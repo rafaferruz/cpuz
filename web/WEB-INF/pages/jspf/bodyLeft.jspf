@@ -1,0 +1,129 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@taglib prefix="zorongo" uri="http://www.zorongocookies.com/zorongo"%>
+<%@taglib prefix="rfm" uri="/WEB-INF/tlds/rfm"%>
+
+<fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
+
+<%-- empieza columna izquierda --%>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="menus">
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30">
+            <div align="center"><a href="${dirApplication}/pages/index.htm" class="menus_2">PAGINA
+                    DE INICIO</a></div>                </td>
+    </tr>
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30">
+            <div align="center"><a href="${dirApplication}/view/SelecAlumnos" class="menus_2">
+                    BUSQUEDA DE LABORALES</a></div>                </td>
+    </tr>
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30">
+            <div align="center"><a href="${applicationScope.dirHomeResources}/Lista_de_clase.htm" class="menus_2" title="Pasando lista. Si faltas, vas al profe.">LISTAS
+                    DE CLASE</a></div>                </td>
+    </tr>
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30">
+            <div align="center"><a href="${dirApplication}/pages/ReunionMayo2008.jsp" class="menus_2" title="Lo que fuÈ nuest·a reuniÛn en Mayo de 2008">REUNION MAYO 2008</a></div>                </td>
+    </tr>
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30">
+            <div align="center"><a href="${dirApplication}/pages/Colaboraciones.htm" class="menus_2" title="Colaboraciones en prosa, verso y gr·ficas de nuest·os geniales compaÒeros">COLABORACIONES</a></div>                </td>
+    </tr>
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30">
+            <div align="center"><a href="${dirApplication}/pages/Archivo.jsp" class="menus_2" title="El armario de la Web. Todo lo que vaya apareciendo en la web te lo puedes descargar.">ARCHIVO</a></div>                </td>
+    </tr>
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${dirApplication}/pages/CentroExposiciones.jsp" class="menus_2" title="Obras artÌsticas de nuest·os compaÒeros.">SALA DE EXPOSICIONES</a></div></td>
+    </tr>
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30">
+            <div align="center"><a href="${dirApplication}/pages/Contactar.jsp" class="menus_2" title="Para enviar colaboraciones, sugerencias, fotografÌas, quejas, etc.">CONTACTAR</a></div>                </td>
+    </tr>
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu_45.gif" height="45">
+            <div align="center"><a href="${dirApplication}/pages/UULL.jsp" class="menus_2" title="Enlaces a Webs sobre el mundo de las Universidades Laborales">UNIVERSIDADES<br>
+                    LABORALES</a></div></td>
+    </tr>
+<%--    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30">
+            <div align="center"><a href="${applicationScope.dirHomeResources}/Libro_Visitas.htm" title="Libro de Visitas." target="_blank" class="menus_2">LIBRO DE VISITAS</a></div>                </td>
+    </tr>
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30">
+            <div align="center"><a href="${applicationScope.dirHomeResources}/Libro_Visitas.htm" title="Blog de los Laborales." target="_blank" class="menus_2">NUESTRO BLOG</a></div>                </td>
+    </tr>        --%>
+<%--    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirHomeResources}/Laborales.htm" title="Blog de los Laborales." class="menus_2">LABORALES DE TARRAGONA</a></div></td>
+    </tr>
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirHomeResources}/Viajes.htm" title="Blog de los Laborales." class="menus_2">NUESTROS VIAJES</a></div></td>
+    </tr>
+    <tr>
+        <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirHomeResources}/Aficiones.htm" title="Blog de los Laborales." class="menus_2">NUESTRAS AFICIONES</a></div></td>
+    </tr>      --%>
+    <c:if test·"${pageContext.request·userPrincipal ne null && pageContext.request·userPrincipal.name eq 'admin'}">
+        <tr>
+            <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirApplication}/view/UsersList" title="Usuarios" class="menus_2">Usuarios</a></div></td>
+        </tr>
+        <tr>
+            <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirApplication}/view/RolesList" title="Roles de Usuario" class="menus_2">Roles de Usuario</a></div></td>
+        </tr>
+        <tr>
+            <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirApplication}/view/NoticiasList" title="Gest·r de Noticias" class="menus_2">Gest·Ûn de Noticias</a></div></td>
+        </tr>
+        <tr>
+            <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirApplication}/view/CursoEscolarList" title="Cursos Escolares" class="menus_2">Cursos Escolares</a></div></td>
+        </tr>
+        <tr>
+            <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirApplication}/view/UniLabsList" title="Universidades Laborales" class="menus_2">Universidades Laborales</a></div></td>
+        </tr>
+        <tr>
+            <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirApplication}/view/EstudiosList" title="Estudios" class="menus_2">Estudios</a></div></td>
+        </tr>
+        <tr>
+            <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirApplication}/view/EspecialidadesList" title="Especialidades" class="menus_2">Especialidades</a></div></td>
+        </tr>
+        <tr>
+            <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirApplication}/view/CursosList" title="Cursos" class="menus_2">Cursos</a></div></td>
+        </tr>
+        <tr>
+            <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirApplication}/view/AlumnosList" title="Alumnos" class="menus_2">Alumnos</a></div></td>
+        </tr>
+        <tr>
+            <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirApplication}/pages/ImportFiles.jsp" title="Importar fichero" class="menus_2">Importar Fichero</a></div></td>
+        </tr>
+        <tr>
+            <td background="${applicationScope.dirHomeResources}/images/Fondo_menu.gif" height="30"><div align="center"><a href="${applicationScope.dirApplication}/view/SelecAlumnos" title="Buscar Alumnos" class="menus_2">Buscar Alumnos</a></div></td>
+        </tr>
+    </c:if>
+</table>
+<%--
+<table width="100%" height="100" border="1" cellpadding="0" cellspacing="0" bordercolor="#009900" id="actualidad">
+    <tr>
+        <td height="30" bgcolor="#00BD00">
+            <h6 align="center" class="Estilo2">ACTUALIDAD WEB</h6></td>
+    </tr>
+    <tr>
+        <td height="49" valign="top" >
+            <!-- Muest·a una marquesina con las novedades de la Web -->
+            <script language="JavaScript" src="${applicationScope.dirHomeResources}/Novedades.js"></script>
+        </td>
+    </tr>
+</table>
+--%>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td>&nbsp;
+            <p align="center">&nbsp;</p>
+            <p align="center">&nbsp;</p>                </td>
+    </tr>
+    <tr>
+        <td align="center"><a href="${applicationScope.dirHomeResources}/Lista_de_Contactos.htm"><img src="${applicationScope.dirHomeResources}/images/wanted.jpeg" alt="ffffff" width="92" height="129" longdesc="Listas para encontrar compaÒeros en paradero conocido o desconocido"></a></td>
+    </tr>
+    <tr>
+        <td align="center"><p>Queremos encontrar a todos y queremos que encuentres a cualquiera. Cualquier dato que nos ayude ser&aacute; recompensado.</p></td>
+    </tr>
+</table>

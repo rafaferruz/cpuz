@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.6.SEC01.xsd
+">
+
+    <bean id="InitModel"
+        class="com.cpuz.model.InitModel" />
+    <bean id="UsersModel"
+        class="com.cpuz.model.UserModel" />
+    <bean id="RolesModel"
+        class="com.cpuz.model.RolesModel" />
+    <bean id="UserRolesModel"
+        class="com.cpuz.model.UserRolesModel" />
+    <bean id="BugsModel"
+        class="com.cpuz.model.BugsModel" />
+    <bean id="SectionsModel"
+        class="com.cpuz.model.SectionsModel" />
+    <bean id="InfoBlocksModel"
+        class="com.cpuz.model.InfoBlocksModel" />
+    <bean id="ImagesModel"
+        class="com.cpuz.model.ImagesModel" />
+    <bean id="DocumentsModel"
+        class="com.cpuz.model.DocumentsModel" />
+    <bean id="NewsPiecesModel"
+        class="com.cpuz.model.NewsPiecesModel" />
+    <bean id="NewsCompositionsModel"
+        class="com.cpuz.model.NewsCompositionsModel" />
+    <bean id="ContactsModel"
+        class="com.cpuz.model.ContactsModel" />
+    <bean id="availableRolesList"
+        class="java.util.ArrayList" />
+    <bean id="authRolesList"
+        class="java.util.ArrayList" />
+    <bean id="RolesList"
+        class="java.util.ArrayList" />
+    <bean id="UserRolesList"
+        class="java.util.ArrayList" />
+
+    <bean id="springInitAction" class="com.cpuz.st2.actions.InitAction"
+        scope="prototype">
+        <property name="initModel" ref="InitModel"/>
+    </bean>
+
+    <bean id="springRoleAction" class="com.cpuz.st2.actions.RoleAction"
+        scope="prototype">
+        <property name="dataModel" ref="RolesModel"/>
+    </bean>
+
+    <bean id="springUserAction" class="com.cpuz.st2.actions.UserAction"
+        scope="prototype">
+        <property name="dataModel" ref="UsersModel"/>
+        <property name="rolesModel" ref="RolesModel"/>
+        <property name="userRolesModel" ref="UserRolesModel"/>
+        <property name="rolesList" ref="RolesList"/>
+        <property name="userRolesList" ref="UserRolesList"/>
+    </bean>
+
+    <bean id="springBugAction" class="com.cpuz.st2.actions.BugAction"
+        scope="prototype">
+        <property name="dataModel" ref="BugsModel"/>
+    </bean>
+
+    <bean id="springSectionAction" class="com.cpuz.st2.actions.SectionAction"
+        scope="prototype">
+        <property name="dataModel" ref="SectionsModel"/>
+        <property name="availableRolesList" ref="availableRolesList"/>
+        <property name="authRolesList" ref="authRolesList"/>
+        <property name="rolesModel" ref="RolesModel"/>
+    </bean>
+
+    <bean id="springInfoBlockAction" class="com.cpuz.st2.actions.InfoBlockAction"
+        scope="prototype">
+        <property name="dataModel" ref="InfoBlocksModel"/>
+    </bean>
+
+    <bean id="springImageAction" class="com.cpuz.st2.actions.ImageAction"
+        scope="prototype">
+        <property name="dataModel" ref="ImagesModel"/>
+    </bean>
+
+    <bean id="springDocumentAction" class="com.cpuz.st2.actions.DocumentAction"
+        scope="prototype">
+        <property name="dataModel" ref="DocumentsModel"/>
+    </bean>
+
+    <bean id="springNewsPieceAction" class="com.cpuz.st2.actions.NewsPieceAction"
+         scope="prototype">
+        <property name="dataModel" ref="NewsPiecesModel"/>
+    </bean>
+
+    <bean id="springNewsCompositionAction" class="com.cpuz.st2.actions.NewsCompositionAction"
+         scope="prototype">
+        <property name="dataModel" ref="NewsCompositionsModel"/>
+    </bean>
+
+    <bean id="springContactAction" class="com.cpuz.st2.actions.ContactAction"
+        scope="prototype">
+        <property name="dataModel" ref="ContactsModel"/>
+    </bean>
+
+
+</beans>

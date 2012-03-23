@@ -1,0 +1,63 @@
+<jsp:useBean id="userService" class="com.cpuz.model.UserService"/>
+<jsp:setProperty name="userService" property="user" value="${sessionScope['user']}"/>
+<jsp:setProperty name="userService" property="role" value="regularRole"/>
+<c:set var="regularRole">
+    <jsp:getProperty name="userService" property="userInRole"/>
+</c:set>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #000066;">
+    <tr>
+        <td valign="top">
+    <sql:query var="sections" dataSource="jdbc/CPUZ">
+        SELECT * FROM sections
+        WHERE  NOT sec_group IS NULL AND sec_group != '' OR sec_group > '0'
+        ORDER BY sec_name
+    </sql:query>
+    <c:forEach var="section" items="${sections.rows}">
+        <sql:query var="sectionNews"  dataSource="jdbc/CPUZ" maxRows="6">
+            SELECT * FROM newspieces AS NPI
+            WHERE NPI.npi_status = 2
+            AND (NPI.npi_scope = 0
+            <c:if testá"${regularRole}">
+                OR NPI.npi_scope=1
+            </c:if>
+            <c:if testá"${sessionScope.userCategory >= 1}">
+                OR  NPI.npi_scope=2
+            </c:if>
+            )
+            AND TO_DAYS(NPI.npi_date) > (TO_DAYS(CURDATE()) - 180)
+            AND NPI.npi_section = ?
+            ORDER BY NPI.npi_date DESC
+            <sql:param value="${section.sec_id}"/>
+        </sql:query>
+        <c:if testá"${sectionNews.rowCount > 0 }">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #000066;">
+                <tr>
+                    <th class="homepagenews">${section.sec_name}</th>
+                </tr>
+                <tr>
+                    <td>
+                <ztags:showNews lengthintroduction="90" columns="1" listNews="${sectionNews}" classPrefix="advs" >
+                    <sql:query var="composition" dataSource="jdbc/CPUZ"
+                               sql="SELECT * FROM newscomposition AS NCO
+                               WHERE NCO.nco_npi_id = ?
+                               ORDER BY nco_order" >
+                        <sql:param value="${ShowItemId}"/>
+                    </sql:query>
+                    <ztags:showComposition listComp="${composition}"/>
+                </ztags:showNews>
+                </td>
+                </tr>
+                <tr>
+                    <td class="advsvisitsection">
+                        <a href="/CPUZ/pages/newsSection.jsp?section=${section.sec_id}"  class="visitsection">Visita la Sección:&nbsp;${section.sec_name}&nbsp;>></a>
+                    </td>
+                </tr>
+            </table>
+        </c:if>
+
+    </c:forEach>
+</td>
+</tr>
+</table>
+

@@ -1,0 +1,18 @@
+<%-- Directivas page comunes --%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page errorPage="error.jsp" %>
+<%@page buffer="none"%>
+
+<%-- Directivas taglib comunes --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<%-- Directivas taglib comunes que deberían sustituirse por otros recursos --%>
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@taglib prefix="zorongo" uri="http://www.zorongocookies.com/zorongo"%>
+<%@taglib prefix="ztags" uri="/WEB-INF/tlds/ztags.tld"%>
+<%@taglib prefix="rfm" uri="/WEB-INF/tlds/rfm"%>
+
+<fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
+

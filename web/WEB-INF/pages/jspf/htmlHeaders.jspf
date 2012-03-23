@@ -1,0 +1,18 @@
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>${titleHead}</title>
+
+	<%-- Nuestros propios estilos --%>
+	<link href="/css/common.css" rel="stylesheet" type="text/css"/>
+	<%-- CSS del framework YAML --%>
+	<link href="/css/my_layout.css" rel="stylesheet" type="text/css"/>
+	<!--[if lte IE 7]>
+	<link href="/css/patches/patch_my_layout.css" rel="stylesheet" type="text/css" />
+	<![endif]-->
+	<%@include file="scripts.jspf" %>
+
+
+	<%@ include file="head01.jspf" %>
+
+</head>
+

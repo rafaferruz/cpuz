@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd">
+    <tlib-version>1.0</tlib-version>
+    <short-name>ztags</short-name>
+    <uri>/WEB-INF/tlds/ztags</uri>
+  <!-- A validator verifies that the tags are used correctly at JSP
+         translation time. Validator entries look like this: 
+      <validator>
+          <validator-class>com.mycompany.TagLibValidator</validator-class>
+          <init-param>
+             <param-name>parameter</param-name>
+             <param-value>value</param-value>
+	  </init-param>
+      </validator>
+   -->
+  <!-- A tag library can register Servlet Context event listeners in
+        case it needs to react to such events. Listener entries look
+        like this: 
+     <listener>
+         <listener-class>com.mycompany.TagLibListener</listener-class> 
+     </listener>
+   -->
+    <tag>
+        <name>showNews</name>
+        <tag-class>com.cpuz.ztaghandlers.ShowNews</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>listNews</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <name>columns</name>
+            <type>java.lang.Integer</type>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>lengthintroduction</name>
+            <type>java.lang.Integer</type>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>classPrefix</name>
+            <type>java.lang.String</type>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>mode</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <name>showItem</name>
+        <tag-class>com.cpuz.ztaghandlers.ShowItem</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+    <tag>
+        <name>showAdvs</name>
+        <tag-class>com.cpuz.ztaghandlers.ShowAdvs</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+    </tag>
+    <tag>
+        <name>showComposition</name>
+        <tag-class>com.cpuz.ztaghandlers.ShowComposition</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>listComp</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+    </tag>
+    <tag>
+        <name>showCopyComponentToComposition</name>
+        <tag-class>com.cpuz.ztaghandlers.ShowCCTC</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>component</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <name>composition</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <name>index</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Integer</type>
+        </attribute>
+    </tag>
+
+</taglib>

@@ -1,0 +1,20 @@
+Acta reunión Sta. Inés
+
+Buscar Noticias. HECHO. Falta comprobar fechas y tomar valores de fechas del bean
+
+Informe del agua para la junta
+
+Crear clases para subir imagenes al servidor ftp >> HECHO para save_new y save_edit
+Si se elimina una Imagen, debe eliminarse la imagen en el servidor
+
+Listado de Noticias de Sección. HECHO.
+Presentar noticias de todas las secciones en portada. HECHO.
+
+Me he quedado en el jsp ComponentDisplay.jsp para displayar un componente no titular de
+noticia en modo alone. Falta modificar la clase showComposition (es una Tag) para que
+actúe de un modo especial en caso de los Infoblock en modo alone. Debe añadir al final
+un enlace que diga 'Enlace relacionado' si hay un element link de enlace, o 'Noticia
+relacionada si es un código de noticia (NewsPiece ID)
+
+
+

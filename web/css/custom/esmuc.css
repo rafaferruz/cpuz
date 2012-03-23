@@ -1,0 +1,79 @@
+/**
+ * CSS personalizada para el ESMUC.
+ */
+
+* {
+	font-family: Verdana, sans-serif !important;
+}
+
+body {
+	background-color: #ffffff !important;
+	background-image: none !important;
+	font-size: 12px !important;
+}
+
+div#header div.banner {
+	background-color: transparent !important;
+	float: none;
+	position: absolute;
+	top: 36px;
+	left: 0px;
+	font-size: 1.5em;
+	overflow: hidden;
+	color: #993300 !important;
+}
+
+div#header div.banner img {
+	display: none !important;
+}
+
+div.page_margins {
+	max-width: 85% !important;
+}
+
+div.page {
+	border: 0 !important;
+}
+
+div#header {
+	height: 84px !important;
+	background-color: #ffffff !important;
+	background-image: url(images/esmuc.png) !important;
+	background-repeat: no-repeat !important;
+	border: 0 !important;
+	border-bottom: solid 4px #cccccc !important;
+}
+
+div#footer {
+	padding-top: 100px  !important;
+	height: 50px  !important;
+	background-color: #ffffff !important;
+	background-image: url(images/esmuc_footer.png) !important;
+	background-repeat: no-repeat !important;
+	background-position: right top !important;
+	border: 0 !important;
+}
+
+h1#title, span#subtitle {
+	display: none;
+}
+
+h1 {
+	font-size: 18px !important;
+}
+
+h2 {
+	font-size: 16px !important;
+}
+
+h3 {
+	font-size: 14px !important;
+}
+
+a {
+	color: #993300 !important;
+}
+
+div#codexProInfo {
+	display: none;
+}

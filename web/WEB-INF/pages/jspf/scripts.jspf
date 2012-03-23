@@ -1,0 +1,117 @@
+<c:if test="${not empty focus || warnOnExit == 'true'
+		|| fn:contains(includes, 'dragdrop') || fn:contains(includes, 'event')
+		|| fn:contains(includes, 'help') || fn:contains(includes, 'info')
+		|| fn:contains(includes, 'panel') || fn:contains(includes, 'menu')
+		|| fn:contains(includes, 'autocomplete') || fn:contains(includes, 'subjectChooser')
+		|| fn:contains(includes, 'tabview') || fn:contains(includes, 'account')
+		|| fn:contains(includes, 'calendar') || fn:contains(includes, 'selectLoader')
+		|| fn:contains(includes, 'marks')}">
+	<%-- Ojo: esta dependencia debe estar antes que las otras --%>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'autocomplete') || fn:contains(includes, 'subjectChooser')}">
+	<%-- YUI autocomplete --%>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/yui/autocomplete/assets/skins/sam/autocomplete.css" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/utilities/utilities.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/datasource/datasource-min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/autocomplete/autocomplete-min.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'connection') || fn:contains(includes, 'subjectChooser')
+		|| fn:contains(includes, 'selectLoader') || fn:contains(includes, 'help') || fn:contains(includes, 'info')}">
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/event/event-min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/connection/connection-min.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'dragdrop') || fn:contains(includes, 'panel')
+		|| fn:contains(includes, 'help') || fn:contains(includes, 'info')}">
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/dragdrop/dragdrop-min.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'help') || fn:contains(includes, 'info')
+		|| fn:contains(includes, 'autocomplete') || fn:contains(includes, 'subjectChooser')}">
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/PopUp.jsp"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'panel') || fn:contains(includes, 'help')
+		|| fn:contains(includes, 'info') || fn:contains(includes, 'autocomplete') || fn:contains(includes, 'subjectChooser')}">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/yui/container/assets/skins/sam/container.css" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/container/container-min.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'menu')}">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/yui/menu/assets/skins/sam/menu.css" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/container/container_core-min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/menu/menu-min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/dom/dom-min.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'subjectChooser')}">
+	<%-- Componente de selección de asignatura --%>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/subjectChooser.css" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/SubjectChooser.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/event-simulate/event-simulate-min.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'tabview')}">
+	<%-- YUI tabview --%>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/yui/tabview/assets/skins/sam/tabview.css" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/element/element-min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/tabview/tabview-min.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'displaytag')}">
+	<link rel="stylesheet" type="text/css" href="css/displaytag.css" />
+</c:if>
+<c:if test="${fn:contains(includes, 'common')}">
+	<%-- Funciones de js comunes --%>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/toggleVisibility.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/common.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'ckeditor')}">
+	<%-- CKEditor --%>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/ckeditor/ckeditor.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'calendar')}">
+	<%-- YUI calendar --%>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/yui/fonts/fonts-min.css" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/yui/calendar/assets/skins/sam/calendar.css" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/yui/calendar/calendar-min.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'marks')}">
+	<%-- Notas --%>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/marks.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'selectLoader')}">
+	<%-- Componente de carga de un desplegable --%>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/selectLoader.css" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/SelectLoader.js"></script>
+</c:if>
+<c:if test="${fn:contains(includes, 'report')}">
+	<%-- Css para el generador de listados --%>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/report.css" />
+</c:if>
+<%-- Evitar dobles envíos de formularios --%>
+<%-- Lo comentamos porque rompe el funcionamiento de user/inscription.do
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/preventDoubleSubmit.js"></script>
+--%>
+<c:if test="${not empty focus}">
+	<script type="text/javascript"> <%-- Coloca el foco en el elemento indicado --%>
+		<%-- FIXME: sacar a un archivo .js para que se pueda cachear --%>
+		YAHOO.util.Event.onDOMReady(function() {
+			document.getElementById("${focus}").focus();
+		});
+	</script>
+</c:if>
+<c:if test="${warnOnExit == 'true'}"> <%-- Lanza un aviso al salir sin guardar --%>
+	<script type="text/javascript">
+		<%-- FIXME: sacar a un archivo .js para que se pueda cachear --%>
+		YAHOO.util.Event.onDOMReady(function() {
+			// Añadimos el aviso de confirmar salida a la página
+			window.onbeforeunload = function() {
+				return '<codex:message escape="true" key="page.discardChanges" />';
+			}
+			// Quitamos el aviso en todos los formularios
+			var allForms = document.forms;
+			if (allForms && allForms.length > 0) {
+				for (var i = 0; i < allForms.length; i++) {
+					YAHOO.util.Event.addListener(allForms[i], "submit", function() {
+						window.onbeforeunload = null;
+					});
+				}
+			}
+		});
+	</script>
+</c:if>

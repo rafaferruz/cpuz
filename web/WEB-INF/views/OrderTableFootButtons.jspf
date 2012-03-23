@@ -1,0 +1,34 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="ISO-8859-1" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="5" class="data_table">
+    <tr>
+        <td align="center">
+            <s:submit theme="simple" type="submit" value="%{getText('Top')}"
+                      name="nav_top" onclick="DoNavigation('nav_top')"/>
+            <s:submit theme="simple" type="submit" value="%{getText('Up')}"
+                      name="nav_up" onclick="DoNavigation('nav_up')"/>
+            <s:submit theme="simple" type="submit" value="%{getText('Down')}"
+                      name="nav_down" onclick="DoNavigation('nav_down')"/>
+            <s:submit theme="simple" type="submit" value="%{getText('Bottom')}"
+                      name="nav_bottom" onclick="DoNavigation('nav_bottom')"/>
+        </td>
+        <%-- Requirement codes: E5-2 --%>
+        <td align="center">
+            <s:submit theme="simple" type="button" name="newButton" id="newButton"
+                      value="%{getText('New')}"  onclick="DoNavigation('new')"/>
+        </td>
+        <s:set var="confirm" value="getText('ConfirmDeleteQuestáon')"/>
+        <td align="center">
+            <s:submit theme="simple" type="button" name="delete" id="delete"
+                      value="%{getText('Delete')}"
+                      onclick="if (confirm('%{#confirm}')) DoNavigation('delete')"/>
+        </td>
+        <td align="center">
+            <s:submit theme="simple" type="button" name="selec" id="selec"
+                      value="%{getText('SearchSelect')}"
+                      onclick="DoNavigation('selec')"/>
+        </td>
+    </tr>
+</table>

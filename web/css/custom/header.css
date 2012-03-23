@@ -1,0 +1,17 @@
+/**
+ * CSS que oculta la imagen de Codex.pro y muestáa el banner del centro en su lugar.
+ */
+
+div#header {
+	background-image: none;
+	height: auto;
+}
+
+h1#title, span#subtitle {
+	display: none;
+}
+
+div#header div.banner {
+	float: none;
+	margin-top: 0;
+}

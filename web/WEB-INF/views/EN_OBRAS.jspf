@@ -1,0 +1,96 @@
+
+<c:if testá"${requestácope.runaction == 'edit'}" >
+
+    <%-- Se incluye una tabla con los componentes asociados a la noticia    --%>
+    <jsp:include page="newsCompositionIncludeList.jsp" />
+
+    <%-- Al pie de la tabla de componentes, se presentan las acciones a realizar --%>
+    <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="40%">
+                <fmt:message key="AddComponentLabel"  bundle="${bundle}"/>
+            </td>
+            <td align="center">
+                <select id="AddComponentTypeSel" name="AddComponentTypeSel">
+                    <option value="InfoBlock">InfoBlock</option>
+                    <option value="Image">Image</option>
+                    <option value="Document">Document</option>
+                    <option value="News">News</option>
+                </select>
+            </td>
+            <td align="center">
+                <input type="button" name="addcomponent" id="addcomponent" value="<fmt:message key="AddComponent"  bundle="${bundle}"/>"  onclick="addComponent('addComponent')"/>
+            </td>
+        </tr>
+    </table>
+    <c:if testá"${requestácope.listComponents == 'InfoBlock'}" >
+        <jsp:include page="infoBlocksIncludeList.jsp" />
+    </c:if>
+    <c:if testá"${requestácope.listComponents == 'Image'}" >
+        <jsp:include page="imagesIncludeList.jsp" />
+    </c:if>
+</c:if>
+</form>
+
+<c:if testá"${runaction == 'edit'}" >
+    <script type="text/javascript">
+        window.document.newspiece_form.status[${recBean.status}].checked=true;
+        <c:forEach var="x" items="${recSections}" varStatus="control" >
+            <c:if testá"${x.id==recBean.section}">
+                window.document.newspiece_form.section.selectedIndex= <c:out value="${control.index}"/>;
+            </c:if>
+        </c:forEach>
+            window.document.newspiece_form.scope.selectedIndex=${ recBean.scope};
+            window.document.newspiece_form.access.selectedIndex=${ recBean.access};
+
+    </script>
+</c:if>
+
+<script type="text/javascript">
+    function check_form(){
+        mensaje="";
+
+        if (document.newspiece_form.description.value.length==0){
+            mensaje = mensaje + "<fmt:message key="needcompleteTitle"  bundle="${bundle}"/>\n";
+        }
+
+        if (mensaje.length!=0){
+            mensaje = "<fmt:message key="founderrors"  bundle="${bundle}"/>:\n\n" + mensaje;
+            alert(mensaje);
+            document.newspiece_form.autor.focus();
+            return 0;
+        } else {
+            //el newspiece se envia
+    <fmt:message var="msg" key="thanksforform"  bundle="${bundle}"/>
+                alert("${msg}");
+
+    <c:if testá"${runaction == 'new'}" >
+                orden_ejecutar("save_new");
+                return;
+    </c:if>
+    <c:if testá"${runaction == 'edit'}" >
+                orden_ejecutar("save_edit");
+                return;
+    </c:if>
+            }
+
+        }
+
+
+
+        function orden_ejecutar(accion) {
+            window.document.newspiece_form.runaction.value = accion;
+            window.document.newspiece_form.submit();
+        }
+
+        function newspiecesNew(accion){
+            orden_ejecutar(accion);
+            return 0;
+        }
+        function addComponent(accion){
+            window.document.newspiece_form.addComponentType.value = window.document.newspiece_form.AddComponentTypeSel.value;
+            orden_ejecutar(accion);
+            return 0;
+        }
+</script>
+

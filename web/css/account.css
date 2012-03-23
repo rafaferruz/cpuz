@@ -1,0 +1,239 @@
+table.full td.pending {
+	background-color:#FF5C33;
+}
+
+div.legend {
+	display:inline-block;
+	border: solid 2px grey;
+	width:30px;
+	height:5px;
+	margin-right:4px;
+	margin-left:14px;
+}
+
+div.legendIncome, div.fiscalPeriodActive {
+	background-color:#7EDF7E;
+}
+
+div.legendExpense{
+	background-color:#A2BFF4;
+}
+
+div.legendInterestá
+	background-color:#D8F5D8;
+}
+
+div.legendCommission{
+	background-color:#B2E0F0;
+}
+
+table.full td.fiscalPeriodActive{
+	background-color:#7EDF7E;
+	font-weight:bold;
+}
+
+/* Cajita con la selección de centros */
+div.centreSelection {
+	padding: 4px;
+	border: solid 1px #dddddd;
+	margin-bottom: 1em;
+}
+
+/** Caja con la selección de filtros de búsqueda de apuntes*/
+div.recordFilterSelection{
+	padding: 4px;
+	border: solid 1px #dddddd;
+	margin-bottom: 1em;
+}
+
+form legend{
+	font-weight:bold !important;
+}
+
+div.selectButton{
+	margin-left:10px;
+}
+
+div.selectButton span.title{
+	margin-left:20px;
+	padding-left: 20px;
+	background-position: left top;
+	background-image:url(../images/icons/next.png);
+	_background-image:url(../images/icons/next.png);
+	background-repeat:no-repeat;
+}
+
+/** Tabla de presupuestá::Filas de conceptos*/
+tr.conceptRow{
+	font-weight: bold !important;
+	background-color: inactivecaptiontext;
+}
+/** Tabla de presupuestá::No cambia de color cuando pasa el ratón*/
+tr.conceptRow:hover td {
+	background-color: inactivecaptiontext;
+}
+/** Tabla de presupuestá::Filas de subconceptos*/
+td.subconceptRow{
+	text-indent: 20px;
+	font-style: oblique !important;
+}
+/** Tabla de presupuestá::Fila para el total*/
+tr.budgetTotal{
+	border-style: solid;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+/* Tabla de presupuestá::Fila para los subtotales*/
+tr.subTotal{
+	/*border-style: solid;
+	border-width: 0.2em;*/
+	font-weight: bold;
+	font-size: 1em;
+}
+
+span.subconceptTotal,span.conceptTotal{
+	font-size: 1.2em;
+}
+
+span.conceptTotal{
+	font-weight: bold;
+}
+
+/* Botón de radio pagado o no pagado */
+input#paid + label {
+	padding: 0.6em;
+	margin-right: 2em;
+}
+
+input#paid:checked + label {
+	font-weight: bold;
+	background-color: #00FA9A;
+}
+
+input#unpaid + label {
+	padding: 0.6em;
+}
+
+input#unpaid:checked + label {
+	font-weight: bold;
+	background-color: #FF6347;
+}
+
+/* Pendiente de pago */
+.unpaid {
+	background-color: #FF6347;
+}
+
+.unpaid:hover {
+	background-color: #FF6347;
+}
+
+/* Seleccion de fecha Hoy-Ayer */
+span.select{
+	color: #4D87C7;
+}
+
+span.select:hover{
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+/** Total del asiento */
+p.total {
+	font-size: 1.2em;
+}
+
+/** Totales en el detalle del asiento. */
+tr.recordTotals {
+	background-color: #C7D9F8;
+	font-weight: 600;
+}
+
+span.rectification, span.rectified {
+	color: #FF0000;
+}
+
+/*Listado presupuestário*/
+td.budgetaryReportMonth,td.budgetaryReportConcept{
+	font-size: 1.1em;
+}
+
+td.budgetaryReportConcept{
+	border-bottom: solid;
+}
+
+tr.budgetaryReportTotalBottom,td.budgetaryReportTotalRight{
+	font-weight: bold;
+	background-color: #C7D9F8;
+}
+
+td.sumTotal{
+	background-color: #B0C4DE;
+}
+
+td.negative{
+	background-color: red !important;
+}
+
+/*Informe de saldos restántes, por centros de coste y partidas presupuestárias*/
+td.remainingBalancesCostCentre {
+	font-size: 1.1em;
+	vertical-align: middle;
+	text-align: right;
+	width:10%;
+	font-weight: bold;
+}
+
+thead th.remainingBalancesCostCentre {
+	color: #000;
+	border-bottom: 2px #800 solid;
+	border-left: 1px #cccccc solid;
+	vertical-align: middle;
+	text-align: center;
+}
+
+td.remainingBalancesAmount {	/*Columna presupuestádo...*/
+	text-align: right;
+	padding-right: 1%;
+}
+
+/**Listado de organismo: tiene los centros como columnas y en las filas los ingresos (por partidas pero sin subpartidas),
+	gastos (por partidas) y remanentes (año anterior, actual...). */
+th.centres {
+	text-align: right;
+}
+
+/* Columnas de dos colores */
+colgroup.column0 {
+	background-color: #ccccff !important;
+}
+
+colgroup.column1 {
+	background-color: #e6e6fb !important;
+}
+
+/* Importe */
+td.euro:after {
+	content: "\00a0\20AC";
+	text-align: right;
+}
+
+td.euro {
+	text-align: right;
+}
+
+/* Número de asiento destácado */
+span.recordNumber {
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #460000;
+}
+
+/** Opciones de selección que no generan número de asiento. */
+option.noRecordNumber{
+	background-image: url(../images/icons/noRecordNumber.png);
+	padding-right: 24px;
+	background-repeat: no-repeat;
+	background-position: center right;
+}

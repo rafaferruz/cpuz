@@ -1,0 +1,32 @@
+div.expedient {
+	padding: 0.4em;
+	margin-top: 1.4em;
+	margin-bottom: 1.4em;
+	border: solid 1px #808080;
+	background-color: #F5DEB3;
+}
+
+div.expedient h2.expedient {
+	line-height: 64px;
+	text-indent: 72px;
+	background-image: url(../images/folder.png);
+	background-repeat: no-repeat;
+}
+
+div.enroll {
+	line-height: 1.5em;
+	padding: 1em;
+	margin-top: 1.4em;
+	margin-bottom: 1.4em;
+	border: solid 1px #D4C7B4;
+	background-color: #FFEBCE;
+}
+
+div.enroll table, div.enroll td, div.enroll th {
+	background: 0;
+	border: solid 1px #D4C7B4;
+}
+
+div.enroll table {
+	min-width: 60%;
+}

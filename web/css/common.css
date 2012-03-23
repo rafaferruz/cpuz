@@ -1,0 +1,1410 @@
+/**
+* CSS con nuestáos estálos propios.
+* Es un archivo separado para no interferir con los
+* estálos de YAML
+*/
+
+/* Estructura de la página */
+
+@import "account.css";
+
+body {
+	padding-left : 8px !important;
+	padding-right : 8px !important;
+}
+
+div#header {
+	border-top: 1px solid #507dc1;
+	border-left: 1px solid #507dc1;
+	border-right: 1px solid #507dc1;
+	background-color: #83a3d4;
+	padding: 8px 0px 4px 8px !important;
+	height: 90px;
+	background-repeat: no-repeat;
+}
+
+body.demo div#header {
+	background-repeat: repeat-x;
+	background-image: url(../images/hipodemo.png);
+	_background-image: url(../images/hipodemo.gif); /* IE6 hack */
+}
+
+body.demo div#footer {
+	margin-top: 60px;
+	line-height: 120px;
+	background-repeat: repeat-x;
+	background-image: url(../images/hipodemo.png);
+	_background-image: url(../images/hipodemo.gif); /* IE6 hack */
+}
+
+div#header h1#title {
+	text-indent: 130px;
+	font-size: 2.8em;
+	padding: 0;
+	margin: 0;
+	margin-top: 16px;
+	width:400px;
+}
+
+h1#title a {
+	color: #333333;
+	text-decoration: none;
+}
+
+span#subtitle {
+	color: #333333;
+	margin-left: 130px;
+}
+
+/* Si el usuario tiene solamente permisos para un centro, aparecerá el nombre del centro o su banner */
+div#header div.banner {
+	background-color: #83a3d4;
+	float: right;
+	margin-top: 0.8em;
+	padding: 4px;
+	color: #f0f8ff;
+	font-weight: bold;
+	font-size: 2em;
+}
+
+div#nav {
+	border-left: 1px solid #507dc1;
+	border-right: 1px solid #507dc1;
+}
+
+div#footer {
+	text-align: right;
+	background-color: #eeeeee;
+	border: solid 1px #dddddd;
+}
+
+/* Menú principal */
+
+li.active a {
+	color: #ffffff !important;
+}
+
+/* Submenu */
+div.submenu {
+	float:left;
+	width:100%;
+	background:#E7E5E2;
+	font-weight: 500;
+	line-height:normal;
+	margin-top: -1em;
+	border-bottom:1px solid #54545C;
+}
+div.submenu ul {
+	margin:0;
+	padding:10px 10px 0 50px;
+	list-style:none;
+}
+div.submenu li {
+	display:inline;
+	margin:0;
+	padding:0;
+}
+div.submenu a {
+	float:left;
+	background:url(../images/tab-left.gif) no-repeat left top;
+	margin:0;
+	padding:0 0 0 4px;
+	text-decoration:none;
+}
+div.submenu a span {
+	float:left;
+	display:block;
+	background:url(../images/tab-right.gif) no-repeat right top;
+	padding:5px 15px 4px 6px;
+	color:#FFF;
+}
+div.submenu a span {
+	float:none;
+}
+div.submenu a:hover span {
+	color:#FFF;
+	background-position:100% -42px;
+}
+div.submenu a:hover {
+	background-position:0% -42px;
+}
+div.submenu a.active span {
+	color:#000;
+	background-position:100% -84px;
+}
+div.submenu a.active {
+	background-position:0% -84px;
+}
+ul.options {
+	margin-left: 0px;
+	background:#E7E5E2;
+	border-bottom:1px solid #54545C;
+	margin-bottom: 2em;
+}
+ul.options li {
+	padding-left: 8px;
+	line-height: 2.2em;
+	display: inline;
+}
+ul.options a {
+	color:#000;
+}
+
+/* Elementos de formulario */
+
+.center {
+	text-align: center;
+}
+
+.right {
+	text-align: right;
+}
+
+p.next {
+	width: 100%;
+	text-align: right;
+}
+
+.separator {
+	clear: both;
+}
+
+optgroup {
+	font-style: normal;
+	color: #696969;
+}
+
+optgroup option {
+	color: #000000;
+}
+
+form.delete, form.button {
+	display: inline;
+}
+
+form.button input {
+	text-decoration: none;
+	border-top: 1px #ddd solid;
+	border-left: 1px #ddd solid;
+	border-right: 1px #444 solid;
+	border-bottom: 1px #444 solid;
+	color: #000 !important;
+	background: #454545 url(../yaml/screen/images/button_gray.png) top left repeat-x;
+	padding: .5em 1em .5em 0.8em;
+}
+
+form.button input:focus,
+form.button input:hover,
+form.button input:active {
+	text-decoration: none;
+	border-top: 1px #444 solid;
+	border-left: 1px #444 solid;
+	border-right: 1px #ddd solid;
+	border-bottom: 1px #ddd solid;
+	color: #fff !important;
+	background: #555;
+}
+
+form.yform .type-text input, form.yform .type-select select {
+	width: auto !important;
+	display: inline !important;
+}
+
+form.yform .type-text textarea {
+	width: auto !important;
+}
+
+form.yform label {
+	display: inline !important;
+}
+
+option.selectOne {
+	font-style: italic;
+	color: #a9a9a9;
+}
+/* Sobreescribimos determinados elementos de yform */
+
+form.yform label {
+	color: #383838 !important;
+}
+
+form.yform .type-text input,
+form.yform .type-text textarea,
+form.yform .type-select select {
+	border: 1px solid #989898 !important;
+}
+
+form.yform div input[type="text"]:focus,
+form.yform div input[type="password"]:focus,
+form.yform div select:focus,
+form.yform div textarea:focus,
+form.yform div input[type="text"]:hover,
+form.yform div input[type="password"]:hover,
+form.yform div select:hover,
+form.yform div textarea:hover,
+form.yform div input[type="text"]:active,
+form.yform div input[type="password"]:active,
+form.yform div select:active,
+form.yform div textarea:active {
+	border: 1px #a66 solid !important;
+	background-color: #feffab !important;
+}
+
+/* Enlaces con aspecto de botón */
+
+a.button, a.bigbutton {
+	text-decoration: none;
+	border-top: 1px #ddd solid;
+	border-left: 1px #ddd solid;
+	border-right: 1px #444 solid;
+	border-bottom: 1px #444 solid;
+	color: #000 !important;
+	background: #454545 url(../yaml/screen/images/button_gray.png) top left repeat-x;
+	padding: .5em 1em .5em 0.8em;
+}
+
+a.bigbutton {
+	padding: 1em;
+	line-height: 2.8em;
+	_line-height: 3.4em; /* IE6 hack */
+}
+
+a.button:focus, a.bigbutton:focus,
+a.button:hover, a.bigbutton:hover,
+a.button:active, a.bigbutton:active {
+	text-decoration: none;
+	border-top: 1px #444 solid;
+	border-left: 1px #444 solid;
+	border-right: 1px #ddd solid;
+	border-bottom: 1px #ddd solid;
+	color: #fff !important;
+	background: #555;
+}
+
+a.bigbutton span.inscription {
+	background-repeat: no-repeat;
+	padding-left: 40px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+a.bigbutton span.inscription {
+	background-image: url(../images/icons/inscription.png);
+	_background-image: url(../images/icons/inscription.gif); /* IE6 hack */
+}
+
+/* Botones con icono */
+a.button span.back,
+a.button span.new,
+a.button span.help,
+a.button span.info,
+a.button span.pdf,
+a.button span.previous,
+a.button span.next,
+a.button span.printer,
+a.button span.cancel,
+a.button span.find,
+a.button span.user,
+a.button span.change,
+a.button span.view{
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+
+a.button span.back {
+	background-image: url(../images/icons/back.png);
+	_background-image: url(../images/icons/back.gif); /* IE6 hack */
+}
+a.button span.new {
+	background-image: url(../images/icons/new.png);
+	_background-image: url(../images/icons/new.png); /* IE6 hack */
+}
+a.button span.help {
+	background-image: url(../images/icons/help.png);
+	_background-image: url(../images/icons/help.gif); /* IE6 hack */
+}
+a.button span.info {
+	background-image: url(../images/icons/info.png);
+	_background-image: url(../images/icons/info.gif); /* IE6 hack */
+}
+a.button span.previous {
+	background-image: url(../images/icons/previous_normal.png);
+	_background-image: url(../images/icons/previous_normal.gif); /* IE6 hack */
+}
+a.button span.next {
+	background-image: url(../images/icons/next_normal.png);
+	_background-image: url(../images/icons/next_normal.gif); /* IE6 hack */
+}
+a.button span.printer {
+	background-image: url(../images/icons/print.png);
+	_background-image: url(../images/icons/print.gif); /* IE6 hack */
+}
+a.button span.pdf {
+	background-image: url(../images/icons/pdf.png);
+	_background-image: url(../images/icons/pdf.gif); /* IE6 hack */
+}
+a.button span.cancel {
+	background-image: url(../images/icons/cancel.png);
+	_background-image: url(../images/icons/cancel.gif); /* IE6 hack */
+}
+
+a.button span.find {
+	background-image: url(../images/icons/find.png);
+	_background-image: url(../images/icons/find.gif); /* IE6 hack */
+}
+
+a.button span.user {
+	background-image: url(../images/icons/user.png);
+	_background-image: url(../images/icons/user.gif); /* IE6 hack */
+}
+
+a.button span.change {
+	background-image: url(../images/icons/change.png);
+	_background-image: url(../images/icons/change.gif); /* IE6 hack */
+}
+
+a.button span.view {
+	background-image: url(../images/icons/view-small.png);
+	_background-image: url(../images/icons/view-small.gif); /* IE6 hack */
+}
+
+p.back {
+	margin-top: 3em;
+}
+
+/* Sustituir enlace por icono */
+a.edit, a.delete, a.view, a.rectify, a.duplicate {
+	display: inline-block;
+	width: 22px;
+	height: 22px;
+	text-indent: -1000em;
+	line-height: 0;
+	overflow: hidden;
+	background-position: top left;
+	background-repeat: no-repeat !important;
+	/* IE6, IE7 hack 
+	*width: auto;
+	*text-indent: 22px;*/
+}
+
+a.edit {
+	background-image: url(../images/icons/edit.png);
+	_background-image: url(../images/icons/edit.gif); /* IE6 hack */
+}
+
+a.delete {
+	background-image: url(../images/icons/delete.png);
+	_background-image: url(../images/icons/delete.gif); /* IE6 hack */
+}
+
+a.view {
+	background-image: url(../images/icons/view.png);
+	_background-image: url(../images/icons/view.gif); /* IE6 hack */
+}
+
+a.rectify {
+	background-image: url(../images/icons/rectify.png);
+	_background-image: url(../images/icons/rectify.gif); /* IE6 hack */
+}
+
+a.duplicate {
+	background-image: url(../images/icons/duplicate.png);
+	_background-image: url(../images/icons/duplicate.gif); /* IE6 hack */
+}
+
+/* Estilos para displaytag */
+
+span.pagebanner {
+	font-style: italic;
+}
+
+div.pagelinks {
+	text-align: center;
+	font-size: 1.4em;
+}
+
+div.pagelinks a.pagebutton {
+	text-decoration: none;
+	background-repeat: no-repeat;
+	display: inline-block;
+}
+
+div.pagelinks a.first {
+	background-position: center left;
+	padding-left: 24px;
+	background-image:url(../images/icons/first.png);
+	_background-image:url(../images/icons/first.gif);
+}
+
+div.pagelinks a.last {
+	background-position: center right;
+	padding-right: 24px;
+	background-image:url(../images/icons/last.png);
+	_background-image:url(../images/icons/last.gif);
+}
+
+div.pagelinks a.next {
+	background-position: center right;
+	padding-right: 24px;
+	background-image:url(../images/icons/next.png);
+	_background-image:url(../images/icons/next.gif);
+}
+
+div.pagelinks a.previous {
+	background-position: center left;
+	padding-left: 24px;
+	background-image:url(../images/icons/previous.png);
+	_background-image:url(../images/icons/previous.gif);
+}
+
+div.exportLinks {
+	margin-top: 0.5em;
+}
+
+div.exportLinks a {
+	text-decoration: none;
+}
+
+div.exportLinks span:hover {
+	text-decoration: underline;
+}
+
+span.export {
+	padding-left: 20px;
+	background-repeat: no-repeat;
+}
+
+span.csv {
+	background-image: url(../images/icons/csv.png);
+	_background-image: url(../images/icons/csv.gif); /* IE6 hack */
+}
+
+span.excel {
+	background-image: url(../images/icons/excel.png);
+	_background-image: url(../images/icons/excel.gif); /* IE6 hack */
+}
+
+span.pdf {
+	background-image: url(../images/icons/pdf.png);
+	_background-image: url(../images/icons/pdf.gif); /* IE6 hack */
+}
+
+/** Enlace con icono */
+a.pdf, a.excel {
+	padding-left: 20px;
+	background-position: top left;
+	background-repeat: no-repeat !important;
+}
+
+a.pdf {
+	background-image: url(../images/icons/pdf.png);
+	_background-image: url(../images/icons/pdf.gif); /* IE6 hack */
+}
+
+a.excel {
+	background-image: url(../images/icons/excel.png);
+	_background-image: url(../images/icons/excel.gif); /* IE6 hack */
+}
+
+/** Sustituir botón por icono */
+form.delete input {
+	cursor: pointer;
+	text-indent: -1000px;
+	width: 22px;
+	height: 22px;
+	border: 0;
+	padding: 0;
+	background-color: transparent;
+	background-image: url(../images/icons/delete.png);
+	_background-image: url(../images/icons/delete.gif); /* IE6 hack */
+	line-height: 0;
+}
+
+/** Estilos para displaytag */
+th.sortable.sortable {
+}
+
+th.sortable.sorted {
+	font-style: italic;
+	padding-left: 20px;
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+
+th.sortable.order1 {
+	background-image: url(../images/icons/up.png);
+	_background-image: url(../images/icons/up.gif); /* IE6 hack */
+}
+
+th.sortable.order2 {
+	background-image: url(../images/icons/down.png);
+	_background-image: url(../images/icons/down.gif); /* IE6 hack */
+}
+
+tr.even {
+	background-color: #f8f8f8;
+}
+
+tr.total {
+	background-color: #a9a9a9;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+tr.total td {
+	/** Evitamos que se pinte el color de 'pendiente de pago' */
+	background-color: #a9a9a9 !important;
+}
+
+tr.subheader {
+	font-weight: bold;
+	background-color: #c0c0c0;
+}
+
+td.enhanced {
+	font-weight: bold;
+}
+
+/* Estilo para el componente de autocompletado */
+.yui-ac-ft{
+	text-align:right;
+	font-size: 0.85em;
+	font-style:italic;
+}
+
+/* Yav styles */
+
+span.mandatory {
+	color: red;
+	font-weight: bold;
+	font-size: 1.6em;
+	font-family: monospace;
+	margin-right: 0.2em;
+}
+
+.innerError {
+	color: brown;
+	font-weight: bold;
+}
+
+.innerHelp {
+	color: green;
+	font-weight: bold;
+}
+
+/* Componente codex:help */
+img.help {
+	margin-left: 2px;
+	cursor: pointer;
+}
+span.help {
+	background-image: url(../images/icons/help_pale.png);
+	_background-image: url(../images/icons/help_pale.gif); /* IE6 hack */
+	background-repeat: no-repeat;
+	padding-top: 1px;
+	padding-left: 20px;
+}
+
+.noBorders {
+	border: 0px solid;
+}
+
+/* Componente codex:info */
+img.infoBox {
+	vertical-align: middle;
+	margin: 0 0 2px 2px;
+	cursor: pointer;
+}
+span.infoBox {
+	background-image: url(../images/icons/info_pale.png);
+	_background-image: url(../images/icons/info_pale.gif); /* IE6 hack */
+	background-repeat: no-repeat;
+	padding-top: 1px;
+	padding-left: 20px;
+}
+
+/* Iconos de asignado y no */
+.true {
+	background-image: url(../images/icons/true.png);
+	_background-image: url(../images/icons/true.gif); /* IE6 hack */
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.false{
+	background-image: url(../images/icons/false.png);
+	_background-image: url(../images/icons/false.gif); /* IE6 hack */
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+/* Cuadros de información */
+div.dataInfo {
+	background: #f4f4f4;
+	border: 1px #ddd solid;
+	margin: 0 0 1em 0;
+	padding: 10px;
+	overflow: hidden;
+}
+
+div.labelValueDataInfo {	/*para mantener juntos el label y el value*/
+	float: left;
+}
+
+div.labelDataInfo {
+	float: left;
+	font-weight: bold;
+	padding: 10px;
+}
+
+div.valueDataInfo {
+	float: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 50px;
+}
+
+div.labelDataInfoHighlighted {
+	float: left;
+	font-weight: bold;
+	padding: 10px;
+	color: #990000;
+}
+
+div.valueDataInfoHighlighted {
+	float: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 50px;
+	color: #990000;
+}
+
+fieldset.dataInfo{
+	float: left;
+	width: 45%;
+	border: 1px #ddd solid;
+	background: #fafafa;
+	margin: 0 1em 1em 0;
+	padding: 10px;
+}
+
+fieldset.dataInfo legend {
+	font-weight: bold;
+}
+
+fieldset.filter{
+	float: left !important;
+	width: 45% !important;
+	border: 1px #ddd solid !important;
+	background: #fafafa !important;
+	margin: 0 1em 1em 0 !important;
+	padding: 10px !important;
+}
+
+fieldset.filter legend {
+	font-weight: normal !important;
+	font-size: 100% !important;
+}
+
+.inputInfo {
+	border: none;
+}
+
+/* divs para agrupar informacion, p.e. los grupos de un alumno, los grupos de un profesor... */
+div.container {
+	padding: 1.6em;
+	margin-top: 1.4em;
+	margin-bottom: 1.4em;
+	border: solid 1px #808080;
+	background-color: 	#F5DEB3;
+}
+
+div.container h2 {
+	line-height: 64px;
+	/*text-indent: 72px;*/
+}
+
+/* Iconos de la página de inicio */
+a.centresIcon, a.accountsIcon, a.usersIcon, a.adminIcon, a.teachersIcon,
+a.studentsIcon, a.userIcon, a.inscriptionsIcon, a.enrollsIcon, a.paymentsIcon{
+	display: inline-block;
+	margin-top: 1em;
+	padding: 6px;
+	text-align: center;
+	font-size: 1.3em;
+	line-height: 176px;
+	height: 120px;
+	min-width: 148px;
+	background-repeat: no-repeat;
+	background-position: top center;
+	_width: 156px !important; /* IE6 hack */
+}
+a.enrollsIcon{
+	background-image: url(../images/enrolls.png);
+	_background-image: url(../images/enrolls.gif); /* IE6 hack */
+}
+
+a.inscriptionsIcon{
+	background-image: url(../images/inscriptions.png);
+	_background-image: url(../images/inscriptions.gif); /* IE6 hack */
+}
+
+a.userIcon{
+	background-image: url(../images/user.png);
+	_background-image: url(../images/user.gif); /* IE6 hack */
+}
+
+a.usersIcon{
+	background-image: url(../images/users.png);
+	_background-image: url(../images/users.gif); /* IE6 hack */
+}
+
+a.centresIcon {
+	background-image: url(../images/centres.png);
+	_background-image: url(../images/centres.gif); /* IE6 hack */
+}
+
+a.paymentsIcon {
+	background-image: url(../images/payments.png);
+	_background-image: url(../images/payments.gif); /* IE6 hack */
+}
+
+a.accountsIcon {
+	background-image: url(../images/accounts.png);
+	_background-image: url(../images/accounts.gif); /* IE6 hack */
+}
+
+a.adminIcon {
+	background-image: url(../images/admin.png);
+	_background-image: url(../images/admin.gif); /* IE6 hack */
+}
+
+a.teachersIcon {
+	background-image: url(../images/teachers.png);
+	_background-image: url(../images/teachers.gif); /* IE6 hack */
+}
+
+a.studentsIcon {
+	background-image: url(../images/students.png);
+	_background-image: url(../images/students.gif); /* IE6 hack */
+}
+
+/** Prueba para los botones de eliminar*/
+form.tinyForm div.type-button input{
+	text-decoration: none;
+	border-top: 1px #ddd solid;
+	border-left: 1px #ddd solid;
+	border-right: 1px #444 solid;
+	border-bottom: 1px #444 solid;
+	color: #000 !important;
+	background: #454545 url(../yaml/screen/images/button_gray.png) top left repeat-x;
+	padding: .5em .5em .5em .5em;
+}
+
+/** Caja de información del login */
+div.loginInfo {
+	border: 1px solid #DDDDDD;
+	background-color: #F4F4F4;
+	background-image: url(../images/logodial.png);
+	_background-image: url(../images/logodial.gif); /* IE6 hack */
+	background-position: 98% 5%;
+	background-repeat: no-repeat;
+	font-size: 1.2em;
+	padding-right: 0.6em;
+	padding-bottom: 0.6em;
+}
+
+/** Aviso para usuarios de IE6. */
+div.ie6warning {
+	border: solid 3px red;
+	padding: 10px 10px 10px 138px;
+	margin-bottom: 20px;
+	font-size: 1.2em;
+	background-color: #FFFFE0;
+	background-image: url(../images/icons/important-big.gif);
+	background-position: center left;
+	background-repeat: no-repeat;
+}
+
+p.ie6warningTitle {
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+/** Impresión de asientos*/
+@media print{
+	#header, #footer, p.back, div.pagelinks, div.exportLinks, .noprint {display:none;}
+	h1 p{display: block;}
+}
+
+/** La cajita de aviso de que se ha pasado del presupuestá*/
+div.warningBox {
+	margin-left: 35%;
+	width: 30%;
+}
+
+.indent{
+	text-indent: 2em;
+}
+
+/* Pestáñas YUI */
+
+div.yui-navset ul.yui-nav li {
+	_width: 10em !important; /* IE6 hack */
+}
+
+/* Estados del sorteo */
+.drawStateAdmitted {
+	color : blue;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.drawStateNotAdmitted {
+	color : red;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+/* Estados del ingreso */
+.ingressStateConfirmed {
+	color : blue;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.ingressStateProvisional {
+	color : orange;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.ingressStateCancelled {
+	color : red;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.ingressStateDeclined {
+	color : #884;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.ingressStateStandard {
+	color : black;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+/* Estados de pago */
+.paymentStatePending {
+	color : green;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.paymentStateConfirmed {
+	color : blue;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.paymentStateCancelled {
+	color : red;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.paymentStateRefundPending {
+	color : #884;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.paymentStateRefunded {
+	color : maroon;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.ingressPaymentStateConfirmed {
+	color : green;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.ingressPaymentStatePending{
+	color : red;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+/** Oferta de inscripción */
+form.enrollOffer ul li {
+	list-style:none !important;
+}
+
+form.enrollOffer label {
+	line-height: 2em;
+}
+
+div.enrollOffer {
+	border: 1px solid #DDDDDD;
+	background-color: #F4F4F4;
+	background-position: 98% 5%;
+	background-repeat: no-repeat;
+	overflow-y: auto;
+	max-height: 30em;
+	margin-bottom: 2em;
+}
+
+/** Problema con ocultación de información */
+.yform {
+	overflow: visible !important;
+}
+
+span.logout a:link,
+span.logout a:visited,
+span.logout a:active,
+span.logout a:hover {
+	background-image: url(../images/icons/exit.png);
+	_background-image: url(../images/icons/exit.gif); /* IE6 hack */
+	background-position: right center;
+	background-repeat: no-repeat;
+	padding: 4px 24px 4px 0px;
+}
+
+/** Selección de asignaturas en el proceso de inscripción. */
+table.subjectSelection td {
+	border: solid 1px gray !important;
+}
+
+/** Selección de grupos en la matrícula o preinscripción */
+table.ingressGroupSelect{
+	width: 90%;
+	margin-top: 0.5em;
+	margin-bottom: 2em;
+	margin-left: 2em;
+}
+
+table.ingressGroupSelect td{
+	padding: 0px;
+}
+
+span.annotation {
+	font-style: italic;
+	color: #999999;
+	font-size: 0.9em;
+}
+
+.linkStyle {
+	border: 0;
+	background: 0;
+	color: #4D87C7;
+	font-size: 1.05em;
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+.linkStyleTrue {
+	border: 0;
+	background: 0;
+	color: #4D87C7;
+	min-width: 20px;
+	background-image: url(../images/icons/true.png);
+	_background-image: url(../images/icons/true.gif); /* IE6 hack */
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.linkStyleFalse {
+	border: 0;
+	background: 0;
+	color: #4D87C7;
+	min-width: 20px;
+	background-image: url(../images/icons/false.png);
+	_background-image: url(../images/icons/false.gif); /* IE6 hack */
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.linkStyle:hover, .linkStyle:focus, .linkStyle:active,
+.linkStyleTrue:hover, .linkStyleTrue:focus, .linkStyleTrue:active,
+.linkStyleFalse:hover, .linkStyleFalse:focus, .linkStyleFalse:active {
+	text-decoration: underline;
+	color: #182E7A;
+	cursor: pointer;
+}
+
+/* Estados del llenado de las asignaturas*/
+.seatsFull {
+	color : blue;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.seatsFree {
+	color : green;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.overSeatsLimit {
+	color : red;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.noEnrollConfig {
+	color :darkgray;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+/* Estados de procesamiento de archivo bancario */
+.paymentProcessingStatePriceError {
+	color : red;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.paymentProcessingStateOk {
+	color : blue;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.paymentProcessingStateCommError {
+	color : green;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.paymentProcessingStatePaymentTypeMissmatch {
+	color : #CC3300;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+
+}
+
+.mismatch {
+	color: #990000;
+	font-weight: bold;
+}
+
+/** Elemento que tiene como descendiente un componente de autocompletado. */
+.autocompleteContainer {
+	overflow: visible !important;
+}
+
+/* PARA REALIZAR AGRUPACIONES EN UNA TABLA */
+
+thead.absenceDays th {
+	border-bottom: 2px #800 solid;
+	border-left: 1px #cccccc solid;
+	vertical-align: middle;
+	text-align: center;
+}
+
+thead.absenceDays tr:first-child th {
+	border-bottom: 1px #cccccc solid !important;
+}
+
+td.absenceDays td {
+	border-bottom: 2px #800 solid;
+	border-left: 1px #cccccc solid;
+}
+
+td.row0 {
+	background-color: #e8e8e8;
+}
+
+td.row1 {
+	background-color: #f8f8f8;
+}
+
+td.checkbox{	/*Columna presupuestádo...*/
+	border-bottom: 1px #dddddd solid;
+	text-align: center;
+}
+
+td.select{
+	border: 1px solid #989898 !important;
+}
+
+.optionSelected {
+	font-size: 1.8em;
+	font-style: inherit;
+}
+
+table.markTable td {
+	border-bottom: 1px #dddddd solid !important;
+}
+
+/** Configuración de faltas */
+ul.absenceConfig li  {
+	list-style-type: none;
+}
+
+/** Caja de Twitter. */
+div.twitter {
+	height: 400px;
+}
+
+div.twitter h3 {
+	font-family: sans-serif !important;
+}
+
+div.twitter h4 a {
+	font-size: 0.6em !important;
+	font-family: sans-serif !important;
+}
+
+/** Notas medias. */
+td.media {
+	background-color: #B2B2FF;
+	text-align: right;
+}
+
+td.mediaText {
+	background-color: #B2B2FF;
+	text-align:left;
+}
+
+div.userData {
+	margin-top: 1em;;
+	margin-left: 2em;
+	font-size: medium;
+}
+
+div.userPayments {
+	margin-top: 5em;
+}
+
+div.userPaymentsBalance {
+	border-style: solid;
+	border-width: .1em;
+	background-color: #e6e6fb;
+}
+
+div.userPaymentsBalance p{
+	margin-left: 1em;
+	font-size: large;
+}
+
+div.userPaymentsBalance p b{
+	color: black;
+}
+
+/** Cajitas de selección de baja de matrícula para los pagos*/
+div.declineBox {
+	border: solid 1px gray;
+	padding: 1em;
+	background-color: #eeeeee;
+}
+
+/** Vista de las respuestás del cuestáonario de acceso */
+div.questáonaryView {
+	padding: .5em;
+	background-color: #eeeeee;
+}
+
+div.questáonaryView p.questáonaryName {
+	font-size: large;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+div.questáonaryView p.questáon{
+	background-color: #83a3d4;
+}
+
+div.questáonaryView p.response{
+	background-color: #FFFFCC;
+}
+
+/** Cajitas para seleccionar centro y plan de estádios. */
+div.centreBox {
+	vertical-align: top;
+	width: 30%;
+	display: inline-block;
+	margin: 0 1em 1em 0;
+	padding: 0.5em;
+	background-image: url(../images/icons/key.png);
+	_background-image: url(../images/icons/key.gif); /* IE6 hack */
+	background-color: #EFF0F0;
+	background-repeat: no-repeat;
+	background-position: top right;
+}
+
+div.centreBox h2 {
+	font-weight: bolder;
+}
+
+div.centreBox ul {
+	margin-left: 0;
+}
+
+div.centreBox li {
+	font-size: 1.2em;
+	margin-bottom: 0.2em;
+	margin-left: 0;
+	list-style-type: none;
+}
+
+div.centreBox li.new {
+	margin-top: 0.6em;
+	background-image: url(../images/icons/new.png);
+	_background-image: url(../images/icons/new.gif); /* IE6 hack */
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+
+/* Subprocesos de admision */
+div.box {
+	border: solid #83a3d4 1px;
+	background-color: #f0f5ff;
+	margin: 0.5em 0 1em 2em;
+	padding: 0.8em;
+	padding-bottom: 2em;
+}
+
+div.box form.button input {
+	padding: 1px;
+}
+
+div.box hr {
+	padding-top: 0;
+	margin-bottom: 4px;
+}
+
+/** Proceso de seleccion */
+div.free, div.outFree {
+	margin: 0;
+	padding: 4px;
+	text-align: center;
+}
+
+div.free {
+	background-color: green;
+}
+
+div.outFree {
+	background-color: red;
+}
+
+/** Controles de matrícula */
+
+ul.check, ul.check li {
+	list-style-position: inside;
+	list-style-type: none;
+}
+
+ul.check li {
+	background-repeat: no-repeat;
+	background-position: 1% 50%;
+	background-image: url(../images/icons/important-medium.png);
+	_background-image: url(../images/icons/important-medium.gif); /* IE6 hack */
+	border: solid 1px #cccccc;
+	margin-bottom: 0.4em;
+	padding: 1em 1em 1em 4em;
+}
+
+ul.check li.block {
+	background-color: #f1a1b1;
+}
+
+ul.check li.warn {
+	background-color: #ffff80;
+}
+
+div.deleteButton {
+	display: inline;
+	line-height: 2.5em;
+	cursor: pointer;
+}
+
+.previousPendingSubject {
+	color: #FF0000;
+}
+
+/*Para mostrar como una etiqueta, un input (se utiliza en el subjectChooser.tag*/
+form.yform input.disabledInput {
+	text-decoration: none;
+	padding: .5em 1em .0em 0.0em;
+    background-color: transparent;
+	border: none  !important;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-style:italic;
+	margin: 0 0 0 0;
+	color: #666;
+    font-size: 0.9em;
+}
+
+form.yform legend.subjectChooser {
+	font-size: 100%
+}
+
+form.yform input.subjectChooser {
+	background-color: #d5ead2
+}
+
+form.yform input.disabledInput:focus,
+form.yform input.disabledInput:hover,
+form.yform input.disabledInput:active {
+	text-decoration: none;
+    background-color: transparent;
+	border: none;
+}
+
+.levelClassifierType {
+	color :green;
+	padding: 10px;
+	font-variant: small-caps;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}

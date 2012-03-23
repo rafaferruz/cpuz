@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="contact" namespace="/contact" extends="struts-default">
+
+        <action name="Contact_*" method="Contact_{1}" class="springContactAction" >
+            <result name="LIST">/WEB-INF/pages/main.jsp</result>
+            <result name="THANKS">/WEB-INF/pages/main.jsp</result>
+            <result name="NEW">/WEB-INF/pages/main.jsp</result>
+            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
+            <result name="input">/WEB-INF/pages/main.jsp</result>
+            <result>/WEB-INF/pages/main.jsp</result>
+        </action>
+
+    </package>
+
+</struts>
+
