@@ -1,0 +1,117 @@
+.menus_2 {  
+    font-size: 12px;
+    color: #FFFF00;
+    text-decoration: none;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: bold
+}
+
+a.menus_2:link {
+    color: #FFFF00;
+}
+
+a.menus_2:visited {
+    color: #FFFF00;
+}
+.menus {  font-family: Mistral; font-size: 12px; font-weight: bold; color: #FFFF00; text-decoration: none}
+.menus_2 {  font-size: 10px; color: #000000; text-decoration: none; font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold}
+.enlaces {  color: #000000}
+
+.recuadros {
+    background-color:#000066;
+    visibility:hidden;
+    z-index: 2;
+    position: absolute;
+    vertical-align: top;
+    left: 200px;
+    padding-right: 6px;
+    padding-left: 6px;
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
+.recuadrotabla{
+
+    border-right-style: none;
+    border-left-style: none;
+    border-bottom-style: none;
+    border-top-style: none;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+    font-family: verdana,arial;
+    font-size: 8pt;
+    color: #ffffff;
+    background-color: #000066;
+    border-right-color: #000066;
+    border-left-color: #000066;
+    border-bottom-color: #000066;
+    border-top-color: #000066;
+}
+.enlacesbarra { font-size: 8pt;
+                font-family: Verdana,Arial,Helvetica,sans-serif;
+                color: #ffff00;
+}
+.enlacecelda{
+
+    text-align: left;
+
+    background-color: #000066;
+    font-family: verdana,arial;
+    font-size: 8pt;
+    border-right-style: none;
+    border-left-style: none;
+    border-bottom-style: none;
+    border-top-style: none;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-right: 4px;
+    padding-left: 4px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+.ancla {
+    color: #ffff00;
+    font-size: 10pt;
+    font-weight: bold;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    text-decoration: none;
+    background-color: #000066;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-right-width: 5px;
+    border-left-width: 5px;
+    border-bottom-width: 15px;
+    border-top-width: 5px;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    visibility: visible;
+    border-right-color: #000066;
+    border-left-color: #000066;
+    border-bottom-color: #000066;
+    border-top-color: #000066;
+}
+.navigationbar{
+    background-color: #000066;
+    font-family: verdana,arial;
+    color: yellow;
+    font-weight: 800;
+    border-right-style: none;
+    border-left-style: none;
+    border-bottom-style: none;
+    border-top-style: none;
+}

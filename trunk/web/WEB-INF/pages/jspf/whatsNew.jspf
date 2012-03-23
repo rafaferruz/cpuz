@@ -1,0 +1,93 @@
+<%-- Tabla de Novedades en la Web --%>
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib tagdir="/WEB-INF/tags" prefix="cpuz"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<jsp:useBean id="ComponentType" class="com.cpuz.domain.ComponentTypeFactory" />
+<jsp:useBean id="HeaderType" class="com.cpuz.domain.HeaderTypeFactory" />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th class="lastnews">ULTIMAS NOTICIAS</th>
+	</tr>
+	<tr>
+		<td>
+			<%--			<ztags:showNews lengthintroduction="150" columns="3" listNews="${recentNews}"  >
+							<ztags:showComposition listComp="${newsCompositionList}"/>
+						</ztags:showNews>
+			--%>
+
+			<c:set var="classPrefix" value=""/>
+			<c:set var="lengthIntroduction" value="150"/>
+			<c:set var="columns" value="3"/>
+			<c:set var="ncol" value="1"/>
+			<c:set var="imageDataPosition" value=""/>
+			<c:set var="imageDataLinkedElement" value=""/>
+
+			<table <cpuz:classCss style="composition"  /> >
+				<c:forEach var="newsPiece" items="${recentNews}">
+					<c:if test="${ncol == 1 || columns == 1}">
+						<tr <cpuz:classCss style="composition"  /> >
+						</c:if>
+
+						<c:set var="widthCell" value="100" />				
+						<c:if test="${mode == null || mode !='alone'}" >
+							<c:set var="widthCell" value="${100/columns}" />				
+						</c:if>
+
+						<c:set var="colspan" value="1" />
+						<c:forTokens delims=";" items="${newsPiece.showParameters}" var="ahowParam" >
+							<c:choose>
+								<c:when test="${showParam=='colspan'}">
+									<c:forTokens delims="=" items="showParam" var="colspanValue" begin="2" >
+										<c:set var="colspan" value="1" />
+									</c:forTokens>
+								</c:when>
+							</c:choose>
+						</c:forTokens>
+						<c:set var="heightCell" value="0" />
+						<c:set var="showBars" value="false" />
+						<c:set var="charsIntroduction" value="0" />
+
+						<td colspan="${colspan}" width="${widthCell * colspan}%" <cpuz:classCss style="composition"  /> >
+							<p <cpuz:classCss style="compositionDate"  /> >
+								<fmt:formatDate pattern="dd/MM/yyyy" value="${newsPiece.datetime}" />
+							</p>
+							<c:forEach var="itemComp" items="${newsPiece.newsCompositionList}" >
+								<c:set var="startLink" value=""/>
+								// se muestra gestiona el elemento de composición
+								<c:if test="${itemComp.componentType==ComponentType.infoBlock.id}" >
+									// GESTION DE ELEMENTO INFOBLOCK
+									<c:if test="${itemComp.headerStyle==HeaderType.headline.key}" >
+
+										<cpuz:paragraphLink startLink="${startLink}" 
+															headerAlternate="${itemComp.headerAlternate}" 
+															headerStyle="${itemComp.headerStyle}" />
+
+										<p <cpuz:classCss style="compositionAbstract" /> >
+											<c:if test="${itemComp.bodyAbstract != null && itemComp.bodyAbstract != '' }">
+												<c:if test="${imageDataPosition == ''}">
+
+												</c:if>
+											</c:if>
+
+
+										</c:if>
+
+									</c:if>
+
+								</c:forEach>
+							<hr/>
+							<c:set var="ncol" value="${ncol + colspan}" />
+						</td>
+						<c:if test="${ncol > columns}">
+						</tr>
+						<c:set var="ncol" value="1" />
+					</c:if>
+
+				</c:forEach>
+			</table>
+		</td>
+	</tr>
+</table>

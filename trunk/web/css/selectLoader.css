@@ -1,0 +1,29 @@
+/* Componente codex:selectLoader */
+div.selectInit,
+div.selectLoading,
+div.selectLoaded {
+	display: inline-block;
+	line-height: 2.2em;
+}
+
+/* Componente codex:selectLoader en estádo inicial */
+div.selectInit {
+	display: none;
+}
+
+/* Componente codex:selectLoader mientras está cargando */
+div.selectLoading img {
+	display: inline;
+	vertical-align: text-bottom;
+}
+div.selectLoading select {
+	display: none;
+}
+
+/* Componente codex:selectLoader cuando ya está cargado */
+div.selectLoaded img {
+	display: none;
+}
+div.selectLoaded select {
+	display: inline;
+}

@@ -1,0 +1,19 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="ISO-8859-1" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
+<table  class="form_data" align="right" >
+    <tr>
+        <td align="center"><s:submit type="button" name="return"
+                  id="return" value="%{getText('Return')}"
+                  onclick="window.back()" theme="simple"/></td>
+            <s:if testá"control.runAction == 'edit'" >
+            <td align="center"><s:submit type="button" name="newButton"
+                      id="newButton" value="%{getText('New')}"
+                      onclick="orden_ejecutar('new');" theme="simple"/></td>
+            </s:if>
+        <td align="center"><s:submit type="button" name="guardar"
+                  id="enviar" value="%{getText('Save')}"
+                  onClick="check_form()" theme="simple"/></td>
+    </tr>
+</table>

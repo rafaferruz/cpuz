@@ -1,0 +1,43 @@
+div.subjectChooser {
+	display: none;
+	width: 90%;
+	padding-bottom: 1em;
+	overflow: visible;
+}
+
+div.autoCompleteSelect {
+	float: left;
+	overflow: visible;
+}
+
+span.match {
+	color: #ff3300;
+}
+
+li.yui-ac-highlight span.match {
+	color: #ffad99;
+}
+
+div.firstColumn {
+	width: 30%;
+	display: inline-block;
+	font-weight: bold;
+	overflow: hidden;
+	margin-right: 2px;
+}
+
+div.secondColumn {
+	display: inline-block;
+	color: #696969;
+	font-size: 0.85em;
+}
+
+div.subject {
+	display: inline;
+	color: black;
+}
+
+li.yui-ac-highlight div.secondColumn,
+li.yui-ac-highlight div.subject {
+	color: #ffffff;
+}

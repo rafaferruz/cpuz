@@ -1,0 +1,30 @@
+/* Filtros de selección */
+div.selectionButton {
+	margin-top: 0.4em;
+	margin-bottom: 0.4em;
+}
+
+div.selectionButton span {
+	color: #182E7A !important;
+	cursor: pointer;
+	background-position: left top;
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	background-image: url(../images/selection.png);
+	_background-image: url(../images/selection.gif); /* IE6 hack */
+}
+
+div.selectionButton div {
+	margin-top: 0.3em;
+	margin-bottom: 1em;
+	padding-left: 20px;
+}
+
+div.selectionButton div.selectBox {
+	float: left;
+	margin-right: 3em;
+}
+
+.display_none {
+	display: none;
+}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/CPUZ">
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/CPUZ" password="07021951" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/CPUZ" username="root"/>
+  <Realm className="org.apache.catalina.realm.DataSourceRealm" dataSourceName="jdbc/CPUZ" debug="99" localDataSource="true" roleNameCol="usr_role" userCredCol="usu_password" userNameCol="usu_user" userRoleTable="userroles" userTable="users"/>
+</Context>

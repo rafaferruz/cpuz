@@ -1,0 +1,8 @@
+<table width="100%" class="tabladerecha">
+    <tr>
+        <td >
+            <%@ include file="advsHeadLines.jspf" %>
+        </td>
+    </tr>
+
+</table>

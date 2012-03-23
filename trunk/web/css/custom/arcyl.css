@@ -1,0 +1,50 @@
+/**
+ * CSS personalizada para el ARCYL.
+*/
+
+body {
+	background-color: #a01040 !important;
+	background-image: none !important;
+}
+
+div#header div.banner {
+	background-color: transparent !important;
+	float: none;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	font-size:2em;
+	overflow: hidden;
+	color: #000000 !important;
+}
+
+div.page_margins {
+	max-width: 95% !important;
+}
+
+div.page {
+	border: 0 !important;
+}
+
+
+div#header {
+	height: 150px !important;
+	background-color: #ffffff !important;
+	background-image: none !important;
+	background-repeat: no-repeat !important;
+	border: 0 !important;
+}
+
+div#footer {
+	padding-top: 150px  !important;
+	height: 50px  !important;
+	background-color: #ffffff !important;
+	background-image: url(images/arcyl_footer.png) !important;
+	background-repeat: no-repeat !important;
+	background-position: right top !important;
+	border: 0 !important;
+}
+
+div#codexProInfo {
+	display: none;
+}

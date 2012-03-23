@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="${applicationScope.dirCommonResources}/css/zcommon.css" type="text/css"/>
+<link rel="stylesheet" href="${applicationScope.dirCommonResources}/css/zmenus.css" type="text/css"/>
+<link rel="stylesheet" href="${applicationScope.dirCommonResources}/css/cpuz_styles.css" type="text/css"/>
+<link rel="stylesheet" href="${applicationScope.dirCommonResources}/css/cpuz_menus.css" type="text/css"/>
+<%--
+<script type="text/javascript" src="${applicationScope.dirCommonResources}/scripts/Comunes1.js"></script>
+--%>
+<script type="text/javascript" src="${applicationScope.dirCommonResources}/scripts/x_core.js"></script>
+<%--
+<script type="text/javascript" language="javascript" src="${applicationScope.dirCommonResources}/scripts/cpuz_src_header_slides.js"></script>
+--%>
+<script type="text/javascript" language="javascript" src="${applicationScope.dirCommonResources}/scripts/zcommon.js"></script>
+
+<meta name="keywords" content="<fmt:message bundle='${bundle}' key='titleHead' />"/>
+
+
+
