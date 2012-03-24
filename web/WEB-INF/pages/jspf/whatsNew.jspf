@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="cpuz"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <jsp:useBean id="ComponentType" class="com.cpuz.domain.ComponentTypeFactory" />
 <jsp:useBean id="HeaderType" class="com.cpuz.domain.HeaderTypeFactory" />
 
@@ -17,6 +19,23 @@
 							<ztags:showComposition listComp="${newsCompositionList}"/>
 						</ztags:showNews>
 			--%>
+			<c:set var="imageDataPosition" value = ""/>
+			<c:set var="imageDataRepositoryReference" value = ""/>
+			<c:set var="imageDataUserReference" value = ""/>
+			<c:set var="imageDataImageHigh" value = "0"/>
+			<c:set var="imageDataImageWidth" value = "0"/>
+			<c:set var="imageDataLinkedElement" value = ""/>
+			<c:set var="isAbstract" value = "false"/>
+			<c:set var="startAttrNews" value = "-1"/>
+			<c:set var="endAttrNews" value = "-1"/>
+			<c:set var="colspan" value="1"/>
+			<c:set var="widthCell" value="0"/>
+			<c:set var="heightCell" value="0"/>
+			<c:set var="showBars" value= "false"/>
+			<c:set var="charsIntroduction" value="0"/>
+			<c:set var="attributesNews" value = ""/>
+			<c:set var="valueAttrNews" value = ""/>
+
 
 			<c:set var="classPrefix" value=""/>
 			<c:set var="lengthIntroduction" value="150"/>
@@ -33,19 +52,22 @@
 
 						<c:set var="widthCell" value="100" />				
 						<c:if test="${mode == null || mode !='alone'}" >
-							<c:set var="widthCell" value="${100/columns}" />				
+							<c:set var="widthCell">
+								<fmt:formatNumber pattern="#" value="${100/columns}" />
+							</c:set> 			
 						</c:if>
-
 						<c:set var="colspan" value="1" />
-						<c:forTokens delims=";" items="${newsPiece.showParameters}" var="ahowParam" >
-							<c:choose>
-								<c:when test="${showParam=='colspan'}">
-									<c:forTokens delims="=" items="showParam" var="colspanValue" begin="2" >
-										<c:set var="colspan" value="1" />
-									</c:forTokens>
-								</c:when>
-							</c:choose>
-						</c:forTokens>
+						<c:if test="${fn:contains(newsPiece.showParameters,'colspan=')}">
+							<c:forTokens delims=";" items="${newsPiece.showParameters}" var="ahowParam" >
+								<c:choose>
+									<c:when test="${showParam=='colspan'}">
+										<c:forTokens delims="=" items="showParam" var="colspanValue" begin="2" >
+											<c:set var="colspan" value="1" />
+										</c:forTokens>
+									</c:when>
+								</c:choose>
+							</c:forTokens>
+						</c:if>
 						<c:set var="heightCell" value="0" />
 						<c:set var="showBars" value="false" />
 						<c:set var="charsIntroduction" value="0" />
@@ -56,28 +78,69 @@
 							</p>
 							<c:forEach var="itemComp" items="${newsPiece.newsCompositionList}" >
 								<c:set var="startLink" value=""/>
-								// se muestra gestiona el elemento de composición
-								<c:if test="${itemComp.componentType==ComponentType.infoBlock.id}" >
-									// GESTION DE ELEMENTO INFOBLOCK
+								<%--								// se muestra gestiona el elemento de composición								--%>
+								<c:if test="${itemComp.componentType==ComponentType.infoBlock.key}" >
+									<%--									// GESTION DE ELEMENTO INFOBLOCK									--%>
 									<c:if test="${itemComp.headerStyle==HeaderType.headline.key}" >
-
+										<cpuz:createLink link="${itemComp.headerAlt}" />
 										<cpuz:paragraphLink startLink="${startLink}" 
-															headerAlternate="${itemComp.headerAlternate}" 
+															headerAlt="${itemComp.headerAlt}" 
 															headerStyle="${itemComp.headerStyle}" />
 
 										<p <cpuz:classCss style="compositionAbstract" /> >
 											<c:if test="${itemComp.bodyAbstract != null && itemComp.bodyAbstract != '' }">
-												<c:if test="${imageDataPosition == ''}">
+												<c:choose>
+													<c:when test="${imageDataPosition == ''}">
+														${fn:substring(itemComp.bodyAbstract,0,lengthIntroduction)}
+														<cpuz:modeNullOrAloneLink linkedElement="${itempComp.linkedElement}" id="${itemComp.idNpi}"/> >
+													</c:when>
+													<c:otherwise>
+														<c:if test="${imageDataLinkedElement != ''}">
+															<c:set var="startLink">
+																<cpuz:createLink link="${imageDataLinkedElement}"/>
+															</c:set>
+														</c:if>
+														<c:set var="temp">
+															<cpuz:showImage imageReference="${imageDataRepositoryReference}" imagePosition="${imageDataPosition}" classCss="compositionAbstract" /> />
+															${fn:substring(itemComp.bodyAbstract,0,lengthIntroduction)}
+															<cpuz:modeNullOrAloneLink linkedElement="${itempComp.linkedElement}" id="${itemComp.idNpi}"/> >
+														</c:set>
 
-												</c:if>
+														<cpuz:showLink startLink="${startLink}" elementLink="${temp}" />
+														<c:set var="imageDataPosition" value=""/>
+														<c:set var="imageDataUserReference" value=""/>
+														<c:set var="imageDataRepositoryReference" value=""/>
+														<c:set var="imageDataImageHigh" value="0"/>
+														<c:set var="imageDataImageWidth" value="0"/>
+														<c:set var="imageDataLinkedElement" value=""/>
+													</c:otherwise>
+												</c:choose>
 											</c:if>
-
-
-										</c:if>
-
+										</p>
+										<c:set var="isAbstract" value="true"/>
 									</c:if>
-
-								</c:forEach>
+									<c:if test="${itemComp.headerStyle==HeaderType.subtitle.key}" >
+										<cpuz:paragraphLinkOnNewsDisplay
+											id="${itemComp.idNpi}"
+											order="${itemComp.order}"
+											headerStyle="${itemComp.headerStyle}"
+											headerAlt="${itemComp.headerAlt}"	/>
+										<c:if test="${isAbstract == false}">
+											<p <cpuz:classCss style="compositionAbstract" /> >${itemComp.bodyAbstract}<cpuz:modeNullOrAloneLink linkedElement="${itemComp.linkedElement}" id="${itemComp.idNpi}" /></p>
+										</c:if>
+									</c:if>
+									<c:if test="${itemComp.headerStyle==HeaderType.remarked.key}" >
+										<cpuz:paragraphLinkOnNewsDisplay
+											id="${itemComp.idNpi}"
+											order="${itemComp.order}"
+											headerStyle="${itemComp.headerStyle}"
+											headerAlt="${itemComp.headerAlt}"	/>
+										<c:if test="${isAbstract == false}">
+											<cpuz:paragraphAbstract headerStyle="compositionAbstract" bodyAbstract="${itemComp.bodyAbstract}" />
+										</c:if>
+									</c:if>
+								</c:if>
+							</c:forEach>
 							<hr/>
 							<c:set var="ncol" value="${ncol + colspan}" />
 						</td>

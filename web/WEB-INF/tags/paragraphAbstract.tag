@@ -9,10 +9,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="cpuz"%>
-<%@attribute name="startLink" type="java.lang.String" required="true" description="Cadena inicial del enlace"%>
-<%@attribute name="headerStyle" type="java.lang.String" required="true" description="Cadena con la clase a aplicar al texto que formará el enlace"%>
-<%@attribute name="headerAlt" type="java.lang.String" required="true" description="Texto alternativo del enlace"%>
+<%@attribute name="bodyAbstract" type="java.lang.String" required="true" description=""%>
+<%@attribute name="headerStyle" type="java.lang.String" required="true" description="Cadena con la clase a aplicar al texto"%>
 
-<p <cpuz:classCss style="${headerStyle}" /> > 
-	<cpuz:showLink startLink="${startLink}" elementLink="${headerAlt}" />
-</p>
+<p <cpuz:classCss style="${headerStyle}" /> >${bodyAbstract}</p>

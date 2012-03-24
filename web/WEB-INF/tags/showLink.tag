@@ -13,6 +13,6 @@
 <%@attribute name="elementLink" type="java.lang.String" required="true" description="Cadena con el elemento sobre el que se crea el enlace"%>
 
 ${startLink} ${elementLink}
-<c:if test="${startLink == ''}">
+<c:if test="${startLink != ''}">
 </a>
 </c:if>
