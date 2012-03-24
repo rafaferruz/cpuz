@@ -24,6 +24,11 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
+    <context-param>
+        <description>Quitarespacios en salidas generadas por JSP</description>
+        <param-name>trimSpaces</param-name>
+        <param-value>true</param-value>
+    </context-param>
     <filter>
         <filter-name>UserLogin</filter-name>
         <filter-class>com.cpuz.filters.UserLogin</filter-class>
@@ -221,56 +226,6 @@
             <role-name>playerRole</role-name>
         </auth-constraint>
     </security-constraint>
-    <filter>
-        <filter-name>YavFilter</filter-name>
-        <filter-class>net.sf.yavtags.YavFilter</filter-class>
-        <init-param>
-            <description>
-				Type of error shown to the final user.
-				It can be: exception | innerHTML | inline
-				Default value: ....
-			</description>
-            <param-name>error-type</param-name>
-            <param-value>exception</param-value>
-        </init-param>
-        <init-param>
-            <description>
-				If this param exists, when validation fails it is shown a javascript alert
-				with this message.
-				In case you use i18n, use value for i18n key.
-			</description>
-            <param-name>additional-error</param-name>
-            <param-value>yav.additionalError</param-value>
-        </init-param>
-        <init-param>
-            <description>
-				If it is true, every literal text is treated as a i18n key.
-				In that case, you have to configure i18n in your application and
-				provide localized messages for every i18n literal in yav-config.js
-				(i.e., HEADER_MSG, FOOTER_MSG, DEFAULT_MSG, REQUIRED_MSG, ALPHABETIC_MSG...)
-			</description>
-            <param-name>internationalization</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <!-- You could overwrite YAV default configuration. -->
-        <init-param>
-            <param-name>DATE_FORMAT</param-name>
-            <param-value>dd/MM/yyyy</param-value>
-        </init-param>
-        <init-param>
-            <param-name>DECIMAL_SEP</param-name>
-            <param-value>,</param-value>
-        </init-param>
-        <init-param>
-            <param-name>THOUSAND_SEP</param-name>
-            <param-value>.</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>YavFilter</filter-name>
-        <url-pattern>*.do</url-pattern>
-        <url-pattern>*.jsp</url-pattern>
-    </filter-mapping>
     <servlet>
         <servlet-name>YavServlet</servlet-name>
         <servlet-class>net.sf.yavtags.web.YavServlet</servlet-class>
