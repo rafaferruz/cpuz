@@ -7,11 +7,11 @@
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<s:if testá"control.runAction == 'edit'" >
+<s:if test="control.runAction == 'edit'" >
     <h3 align="center"><s:text name="NewsPieceEdition"/></h3>
 </s:if>
 
-<s:if testá"control.runAction == 'new'" >
+<s:if test="control.runAction == 'new'" >
     <h3 align="center"><s:text name="NewsPieceMailBox"/></h3>
     <ul>
         <li><s:text name="NewsPieceEditFull_Msg1"/></li>
@@ -31,22 +31,22 @@
         <td style="width: 80%;" ><br/><br/></td>
     </tr>
 
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
         <s:hidden name="control.runAction" id="runAction" value="saveNew"/>
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
         <s:hidden name="control.runAction" id="runAction" value="saveEdit"/>
         <s:hidden name="control.idKey" id="idKey" value="%{dataEdit.id}"/>
         <s:hidden name="addComponetType" id="addComponetType" value="%{addComponentType}"/>
     </s:if>
 
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
         <s:set var="readonly" value="true"/>
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
         <s:set var="readonly" value="true"/>
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
         <s:textfield key="dataEdit.id"
                      id="identificador"
                      size="5" maxlength="8"
@@ -76,7 +76,7 @@
     </tr>
 
 
-    <s:if testá"control.runAction == 'edit' && controlCompList.runAction=='list'" >
+    <s:if test="control.runAction == 'edit' && controlCompList.runAction=='list'" >
         <%-- Se incluye una tabla con los componentes asociados a la noticia    --%>
         <s:i18n name="com.cpuz.st2.actions.NewsCompositionAction">
             <tr><td colspan="2">
@@ -95,7 +95,7 @@
                         <s:hidden name="controlCompList.recCount" id="recCount"/>
 
                         <%-- Requirement codes: E5-2 --%>
-                        <s:if testá"#session.userCategory == 2">
+                        <s:if test="#session.userCategory == 2">
                             <tr>
                                 <th><s:text name="ID" /></th>
                                 <th><s:text name="ComponentType" /></th>
@@ -108,10 +108,10 @@
                             </tr>
                         </s:if>
                         <!-- column data -->
-                        <s:if testá"controlCompList.recCount>0">
+                        <s:if test="controlCompList.recCount>0">
 
                             <s:iterator var="row" value="dataCompList" status="rowStatus">
-                                <s:if testá"#rowStatus.odd == true">
+                                <s:if test="#rowStatus.odd == true">
                                     <s:set var="trClass" value="getText('trClassOddRows')" />
                                 </s:if>
                                 <s:else>
@@ -119,22 +119,22 @@
                                 </s:else>
                                 <tr class="<s:property value="#trClass"/>">
                                     <%-- Requirement codes: E5-2 --%>
-                                    <s:if testá"#session.userCategory == 2">
+                                    <s:if test="#session.userCategory == 2">
                                         <td align="center"><s:property value="#row.id"/></td>
                                         <td align="center"><s:property value="#row.componentType"/></td>
                                         <td align="left"><s:property value="#row.headerAlt"/></td>
                                         <td align="center"><s:property value="#row.headerStyle"/></td>
-                                        <s:if testá"#row.componentType =='InfoBlock'" >
+                                        <s:if test="#row.componentType =='InfoBlock'" >
                                             <td align="left"><s:property value="#row.bodyAbstract"/></td>
                                         </s:if>
-                                        <s:if testá"#row.componentType =='Image'" >
+                                        <s:if test="#row.componentType =='Image'" >
                                             <td align="#row.headerStyle">
                                                 <img src="<s:property value="%{#application.dirHomeResources}"/>/../CPUZ/images/<s:property value="%{#row.bodyAbstract}"/>"
                                                      alt="<s:property value="%{#application.dirHomeResources}"/>/../CPUZ/images/<s:property value="%{#row.bodyAbstract}"/>"
                                                      height="90" width="120"/>
                                             </td>
                                         </s:if>
-                                        <s:if testá"#row.componentType =='Document'" >
+                                        <s:if test="#row.componentType =='Document'" >
                                             <td>
                                                 <a href="<s:property value="%{#application.dirHomeResources}"/>/../CPUZ/documents/<s:property value="%{#row.bodyAbstract}"/>" target="_blank" >
                                                     See document</a>
@@ -143,7 +143,7 @@
                                         <td align="left"><s:property value="#row.linkedElement"/></td>
                                     </s:if>
                                     <%-- Requirement codes: E5-2 --%>
-                                    <s:if testá"#session.userCategory == 2">
+                                    <s:if test="#session.userCategory == 2">
                                         <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="newsComposition_edit('%{#row.id}')"/></td>
                                         <td align="center"><s:checkbox theme="simple" name="selec1Comp" fieldValue="%{#row.id}"/></td>
                                     </s:if>
@@ -241,20 +241,20 @@
     <s:hidden name="controlComponentType.recCount" id="recCount"/>
     <tr>
         <td colspan="2">
-            <s:if testá"controlComponentType.runAction == 'list'">
-                <s:if testá"addComponentType=='InfoBlock'">
+            <s:if test="controlComponentType.runAction == 'list'">
+                <s:if test="addComponentType=='InfoBlock'">
                     <%-- Se incluye una tabla con los componentes de tipo InfoBlock --%>
                     <s:i18n name="com.cpuz.st2.actions.InfoBlockAction">
                         <%@include  file="/WEB-INF/views/InfoBlocksIncludeList.jsp" %>
                     </s:i18n>
                 </s:if>
-                <s:if testá"addComponentType=='Image'">
+                <s:if test="addComponentType=='Image'">
                     <%-- Se incluye una tabla con los componentes de tipo Image --%>
                     <s:i18n name="com.cpuz.st2.actions.ImageAction">
                         <%@include  file="/WEB-INF/views/ImagesIncludeList.jsp" %>
                     </s:i18n>
                 </s:if>
-                <s:if testá"addComponentType=='Document'">
+                <s:if test="addComponentType=='Document'">
                     <%-- Se incluye una tabla con los componentes de tipo Document --%>
                     <s:i18n name="com.cpuz.st2.actions.DocumentsAction">
                         <%@include  file="/WEB-INF/views/DocumentsIncludeList.jsp" %>
@@ -266,7 +266,7 @@
     </tr>
 
     <%-- Se muestáa una ventana de edición de Línea de Composición --%>
-    <s:if testá"control.runAction == 'edit' && controlCompList.runAction=='edit'" >
+    <s:if test="control.runAction == 'edit' && controlCompList.runAction=='edit'" >
         <%-- Se incluye una tabla con los componentes asociados a la noticia    --%>
         <s:i18n name="com.cpuz.st2.actions.NewsCompositionAction">
 
@@ -308,7 +308,7 @@
                                 <s:hidden name="dataCompEdit.componentType" id="dataCompEdit.componentType" />
 
 
-                                <s:if testá"dataCompEdit.componentType=='InfoBlock'" >
+                                <s:if test="dataCompEdit.componentType=='InfoBlock'" >
                                     <s:select list="listTypes"
                                               id="dataCompEdit_listTypes"
                                               size="1"
@@ -323,7 +323,7 @@
                                                 rows="4"/>
 
                                 </s:if>
-                                <s:elseif testá"dataCompEdit.componentType=='Image'" >
+                                <s:elseif test="dataCompEdit.componentType=='Image'" >
                                     <s:select list="listImagePositions"
                                               id="dataCompEdit_listImagePositionsTypes"
                                               size="1"
@@ -345,7 +345,7 @@
                                                  size="5" maxlength="3"/>
 
                                 </s:elseif>
-                                <s:elseif testá"dataCompEdit.componentType=='Document'" >
+                                <s:elseif test="dataCompEdit.componentType=='Document'" >
                                     <s:select list="listTypes"
                                               id="dataCompEdit_listTypes"
                                               size="1"
@@ -418,11 +418,11 @@
             alert("<s:text name="thanksforform"/>");
             // se ponen selected todas las option del select
 
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
                 orden_ejecutar("saveNew");
                 return;
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
                 orden_ejecutar("saveEdit");
                 return;
     </s:if>

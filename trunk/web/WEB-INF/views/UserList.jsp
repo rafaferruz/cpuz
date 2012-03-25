@@ -29,7 +29,7 @@
 
     <%-- Recibe una lista de Users y las presenta en pantalla --%>
     <tr>
-        <s:if testá"#session.userCategory == 2">
+        <s:if test="#session.userCategory == 2">
             <th><s:text name="ID" /></th>
         </s:if>
         <th><s:text name="Status"/></th>
@@ -42,16 +42,16 @@
 
 
     <!-- column data -->
-    <s:if testá"control.recCount>0">
+    <s:if test="control.recCount>0">
         <s:iterator var="row" value="dataList" status="rowStatus">
-            <s:if testá"#rowStatus.odd == true">
+            <s:if test="#rowStatus.odd == true">
                 <s:set var="trClass" value="getText('trClassOddRows')" />
             </s:if>
             <s:else>
                 <s:set var="trClass" value="getText('trClassEvenRows')"/>
             </s:else>
             <tr class="<s:property value="#trClass"/>">
-                <s:if testá"#session.userCategory == 2">
+                <s:if test="#session.userCategory == 2">
                     <td align="center">
                         <s:property value="#row.id"/>
                     </td>
@@ -68,7 +68,7 @@
                 <td>
                     <s:property value="#row.nombre"/>
                 </td>
-                <s:if testá"#session.userCategory == 2">
+                <s:if test="#session.userCategory == 2">
                     <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="news_edit('%{#row.id}')"/></td>
                     <td align="center"><s:checkbox theme="simple" name="selec1" fieldValue="%{#row.id+';'+#row.user}"/></td>
                 </s:if>

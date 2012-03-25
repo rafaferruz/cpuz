@@ -14,11 +14,11 @@
 <fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
 
 
-<c:if testá"${requestácope.runaction == 'edit'}" >
+<c:if test="${resquestScope.runaction == 'edit'}" >
     <h3 align="center"><fmt:message key="newspiecesEdition"  bundle="${bundle}"/></h3>
 </c:if>
 
-<c:if testá"${requestácope.runaction == 'new'}" >
+<c:if test="${resquestScope.runaction == 'new'}" >
     <h3 align="center"><fmt:message key="newspiecesMailBox"  bundle="${bundle}"/></h3>
     <p align="center"><fmt:message key="newspiecesEditFull_Msg1"  bundle="${bundle}"/></p>
     <ul>
@@ -27,13 +27,13 @@
     </ul>
 </c:if>
 
-<c:if testá"${requestácope.NewsPiecesEditErrorMsg!=null}">
+<c:if test="${resquestScope.NewsPiecesEditErrorMsg!=null}">
     <label style="color: red">
         <fmt:message key="${NewsPiecesEditErrorMsg}"  bundle="${bundle}"/>
         <br/>
     </label>
 </c:if>
-<c:if testá"${requestácope.NewsPiecesEditSaveOkMsg!=null}">
+<c:if test="${resquestScope.NewsPiecesEditSaveOkMsg!=null}">
     <label style="color: black">
         <fmt:message key="${NewsPiecesEditSaveOkMsg}"  bundle="${bundle}"/>
         <br/>
@@ -41,19 +41,19 @@
 </c:if>
 
 <form id="newspiece_form" name="newspiece_form" method="post" action="NewsPiecesEdit">
-    <c:if testá"${requestácope.runaction == 'new'}" >
+    <c:if test="${resquestScope.runaction == 'new'}" >
         <input name="runaction" type="hidden" id="runaction" value="save_new">
     </c:if>
-    <c:if testá"${requestácope.runaction == 'edit'}" >
+    <c:if test="${resquestScope.runaction == 'edit'}" >
         <input name="runaction" type="hidden" id="runaction" value="save_edit">
         <input name="id_disabled" type="hidden" id="id_disabled" value="${recBean.id}">
     </c:if>
-    <input name="recStart" type="hidden" id="recStart" value="${requestácope.recStart}">
-    <input name="recChunk" type="hidden" id="recChunk" value="${requestácope.recChunk}">
-    <input name="recCount" type="hidden" id="recCount" value="${requestácope.recCount}">
+    <input name="recStart" type="hidden" id="recStart" value="${resquestScope.recStart}">
+    <input name="recChunk" type="hidden" id="recChunk" value="${resquestScope.recChunk}">
+    <input name="recCount" type="hidden" id="recCount" value="${resquestScope.recCount}">
     <input name="addComponentType" type="hidden" id="addComponentType" value="">
     <table width="90%" border="1" align="center" cellpadding="0" cellspacing="10"  class="form_data">
-        <c:if testá"${requestácope.runaction == 'edit'}" >
+        <c:if test="${resquestScope.runaction == 'edit'}" >
             <tr>
                 <td><fmt:message key="newspiecesidentifier"  bundle="${bundle}"/>:</td>
                 <td colspan="4"><input  name="identificador" type="text" id="identificador" disabled  size="5" value="${recBean.id}">
@@ -100,10 +100,10 @@
         <tr>
             <td><fmt:message key="description"  bundle="${bundle}"/>:</td>
             <td colspan="4">
-                <c:if testá"${runaction == 'new'}" >
+                <c:if test="${runaction == 'new'}" >
                     <input name="description" type="text" id="description" size="60" maxlength="128" value=""/>
                 </c:if>
-                <c:if testá"${runaction == 'edit'}" >
+                <c:if test="${runaction == 'edit'}" >
                     <input name="description" type="text" id="description" size="60" maxlength="128" value="${recBean.description}"/>
                 </c:if>
             </td>
@@ -132,12 +132,12 @@
 
 
         <tr>
-            <c:if testá"${runaction == 'new'}" >
+            <c:if test="${runaction == 'new'}" >
                 <td colspan="3">&nbsp;</td>
                 <td align="center"><input type="button" name="cancelar" id="cancelar" value="<fmt:message key="cancel"  bundle="${bundle}"/>"  onclick="window.back();"/></td>
                 <td align="center"><input type="button" name="guardar" id="enviar" value="<fmt:message key="save"  bundle="${bundle}"/>" onClick="valida_newspiece();" /></td>
                 </c:if>
-                <c:if testá"${runaction == 'edit'}" >
+                <c:if test="${runaction == 'edit'}" >
                 <td colspan="1">&nbsp;</td>
                 <td align="center"><input type="button" name="return" id="return" value="<fmt:message key="return"  bundle="${bundle}"/>"  onclick="window.back()"/></td>
                 <td align="center"><input type="button" name="new" id="new" value="<fmt:message key="new"  bundle="${bundle}"/>"  onclick="newspiecesNew('new')"/></td>
@@ -155,7 +155,7 @@
     </table>
     <br/>
 
-    <c:if testá"${requestácope.runaction == 'edit'}" >
+    <c:if test="${resquestScope.runaction == 'edit'}" >
 
         <%-- Se incluye una tabla con los componentes asociados a la noticia    --%>
         <jsp:include page="NewsCompositionIncludeList.jsp" />
@@ -179,20 +179,20 @@
                 </td>
             </tr>
         </table>
-        <c:if testá"${requestácope.listComponents == 'InfoBlock'}" >
+        <c:if test="${resquestScope.listComponents == 'InfoBlock'}" >
             <jsp:include page="InfoBlocksIncludeList.jsp" />
         </c:if>
-        <c:if testá"${requestácope.listComponents == 'Image'}" >
+        <c:if test="${resquestScope.listComponents == 'Image'}" >
             <jsp:include page="ImagesIncludeList.jsp" />
         </c:if>
     </c:if>
 </form>
 
-<c:if testá"${runaction == 'edit'}" >
+<c:if test="${runaction == 'edit'}" >
     <script type="text/javascript">
         window.document.newspiece_form.status[${recBean.status}].checked=true;
         <c:forEach var="x" items="${recSections}" varStatus="control" >
-            <c:if testá"${x.id==recBean.section}">
+            <c:if test="${x.id==recBean.section}">
                 window.document.newspiece_form.section.selectedIndex= <c:out value="${control.index}"/>;
             </c:if>
         </c:forEach>
@@ -220,11 +220,11 @@
     <fmt:message var="msg" key="thanksforform"  bundle="${bundle}"/>
                 alert("${msg}");
 
-    <c:if testá"${runaction == 'new'}" >
+    <c:if test="${runaction == 'new'}" >
                 orden_ejecutar("save_new");
                 return;
     </c:if>
-    <c:if testá"${runaction == 'edit'}" >
+    <c:if test="${runaction == 'edit'}" >
                 orden_ejecutar("save_edit");
                 return;
     </c:if>

@@ -8,12 +8,6 @@ La plantilla ofrece una estructura de página html con un elemento <head> y un el
 	el fichero 'jspf/bodycenter.jspf', y una columna lateral derecha, definida en el fichero 
 	'jspf/bodyright.jspf'.
 --%>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-
-<fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
 <c:set var="titleHead">
 	<fmt:message bundle="${bundle}" key="titleHead" />
 </c:set>

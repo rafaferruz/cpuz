@@ -4,23 +4,13 @@
     Author     : RAFAEL FERRUZ
 --%>
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
-<%@page buffer="none"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@taglib prefix="ztags" uri="/WEB-INF/tlds/ztags.tld"%>
-
-<fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
-
 <form id="NewsSectionListform" name="NewsSectionListform" method="post" action="NewsSearchedList.do"   class="zorongo">
     <input name="runaction" type="hidden" id="runaction" value="${NewsSelecConditionsFormBean.runaction}"/>
     <input name="maxRows" type="hidden" id="maxRows" value="${NewsSelecConditionsFormBean.maxRows}"/>
     <input name="startRow" type="hidden" id="startRow" value="${NewsSelecConditionsFormBean.startRow}"/>
     <input name="rowCount" type="hidden" id="rowCount" value="${NewsSelecConditionsFormBean.rowCount}"/>
 
-    <c:if testá"${NewsSelecConditionsFormBean.rowCount > 0 }">
+    <c:if test="${NewsSelecConditionsFormBean.rowCount > 0 }">
         <c:set var="rowCount" value="${NewsSelecConditionsFormBean.rowCount}"/>
         <c:set var="rowClass" value="tr_par"  scope="page"/>
         <br/>
@@ -39,13 +29,13 @@
                        end="${NewsSelecConditionsFormBean.startRow + NewsSelecConditionsFormBean.maxRows}"  >
 
 
-                <c:if testá"${newsId ne '' && newsId ne news.npi_id}">
+                <c:if test="${newsId ne '' && newsId ne news.npi_id}">
 
                     <c:choose>
-                        <c:when testá"${rowClass == 'tr_par'}">
+                        <c:when test="${rowClass == 'tr_par'}">
                             <c:set var="rowClass" value="tr_impar"  scope="page"/>
                         </c:when>
-                        <c:when testá"${rowClass == 'tr_impar'}">
+                        <c:when test="${rowClass == 'tr_impar'}">
                             <c:set var="rowClass" value="tr_par"  scope="page"/>
                         </c:when>
                     </c:choose>
@@ -69,21 +59,21 @@
                 <c:set var="newsDescription" value="${news.npi_description}"/>
                 <c:set var="newsDate" value="${news.npi_date}"/>
 
-                <c:if testá"${newsHeaders != ''}">
+                <c:if test="${newsHeaders != ''}">
                     <c:set var="newsHeaders" value="${newsHeaders}<br/>${news.nco_headerAlt}"/>
                 </c:if>
-                <c:if testá"${newsHeaders == ''}">
+                <c:if test="${newsHeaders == ''}">
                     <c:set var="newsHeaders" value="${news.nco_headerAlt}"/>
                 </c:if>
 
             </c:forEach>
-            <c:if testá"${newsId ne ''}">
+            <c:if test="${newsId ne ''}">
 
                 <c:choose>
-                    <c:when testá"${rowClass == 'tr_par'}">
+                    <c:when test="${rowClass == 'tr_par'}">
                         <c:set var="rowClass" value="tr_impar"  scope="page"/>
                     </c:when>
-                    <c:when testá"${rowClass == 'tr_impar'}">
+                    <c:when test="${rowClass == 'tr_impar'}">
                         <c:set var="rowClass" value="tr_par"  scope="page"/>
                     </c:when>
                 </c:choose>
@@ -107,23 +97,23 @@
         <tr>
             <td align="center">
                 <input type="submit" value="|<<" name="nav_first" onclick="orden_ejecutar('nav_first')"
-                       <c:if testá"${NewsSelecConditionsFormBean.startRow==0}">
+                       <c:if test="${NewsSelecConditionsFormBean.startRow==0}">
                            disabled
                        </c:if>
                        />
                 <input type="submit" value=" < " name="nav_prev" onclick="orden_ejecutar('nav_prev')"
-                       <c:if testá"${NewsSelecConditionsFormBean.startRow==0}">
+                       <c:if test="${NewsSelecConditionsFormBean.startRow==0}">
                            disabled
                        </c:if>
                        />
 
                 <input type="submit" value=" > " name="nav_next" onclick="orden_ejecutar('nav_next')"
-                       <c:if testá"${NewsSelecConditionsFormBean.startRow>=(NewsSelecConditionsFormBean.rowCount-NewsSelecConditionsFormBean.maxRows)}" >
+                       <c:if test="${NewsSelecConditionsFormBean.startRow>=(NewsSelecConditionsFormBean.rowCount-NewsSelecConditionsFormBean.maxRows)}" >
                            disabled
                        </c:if>
                        />
                 <input type="submit" value=">>|" name="nav_last" onclick="orden_ejecutar('nav_last')"
-                       <c:if testá"${NewsSelecConditionsFormBean.startRow>=(NewsSelecConditionsFormBean.rowCount-NewsSelecConditionsFormBean.maxRows)}" >
+                       <c:if test="${NewsSelecConditionsFormBean.startRow>=(NewsSelecConditionsFormBean.rowCount-NewsSelecConditionsFormBean.maxRows)}" >
                            disabled
                        </c:if>
                        />

@@ -7,11 +7,11 @@
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<s:if testá"control.runAction == 'edit'" >
+<s:if test="control.runAction == 'edit'" >
     <h3 align="center"><s:text name="UserEdition"/></h3>
 </s:if>
 
-<s:if testá"control.runAction == 'new'" >
+<s:if test="control.runAction == 'new'" >
     <h3 align="center"><s:text name="UserMailBox"/></h3>
     <ul>
         <li><s:text name="UserEditFull_Msg1"/></li>
@@ -25,12 +25,12 @@
 <s:actionerror/>
 
 <s:form id="users_form" name="users_form" method="post" cssClass="form_data" cssStyle="width: 80%;" onsubmit="return onSubmitFunction();" >
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
         <s:hidden name="control.runAction" id="runAction" value="saveNew"/>
         <s:date name="dataEdit.fecha" id="fecha" format="dd/MM/yyyy" var="fechaformat" />
         <s:hidden name="dataEdit.fecha" id="fecha" value="%{#fechaformat}"/>
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
         <s:hidden name="control.runAction" id="runAction" value="saveEdit"/>
         <s:hidden name="control.idKey" id="idKey" value="%{dataEdit.id}"/>
         <s:set var="readonly" value="true"/>
@@ -43,7 +43,7 @@
                      value="%{#fechaformat}" onBlur="ValidarFecha(this)"
                      readonly="true"/>
     </s:if>
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
         <s:set var="readonly" value="false"/>
         <s:hidden name="dataEdit.fecha" id="fecha" value="%{dataEdit.fecha}"/>
     </s:if>
@@ -119,7 +119,7 @@
                     <td align="center"><s:submit type="button" name="return"
                               id="return" value="%{getText('Return')}"
                               onclick="window.back()" theme="simple"/></td>
-                        <s:if testá"control.runAction == 'edit'" >
+                        <s:if test="control.runAction == 'edit'" >
                         <td align="center"><s:submit type="button" name="newButton"
                                   id="newButton" value="%{getText('New')}"
                                   onclick="orden_ejecutar('new');" theme="simple"/></td>
@@ -175,7 +175,7 @@
         if (document.users_form.nombre.value.length<5){
             mensaje = mensaje + "<s:text name="needNameUserLongMin"/>" + "\n"
         }
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
             if (document.users_form.password.value.length!=0 || document.users_form.password.value.length!=0){
     </s:if>
                 if (document.users_form.password.value.length<6){
@@ -184,7 +184,7 @@
                 if (document.users_form.password.value != document.users_form.password_again.value){
                     mensaje = mensaje + "<s:text name="needPassWordEquals"/>"+"\n"
                 }
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
             }
     </s:if>
             if (document.users_form.email.value.length<6){
@@ -205,11 +205,11 @@
                     window.document.users_form.ownedRoles.options[i].selected=true;
                 }
 
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
                 orden_ejecutar("saveNew");
                 return;
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
                 orden_ejecutar("saveEdit");
                 return;
     </s:if>

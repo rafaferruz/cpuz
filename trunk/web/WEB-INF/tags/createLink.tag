@@ -16,17 +16,18 @@
 <c:if test="${link != '' }">
 	<c:set var="id" value="0"/>
 	<c:catch var="exception">
-		<c:set var="dummy" value="${link * 1}"/>
+		<c:set var="dummy" value="${link / 1}"/>
 	</c:catch>
 	<c:choose>
-		<c:when test="${exception == 'NumberFormatException' }" >
+		<c:when test="${exception !=null}" >
 			<a <cpuz:classCss style="composition" /> href='${link}'>
 			</c:when>
 			<c:otherwise>
-				<c:if test="${order == null}">
-					<c:set var="order" value=""/>
+				<c:set var="orderParam" value=""/>
+				<c:if test="${order != null}">
+					<c:set var="orderParam" value="&amp;getOrder=${order}"/>
 				</c:if>
-				<a <cpuz:classCss style="composition" /> href='${applicationScope.dirApplication}/pages/NewsDisplay.jsp?getid=${link}&amp;getOrder=${order}'>
+				<a <cpuz:classCss style="composition" /> href="${applicationScope.dirApplication}/pages/NewsDisplay.jsp?getid=${link}${orderParam}">
 				</c:otherwise>
 
 			</c:choose>

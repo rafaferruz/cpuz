@@ -4,7 +4,6 @@
     Author     : RAFAEL FERRUZ
 --%>
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -22,7 +21,7 @@
 
     <h3 align="center"><fmt:message key="commentlist" bundle="${bundle}" /></h3>
 
-    <c:if testá"${requestácope.ComentariosEditSaveOkMsg!=null}">
+    <c:if test="${resquestScope.ComentariosEditSaveOkMsg!=null}">
         <label style="color: black">
             <fmt:message key="${ComentariosEditSaveOkMsg}"  bundle="${bundle}"/>
             <br/>
@@ -33,9 +32,9 @@
         <input name="runaction" type="hidden" id="runaction" value="list">
         <input name="identificador" type="hidden" id="identificador" >
         <input name="titulo" type="hidden" id="titulo" >
-        <input name="recStart" type="hidden" id="recStart" value="${requestácope.recStart}">
-        <input name="recChunk" type="hidden" id="recChunk" value="${requestácope.recChunk}">
-        <input name="recCount" type="hidden" id="recCount" value="${requestácope.recCount}">
+        <input name="recStart" type="hidden" id="recStart" value="${resquestScope.recStart}">
+        <input name="recChunk" type="hidden" id="recChunk" value="${resquestScope.recChunk}">
+        <input name="recCount" type="hidden" id="recCount" value="${resquestScope.recCount}">
 
         <%-- Recibe una lista de Comentarios y las presenta en pantalla --%>
 
@@ -56,21 +55,21 @@
             </tr>
             <!-- column data -->
             <c:set var="orderrow" value="1"  scope="page"/>
-            <c:set var="recEnd" value="${requestácope.recStart+requestácope.recChunk-2}" />
-            <c:if testá"${requestácope.recStart+requestácope.recChunk>requestácope.recCount}">
-                <c:set var="recEnd" value="${requestácope.recCount-1}" />
+            <c:set var="recEnd" value="${resquestScope.recStart+resquestScope.recChunk-2}" />
+            <c:if test="${resquestScope.recStart+resquestScope.recChunk>resquestScope.recCount}">
+                <c:set var="recEnd" value="${resquestScope.recCount-1}" />
             </c:if>
             <tr>
                 <td align="center">
                     <div id="listarcomentarios" class="listarcomentarios_div" >
                         <table width="100%" cellspacing="1" cellpadding="0">
-                            <c:forEach var="row"  end="${recEnd}"  begin="${requestácope.recStart-1}" items="${requestácope.recList}">
+                            <c:forEach var="row"  end="${recEnd}"  begin="${resquestScope.recStart-1}" items="${resquestScope.recList}">
                                 <c:choose>
-                                    <c:when testá"${orderrow == 1}">
+                                    <c:when test="${orderrow == 1}">
                                         <tr bgcolor="#FFFFFF">
                                             <c:set var="orderrow" value="0"  scope="page"/>
                                         </c:when>
-                                        <c:when testá"${orderrow == 0}">
+                                        <c:when test="${orderrow == 0}">
                                         <tr bgcolor="#CCFFCC">
                                             <c:set var="orderrow" value="1"  scope="page"/>
                                         </c:when>
@@ -81,7 +80,7 @@
                                         <br/>
                                         <%-- La fecha se imprime en todos los casos --%>
                                         <fmt:formatDate  pattern="dd/MM/yyyy" value="${row.fecha}"/>
-                                        <c:if testá"${row.publicar == 'publicarsi'}" >
+                                        <c:if test="${row.publicar == 'publicarsi'}" >
                                             <br/>
                                             <c:out value="${row.nombre}"/>
                                             <br/>
@@ -93,7 +92,7 @@
 
                                         <b><c:out value="${row.titulo}"/></b>
                                         <br/>
-                                        <c:if testá"${row.ficheroImagen > '' }"  >
+                                        <c:if test="${row.ficheroImagen > '' }"  >
 
                                             <img src="http://www.ecosysw.com/ZORONGO/WEB-INF/imagenes/comentarios/<c:out value="${row.ficheroImagen}"/>" alt="${row.ficheroImagen}" width="200" height="150"  hspace="10" vspace="10" align="right" />
                                         </c:if>
@@ -114,23 +113,23 @@
                         <tr>
                             <td align="center">
                                 <input type="submit" value="|<<" name="nav_first" onclick="orden_ejecutar('nav_first')"
-                                       <c:if testá"${requestácope.recStart=='1'}">
+                                       <c:if test="${resquestScope.recStart=='1'}">
                                            disabled
                                        </c:if>
                                        />
                                 <input type="submit" value=" < " name="nav_prev" onclick="orden_ejecutar('nav_prev')"
-                                       <c:if testá"${requestácope.recStart=='1'}">
+                                       <c:if test="${resquestScope.recStart=='1'}">
                                            disabled
                                        </c:if>
                                        />
 
                                 <input type="submit" value=" > " name="nav_next" onclick="orden_ejecutar('nav_next')"
-                                       <c:if testá"${requestácope.recStart+requestácope.recChunk>requestácope.recCount}" >
+                                       <c:if test="${resquestScope.recStart+resquestScope.recChunk>resquestScope.recCount}" >
                                            disabled
                                        </c:if>
                                        />
                                 <input type="submit" value=">>|" name="nav_last" onclick="orden_ejecutar('nav_last')"
-                                       <c:if testá"${requestácope.recStart+requestácope.recChunk>requestácope.recCount}">
+                                       <c:if test="${resquestScope.recStart+resquestScope.recChunk>resquestScope.recCount}">
                                            disabled
                                        </c:if>
                                        />

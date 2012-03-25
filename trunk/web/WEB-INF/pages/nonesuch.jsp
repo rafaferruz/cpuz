@@ -1,7 +1,3 @@
-<%@page contentType="text/html"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
 <fmt:message key="nonesuch" bundle="${bundle}"/> 
 
 <table align="center" border="0" width="60%">

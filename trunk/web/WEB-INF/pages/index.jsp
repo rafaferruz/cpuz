@@ -4,13 +4,6 @@
     Author     : RAFAEL FERRUZ
 --%>
 
-<%@page buffer="none"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
-
-
 <table width="100%">
     <tr>
         <td >

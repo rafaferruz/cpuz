@@ -29,34 +29,34 @@
     <%-- Recibe una lista de Contacts y las presenta en pantalla --%>
     <tr>
         <%-- Requirement codes: E5-2 --%>
-        <s:if testá"#session.userCategory >= 1">
+        <s:if test="#session.userCategory >= 1">
             <th><s:text name="ID" /></th>
         </s:if>
         <th><s:text name="Date" /></th>
         <th><s:text name="Status" /></th>
-        <s:if testá"#session.userCategory == 2">
+        <s:if test="#session.userCategory == 2">
             <th><s:text name="User" /></th>
         </s:if>
         <th><s:text name="Target" /></th>
         <th><s:text name="Header" /></th>
         <th><s:text name="action"/></th>
-        <s:if testá"#session.userCategory == 2">
+        <s:if test="#session.userCategory == 2">
             <th><s:text name="sel"/></th>
         </s:if>
         <%-- Requirement codes: E5-2 --%>
     </tr>
     <!-- column data -->
-    <s:if testá"control.recCount>0">
+    <s:if test="control.recCount>0">
 
         <s:iterator var="row" value="dataList" status="rowStatus">
-            <s:if testá"#rowStatus.odd == true">
+            <s:if test="#rowStatus.odd == true">
                 <s:set var="trClass" value="getText('trClassOddRows')" />
             </s:if>
             <s:else>
                 <s:set var="trClass" value="getText('trClassEvenRows')"/>
             </s:else>
             <tr class="<s:property value="#trClass"/>">
-                <s:if testá"#session.userCategory >= 1">
+                <s:if test="#session.userCategory >= 1">
                     <td align="center">
                         <s:property value="#row.id"/>
                     </td>
@@ -68,7 +68,7 @@
                 <td>
                     <s:property value="#row.status"/>
                 </td>
-                <s:if testá"#session.userCategory == 2">
+                <s:if test="#session.userCategory == 2">
                     <td align="center">
                         <s:property value="#row.user"/>
                     </td>
@@ -80,7 +80,7 @@
                     <b><s:property value="#row.header" /></b>
                 </td >
                 <td align="center"><s:submit theme="simple" target="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="contacts_edit('%{#row.id}')"/></td>
-                <s:if testá"#session.userCategory == 2">
+                <s:if test="#session.userCategory == 2">
                     <td align="center"><s:checkbox theme="simple" name="selec1" fieldValue="%{#row.id}"/></td>
                 </s:if>
             </tr>
@@ -95,20 +95,20 @@
                 <tr>
                     <td align="center">
                         <s:set var="disabled" value="false"/>
-                        <s:if testá"control.recStart==0">
+                        <s:if test="control.recStart==0">
                             <s:set var="disabled" value="true"/>
                         </s:if>
                         <s:submit theme="simple" type="submit" value="|<<" name="nav_first" onclick="DoNavigation('nav_first')" disabled="%{#disabled}"/>
                         <s:submit theme="simple" type="submit" value=" < " name="nav_prev" onclick="DoNavigation('nav_prev')" disabled="%{#disabled}"/>
                         <s:set var="disabled" value="false"/>
-                        <s:if testá"(control.recStart+control.recChunk)>control.recCount">
+                        <s:if test="(control.recStart+control.recChunk)>control.recCount">
                             <s:set var="disabled" value="true"/>
                         </s:if>
                         <s:submit theme="simple" type="submit" value=" > " name="nav_next" onclick="DoNavigation('nav_next')" disabled="%{#disabled}"/>
                         <s:submit theme="simple" type="submit" value=">>|" name="nav_last" onclick="DoNavigation('nav_last')" disabled="%{#disabled}"/>
                     </td>
                     <%-- Requirement codes: E5-2 --%>
-                    <s:if testá"#session.userCategory == 2">
+                    <s:if test="#session.userCategory == 2">
                         <td align="center"><s:submit theme="simple" type="button" name="newButton" id="newButton" value="%{getText('New')}"  onclick="orden_ejecutar('new')"/></td>
                         <s:set var="confirm" value="getText('ConfirmDeleteQuestáon')"/>
                         <td align="center"><s:submit theme="simple" type="button" name="delete" id="delete" value="%{getText('Delete')}"   onclick="if (confirm('%{#confirm}')) orden_ejecutar('delete')"/></td>

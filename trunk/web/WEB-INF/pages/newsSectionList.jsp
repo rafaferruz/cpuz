@@ -4,17 +4,6 @@
     Author     : RAFAEL FERRUZ
 --%>
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
-<%@page buffer="none"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@taglib prefix="ztags" uri="/WEB-INF/tlds/ztags.tld"%>
-
-<fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
-
-
 <form id="NewsSectionList_form" name="NewsSectionList_form" method="post" action="NewsSectionList.do"   class="zorongo">
     <input name="runaction" type="hidden" id="runaction" value="${NewsSectionListFormBean.runaction}"/>
     <input name="section" type="hidden" id="section" value="${NewsSectionListFormBean.section}" />
@@ -24,7 +13,7 @@
 
             <c:set var="rowCount" value="${NewsSectionListFormBean.rowCount}"/>
     <c:set var="startRow" value="${NewsSectionListFormBean.startRow}"/>
-    <c:if testá"${NewsSectionListFormBean.startRow<0}">
+    <c:if test="${NewsSectionListFormBean.startRow<0}">
         <sql:query var="newsCount"  dataSource="jdbc/CPUZ"
                    sql="SELECT npi_id FROM newspieces
                    WHERE npi_status = 2 AND npi_scope >= 0
@@ -51,7 +40,7 @@
                    ORDER BY npi_date DESC">
             <sql:param value="${NewsSectionListFormBean.section}"/>
         </sql:query>
-        <c:if testá"${sectionNews.rowCount > 0 }">
+        <c:if test="${sectionNews.rowCount > 0 }">
             <c:set var="rowCount" value="${sectionNews.rowCount}"/>
             <c:set var="rowClass" value="tr_par"  scope="page"/>
             <br/>
@@ -73,19 +62,19 @@
 
                     <c:set var="newsHeaders" value=""/>
                     <c:forEach var="element" items="${newsComposition.rows}">
-                        <c:if testá"${newsHeaders != ''}">
+                        <c:if test="${newsHeaders != ''}">
                             <c:set var="newsHeaders" value="${newsHeaders}<br/>${element.nco_header_alternate}"/>
                         </c:if>
-                        <c:if testá"${newsHeaders == ''}">
+                        <c:if test="${newsHeaders == ''}">
                             <c:set var="newsHeaders" value="${element.nco_header_alternate}"/>
                         </c:if>
                     </c:forEach>
 
                     <c:choose>
-                        <c:when testá"${rowClass == 'tr_par'}">
+                        <c:when test="${rowClass == 'tr_par'}">
                             <c:set var="rowClass" value="tr_impar"  scope="page"/>
                         </c:when>
-                        <c:when testá"${rowClass == 'tr_impar'}">
+                        <c:when test="${rowClass == 'tr_impar'}">
                             <c:set var="rowClass" value="tr_par"  scope="page"/>
                         </c:when>
                     </c:choose>
@@ -110,23 +99,23 @@
         <tr>
             <td align="center">
                 <input type="submit" value="|<<" name="nav_first" onclick="orden_ejecutar('nav_first')"
-                       <c:if testá"${NewsSectionListFormBean.startRow==0}">
+                       <c:if test="${NewsSectionListFormBean.startRow==0}">
                            disabled
                        </c:if>
                        />
                 <input type="submit" value=" < " name="nav_prev" onclick="orden_ejecutar('nav_prev')"
-                       <c:if testá"${NewsSectionListFormBean.startRow==0}">
+                       <c:if test="${NewsSectionListFormBean.startRow==0}">
                            disabled
                        </c:if>
                        />
 
                 <input type="submit" value=" > " name="nav_next" onclick="orden_ejecutar('nav_next')"
-                       <c:if testá"${sectionNews.rowCount<NewsSectionListFormBean.maxRows}" >
+                       <c:if test="${sectionNews.rowCount<NewsSectionListFormBean.maxRows}" >
                            disabled
                        </c:if>
                        />
                 <input type="submit" value=">>|" name="nav_last" onclick="orden_ejecutar('nav_last')"
-                       <c:if testá"${sectionNews.rowCount<NewsSectionListFormBean.maxRows}">
+                       <c:if test="${sectionNews.rowCount<NewsSectionListFormBean.maxRows}">
                            disabled
                        </c:if>
                        />

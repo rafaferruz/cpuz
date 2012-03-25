@@ -42,10 +42,10 @@
         <%-- Requirement codes: E5-2 --%>
     </tr>
     <!-- column data -->
-    <s:if testá"control.recCount>0">
+    <s:if test="control.recCount>0">
 
         <s:iterator var="row" value="dataList" status="rowStatus">
-            <s:if testá"#rowStatus.odd == true">
+            <s:if test="#rowStatus.odd == true">
                 <s:set var="trClass" value="getText('trClassOddRows')" />
             </s:if>
             <s:else>

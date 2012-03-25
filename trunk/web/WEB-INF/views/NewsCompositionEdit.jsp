@@ -14,11 +14,11 @@
 <fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
 
 
-<c:if testá"${requestácope.runaction == 'edit'}" >
+<c:if test="${resquestScope.runaction == 'edit'}" >
     <h3 align="center"><fmt:message key="newsCompositionsEdition"  bundle="${bundle}"/></h3>
 </c:if>
 
-<c:if testá"${requestácope.runaction == 'new'}" >
+<c:if test="${resquestScope.runaction == 'new'}" >
     <h3 align="center"><fmt:message key="newscompositionsMailBox"  bundle="${bundle}"/></h3>
     <p align="center"><fmt:message key="newscompositionsEditFull_Msg1"  bundle="${bundle}"/></p>
     <ul>
@@ -27,13 +27,13 @@
     </ul>
 </c:if>
 
-<c:if testá"${requestácope.NewsCompositionsEditErrorMsg!=null}">
+<c:if test="${resquestScope.NewsCompositionsEditErrorMsg!=null}">
     <label style="color: red">
         <fmt:message key="${NewsCompositionsEditErrorMsg}"  bundle="${bundle}"/>
         <br/>
     </label>
 </c:if>
-<c:if testá"${requestácope.NewsCompositionsEditSaveOkMsg!=null}">
+<c:if test="${resquestScope.NewsCompositionsEditSaveOkMsg!=null}">
     <label style="color: black">
         <fmt:message key="${NewsCompositionsEditSaveOkMsg}"  bundle="${bundle}"/>
         <br/>
@@ -41,19 +41,19 @@
 </c:if>
 
 <form id="newscomposition_form" name="newscomposition_form" method="post" action="NewsPiecesEdit">
-    <c:if testá"${requestácope.runaction == 'new'}" >
+    <c:if test="${resquestScope.runaction == 'new'}" >
         <input name="runaction" type="hidden" id="runaction" value="save_new">
     </c:if>
-    <c:if testá"${requestácope.runaction == 'edit'}" >
+    <c:if test="${resquestScope.runaction == 'edit'}" >
         <input name="runaction" type="hidden" id="runaction" value="save_edit">
         <input name="id_disabled" type="hidden" id="id_disabled" value="${newsCompositionBean.idNpi}">
         <input name="id_disabled_composition" type="hidden" id="id_disabled_composition" value="${newsCompositionBean.id}">
     </c:if>
-    <input name="recStart" type="hidden" id="recStart" value="${requestácope.recStart}">
-    <input name="recChunk" type="hidden" id="recChunk" value="${requestácope.recChunk}">
-    <input name="recCount" type="hidden" id="recCount" value="${requestácope.recCount}">
+    <input name="recStart" type="hidden" id="recStart" value="${resquestScope.recStart}">
+    <input name="recChunk" type="hidden" id="recChunk" value="${resquestScope.recChunk}">
+    <input name="recCount" type="hidden" id="recCount" value="${resquestScope.recCount}">
     <table width="90%" border="1" align="center" cellpadding="0" cellspacing="10"  class="form_data">
-        <c:if testá"${requestácope.runaction == 'edit'}" >
+        <c:if test="${resquestScope.runaction == 'edit'}" >
             <tr>
                 <td><fmt:message key="newscompositionidentifier"  bundle="${bundle}"/>:</td>
                 <td >
@@ -74,7 +74,7 @@
             </tr>
         </c:if>
         <c:choose>
-            <c:when testá"${newsCompositionBean.componentType=='InfoBlock'}" >
+            <c:when test="${newsCompositionBean.componentType=='InfoBlock'}" >
                 <tr>
                     <td><fmt:message key="HeaderStyle"  bundle="${bundle}"/>:</td>
                     <td colspan="4">
@@ -88,10 +88,10 @@
                 <tr>
                     <td><fmt:message key="HeaderAlt"  bundle="${bundle}"/>:</td>
                     <td colspan="4">
-                        <c:if testá"${runaction == 'new'}" >
+                        <c:if test="${runaction == 'new'}" >
                             <input name="headerAlt" type="text" id="headerAlt" size="60" maxlength="128" value=""/>
                         </c:if>
-                        <c:if testá"${runaction == 'edit'}" >
+                        <c:if test="${runaction == 'edit'}" >
                             <input name="headerAlt" type="text" id="headerAlt" size="60" maxlength="128" value="${newsCompositionBean.headerAlt}"/>
                         </c:if>
                     </td>
@@ -100,16 +100,16 @@
                 <tr>
                     <td><fmt:message key="BodyAbstract"  bundle="${bundle}"/>:</td>
                     <td colspan="4">
-                        <c:if testá"${runaction == 'new'}" >
+                        <c:if test="${runaction == 'new'}" >
                             <textarea name="bodyAbstract" id="bodyAbstract" cols="50" rows="4" ></textarea>
                         </c:if>
-                        <c:if testá"${runaction == 'edit'}" >
+                        <c:if test="${runaction == 'edit'}" >
                             <textarea name="bodyAbstract" id="bodyAbstract" cols="50" rows="4"  >${newsCompositionBean.bodyAbstract}</textarea>
                         </c:if>
                     </td>
                 </tr>
             </c:when>
-            <c:when testá"${newsCompositionBean.componentType=='Image'}" >
+            <c:when test="${newsCompositionBean.componentType=='Image'}" >
                 <tr>
                     <td><fmt:message key="ImagePosition"  bundle="${bundle}"/>:</td>
                     <td colspan="4">
@@ -123,10 +123,10 @@
                 <tr>
                     <td><fmt:message key="userReference"  bundle="${bundle}"/>:</td>
                     <td colspan="4">
-                        <c:if testá"${runaction == 'new'}" >
+                        <c:if test="${runaction == 'new'}" >
                             <input name="headerAlt" type="text" id="headerAlt" size="60" maxlength="128" value=""/>
                         </c:if>
-                        <c:if testá"${runaction == 'edit'}" >
+                        <c:if test="${runaction == 'edit'}" >
                             <input name="headerAlt" type="text" id="headerAlt" id="headerAlt" size="60" maxlength="128" value="${newsCompositionBean.headerAlt}"/>
                         </c:if>
                     </td>
@@ -140,10 +140,10 @@
                 <tr>
                     <td><fmt:message key="ImageHigh"  bundle="${bundle}"/>:</td>
                     <td colspan="4">
-                        <c:if testá"${runaction == 'new'}" >
+                        <c:if test="${runaction == 'new'}" >
                             <input name="imageHigh" type="text" id="imageHigh" size="5" maxlength="3" value="0"/>
                         </c:if>
-                        <c:if testá"${runaction == 'edit'}" >
+                        <c:if test="${runaction == 'edit'}" >
                             <input name="imageHigh" type="text" id="imageHigh" size="5" maxlength="3" value="${newsCompositionBean.imageHigh}"/>
                         </c:if>
                     </td>
@@ -151,10 +151,10 @@
                 <tr>
                     <td><fmt:message key="ImageWidth"  bundle="${bundle}"/>:</td>
                     <td colspan="4">
-                        <c:if testá"${runaction == 'new'}" >
+                        <c:if test="${runaction == 'new'}" >
                             <input name="imageWidth" type="text" id="imageWidth" size="5" maxlength="3" value="0"/>
                         </c:if>
-                        <c:if testá"${runaction == 'edit'}" >
+                        <c:if test="${runaction == 'edit'}" >
                             <input name="imageWidth" type="text" id="imageWidth" size="5" maxlength="3" value="${newsCompositionBean.imageWidth}"/>
                         </c:if>
                     </td>
@@ -166,10 +166,10 @@
         <tr>
             <td><fmt:message key="Link"  bundle="${bundle}"/>:</td>
             <td colspan="4">
-                <c:if testá"${runaction == 'new'}" >
+                <c:if test="${runaction == 'new'}" >
                     <input name="linkedElement" type="text" id="linkedElement" size="60" maxlength="128" value=""/>
                 </c:if>
-                <c:if testá"${runaction == 'edit'}" >
+                <c:if test="${runaction == 'edit'}" >
                     <input name="linkedElement" type="text" id="linkedElement" size="60" maxlength="256" value="${newsCompositionBean.linkedElement}"/>
                 </c:if>
             </td>
@@ -178,12 +178,12 @@
 
 
         <tr>
-            <c:if testá"${runaction == 'new'}" >
+            <c:if test="${runaction == 'new'}" >
                 <td colspan="3">&nbsp;</td>
                 <td align="center"><input type="button" name="cancelar" id="cancelar" value="<fmt:message key="cancel"  bundle="${bundle}"/>"  onclick="window.back();"/></td>
                 <td align="center"><input type="button" name="guardar" id="enviar" value="<fmt:message key="save"  bundle="${bundle}"/>" onClick="valida_newscomposition();" /></td>
                 </c:if>
-                <c:if testá"${runaction == 'edit'}" >
+                <c:if test="${runaction == 'edit'}" >
                 <td colspan="3">&nbsp;</td>
                 <td align="center"><input type="button" name="return" id="return" value="<fmt:message key="return"  bundle="${bundle}"/>"  onclick="window.back()"/></td>
                 <td align="center"><input type="button" name="guardar" id="enviar" value="<fmt:message key="save"  bundle="${bundle}"/>" onClick="valida_newscomposition()" /></td>
@@ -197,7 +197,7 @@
     </table>
 </form>
 
-<c:if testá"${runaction == 'edit'}" >
+<c:if test="${runaction == 'edit'}" >
     <script type="text/javascript">
         <fmt:message var="msg" key="title"  bundle="${bundle}" />
             if ("${newsCompositionBean.headerStyle}" == "${msg}")        {
@@ -261,11 +261,11 @@
     <fmt:message var="msg" key="thanksforform"  bundle="${bundle}"/>
                 alert("${msg}");
 
-    <c:if testá"${runaction == 'new'}" >
+    <c:if test="${runaction == 'new'}" >
                 orden_ejecutar("save_new");
                 return;
     </c:if>
-    <c:if testá"${runaction == 'edit'}" >
+    <c:if test="${runaction == 'edit'}" >
                 orden_ejecutar("save_composition");
                 return;
     </c:if>
