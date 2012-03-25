@@ -7,11 +7,11 @@
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<s:if testá"control.runAction == 'edit'" >
+<s:if test="control.runAction == 'edit'" >
     <h3 align="center"><s:text name="ContactEdition"/></h3>
 </s:if>
 
-<s:if testá"control.runAction == 'new'" >
+<s:if test="control.runAction == 'new'" >
     <h3 align="center"><s:text name="ContactMailBox"/></h3>
     <ul>
         <li><s:text name="ContactEditFull_Msg1"/></li>
@@ -24,17 +24,17 @@
 <s:actionerror/>
 
 <s:form id="contact_form" name="contact_form" method="post" cssClass="form_data" cssStyle="width: 80%;" onsubmit="return onSubmitFunction();" >
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
         <s:hidden name="control.runAction" id="runAction" value="saveNew"/>
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
         <s:hidden name="control.runAction" id="runAction" value="saveEdit"/>
         <s:hidden name="control.idKey" id="idKey" value="%{dataEdit.id}"/>
     </s:if>
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
         <s:set var="readonly" value="true"/>
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
         <s:set var="readonly" value="true"/>
     </s:if>
 
@@ -74,7 +74,7 @@
                               onclick="window.back()" theme="simple"/></td>
 
                     <td align="center">
-                        <s:if testá"control.runAction == 'edit'  && #session.userCategory == 2" >
+                        <s:if test="control.runAction == 'edit'  && #session.userCategory == 2" >
                             <s:submit target="button" name="new"
                                       id="new" value="%{getText('New')}"
                                       onclick="orden_ejecutar('new');" theme="simple"/>
@@ -82,7 +82,7 @@
                     </td>
 
                     <td align="center">
-                        <s:if testá"control.runAction == 'new' || (control.runAction == 'edit' && #session.userCategory == 2)">
+                        <s:if test="control.runAction == 'new' || (control.runAction == 'edit' && #session.userCategory == 2)">
                             <s:submit target="button" name="guardar"
                                       id="enviar" value="%{getText('Save')}"
                                       onClick="check_contact_form()" theme="simple"/>
@@ -135,11 +135,11 @@
             alert("<s:text name="thanksforform"/>");
             // se ponen selected todas las option del select
 
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
                 orden_ejecutar("saveNew");
                 return;
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
                 orden_ejecutar("saveEdit");
                 return;
     </s:if>

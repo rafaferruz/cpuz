@@ -22,7 +22,7 @@
 
 <table width="100%" align="center" class="data_table">
     <%-- Requirement codes: E5-2 --%>
-    <s:if testá"#session.userCategory == 2">
+    <s:if test="#session.userCategory == 2">
         <tr>
             <th><s:text name="ID" /></th>
             <th><s:text name="Date" /></th>
@@ -33,17 +33,17 @@
         </tr>
     </s:if>
     <!-- column data -->
-    <s:if testá"controlComponentType.recCount>0">
+    <s:if test="controlComponentType.recCount>0">
 
         <s:iterator var="DOCrow" value="dataObjectsIncludeList" status="DOCrowStatus">
-            <s:if testá"#DOCrowStatus.odd == true">
+            <s:if test="#DOCrowStatus.odd == true">
                 <s:set var="trClass" value="getText('trClassOddRows')" />
             </s:if>
             <s:else>
                 <s:set var="trClass" value="getText('trClassEvenRows')"/>
             </s:else>
             <tr class="<s:property value="#trClass"/>">
-                <s:if testá"#session.userCategory == 2">
+                <s:if test="#session.userCategory == 2">
                     <td align="center">
                         <s:property value="#DOCrow.id"/>
                     </td>
@@ -63,7 +63,7 @@
                 <td>
                     <s:property value="#DOCrow.scope"/>
                 </td>
-                <s:if testá"#session.userCategory == 2">
+                <s:if test="#session.userCategory == 2">
                     <td align="center"><s:checkbox theme="simple" name="selec1_DOC" fieldValue="%{#DOCrow.id}"/></td>
                 </s:if>
             </tr>
@@ -74,13 +74,13 @@
                     <tr>
                         <td align="center">
                             <s:set var="disabled" value="false"/>
-                            <s:if testá"controlComponentType.recStart==0">
+                            <s:if test="controlComponentType.recStart==0">
                                 <s:set var="disabled" value="true"/>
                             </s:if>
                             <s:submit theme="simple" type="submit" value="|<<" name="nav_first" onclick="DoNavigationComponentType('nav_first')" disabled="%{#disabled}"/>
                             <s:submit theme="simple" type="submit" value=" < " name="nav_prev" onclick="DoNavigationComponentType('nav_prev')" disabled="%{#disabled}"/>
                             <s:set var="disabled" value="false"/>
-                            <s:if testá"(controlComponentType.recStart+controlComponentType.recChunk)>controlComponentType.recCount">
+                            <s:if test="(controlComponentType.recStart+controlComponentType.recChunk)>controlComponentType.recCount">
                                 <s:set var="disabled" value="true"/>
                             </s:if>
                             <s:submit theme="simple" type="submit" value=" > " name="nav_next" onclick="DoNavigationComponentType('nav_next')" disabled="%{#disabled}"/>

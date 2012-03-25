@@ -34,7 +34,7 @@
     <s:hidden name="controlCompList.recCount" id="recCount"/>
 
     <%-- Requirement codes: E5-2 --%>
-    <s:if testá"#session.userCategory == 2">
+    <s:if test="#session.userCategory == 2">
         <tr>
             <th><s:text name="ID" /></th>
             <th><s:text name="ComponentType" /></th>
@@ -47,10 +47,10 @@
         </tr>
     </s:if>
     <!-- column data -->
-    <s:if testá"controlCompList.recCount>0">
+    <s:if test="controlCompList.recCount>0">
 
         <s:iterator var="row" value="dataCompList" status="rowStatus">
-            <s:if testá"#rowStatus.odd == true">
+            <s:if test="#rowStatus.odd == true">
                 <s:set var="trClass" value="getText('trClassOddRows')" />
             </s:if>
             <s:else>
@@ -58,15 +58,15 @@
             </s:else>
             <tr class="<s:property value="#trClass"/>">
                 <%-- Requirement codes: E5-2 --%>
-                <s:if testá"#session.userCategory == 2">
+                <s:if test="#session.userCategory == 2">
                     <td align="center"><s:property value="#row.id"/></td>
                     <td align="center"><s:property value="#row.componentType"/></td>
                     <td align="left"><s:property value="#row.headerAlt"/></td>
                     <td align="center"><s:property value="#row.headerStyle"/></td>
-                    <s:if testá"#row.componentType =='InfoBlock'" >
+                    <s:if test="#row.componentType =='InfoBlock'" >
                         <td align="left"><s:property value="#row.bodyAbstract"/></td>
                     </s:if>
-                    <s:if testá"#row.componentType =='Image'" >
+                    <s:if test="#row.componentType =='Image'" >
                         <td align="#row.headerStyle">
                             <img src="<s:property value="%{#application.dirHomeResources}"/>/../CPUZ/images/<s:property value="%{#row.bodyAbstract}"/>"
                                  alt="<s:property value="%{#application.dirHomeResources}"/>/../CPUZ/images/<s:property value="%{#row.bodyAbstract}"/>"
@@ -76,7 +76,7 @@
                     <td align="left"><s:property value="#row.linkedElement"/></td>
                 </s:if>
                 <%-- Requirement codes: E5-2 --%>
-                <s:if testá"#session.userCategory == 2">
+                <s:if test="#session.userCategory == 2">
                     <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="newsComposition_edit('%{#row.id}')"/></td>
                     <td align="center"><s:checkbox theme="simple" name="selec1" fieldValue="%{#row.id}"/></td>
                 </s:if>

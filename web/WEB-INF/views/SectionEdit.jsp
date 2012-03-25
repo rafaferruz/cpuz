@@ -7,11 +7,11 @@
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<s:if testá"control.runAction == 'edit'" >
+<s:if test="control.runAction == 'edit'" >
     <h3 align="center"><s:text name="SectionEdition"/></h3>
 </s:if>
 
-<s:if testá"control.runAction == 'new'" >
+<s:if test="control.runAction == 'new'" >
     <h3 align="center"><s:text name="SectionMailBox"/></h3>
     <ul>
         <li><s:text name="SectionEditFull_Msg1"/></li>
@@ -25,17 +25,17 @@
 <s:actionerror/>
 
 <s:form id="sections_form" name="sections_form" method="post" cssClass="form_data" cssStyle="width: 80%;" onsubmit="return onSubmitFunction();" >
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
         <s:hidden name="control.runAction" id="runAction" value="saveNew"/>
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
         <s:hidden name="control.runAction" id="runAction" value="saveEdit"/>
         <s:hidden name="control.idKey" id="idKey" value="%{dataEdit.id}"/>
     </s:if>
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
         <s:set var="readonly" value="false"/>
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
         <s:set var="readonly" value="true"/>
     </s:if>
     <s:textfield key="dataEdit.id"
@@ -100,7 +100,7 @@
                     <td align="center"><s:submit type="button" name="return"
                               id="return" value="%{getText('Return')}"
                               onclick="window.back()" theme="simple"/></td>
-                        <s:if testá"control.runAction == 'edit'" >
+                        <s:if test="control.runAction == 'edit'" >
                         <td align="center"><s:submit type="button" name="newButton"
                                   id="newButton" value="%{getText('New')}"
                                   onclick="orden_ejecutar('new');" theme="simple"/></td>
@@ -167,11 +167,11 @@
                 window.document.sections_form.ownedRoles.options[i].selected=true;
             }
 
-    <s:if testá"control.runAction == 'new'" >
+    <s:if test="control.runAction == 'new'" >
             orden_ejecutar("saveNew");
             return;
     </s:if>
-    <s:if testá"control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'edit'" >
                 orden_ejecutar("saveEdit");
                 return;
     </s:if>

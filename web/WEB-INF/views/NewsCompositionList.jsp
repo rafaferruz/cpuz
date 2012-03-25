@@ -20,7 +20,7 @@
 
 <h3 align="center"><fmt:message key="newsCompositionlist" bundle="${bundle}" /></h3>
 
-<c:if testá"${requestácope.NewsCompositionEditSaveOkMsg!=null}">
+<c:if test="${resquestScope.NewsCompositionEditSaveOkMsg!=null}">
     <label style="color: black">
         <fmt:message key="${NewsCompositionEditSaveOkMsg}"  bundle="${bundle}"/>
         <br/>
@@ -31,9 +31,9 @@
     <%--        <input name="runaction" type="hidden" id="runaction" value="list">
             <input name="identificador" type="hidden" id="identificador" >
             <input name="description" type="hidden" id="description" >
-            <input name="recStart" type="hidden" id="recStart" value="${requestácope.recStart}">
-            <input name="recChunk" type="hidden" id="recChunk" value="${requestácope.recChunk}">
-            <input name="recCount" type="hidden" id="recCount" value="${requestácope.recCount}">
+            <input name="recStart" type="hidden" id="recStart" value="${resquestScope.recStart}">
+            <input name="recChunk" type="hidden" id="recChunk" value="${resquestScope.recChunk}">
+            <input name="recCount" type="hidden" id="recCount" value="${resquestScope.recCount}">
     --%>
     <%-- Recibe una lista de NewsComposition y las presenta en pantalla --%>
 
@@ -42,7 +42,7 @@
 
         <tr>
             <%-- Requirement codes: E5-2 --%>
-            <c:if testá"${sessionScope.userCategory == 2}">
+            <c:if test="${sessionScope.userCategory == 2}">
                 <th><fmt:message key="ID" bundle="${bundle}" /></th>
                 <th><fmt:message key="ComponentType" bundle="${bundle}" /></th>
                 <th><fmt:message key="HeaderAlt" bundle="${bundle}" /></th>
@@ -55,20 +55,20 @@
         </tr>
         <!-- column data -->
         <c:set var="orderrow" value="1"  scope="page"/>
-        <c:if testá"${requestácope.recCount>0}">
-            <c:forEach var="rowComp" items="${requestácope.recComposition}">
+        <c:if test="${resquestScope.recCount>0}">
+            <c:forEach var="rowComp" items="${resquestScope.recComposition}">
                 <c:choose>
-                    <c:when testá"${orderrow == 1}">
+                    <c:when test="${orderrow == 1}">
                         <tr class="tr_impar">
                             <c:set var="orderrow" value="0"  scope="page"/>
                         </c:when>
-                        <c:when testá"${orderrow == 0}">
+                        <c:when test="${orderrow == 0}">
                         <tr class="tr_par">
                             <c:set var="orderrow" value="1"  scope="page"/>
                         </c:when>
                     </c:choose>
                     <%-- Requirement codes: E5-2 --%>
-                    <c:if testá"${sessionScope.userCategory == 2}">
+                    <c:if test="${sessionScope.userCategory == 2}">
                         <td align="center"><c:out value="${rowComp.id}"/></td>
                         <td align="center"><c:out value="${rowComp.componentType}"/></td>
                         <td align="center"><c:out value="${rowComp.headerAlt}"/></td>
@@ -77,7 +77,7 @@
                         <td align="center"><c:out value="${rowComp.linkedElement}"/></td>
                     </c:if>
                     <%-- Requirement codes: E5-2 --%>
-                    <c:if testá"${sessionScope.userCategory == 2}">
+                    <c:if test="${sessionScope.userCategory == 2}">
                         <td align="center"><input type="button" name="editComp" id="editComp" value="<fmt:message key="edit" bundle="${bundle}" />"  onclick="newsComposition_edit('${rowComp.id}')"/></td>
                         <td align="center"><input type="checkbox" name="selec1Comp" value="${rowComp.id}" /></td>
                         </c:if>
@@ -93,23 +93,23 @@
                     <tr>
                         <td align="center">
                             <input type="submit" value="|<<" name="nav_first" onclick="orden_ejecutar('nav_first')"
-                                   <c:if testá"${requestácope.recStart=='1'}">
+                                   <c:if test="${resquestScope.recStart=='1'}">
                                        disabled
                                    </c:if>
                                    />
                             <input type="submit" value=" < " name="nav_prev" onclick="orden_ejecutar('nav_prev')"
-                                   <c:if testá"${requestácope.recStart=='1'}">
+                                   <c:if test="${resquestScope.recStart=='1'}">
                                        disabled
                                    </c:if>
                                    />
 
                             <input type="submit" value=" > " name="nav_next" onclick="orden_ejecutar('nav_next')"
-                                   <c:if testá"${requestácope.recStart+requestácope.recChunk>requestácope.recCount}" >
+                                   <c:if test="${resquestScope.recStart+resquestScope.recChunk>resquestScope.recCount}" >
                                        disabled
                                    </c:if>
                                    />
                             <input type="submit" value=">>|" name="nav_last" onclick="orden_ejecutar('nav_last')"
-                                   <c:if testá"${requestácope.recStart+requestácope.recChunk>requestácope.recCount}">
+                                   <c:if test="${resquestScope.recStart+resquestScope.recChunk>resquestScope.recCount}">
                                        disabled
                                    </c:if>
                                    />
@@ -118,7 +118,7 @@
                 </table>
             </td>
             <%-- Requirement codes: E5-2 --%>
-            <c:if testá"${sessionScope.userCategory == 2}">
+            <c:if test="${sessionScope.userCategory == 2}">
                 <td align="center"><input type="button" name="newComp" id="newComp" value="<fmt:message key="new" bundle="${bundle}" />"  onclick="orden_ejecutar('new')"/></td>
                 <td align="center"><input type="button" name="selecComp" id="deleteComp" value="<fmt:message key="delete" bundle="${bundle}" />"  onclick="if (confirm('<fmt:message key="confirmdeletequestáon" bundle="${bundle}" />')) orden_ejecutar('delete')"/></td>
                 </c:if>

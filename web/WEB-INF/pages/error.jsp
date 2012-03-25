@@ -3,7 +3,7 @@
 
 <html>
     <head>
-        <title>Aplicación GRANQ</title>
+        <title>Aplicación CPUZ</title>
     </head>
     <body>
         <h1>Soporte Técnico</h1>

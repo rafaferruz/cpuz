@@ -82,7 +82,9 @@
 								<c:if test="${itemComp.componentType==ComponentType.infoBlock.key}" >
 									<%--									// GESTION DE ELEMENTO INFOBLOCK									--%>
 									<c:if test="${itemComp.headerStyle==HeaderType.headline.key}" >
-										<cpuz:createLink link="${itemComp.headerAlt}" />
+										<c:set var="startLink">
+											<cpuz:createLink link="${itemComp.idNpi}" />
+										</c:set>
 										<cpuz:paragraphLink startLink="${startLink}" 
 															headerAlt="${itemComp.headerAlt}" 
 															headerStyle="${itemComp.headerStyle}" />
@@ -92,7 +94,7 @@
 												<c:choose>
 													<c:when test="${imageDataPosition == ''}">
 														${fn:substring(itemComp.bodyAbstract,0,lengthIntroduction)}
-														<cpuz:modeNullOrAloneLink linkedElement="${itempComp.linkedElement}" id="${itemComp.idNpi}"/> >
+														<cpuz:modeNullOrAloneLink linkedElement="${itempComp.linkedElement}" id="${itemComp.idNpi}"/> 
 													</c:when>
 													<c:otherwise>
 														<c:if test="${imageDataLinkedElement != ''}">
@@ -101,9 +103,9 @@
 															</c:set>
 														</c:if>
 														<c:set var="temp">
-															<cpuz:showImage imageReference="${imageDataRepositoryReference}" imagePosition="${imageDataPosition}" classCss="compositionAbstract" /> />
+															<cpuz:showImage imageReference="${imageDataRepositoryReference}" imagePosition="${imageDataPosition}" classCss="compositionAbstract" /> 
 															${fn:substring(itemComp.bodyAbstract,0,lengthIntroduction)}
-															<cpuz:modeNullOrAloneLink linkedElement="${itempComp.linkedElement}" id="${itemComp.idNpi}"/> >
+															<cpuz:modeNullOrAloneLink linkedElement="${itempComp.linkedElement}" id="${itemComp.idNpi}"/> 
 														</c:set>
 
 														<cpuz:showLink startLink="${startLink}" elementLink="${temp}" />
@@ -139,6 +141,15 @@
 											<cpuz:paragraphAbstract headerStyle="compositionAbstract" bodyAbstract="${itemComp.bodyAbstract}" />
 										</c:if>
 									</c:if>
+								</c:if>
+								<c:if test="${itemComp.componentType==ComponentType.image.key}" >
+									<%--			// GESTION DE ELEMENTO IMAGE--%>
+									<c:set var="imageDataPosition" value = "${itemComp.headerStyle}"/>
+									<c:set var="imageDataUserReference" value = "${itemComp.headerAlt}"/>
+									<c:set var="imageDataRepositoryReference" value = "${itemComp.bodyAbstract}"/>
+									<c:set var="imageDataImageHigh" value = "${itemComp.imageHigh}"/>
+									<c:set var="imageDataImageWidth" value = "${itemComp.imageWidth}"/>
+									<c:set var="imageDataLinkedElement" value = "${itemComp.linkedElement}"/>
 								</c:if>
 							</c:forEach>
 							<hr/>

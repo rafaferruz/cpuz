@@ -12,11 +12,11 @@
     <fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
 
 
-    <c:if testá"${requestácope.runaction == 'edit'}" >
+    <c:if test="${resquestScope.runaction == 'edit'}" >
         <h3 align="center"><fmt:message key="commentsEdition"  bundle="${bundle}"/></h3>
     </c:if>
 
-    <c:if testá"${requestácope.runaction == 'new'}" >
+    <c:if test="${resquestScope.runaction == 'new'}" >
         <h3 align="center"><fmt:message key="commentsMailBox"  bundle="${bundle}"/></h3>
         <p align="center"><fmt:message key="commentsEditFull_Msg1"  bundle="${bundle}"/></p>
         <ul>
@@ -27,13 +27,13 @@
         </ul>
     </c:if>
 
-    <c:if testá"${requestácope.CommentsEditErrorMsg!=null}">
+    <c:if test="${resquestScope.CommentsEditErrorMsg!=null}">
         <label style="color: red">
             <fmt:message key="${CommentsEditErrorMsg}"  bundle="${bundle}"/>
             <br/>
         </label>
     </c:if>
-    <c:if testá"${requestácope.CommentsEditSaveOkMsg!=null}">
+    <c:if test="${resquestScope.CommentsEditSaveOkMsg!=null}">
         <label style="color: black">
             <fmt:message key="${CommentsEditSaveOkMsg}"  bundle="${bundle}"/>
             <br/>
@@ -42,18 +42,18 @@
 
 
     <form id="comments_form" enctype="multipart/form-data" name="comments_form" method="post" action="ComentariosEdit"   class="zorongo">
-        <c:if testá"${requestácope.runaction == 'new'}" >
+        <c:if test="${resquestScope.runaction == 'new'}" >
             <input name="runaction" type="hidden" id="runaction" value="save_new">
         </c:if>
-        <c:if testá"${requestácope.runaction == 'edit'}" >
+        <c:if test="${resquestScope.runaction == 'edit'}" >
             <input name="runaction" type="hidden" id="runaction" value="save_edit">
             <input name="id_disabled" type="hidden" id="id_disabled" value="${recBean.id}">
         </c:if>
-        <input name="recStart" type="hidden" id="recStart" value="${requestácope.recStart}">
-        <input name="recChunk" type="hidden" id="recChunk" value="${requestácope.recChunk}">
-        <input name="recCount" type="hidden" id="recCount" value="${requestácope.recCount}">
+        <input name="recStart" type="hidden" id="recStart" value="${resquestScope.recStart}">
+        <input name="recChunk" type="hidden" id="recChunk" value="${resquestScope.recChunk}">
+        <input name="recCount" type="hidden" id="recCount" value="${resquestScope.recCount}">
         <table width="90%" border="1" align="center" cellpadding="0" cellspacing="10" bordercolor="#000000">
-            <c:if testá"${runaction == 'edit'}" >
+            <c:if test="${runaction == 'edit'}" >
                 <tr>
                     <td><fmt:message key="commentIdentifier"  bundle="${bundle}"/>:</td>
                     <td colspan="4"><input name="identificador" type="text" id="identificador" size="5" maxlength="5" disabled value="${recBean.id}">
@@ -97,10 +97,10 @@
             <tr>
                 <td><fmt:message key="nameAuthor"  bundle="${bundle}"/>:</td>
                 <td colspan="4">
-                    <c:if testá"${runaction == 'new'}" >
+                    <c:if test="${runaction == 'new'}" >
                         <input name="nombre" type="text" id="nombre" value="" size="30" maxlength="40" value=""/>
                     </c:if>
-                    <c:if testá"${runaction == 'edit'}" >
+                    <c:if test="${runaction == 'edit'}" >
                         <input name="nombre" type="text" id="nombre" value="${recBean.nombre}" size="30" maxlength="40"/>
                     </c:if>
                 </td>
@@ -108,10 +108,10 @@
             <tr>
                 <td><fmt:message key="houseNumber"  bundle="${bundle}"/>:</td>
                 <td colspan="4">
-                    <c:if testá"${runaction == 'new'}" >
+                    <c:if test="${runaction == 'new'}" >
                         <input name="parcela" type="text" id="parcela" size="8" maxlength="4" value="" />
                     </c:if>
-                    <c:if testá"${runaction == 'edit'}" >
+                    <c:if test="${runaction == 'edit'}" >
                         <input name="parcela" type="text" id="parcela" size="8" maxlength="4" value="${recBean.parcela}" />
                     </c:if>
                 </td>
@@ -119,10 +119,10 @@
             <tr>
                 <td><fmt:message key="email"  bundle="${bundle}"/>:</td>
                 <td colspan="4">
-                    <c:if testá"${runaction == 'new'}" >
+                    <c:if test="${runaction == 'new'}" >
                         <input name="email" type="text" id="email" size="30" maxlength="60" value="" />
                     </c:if>
-                    <c:if testá"${runaction == 'edit'}" >
+                    <c:if test="${runaction == 'edit'}" >
                         <input name="email" type="text" id="email" size="30" maxlength="60" value="${recBean.email}" />
                     </c:if>
             </tr>
@@ -143,10 +143,10 @@
             <tr>
                 <td><fmt:message key="title"  bundle="${bundle}"/>:</td>
                 <td colspan="4">
-                    <c:if testá"${runaction == 'new'}" >
+                    <c:if test="${runaction == 'new'}" >
                         <input name="titulo" type="text" id="titulo" size="60" maxlength="60" value=""/>
                     </c:if>
-                    <c:if testá"${runaction == 'edit'}" >
+                    <c:if test="${runaction == 'edit'}" >
                         <input name="titulo" type="text" id="titulo" size="60" maxlength="60" value="${recBean.titulo}"/>
                     </c:if>
                 </td>
@@ -155,10 +155,10 @@
             <tr>
                 <td><fmt:message key="comment"  bundle="${bundle}"/>:</td>
                 <td colspan="4">
-                    <c:if testá"${runaction == 'new'}" >
+                    <c:if test="${runaction == 'new'}" >
                         <textarea name="comentario" id="comentario" cols="60" rows="10" ></textarea>
                     </c:if>
-                    <c:if testá"${runaction == 'edit'}" >
+                    <c:if test="${runaction == 'edit'}" >
                         <textarea name="comentario" id="comentario" cols="60" rows="10" >${recBean.comentario}</textarea>
                     </c:if>
                 </td>
@@ -167,11 +167,11 @@
             <tr>
                 <td><fmt:message key="imagefile"  bundle="${bundle}"/>:</td>
                 <td colspan="4">
-                    <c:if testá"${runaction == 'new'}" >
+                    <c:if test="${runaction == 'new'}" >
                         <input name="ficheroimagen" type="file" id="ficheroimagen" size="30"
                                value=""/>
                     </c:if>
-                    <c:if testá"${runaction == 'edit'}" >
+                    <c:if test="${runaction == 'edit'}" >
                         <input name="ficheroimagen" type="text" id="ficheroimagen" size="30"  maxlength="60"
                                value="${recBean.ficheroImagen}"/>
                     </c:if>
@@ -179,12 +179,12 @@
             </tr>
 
             <tr>
-                <c:if testá"${runaction == 'new'}" >
+                <c:if test="${runaction == 'new'}" >
                     <td colspan="3">&nbsp;</td>
                     <td align="center"><input type="button" name="cancelar" id="cancelar" value="<fmt:message key="cancel"  bundle="${bundle}"/>"  onclick="window.back();"/></td>
                     <td align="center"><input type="button" name="guardar" id="enviar" value="<fmt:message key="save"  bundle="${bundle}"/>" onClick="valida_formulario();" /></td>
                     </c:if>
-                    <c:if testá"${runaction == 'edit'}" >
+                    <c:if test="${runaction == 'edit'}" >
                     <td colspan="1">&nbsp;</td>
                     <td align="center"><input type="button" name="return" id="return" value="<fmt:message key="return"  bundle="${bundle}"/>"  onclick="window.back()"/></td>
                     <td align="center"><input type="button" name="new" id="new" value="<fmt:message key="new"  bundle="${bundle}"/>"  onclick="valida_formulario();"/></td>
@@ -205,7 +205,7 @@
     </form>
 </td>
 
-<c:if testá"${runaction == 'edit'}" >
+<c:if test="${runaction == 'edit'}" >
     <script type="text/javascript">
         window.document.comments_form.estádo[${recBean.estádo}].checked=true;
         window.document.comments_form.ambito[${ recBean.ambito -1}].checked=true;
@@ -250,11 +250,11 @@
             alert("<fmt:message key="thanksforform"  bundle="${bundle}"/>");
 
 
-    <c:if testá"${runaction == 'new'}" >
+    <c:if test="${runaction == 'new'}" >
                 orden_ejecutar("save_new");
                 return;
     </c:if>
-    <c:if testá"${runaction == 'edit'}" >
+    <c:if test="${runaction == 'edit'}" >
                 orden_ejecutar("save_edit");
                 return;
     </c:if>

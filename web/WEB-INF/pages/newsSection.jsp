@@ -3,17 +3,7 @@
     Created on : 09-mar-2010, 11:46:23
     Author     : RAFAEL FERRUZ
 --%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
-<%@page buffer="none"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-<%@taglib prefix="ztags" uri="/WEB-INF/tlds/ztags.tld"%>
-
-<fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
 <jsp:useBean id="userService" class="com.cpuz.model.UserService"/>
 <jsp:setProperty name="userService" property="user" value="${sessionScope[user]}"/>
 <jsp:setProperty name="userService" property="role" value="regularRole"/>
@@ -36,10 +26,10 @@
                     SELECT * FROM newspieces AS NPI
                     WHERE NPI.npi_status = 2
                     AND (NPI.npi_scope = 0
-                    <c:if testá"${regularRole}">
+                    <c:if test="${regularRole}">
                         OR NPI.npi_scope = 1
                     </c:if>
-                    <c:if testá"${sessionScope.userCategory>=1}">
+                    <c:if test="${sessionScope.userCategory>=1}">
                         OR  NPI.npi_scope = 2
                     </c:if>
                     )
@@ -48,7 +38,7 @@
                     ORDER BY NPI.npi_date DESC
                     <sql:param value="${param.section}"/>
                 </sql:query>
-                <c:if testá"${sectionNews.rowCount > 0 }">
+                <c:if test="${sectionNews.rowCount > 0 }">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                             <th class="homepagenews">${section.sec_name}</th>

@@ -4,14 +4,6 @@
     Author     : RAFAEL FERRUZ
 --%>
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
-<%@page buffer="none"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-<%@taglib prefix="ztags" uri="/WEB-INF/tlds/ztags.tld"%>
-
-<fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
 <jsp:useBean id="userService" class="com.cpuz.model.UserService"/>
 <jsp:setProperty name="userService" property="user" value="${sessionScope['user']}"/>
 <jsp:setProperty name="userService" property="role" value="regularRole"/>
