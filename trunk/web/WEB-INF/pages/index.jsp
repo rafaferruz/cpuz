@@ -10,12 +10,9 @@
             <%@ include file="jspf/whatsNew.jspf" %>
         </td>
     </tr>
-
     <tr>
         <td valign="top">
-
             <jsp:include page="newsPresentation.jsp" />
-
         </td>
     </tr>
 </table>
