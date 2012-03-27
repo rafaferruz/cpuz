@@ -1,3 +1,6 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
 <%-- Directivas page comunes --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page errorPage="error.jsp" %>
@@ -12,6 +15,6 @@
 <%@taglib prefix="zorongo" uri="http://www.zorongocookies.com/zorongo"%>
 <%@taglib prefix="ztags" uri="/WEB-INF/tlds/ztags.tld"%>
 <%@taglib prefix="rfm" uri="/WEB-INF/tlds/rfm"%>
-<%@taglib prefix="cpuz" tagdir="/WEB-INF/tags" %>
 
 <fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>
+

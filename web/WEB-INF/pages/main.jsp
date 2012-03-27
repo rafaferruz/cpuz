@@ -1,9 +1,12 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
 <%-- 
-Plantilla que define la est·uctura de las p·ginas de vistas de la aplicaciÛn.
-La plantilla ofrece una estructura de p·gina html con un elemento <head> y un elemento <body>
-- El elemento <head> realiza un include del fichero 'jspf/head01.jspf' que deber· contener
+Plantilla que define la estructura de las p√°ginas de vistas de la aplicaci√≥n.
+La plantilla ofrece una estructura de p√°gina html con un elemento <head> y un elemento <body>
+- El elemento <head> realiza un include del fichero 'jspf/head01.jspf' que deber√° contener
 	los enlaces a ficheros de estilos CSS y Javascript que deseen usarse en las vistas.
-- El elemento <body> define la est·uctura de la vista, est·bleciendo una cabecera que deber·
+- El elemento <body> define la estructura de la vista, est√°bleciendo una cabecera que deber√°
 	definirse en el fichero 'jspf/cabecera.jspf', y un cuerpo con una zona central, definido en
 	el fichero 'jspf/bodycenter.jspf', y una columna lateral derecha, definida en el fichero 
 	'jspf/bodyright.jspf'.
@@ -18,35 +21,18 @@ La plantilla ofrece una estructura de p·gina html con un elemento <head> y un el
 <%-- Start of html page --%>
 <html>
 	<%@ include file="jspf/htmlHeaders.jspf" %>
-	
+
     <body class="yui-skin-sam">
 		<div class="page_margins">
 			<div class="page">
 				<div id="header">
 					<%-- Se incluye una cabecera con tres filas de tabla.
 						La primera contiene el banner de cabeceracon el logotipo.
-						La segunda est· pensada para una barra de noticias.
-						La tercera est· pensada para uns barra de men?.
+						La segunda est√° pensada para una barra de noticias.
+						La tercera est√° pensada para uns barra de men?.
 					--%>
 					<%@ include file="jspf/bodyTop.jspf" %>
-					<div id="topnav">
-					</div>
-					<h1 id="title"><a href="${pageContext.request.contextPath}/common/welcome.do"><fmt:message bundle="${bundle}" key="page.headerTitle" /></a></h1>
-					<span id="subtitle"><em><fmt:message bundle="${bundle}" key="page.headerSubtitle" /></em></span>
 				</div>
-				<!-- begin: main navigation #nav -->
-				<c:if test="${not empty section}">
-					<div id="nav">
-						<div class="hlist">
-							<h2 class="hideme"><fmt:message bundle="${bundle}" key="page.mainMenu" /></h2>
-							<c:set var="menu">
-								<%--@include file="menu.jspf" --%>
-							</c:set>
-							<c:if test="${not empty menu}"><ul>${menu}</ul></c:if>
-						</div>
-					</div>
-				</c:if>
-				<!-- end: main navigation -->
 				<!-- begin: main content area #main -->
 				<div id="main">
 					<%@ include file="jspf/bodyCenter.jspf" %>
@@ -55,9 +41,9 @@ La plantilla ofrece una estructura de p·gina html con un elemento <head> y un el
 				<!-- begin: #footer -->
 				<div id="footer">
                     <%--
-   <zorongo:links cadenamenu="P·gina inicial?index.jsp|
+   <zorongo:links cadenamenu="P√°gina inicial?index.jsp|
                                       //Mapa de la Web?mapaweb.jsp|
-                                      Cerrar sesiÛn?docs/cerrarsesiÛn.jsp|
+                                      Cerrar sesi√≥n?docs/cerrarsesi√≥n.jsp|
                                       Publicidad?docs/publicidad.jsp"
                                       separadoritems="?" separadormenu="|" mododisplay="pie" />
                     --%>
