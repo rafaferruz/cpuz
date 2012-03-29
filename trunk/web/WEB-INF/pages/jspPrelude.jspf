@@ -14,4 +14,7 @@
 <%@taglib prefix="rfm" uri="/WEB-INF/tlds/rfm"%>
 <%@taglib prefix="cpuz" tagdir="/WEB-INF/tags" %>
 
+<%-- Directivas taglib para framework Struts --%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
 <fmt:setBundle basename="com.cpuz.multilang.cpuz" var="bundle" scope="page"/>

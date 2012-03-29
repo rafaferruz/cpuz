@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.cpuz.st2.actions;
 
 import com.cpuz.domain.Role;
@@ -27,12 +23,12 @@ import org.apache.struts2.interceptor.RequestAware;
 public class UserAction extends ActionSupport implements RequestAware, Serializable {
 
     private ListControlParams control = new ListControlParams();
-    private List<User> dataList = new ArrayList<User>();
+    private List<User> dataList = new ArrayList<>();
     private User dataEdit = new User();
     private UserModel dataModel;
-    private Map<Integer, String> mapStatus = new HashMap<Integer, String>();
-    private Map<Integer, String> mapCategories = new HashMap<Integer, String>();
-    private Map<String, Object> requestáttributes = new HashMap<String, Object>();
+    private Map<Integer, String> mapStatus = new HashMap<>();
+    private Map<Integer, String> mapCategories = new HashMap<>();
+    private Map<String, Object> requestáttributes = new HashMap<>();
     private List<Role> rolesList;
     private List<UserRole> userRolesList;
     private RolesModel rolesModel;

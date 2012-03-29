@@ -63,7 +63,7 @@ public class LinksHandlerV3 extends BodyTagSupport {
         ResourceBundle bundle = BundleHelper.getBundle(request.getLocales());
 
         HttpServletResponse response = (HttpServletResponse) (pageContext.getResponse());
-        HttpSession sesión = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
         String contextPath = request.getContextPath();
         StringBuffer links = new StringBuffer();
@@ -79,8 +79,8 @@ public class LinksHandlerV3 extends BodyTagSupport {
 
         String[] subCadenas = cadenamenu.split("\\" + separadormenu);
         Integer needCategory = 0;
-        if (sesión.getAttribute("userCategory") == null) {
-            sesión.setAttribute("userCategory", 0);
+        if (session.getAttribute("userCategory") == null) {
+            session.setAttribute("userCategory", 0);
         }
 
         for (int i = 1; i <= subCadenas.length; i++) {
@@ -99,7 +99,7 @@ public class LinksHandlerV3 extends BodyTagSupport {
 
 
             if (!texto.startsWith("//")) {
-                if ((Integer) sesión.getAttribute("userCategory") >= needCategory) {
+                if ((Integer) session.getAttribute("userCategory") >= needCategory) {
                     if (mododisplay.equals("columna")) {
 
                         links.append("<tr><td><table width=\"100%\"  border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr>");
@@ -107,7 +107,7 @@ public class LinksHandlerV3 extends BodyTagSupport {
                             links.append("<td width=\"20%\" bgcolor=\"#80FF80\" >&nbsp;</td>");
                             links.append("<td width=\"80%\" bgcolor=\"#80FF80\" >");
                             links.append("<div align=\"left\">");
-                            if (!sesión.isNew()) {
+                            if (!session.isNew()) {
                                 enlace = response.encodeURL(enlace);
                             }
                             if (enlace.startsWith("http") || enlace.startsWith("#")) {
@@ -129,7 +129,7 @@ public class LinksHandlerV3 extends BodyTagSupport {
                         links.append("</div></td></tr></table></td></tr>");
 
                     } else if (mododisplay.equals("pie")) {
-                        if (!sesión.isNew()) {
+                        if (!session.isNew()) {
                             enlace = response.encodeURL(enlace);
                         }
 
@@ -163,7 +163,7 @@ public class LinksHandlerV3 extends BodyTagSupport {
                             enlacePanelMenu = enlace;
 //                        menuPaneles.append("<a href=\"");
 
-                            if (!sesión.isNew()) {
+                            if (!session.isNew()) {
                                 enlace = response.encodeURL(enlace);
                             }
                             if (enlace.startsWith("http") || enlace.startsWith("#")) {

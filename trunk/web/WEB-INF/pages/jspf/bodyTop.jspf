@@ -53,7 +53,7 @@
 						   Documentos¿admin/Document_list.action¿1|
 						   Noticias¿admin/NewsPiece_list.action¿1|
 						   INICIO¿|
-						   Página de INICIO¿pages/index.jsp|
+						   Página de INICIO¿init.action|
 						   //Conócenos¿docs/presentacionzorongo.jsp|
 						   //Breve historia¿docs/historiazorongo.jsp|
 						   //Cómo es el Zorongo¿docs/comoeselzorongo.jsp|
@@ -87,7 +87,7 @@
 						   Registrarse¿docs/presentacionzorongo.jsp|
 						   Modificar datos¿docs/historiazorongo.jsp¿1|
 						   Darse de Baja¿docs/comoeselzorongo.jsp¿1|
-						   Cerrar sesión¿pages/Logout.jsp'
+						   Cerrar sesión¿logout.action'
 						   mododisplay="navegador"
 						   separadoritems="¿"
 						   separadormenu="|"
