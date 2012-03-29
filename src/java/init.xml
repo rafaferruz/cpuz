@@ -10,6 +10,10 @@
             <result name="whatsNew">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
+        <action name="logout" class="springLogoutAction" >
+            <result name="logout">/WEB-INF/pages/main.jsp</result>
+            <result>/WEB-INF/pages/main.jsp</result>
+        </action>
     </package>
 
 </struts>

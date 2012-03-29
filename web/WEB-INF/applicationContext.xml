@@ -44,6 +44,10 @@
         scope="prototype">
         <property name="initModel" ref="InitModel"/>
     </bean>
+    <bean id="springLogoutAction" class="com.cpuz.st2.actions.LogoutAction"
+        scope="prototype">
+        <property name="initModel" ref="InitModel"/>
+    </bean>
 
     <bean id="springRoleAction" class="com.cpuz.st2.actions.RoleAction"
         scope="prototype">

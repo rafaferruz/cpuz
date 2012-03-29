@@ -1,10 +1,3 @@
-<%--
-    Document   : UsersEdit
-    Created on : 12-nov-2010, 21:09:39
-    Author     : RAFAEL FERRUZ
---%>
-
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <s:if test="control.runAction == 'edit'" >
@@ -53,11 +46,11 @@
     <s:textfield key="dataEdit.nombre" id="nombre"
                  size="30" maxlength="40"/>
 
-    <s:radio key="dataEdit.estádo" list="mapStatus" id="status"/>
+    <s:radio key="dataEdit.estado" list="mapStatus" id="status"/>
 
     <s:radio key="dataEdit.category" list="mapCategories" id="category"/>
 
-    <%-- Se muestáan dos select con los roles autorizados y todos los roles disponobles            --%>
+    <%-- Se muestï¿½an dos select con los roles autorizados y todos los roles disponobles            --%>
     <tr>
         <td>
             <s:label value="%{getText('RolesAuthorization')}" theme="simple"/>

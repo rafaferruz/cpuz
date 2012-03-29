@@ -105,9 +105,9 @@ public class UserLogin implements Filter {
 // Comprueba sesión y usuario. Incrementa contador de visitas y comprueba usuario.
 			CheckTool.checkSession((HttpServletRequest) request, (HttpServletResponse) response);
 			if (this.getFilterConfig().getInitParameter("UserLoginParamName") != null) {
-				if (request.getParameter(this.getFilterConfig().getInitParameter("UserLoginParamName")) != null) {
+//				if (request.getParameter(this.getFilterConfig().getInitParameter("UserLoginParamName")) != null) {
 					CheckTool.checkUserCredentials((HttpServletRequest) request);
-				}
+//				}
 			}
 // fin de comprobación de sesión y usuario
 

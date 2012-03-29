@@ -1,16 +1,3 @@
-<%-- 
-    Document   : UsersList
-    Created on : 12-nov-2010, 18:33:22
-    Author     : RAFAEL FERRUZ
---%>
-
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
-
-<%--
-<%@page errorPage="error.jsp" %>
---%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <h3 align="center"><s:text name="UsersList"/></h3>
@@ -57,7 +44,7 @@
                     </td>
                 </s:if>
                 <td>
-                    <s:property value="#row.estádo"/>
+                    <s:property value="#row.estado"/>
                 </td>
                 <td>
                     <s:property value="#row.category"/>
