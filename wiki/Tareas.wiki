@@ -2,8 +2,8 @@
 
 = Tareas en curso =
 
-  * *30/03/2012: log4j:* Implementar servicio de logging de la aplicación.
   * *30/03/2012: RoleAction.java:* Implementar tests de la clase.
+  * *30/03/2012: log4j:* Implementar servicio de logging de la aplicación.
 
 
 
