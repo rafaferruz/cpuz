@@ -10,7 +10,7 @@ import com.cpuz.domain.UserRole;
 import com.cpuz.model.RolesModel;
 import com.cpuz.model.SectionsModel;
 import com.cpuz.model.UserRolesModel;
-import com.cpuz.st2.beans.ListControlParams;
+import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import org.apache.struts2.interceptor.RequestAware;
  */
 public class SectionAction extends ActionSupport implements RequestAware, Serializable {
 
-    private ListControlParams control = new ListControlParams();
+    private ControlParams control = new ControlParams();
     private List<Section> dataList = new ArrayList<Section>();
     private Section dataEdit = new Section();
     private SectionsModel dataModel;
@@ -149,11 +149,11 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
         super.validate();
     }
 
-    public ListControlParams getControl() {
+    public ControlParams getControl() {
         return control;
     }
 
-    public void setControl(ListControlParams control) {
+    public void setControl(ControlParams control) {
         this.control = control;
     }
 

@@ -1,25 +1,41 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * Foobar is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+*/
 package com.cpuz.st2.beans;
 
+import com.cpuz.domain.UserType;
 import com.cpuz.tools.Const;
 import java.io.Serializable;
 
 /**
- *
- * @author RAFAEL FERRUZ
+ * Esta clase se utiliza para pasar parámetros comunes a las clases de servicio,
+ * a las clases DAO y a las vistas JSP
  */
-public class ListControlParams implements Serializable {
+public class ControlParams implements Serializable {
 
     private String runAction = "";
     private Integer id = 0;
     private Integer recStart = 0;
     private Integer recChunk = Const.LIMIT_SQL_RECORDS_SELECTED_MANAGEMENT;
     private Integer recCount = 0;
+	private UserType userType;
 
-    public ListControlParams() {
+    public ControlParams() {
     }
 
     public Integer getId() {
@@ -62,7 +78,15 @@ public class ListControlParams implements Serializable {
         this.runAction = runAction;
     }
 
-    public void doNavigation() throws Exception {
+	public UserType getUserType() {
+		return userType;
+	}
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
+
+    public void doNavigation()  {
         if (getRunAction().equals("nav_first")) {
             nav_first();
         } else if (getRunAction().equals("nav_prev")) {
@@ -74,19 +98,19 @@ public class ListControlParams implements Serializable {
         }
     }
 
-    private void nav_first() throws Exception {
+    private void nav_first() {
         this.setRecStart(0);
     }
 
-    private void nav_prev() throws Exception {
+    private void nav_prev(){
         this.setRecStart(Math.max(0, (this.getRecStart() - this.getRecChunk())));
     }
 
-    private void nav_next() throws Exception {
+    private void nav_next(){
         this.setRecStart(this.getRecStart() + this.getRecChunk());
     }
 
-    private void nav_last() throws Exception {
+    private void nav_last()  {
         this.setRecStart(Math.max(0, (this.getRecCount() - this.getRecChunk())));
     }
 }

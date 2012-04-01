@@ -1,5 +1,6 @@
-package com.cpuz.DAO.impl;
+package com.cpuz.DAO;
 
+import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.exceptions.UserException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

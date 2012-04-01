@@ -18,7 +18,7 @@ import com.cpuz.model.NewsCompositionsModel;
 import com.cpuz.model.NewsPiecesModel;
 import com.cpuz.model.SectionsModel;
 import com.cpuz.model.UserRolesModel;
-import com.cpuz.st2.beans.ListControlParams;
+import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -37,7 +37,7 @@ import org.apache.struts2.interceptor.SessionAware;
  */
 public class NewsPieceAction extends ActionSupport implements RequestAware, SessionAware, Serializable {
 
-    private ListControlParams control = new ListControlParams();
+    private ControlParams control = new ControlParams();
     private List<NewsPiece> dataList = new ArrayList<NewsPiece>();
     private NewsPiece dataEdit = new NewsPiece();
     private NewsPiecesModel dataModel = new NewsPiecesModel();
@@ -48,7 +48,7 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
     private List<String> listImagePositions = new ArrayList<String>();
     private Map<String, Object> requestáttributes;
     private Map<String, Object> sessionAttributes;
-    private ListControlParams controlCompList = new ListControlParams();
+    private ControlParams controlCompList = new ControlParams();
     private List<NewsComposition> dataCompList = new ArrayList<NewsComposition>();
     private NewsComposition dataCompEdit = new NewsComposition();
     private NewsCompositionsModel dataCompModel = new NewsCompositionsModel();
@@ -57,7 +57,7 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
     private SectionsModel sectionsModel = new SectionsModel();
     private String addComponentType;
     private Map<String, String> mapComponentTypes = new HashMap<String, String>();
-    private ListControlParams controlComponentType = new ListControlParams();
+    private ControlParams controlComponentType = new ControlParams();
     private List dataObjectsIncludeList = new ArrayList();
 
     public NewsPieceAction() {
@@ -384,11 +384,11 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
         super.validate();
     }
 
-    public ListControlParams getControl() {
+    public ControlParams getControl() {
         return control;
     }
 
-    public void setControl(ListControlParams control) {
+    public void setControl(ControlParams control) {
         this.control = control;
     }
 
@@ -468,11 +468,11 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
         this.mapComponentTypes = mapComponentTypes;
     }
 
-    public ListControlParams getControlCompList() {
+    public ControlParams getControlCompList() {
         return controlCompList;
     }
 
-    public void setControlCompList(ListControlParams controlCompList) {
+    public void setControlCompList(ControlParams controlCompList) {
         this.controlCompList = controlCompList;
     }
 
@@ -508,11 +508,11 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
         this.listImagePositions = listImagePositions;
     }
 
-    public ListControlParams getControlComponentType() {
+    public ControlParams getControlComponentType() {
         return controlComponentType;
     }
 
-    public void setControlComponentType(ListControlParams controlComponentType) {
+    public void setControlComponentType(ControlParams controlComponentType) {
         this.controlComponentType = controlComponentType;
     }
 

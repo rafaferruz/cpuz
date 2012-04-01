@@ -1,5 +1,9 @@
-package com.cpuz.DAO.impl;
+package com.cpuz.DAO;
 
+import com.cpuz.DAO.RoleDAO;
+import com.cpuz.DAO.impl.InjectableDAO;
+import com.cpuz.DAO.impl.NewsPieceDAOImpl;
+import com.cpuz.DAO.impl.UserDAO;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;

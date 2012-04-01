@@ -7,7 +7,7 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.Document;
 import com.cpuz.exceptions.DocumentException;
 import com.cpuz.model.DocumentsModel;
-import com.cpuz.st2.beans.ListControlParams;
+import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
  */
 public class DocumentAction extends ActionSupport implements ServletRequestAware, RequestAware, SessionAware, ApplicationAware, Serializable {
 
-    private ListControlParams control = new ListControlParams();
+    private ControlParams control = new ControlParams();
     private List<Document> dataList = new ArrayList<Document>();
     private Document dataEdit = new Document();
     private DocumentsModel dataModel;
@@ -264,11 +264,11 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
         super.validate();
     }
 
-    public ListControlParams getControl() {
+    public ControlParams getControl() {
         return control;
     }
 
-    public void setControl(ListControlParams control) {
+    public void setControl(ControlParams control) {
         this.control = control;
     }
 

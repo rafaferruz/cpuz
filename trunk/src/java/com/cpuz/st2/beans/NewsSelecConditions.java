@@ -21,7 +21,7 @@ import org.apache.struts2.interceptor.RequestAware;
  */
 public class NewsSelecConditions extends ActionSupport implements  RequestAware,Serializable  {
 
-    private ListControlParams control = new ListControlParams();
+    private ControlParams control = new ControlParams();
         private Map<String, Object> requestáttributes = new HashMap<String, Object>();
 
     // Variables de control de formulario

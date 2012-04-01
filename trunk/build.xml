@@ -3,13 +3,18 @@
 <!-- some examples of how to customize the build. -->
 <!-- (If you delete it and reopen the project it will be recreated.) -->
 <!-- By default, only the Clean and Build commands use this build script. -->
-<!-- Commands such as Run, Debug, and Testáonly use this build script if -->
+<!-- Commands such as Run, Debug, and Test-only use this build script if -->
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
 <project name="CPUZ" default="default" basedir=".">
-    <description>Builds, testá, and runs the project CPUZ.</description>
-    <import file="nbproject/build-impl.xml"/>
+	<description>Builds, tests, and runs the project CPUZ.</description>
+<!-- Se definen algunas propiedades usadas por las etiquetas específicas de CPUZ. -->
+	<xmlproperty file="config.xml"/>
+
+	<property name="log4j.dir" value="src/log4j" />
+
+	<import file="nbproject/build-impl.xml"/>
     <!--
 
     There exist several targets which are by default empty and which can be 
@@ -22,10 +27,10 @@
       -post-compile:             called after javac compilation 
       -pre-compile-single:       called before javac compilation of single file
       -post-compile-single:      called after javac compilation of single file
-      -pre-compile-testá         called before javac compilation of JUnit testá
-      -post-compile-testá        called after javac compilation of JUnit testá
-      -pre-compile-testásingle:  called before javac compilation of single JUnit test
-      -post-compile-testásingle: called after javac compilation of single JUunit test
+      -pre-compile-tests         called before javac compilation of JUnit tests
+      -post-compile-tests        called after javac compilation of JUnit tests
+      -pre-compile-test-single:  called before javac compilation of single JUnit test
+      -post-compile-test-single: called after javac compilation of single JUunit test
       -pre-dist:                 called before archive building 
       -post-dist:                called after archive building 
       -post-clean:               called after cleaning build products 
@@ -45,7 +50,7 @@
 
 
     Other way how to customize the build is by overriding existing main targets.
-    The target of interestáare: 
+    The target of interest are: 
 
       init-macrodef-javac:    defines macro for javac compilation
       init-macrodef-junit:   defines macro for junit execution
@@ -68,4 +73,19 @@
     nbproject/build-impl.xml file. 
 
     -->
+	
+	<target depends="prepare" name="-post-compile">
+        <!-- Empty placeholder for easier customization. -->
+        <!-- You can override this target in the ../build.xml file. -->
+	</target>
+
+    	<!-- Copia de archivos y creación de directorios -->
+	<target name="prepare">
+		<copy file="${log4j.dir}/log4j.properties" toDir="${build.classes.dir}" />
+		<replace file="${build.classes.dir}/log4j.properties">
+			<replacefilter token="@@LOGLEVEL@@" value="${config.logLevel}" />
+			<replacefilter token="@@LOGFILE@@" value="${config.logFile}" />
+		</replace>
+	</target>
+
 </project>

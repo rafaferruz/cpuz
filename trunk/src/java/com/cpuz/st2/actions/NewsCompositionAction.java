@@ -7,7 +7,7 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.NewsComposition;
 import com.cpuz.domain.Section;
 import com.cpuz.model.NewsCompositionsModel;
-import com.cpuz.st2.beans.ListControlParams;
+import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -24,7 +24,7 @@ import org.apache.struts2.interceptor.SessionAware;
  */
 public class NewsCompositionAction extends ActionSupport implements RequestAware, SessionAware, Serializable {
 
-    private ListControlParams control = new ListControlParams();
+    private ControlParams control = new ControlParams();
     private List<NewsComposition> dataList = new ArrayList<NewsComposition>();
     private NewsComposition dataEdit = new NewsComposition();
     private NewsCompositionsModel dataModel;
@@ -151,11 +151,11 @@ public class NewsCompositionAction extends ActionSupport implements RequestAware
         super.validate();
     }
 
-    public ListControlParams getControl() {
+    public ControlParams getControl() {
         return control;
     }
 
-    public void setControl(ListControlParams control) {
+    public void setControl(ControlParams control) {
         this.control = control;
     }
 
