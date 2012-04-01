@@ -6,7 +6,7 @@ package com.cpuz.st2.actions;
 
 import com.cpuz.DAO.query.entities.NewsPieceComposition;
 import com.cpuz.DAO.query.models.NewsPieceCompositionModel;
-import com.cpuz.st2.beans.ListControlParams;
+import com.cpuz.st2.beans.ControlParams;
 import com.cpuz.st2.beans.NewsSelecConditions;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -22,7 +22,7 @@ import org.apache.struts2.interceptor.RequestAware;
  */
 public class NewsSearchedAction extends ActionSupport implements RequestAware, Serializable {
 
-    private ListControlParams control = new ListControlParams();
+    private ControlParams control = new ControlParams();
     private List<NewsPieceComposition> dataList = new ArrayList<NewsPieceComposition>();
     private NewsPieceComposition dataEdit = new NewsPieceComposition();
     private NewsPieceCompositionModel dataModel = new NewsPieceCompositionModel();
@@ -74,11 +74,11 @@ public class NewsSearchedAction extends ActionSupport implements RequestAware, S
         super.validate();
     }
 
-    public ListControlParams getControl() {
+    public ControlParams getControl() {
         return control;
     }
 
-    public void setControl(ListControlParams control) {
+    public void setControl(ControlParams control) {
         this.control = control;
     }
 

@@ -1,6 +1,6 @@
 package com.cpuz.model;
 
-import com.cpuz.DAO.impl.DAOFactory;
+import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.NewsPiece;
 import com.cpuz.exceptions.NewsCompositionException;
 import com.cpuz.exceptions.NewsPieceException;

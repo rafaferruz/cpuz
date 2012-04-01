@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<appName>cpuz</appName>
+	<serverDir>C:/Archivos de programa/Apache Software Foundation/apache-tomcat-7.0.20</serverDir>
+	<logFile>C:/proyectos/logs/cpuz.log</logFile>
+	<logLevel>DEBUG</logLevel>
+	<databaseUser>root</databaseUser>
+	<databasePassword>07021951</databasePassword>
+	<databaseName>cpuz</databaseName>
+	<databasePort>3306</databasePort>
+</config>

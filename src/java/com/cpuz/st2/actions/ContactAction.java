@@ -7,7 +7,7 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.Contact;
 import com.cpuz.model.ContactsModel;
 import com.cpuz.model.UserService;
-import com.cpuz.st2.beans.ListControlParams;
+import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import org.apache.struts2.interceptor.SessionAware;
  */
 public class ContactAction extends ActionSupport implements RequestAware, SessionAware, Serializable {
 
-    private ListControlParams control = new ListControlParams();
+    private ControlParams control = new ControlParams();
     private List<Contact> dataList = new ArrayList<Contact>();
     private Contact dataEdit = new Contact();
     private ContactsModel dataModel;
@@ -147,11 +147,11 @@ public class ContactAction extends ActionSupport implements RequestAware, Sessio
         super.validate();
     }
 
-    public ListControlParams getControl() {
+    public ControlParams getControl() {
         return control;
     }
 
-    public void setControl(ListControlParams control) {
+    public void setControl(ControlParams control) {
         this.control = control;
     }
 

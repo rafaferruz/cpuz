@@ -3,7 +3,7 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.NewsPiece;
 import com.cpuz.domain.Role;
 import com.cpuz.model.InitModel;
-import com.cpuz.st2.beans.ListControlParams;
+import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import org.apache.struts2.interceptor.RequestAware;
  */
 public class LogoutAction extends ActionSupport implements RequestAware, Serializable {
 
-    private ListControlParams control = new ListControlParams();
+    private ControlParams control = new ControlParams();
     private List<NewsPiece> dataList = new ArrayList<>();
     private InitModel initModel;
     private Map<Integer, String> mapStatus = new HashMap<>();

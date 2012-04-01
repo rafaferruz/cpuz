@@ -7,7 +7,7 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.Image;
 import com.cpuz.exceptions.ImageException;
 import com.cpuz.model.ImagesModel;
-import com.cpuz.st2.beans.ListControlParams;
+import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
  */
 public class ImageAction extends ActionSupport implements ServletRequestAware, RequestAware, SessionAware, ApplicationAware, Serializable {
 
-    private ListControlParams control = new ListControlParams();
+    private ControlParams control = new ControlParams();
     private List<Image> dataList = new ArrayList<Image>();
     private Image dataEdit = new Image();
     private ImagesModel dataModel;
@@ -263,11 +263,11 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
         super.validate();
     }
 
-    public ListControlParams getControl() {
+    public ControlParams getControl() {
         return control;
     }
 
-    public void setControl(ListControlParams control) {
+    public void setControl(ControlParams control) {
         this.control = control;
     }
 
