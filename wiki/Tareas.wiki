@@ -2,9 +2,8 @@
 
 = Tareas en curso =
 
-
+  * *30/03/2012: Cambiar nombre de paquete DAO.impl a DAO
+    Cambiando BugDAO
 
 
 = Tareas pendientes =
-
-  * *30/03/2012: Cambiar nombre de paquete DAO.impl a DAO
