@@ -2,8 +2,12 @@
 
 = Tareas en curso =
 
+  * *03/04/2012: Corregir BugAction.java y BugsModel.java
+
   * *30/03/2012: Cambiar nombre de paquete DAO.impl a DAO
     02/04/2012: Cambiando BugDAO
 
 
 = Tareas pendientes =
+
+  * *03/04/2012: Implementar estilos CSS según arquitectura YAML para diseñar la ventana principal: Tamaños, Columnas y Colores generales
