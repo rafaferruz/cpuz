@@ -6,6 +6,8 @@
 
   * *30/03/2012: Cambiar nombre de paquete DAO.impl a DAO
     02/04/2012: Cambiando BugDAO
+    07/04/2012: Cambiado BugDAO.java, Bug.java, BugsModel.java
+    No muestra la lista de bugs. Revisar problema.
 
 
 = Tareas pendientes =
