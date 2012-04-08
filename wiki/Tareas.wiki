@@ -7,4 +7,7 @@
 = Tareas pendientes =
 
   * *03/04/2012: Implementar estilos CSS según arquitectura YAML para diseñar la ventana principal: Tamaños, Columnas y Colores generales
-  * *08/04/2012: Corregir y poner en marcha UserAction.java, UserDAO.java, UsersModel.java u userList.jsp
+  * *08/04/2012: Corregir y poner en marcha UserAction.java, UserDAO.java, UsersModel.java y userList.jsp
+  * *08/04/2012: Corregir errores de renderización de páginas HTML con componentes Struts2:
+    * rolelist.jsp
+    * bugsList.jsp
