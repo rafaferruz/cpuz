@@ -1,6 +1,5 @@
 package com.cpuz.DAO;
 
-import com.cpuz.DAO.RoleDAO;
 import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.DAO.impl.NewsPieceDAOImpl;
 import com.cpuz.DAO.impl.UserDAO;
@@ -108,6 +107,9 @@ public class DAOFactory {
 
 	public RoleDAO getRoleDAO() {
 		return (RoleDAO) this.getDAO(RoleDAO.class);
+	}
+	public BugDAO getBugDAO() {
+		return (BugDAO) this.getDAO(BugDAO.class);
 	}
 	public NewsPieceDAOImpl getNewsPieceDAOImpl() {
 		return (NewsPieceDAOImpl) this.getDAO(NewsPieceDAOImpl.class);

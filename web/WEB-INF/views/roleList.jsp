@@ -54,7 +54,7 @@
 
     </s:if>
 
-    <%@include  file="/WEB-INF/views/ListTableFootButtons.jspf" %>
+    <%@include  file="/WEB-INF/views/listTableFootButtons.jspf" %>
 
 </s:form>
 

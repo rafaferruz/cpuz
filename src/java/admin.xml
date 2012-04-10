@@ -21,11 +21,11 @@
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="Bug_*" method="Bug_{1}" class="springBugAction" >
-            <result name="LIST">/WEB-INF/pages/main.jsp</result>
-            <result name="NEW">/WEB-INF/pages/main.jsp</result>
-            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
-            <result name="input">/WEB-INF/pages/main.jsp</result>
+        <action name="Bug*" method="bug{1}" class="springBugAction" >
+            <result name="List">/WEB-INF/pages/main.jsp</result>
+            <result name="New">/WEB-INF/pages/main.jsp</result>
+            <result name="Edit">/WEB-INF/pages/main.jsp</result>
+            <result name="Input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
         <action name="Section_*" method="Section_{1}" class="springSectionAction" >

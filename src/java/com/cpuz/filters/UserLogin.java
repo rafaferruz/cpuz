@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.SQLException;
 import java.util.Enumeration;
+import javax.naming.NamingException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -112,7 +114,7 @@ public class UserLogin implements Filter {
 // fin de comprobación de sesión y usuario
 
 			chain.doFilter(request, response);
-		} catch (Throwable t) {
+		} catch (ServletException | IOException | SQLException | NamingException t) {
 			// If an exception is thrown somewhere down the filter chain,
 			// we still want to execute our after processing, and then
 			// rethrow the problem after that.

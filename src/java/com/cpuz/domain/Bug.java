@@ -1,6 +1,20 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * Foobar is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.cpuz.domain;
 
@@ -8,25 +22,20 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- *
- * @author RAFAEL FERRUZ
- */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Clase que define los objetos Bug de la aplicación
  */
 public class Bug implements Serializable {
 
     private static final long serialVersionUID = 101L;
     private Integer id;
-    private java.util.Date datetime;
-    private Integer status;
+    private java.util.Date datetime=new Date();
+    private Integer status=BugStatusType.CREATED.getId();
     private String user;
-    private Integer priority;
-    private String type;
-    private String application;
-    private String header;
-    private String body;
+    private Integer priority=5;
+    private String type=BugType.UNDEFINED.getKey();
+    private String application="";
+    private String header="";
+    private String body="";
     private boolean registered;
 
     public Bug() {

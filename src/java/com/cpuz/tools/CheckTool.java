@@ -108,17 +108,21 @@ public class CheckTool {
 			page = "/WEB-INF/pages/nonesuch.jsp";
 			request.setAttribute("nonesuch", id);
 		}
-// Fin de la comprobación de autorización de uso de la página
-		if (id.equals("/pages/juntanoticiaslistar.jsp")) {
-			session.setAttribute("indexSolapa3", "juntanoticiaslistar.jsp");
-			page = "/WEB-INF/pages/index.jsp";
-		} else if (id.equals("/docs/juntanoticiasseleccionar.jsp")) {
-			session.setAttribute("indexSolapa3", "juntanoticiasseleccionar.jsp");
-			page = "/WEB-INF/pages/index.jsp";
-		} else if (id.equals("/docs/juntanoticiasseleccionados.jsp")) {
-			session.setAttribute("indexSolapa3", "juntanoticiasseleccionados.jsp");
-			page = "/WEB-INF/pages/index.jsp";
-		} // Comprueba si es una página del grupo 'index'
+		// Fin de la comprobación de autorización de uso de la página
+		switch (id) {
+			case "/pages/juntanoticiaslistar.jsp":
+				session.setAttribute("indexSolapa3", "juntanoticiaslistar.jsp");
+				page = "/WEB-INF/pages/index.jsp";
+				break;
+			case "/docs/juntanoticiasseleccionar.jsp":
+				session.setAttribute("indexSolapa3", "juntanoticiasseleccionar.jsp");
+				page = "/WEB-INF/pages/index.jsp";
+				break;
+			case "/docs/juntanoticiasseleccionados.jsp":
+				session.setAttribute("indexSolapa3", "juntanoticiasseleccionados.jsp");
+				page = "/WEB-INF/pages/index.jsp";
+				break;
+		}
 		return page;
 	}
 

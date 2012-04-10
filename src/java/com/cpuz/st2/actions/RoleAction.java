@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.cpuz.st2.actions;
 
@@ -34,7 +34,6 @@ import org.apache.struts2.interceptor.RequestAware;
 
 /**
  * Esta clase gestiona las operaciones CRUD de los objetos Role de la aplicación
- * @author RAFAEL FERRUZ
  */
 public class RoleAction extends ActionSupport implements RequestAware, Serializable {
 

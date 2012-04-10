@@ -1,17 +1,3 @@
-<%-- 
-    Document   : bugsList.jsp
-    Created on : 23-dic-2009, 13:30:17
-    Author     : RAFAEL FERRUZ
---%>
-
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
-
-<%--
-<%@page errorPage="error.jsp" %>
---%>
-<%@ taglib prefix="s" uri="/struts-tags" %>
 
 <h3 align="center"><s:text name="BugsList"/></h3>
 
@@ -19,7 +5,7 @@
 <s:actionerror/>
 
 
-<s:form id="bugslist_form" name="bugslist_form" method="post" cssClass="data_table">
+<s:form id="bugslist_form" name="bugslist_form" method="post" cssClass="data_table" >
     <s:hidden name="control.runAction" id="runAction"/>
     <s:hidden name="control.idKey" id="idKey" />
     <s:hidden name="control.recStart" id="recStart"/>
@@ -91,13 +77,13 @@
 <script type="text/javascript">
     function orden_ejecutar(accion) {
         window.document.bugslist_form.runAction.value = accion;
-        window.document.bugslist_form.action = "Bug_"+accion+".action";
+        window.document.bugslist_form.action = "Bug"+accion+".action";
         window.document.bugslist_form.submit();
         return 0;
     }
     function DoNavigation(nav_rule) {
         window.document.bugslist_form.runAction.value = nav_rule;
-        window.document.bugslist_form.action = "Bug_Navigation.action";
+        window.document.bugslist_form.action = "BugNavigation.action";
         window.document.bugslist_form.submit();
         return 0;
     }

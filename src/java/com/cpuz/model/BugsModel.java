@@ -1,166 +1,110 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * Foobar is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.cpuz.model;
 
 import com.cpuz.domain.Bug;
-import com.cpuz.DAO.impl.BugDAOImpl;
+import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.UserType;
-import com.cpuz.exceptions.BugException;
+import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
- *
- * @author RAFAEL FERRUZ
+ * Clase puente para aislar la clase Action de la clase DAO, de forma que Action
+ * no utilice llamadas a la DAO sino llamadas a métodos de Model que a su vez realizarán
+ * llamadas DAO.
+ * 
  */
 public class BugsModel {
+	private final transient Logger log = Logger.getLogger(this.getClass());
+	ControlParams control=new ControlParams();
 
     public BugsModel() {
     }
 
-    public boolean keyIdExists(Integer ssn) {
-        try {
-            BugDAOImpl nDao = new BugDAOImpl();
-            return nDao.keyIdExists(ssn);
-
-        } catch (Exception ex) {
-            return false;
-        }
+	/**
+	 * Devuelve un valor booleano indicando si existe una fila con el id pasado como parámetro
+	 * 
+	 * @param bugId		id del bug a consultar
+	 * @return			true si encuentra una fila con el id recibido, false si no lo encuentra.
+	 * @throws RoleException 
+	 */
+    public boolean keyIdExists(Integer bugId) throws SQLException {
+            Bug bug = new DAOFactory().getBugDAO().read(bugId);
+		return (bug != null);
     }
 
-    /**
-     * Proporciona un objeto List de registros de titulares de Bugs
-     * con un número de registros indicado por el parámetro recChunk y
-     * a partir del indicado por el parámetro recStart. Se toma como lista
-     * base la totalidad de titulares de Bugs ordenados por fecha empezando
-     * por el titular más reciente y continuando al más antiguo.
-     * @param recStart N� de registro inicial
-     * @param recChunk N� de registros a incluir en la b�squeda
-     * @return Un objeto List<Bug> con los registros seleccionados
-     */
-    public List<Bug> getNewsRecords() {
-        /* Requirement codes: E5-1 */
-        return this.getNewsRecords(UserType.ANONYMOUS, "");
-    }
+	/**
+	 * Proporciona un objeto List de registros de titulares de Bugs
+	 * con un número de registros indicado por el parámetro recChunk y
+	 * a partir del indicado por el parámetro recStart. Se toma como lista
+	 * base la totalidad de titulares de Bugs ordenados por fecha empezando
+	 * por el titular más reciente y continuando al más antiguo.
+	 * @param recStart Nº de registro inicial
+	 * @param recChunk Nº de registros a incluir en la búsqueda
+	 * @return Un objeto List<Bug> con los registros seleccionados
+	 */
+	public List<Bug> getNewsRecords() throws SQLException  {
+		control.setUserType(UserType.ANONYMOUS);
+		control.setRecStart(0);
+		control.setRecChunk(0);
+		return this.getBugList(control);
+	}
 
-    public List<Bug> getNewsRecords(UserType userType) {
-        /* Requirement codes: E5-1 */
-        return this.getNewsRecords(userType, "");
+	public List<Bug> getNewsRecords(UserType userType) throws SQLException {
+		control.setUserType(userType);
+		control.setRecStart(0);
+		control.setRecChunk(0);
+		return this.getBugList(control);
 
-    }
+	}
+	public List<Bug> getBugList(ControlParams control) throws SQLException  {
 
-    public List<Bug> getNewsRecords(UserType userType, String selectionClause) {
+		List<Bug> bugs = new ArrayList<>();
+		bugs = new DAOFactory().getBugDAO().getBugList(control);
+		return bugs;
+	}
 
-        String sqlWhereClause = "";
-        List<Bug> news = new ArrayList<Bug>();
-        try {
-            BugDAOImpl nDao = new BugDAOImpl();
-            /* Requirement codes: E5-1 */
-            if (userType != UserType.ADMIN) {
-                sqlWhereClause = " bug_status = 2 ";
-            }
-            if (!selectionClause.equals("")) {
-                if (!sqlWhereClause.equals("")) {
-                    sqlWhereClause += " AND (" + selectionClause + ") ";
-                } else {
-                    sqlWhereClause = " (" + selectionClause + ") ";
-                }
-            }
-            if (!sqlWhereClause.equals("")) {
-                sqlWhereClause = " WHERE " + sqlWhereClause;
-            }
+	public int getCountRows() throws SQLException {
+		return new DAOFactory().getBugDAO().getCountRows();
+	}
 
-            /*            String sqlWhereClause = "WHERE bug_user=null" +
-            " OR bug_user=0 " +
-            " OR bug_user=bug_id " +
-            " ORDER BY bug_FECHA DESC, bug_id DESC";
-             * */
-            sqlWhereClause = "SELECT * FROM bugs " + sqlWhereClause
-                    + " ORDER BY bug_priority, bug_date DESC, bug_id DESC";
-            for (Bug n : nDao.readBugs(sqlWhereClause)) {
-                news.add(n);
-            }
-        } catch (BugException ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
+	public Bug getById(int bugId) throws SQLException{
+		return new DAOFactory().getBugDAO().read(bugId);
+	}
 
-    public List<Bug> getRecords(String selectClause, String whereClause, String orderClause) {
+	public int insertBug(Bug bug) throws SQLException {
+		return new DAOFactory().getBugDAO().create(bug);
+	}
 
-        String sqlClause = "";
-        List<Bug> records = new ArrayList<Bug>();
-        try {
-            BugDAOImpl nDao = new BugDAOImpl();
-            if (selectClause == null || selectClause.equals("")) {
-                sqlClause = "SELECT * FROM bugs ORDER BY bug_priority, bug_date DESC, bug_id DESC";
-            } else {
-                sqlClause = selectClause + " " + whereClause + " " + orderClause;
-            }
+	public int updateBug(Bug bug) throws SQLException{
+		return new DAOFactory().getBugDAO().update(bug);
+	}
 
-            records = nDao.readBugs(sqlClause);
+	public int deleteBug(Bug bug) throws SQLException {
+		return new DAOFactory().getBugDAO().delete(bug.getId());
+	}
 
-        } catch (BugException ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return records;
-    }
+	public int deleteBugIds(List<String> ids) throws SQLException {
+		return new DAOFactory().getBugDAO().deleteIds(ids);
+	}
 
-    public synchronized int setNewRecord(Bug news) {
-
-        try {
-            BugDAOImpl nDao = new BugDAOImpl();
-            return nDao.createBug(news);
-        } catch (BugException ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int setUpdateRecord(Bug news) {
-
-        try {
-            BugDAOImpl nDao = new BugDAOImpl();
-            return nDao.updateBug(news);
-        } catch (BugException ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int deleteNews(Bug news) {
-
-        try {
-            BugDAOImpl nDao = new BugDAOImpl();
-            return nDao.deleteBug(news);
-        } catch (BugException ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(BugsModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
 }
