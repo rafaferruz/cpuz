@@ -174,7 +174,7 @@ public class RolesModelTest extends RolesModel {
 	 * Test of getCountRows method, of class RolesModel.
 	 */
 	@Test
-	public void testGetCountRows() {
+	public void testGetCountRows() throws SQLException {
 		System.out.println("getCountRows");
 		RolesModel instance = new RolesModel();
 		int expResult = 0;

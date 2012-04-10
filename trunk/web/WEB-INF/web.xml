@@ -24,6 +24,10 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
+    <context-param>
+        <param-name>dirApplication</param-name>
+        <param-value>http://localhost:8080/CPUZ</param-value>
+    </context-param>
     <filter>
         <filter-name>UserLogin</filter-name>
         <filter-class>com.cpuz.filters.UserLogin</filter-class>

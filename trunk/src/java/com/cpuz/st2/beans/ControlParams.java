@@ -87,15 +87,20 @@ public class ControlParams implements Serializable {
 	}
 
     public void doNavigation()  {
-        if (getRunAction().equals("nav_first")) {
-            nav_first();
-        } else if (getRunAction().equals("nav_prev")) {
-            nav_prev();
-        } else if (getRunAction().equals("nav_next")) {
-            nav_next();
-        } else if (getRunAction().equals("nav_last")) {
-            nav_last();
-        }
+		switch (getRunAction()) {
+			case "nav_first":
+				nav_first();
+				break;
+			case "nav_prev":
+				nav_prev();
+				break;
+			case "nav_next":
+				nav_next();
+				break;
+			case "nav_last":
+				nav_last();
+				break;
+		}
     }
 
     private void nav_first() {

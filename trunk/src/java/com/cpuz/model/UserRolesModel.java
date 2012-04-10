@@ -43,8 +43,8 @@ public class UserRolesModel {
      * a partir del indicado por el parámetro recStart. Se toma como lista
      * base la totalidad de titulares de UserRoles ordenados por fecha empezando
      * por el titular más reciente y continuando al más antiguo.
-     * @param recStart N� de registro inicial
-     * @param recChunk N� de registros a incluir en la b�squeda
+     * @param recStart Nº de registro inicial
+     * @param recChunk Nº de registros a incluir en la búsqueda
      * @return Un objeto List<UserRole> con los registros seleccionados
      */
     public List<UserRole> getNewsRecords() {

@@ -14,8 +14,9 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
- */package com.cpuz.DAO;
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.cpuz.DAO;
 
 import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.domain.Role;
@@ -30,7 +31,6 @@ import org.apache.log4j.Logger;
 /**
  * Clase para la ejecución de operaciones CRUD sobre la tabla 'roles'.
  * 
- * @author RAFAEL FERRUZ
  */
 public class RoleDAO implements InjectableDAO {
 
@@ -48,7 +48,7 @@ public class RoleDAO implements InjectableDAO {
 	 * @param role		Objeto Role que se quiere insertar en la tabla
 	 * @return			Un entero indicando el número de filas afectadas por la sentencia
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
-	 * @throws RoleException 
+	 * @throws SQLException 
 	 */
 	public int create(Role role) throws SQLException {
 		String sql = "INSERT INTO roles ("
@@ -77,7 +77,7 @@ public class RoleDAO implements InjectableDAO {
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			role = getCompleteRole(conn, rs);
+			role = getCompleteRole(rs);
 		}
 		return role;
 	}
@@ -111,7 +111,7 @@ public class RoleDAO implements InjectableDAO {
 	 * @param rolId		Id del objeto Role que se quiere eliminar de la tabla
 	 * @return			Un entero indicando el número de filas afectadas por la sentencia
 	 *					SQL; en está caso será igual a 1 si se ha eliminado con éxito.
-	 * @throws RoleException 
+	 * @throws SQLException 
 	 */
 	public int delete(int rolId) throws SQLException {
 		int rowCount = 0;
@@ -123,7 +123,7 @@ public class RoleDAO implements InjectableDAO {
 		return rowCount;
 	}
 
-	private Role getCompleteRole(Connection conn, ResultSet rs) throws SQLException {
+	private Role getCompleteRole(ResultSet rs) throws SQLException {
 		Role role = new Role();
 		role.setId(rs.getInt("rol_id"));
 		role.setRole(rs.getString("rol_role"));
@@ -143,7 +143,7 @@ public class RoleDAO implements InjectableDAO {
 		}
 		try (ResultSet rs = ps.executeQuery()) {
 			while (rs.next()) {
-				roles.add(getCompleteRole(conn, rs));
+				roles.add(getCompleteRole(rs));
 			}
 		}
 		return roles;
@@ -163,17 +163,13 @@ public class RoleDAO implements InjectableDAO {
 	 * 
 	 * @return variable int con el número de registros en la tabla
 	 */
-	public int getCountRows() {
-		try {
-			String sql = "SELECT COUNT(*) FROM roles";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			log.debug("RoleDAO getCountRows(): " + ps.toString());
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				return rs.getInt(1);
-			}
-		} catch (SQLException ex) {
-			ex.printStackTrace();
+	public int getCountRows() throws SQLException {
+		String sql = "SELECT COUNT(*) FROM roles";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		log.debug("RoleDAO getCountRows(): " + ps.toString());
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			return rs.getInt(1);
 		}
 		return 0;
 	}
