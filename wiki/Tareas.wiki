@@ -6,7 +6,7 @@
     * 09/04/2012: Se ha iniciado la adaptación de los estilos CSS a la arquitectura y conceptos del framework YAML.
     * 12/04/2012: Se ha iniciado el diseño con YAML definiendo 3 columna de información y una columna vacía a la derecha.
 
-  * *13/04/2012: Incorporrar anotaciones Struts en Init.java, Role.java y Bug.java 
+  * *13/04/2012: Incorporar anotaciones Struts en Init.java, Role.java y Bug.java 
 
 
 = Tareas pendientes =
