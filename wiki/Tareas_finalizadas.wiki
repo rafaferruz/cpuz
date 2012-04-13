@@ -3,7 +3,5 @@
 = Tareas finalizadas =
 
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * *13/04/2012: Incorporar anotaciones Struts en Init.java, Role.java y Bug.java*
+    *13/04/2012: Existen dificultades para implementar anotaciones Struts2 cuando se trabaja con Spring. Dejo la tarea como finalizada y se retomará más adelante cuando se tengan conocimientos y soluciones para ello. Se continúa con ficheros XML de confoguración de Struts.
