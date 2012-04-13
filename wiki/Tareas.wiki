@@ -3,7 +3,10 @@
 = Tareas en curso =
 
   * *03/04/2012: Implementar estilos CSS según arquitectura YAML para diseñar la ventana principal: Tamaños, Columnas y Colores generales*
-    09/04/2012: Se ha iniciado la adaptación de los estilos CSS a la arquitectura y conceptos del framework YAML.
+    * 09/04/2012: Se ha iniciado la adaptación de los estilos CSS a la arquitectura y conceptos del framework YAML.
+    * 12/04/2012: Se ha iniciado el diseño con YAML definiendo 3 columna de información y una columna vacía a la derecha.
+
+  * *13/04/2012: Incorporrar anotaciones Struts en Init.java, Role.java y Bug.java 
 
 
 = Tareas pendientes =
