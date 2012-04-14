@@ -2,6 +2,10 @@
 
 = Tareas finalizadas =
 
+  * *03/04/2012: Implementar estilos CSS según arquitectura YAML para diseñar la ventana principal: Tamaños, Columnas y Colores generales*
+    * 09/04/2012: Se ha iniciado la adaptación de los estilos CSS a la arquitectura y conceptos del framework YAML.
+    * 12/04/2012: Se ha iniciado el diseño con YAML definiendo 3 columna de información y una columna vacía a la derecha.
+    * 14/04/2012: Se da por finalizada la primera parte de esta tarea ya que se muestran las tres columnas de información requeridas y una columna a la derecha vacía. Se continuará con el diseño cuando se tengan en funcionamiento las clases de los objetos noticias.
 
   * *13/04/2012: Incorporar anotaciones Struts en Init.java, Role.java y Bug.java*
     *13/04/2012: Existen dificultades para implementar anotaciones Struts2 cuando se trabaja con Spring. Dejo la tarea como finalizada y se retomará más adelante cuando se tengan conocimientos y soluciones para ello. Se continúa con ficheros XML de confoguración de Struts.
