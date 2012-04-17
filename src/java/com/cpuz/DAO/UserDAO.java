@@ -19,7 +19,7 @@
 package com.cpuz.DAO;
 
 import com.cpuz.DAO.impl.InjectableDAO;
-import com.cpuz.domain.Bug;
+import com.cpuz.domain.User;
 import com.cpuz.st2.beans.ControlParams;
 import com.cpuz.util.SqlUtil;
 import java.sql.*;
@@ -28,10 +28,10 @@ import java.util.*;
 import org.apache.log4j.Logger;
 
 /**
- * Clase para la ejecución de operaciones CRUD sobre la tabla 'bugs'.
  *
+ * @author RAFAEL FERRUZ
  */
-public class BugDAO implements InjectableDAO {
+public class UserDAO implements InjectableDAO {
 
 	transient private final Logger log = Logger.getLogger(this.getClass());
 	private Connection conn;
@@ -42,34 +42,33 @@ public class BugDAO implements InjectableDAO {
 	}
 
 	/**
-	 * Añade el Bug a la tabla 
+	 * Añade el User a la tabla 
 	 *
-	 * @param Bug		Objeto Bug que se quiere insertar en la tabla
+	 * @param User		Objeto User que se quiere insertar en la tabla
 	 * @return			Un entero indicando el número de filas afectadas por la sentencia
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public synchronized int create(Bug rec) throws SQLException {
+	public synchronized int create(User rec) throws SQLException {
 
-		String sql = "INSERT INTO bugs "
-				+ "(bug_date, bug_status, bug_user, bug_priority, bug_type, "
-				+ "bug_application, bug_header, bug_body) "
+		String sql = "INSERT INTO users "
+				+ "(usu_date, usu_status, usu_category, usu_user, "
+				+ "usu_name, usu_password, usu_email) "
 				+ " VALUES ("
-				+ "'" + (new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(rec.getDatetime())) + "',"
-				+ rec.getStatus() + ","
+				+ "'" + (new SimpleDateFormat("yyyy-MM-dd").format(rec.getDate())) + "',"
+				+ " " + rec.getStatus() + ","
+				+ " " + rec.getCategory() + " ,"
 				+ "'" + rec.getUser() + "',"
-				+ rec.getPriority() + ","
-				+ "'" + rec.getType() + "',"
-				+ "'" + rec.getApplication() + "',"
-				+ "'" + rec.getHeader() + "',"
-				+ "'" + rec.getBody() + "')";
+				+ "'" + rec.getName() + "',"
+				+ "'" + rec.getPassword() + "',"
+				+ "'" + rec.getEmail() + "')";
 		int rowCount = 0;
 
 		PreparedStatement ps = conn.prepareStatement(sql);
 		rowCount = ps.executeUpdate();
-		sql = "SELECT LAST_INSERT_id() FROM bugs ";
+		sql = "SELECT LAST_INSERT_id() FROM users ";
 		ps = conn.prepareStatement(sql);
-		log.debug("BugDAO create(): " + ps.toString());
+		log.debug("UserDAO create(): " + ps.toString());
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
 			rec.setId(rs.getInt(1));
@@ -80,77 +79,75 @@ public class BugDAO implements InjectableDAO {
 	}
 
 	/**
-	 * Recupera un BugRol de la tabla 
+	 * Recupera un User de la tabla 
 	 *
-	 * @param bugId		Id del objeto Bug que se quiere recuperar de la tabla
+	 * @param userId		Id del objeto User que se quiere recuperar de la tabla
 	 * @return			Un un objeto bug con la información recuperada de la 
 	 *					base de datos. Si no encuentra el id buscado, devuelve null.
 	 * @throws SQLException 
 	 */
-	public Bug read(int bugId) throws SQLException {
-		Bug bug = null;
-		String sql = "SELECT * FROM bugs WHERE bug_id = ?";
+	public User read(int userId) throws SQLException {
+		User user = null;
+		String sql = "SELECT * FROM users WHERE usu_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, bugId);
-		log.debug("BugDAO create(): " + ps.toString());
+		ps.setInt(1, userId);
+		log.debug("UserDAO create(): " + ps.toString());
 		ResultSet rs = ps.executeQuery(sql);
 		if (rs.next()) {
-			bug = getCompleteBug(rs);
-		} 
-		return bug;
+			user = getCompleteUser(rs);
+		}
+		return user;
 	}
 
 	/**
-	 * Actualiza un Bug en la tabla 
+	 * Actualiza un User en la tabla 
 	 *
-	 * @param bug		Objeto Bug que se quiere actualizar en la tabla
+	 * @param user		Objeto User que se quiere actualizar en la tabla
 	 * @return			Un entero indicando el número de filas afectadas por la sentencia
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public int update(Bug bug) throws SQLException {
+	public int update(User user) throws SQLException {
 		int rowCount = 0;
-		String sql = "UPDATE bugs SET "
-				+ "bug_date = ?, bug_status = ?, bug_user = ?, "
-				+ "bug_priority = ?, bug_type = ?, "
-				+ "bug_application = ?, bug_header = ?, bug_body = ? "
-				+ " WHERE bug_id = ?";
+		String sql = "UPDATE users SET "
+				+ "usu_date = ?, usu_status = ?, usu_category = ?, "
+				+ "usu_user = ?, usu_name = ?, usu_password = ?, user_email = ? "
+				+ " WHERE usu_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setDate(1, new java.sql.Date(bug.getDatetime().getTime()));
-		ps.setInt(2, bug.getStatus());
-		ps.setString(3, bug.getUser());
-		ps.setInt(4, bug.getPriority());
-		ps.setString(5, bug.getType());
-		ps.setString(6, bug.getApplication());
-		ps.setString(7, bug.getHeader());
-		ps.setString(8, bug.getBody());
-		ps.setInt(9, bug.getId());
-		log.debug("RoleDAO update(): " + ps.toString());
+		ps.setDate(1, new java.sql.Date(user.getDate().getTime()));
+		ps.setInt(2, user.getStatus());
+		ps.setInt(3, user.getCategory());
+		ps.setString(4, user.getUser());
+		ps.setString(5, user.getName());
+		ps.setString(6, user.getPassword());
+		ps.setString(7, user.getEmail());
+		ps.setInt(8, user.getId());
+		log.debug("UserDAO update(): " + ps.toString());
 		rowCount = ps.executeUpdate();
 		return rowCount;
 	}
 
 	/**
-	 * Elimina un Bug de la tabla 
+	 * Elimina un User de la tabla 
 	 *
-	 * @param bugId		Id del objeto Bug que se quiere eliminar de la tabla
+	 * @param userId		Id del objeto User que se quiere eliminar de la tabla
 	 * @return			Un entero indicando el número de filas afectadas por la sentencia
 	 *					SQL; en está caso será igual a 1 si se ha eliminado con éxito.
 	 * @throws SQLException 
 	 */
-	public int delete(int bugId) throws SQLException {
+	public int delete(int userId) throws SQLException {
 		int rowCount = 0;
-		String sql = "DELETE FROM bugs WHERE bug_id = ?";
+		String sql = "DELETE FROM users WHERE usu_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, bugId);
-		log.debug("BugDAO delete(): " + ps.toString());
+		ps.setInt(1, userId);
+		log.debug("UserDAO delete(): " + ps.toString());
 		rowCount = ps.executeUpdate();
 		return rowCount;
 	}
 
-	public List<Bug> getBugList(ControlParams control) throws SQLException {
-		List<Bug> roles = new ArrayList<>();
-		String sql = "SELECT * FROM bugs ORDER BY bug_id ";
+	public List<User> getUserList(ControlParams control) throws SQLException {
+		List<User> roles = new ArrayList<>();
+		String sql = "SELECT * FROM users ORDER BY usu_id ";
 		String limit = control.getRecChunk() > 0 ? " LIMIT ? OFFSET ?" : "";
 		sql = sql + limit;
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -158,21 +155,21 @@ public class BugDAO implements InjectableDAO {
 			ps.setInt(1, control.getRecChunk());
 			ps.setInt(2, control.getRecStart());
 		}
-		log.debug("BugDAO getBugList(): " + ps.toString());
+		log.debug("UserDAO getUserList(): " + ps.toString());
 		try (ResultSet rs = ps.executeQuery()) {
 			while (rs.next()) {
-				roles.add(getCompleteBug(rs));
+				roles.add(getCompleteUser(rs));
 			}
 		}
 		return roles;
 	}
 
 	public int deleteIds(List<String> ids) throws SQLException {
-		String sql = "DELETE FROM bugs WHERE bug_id IN "
+		String sql = "DELETE FROM users WHERE usu_id IN "
 				+ SqlUtil.getPreparedStatementInClause(ids);
 		PreparedStatement ps = conn.prepareStatement(sql);
 		SqlUtil.setList(ps, ids);
-		log.debug("BugDAO deleteIds(): " + ps.toString());
+		log.debug("UserDAO deleteIds(): " + ps.toString());
 		return ps.executeUpdate();
 	}
 
@@ -182,9 +179,9 @@ public class BugDAO implements InjectableDAO {
 	 * @return variable int con el número de registros en la tabla
 	 */
 	public int getCountRows() throws SQLException {
-		String sql = "SELECT COUNT(*) FROM bugs";
+		String sql = "SELECT COUNT(*) FROM users";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		log.debug("BugDAO getCountRows(): " + ps.toString());
+		log.debug("UserDAO getCountRows(): " + ps.toString());
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			return rs.getInt(1);
@@ -192,17 +189,15 @@ public class BugDAO implements InjectableDAO {
 		return 0;
 	}
 
-	public Bug getCompleteBug(ResultSet rs) throws SQLException {
-		Bug bug = new Bug();
-		bug.setId(rs.getInt("bug_id"));
-		bug.setDatetime(rs.getTimestamp("bug_date"));
-		bug.setStatus(rs.getInt("bug_status"));
-		bug.setUser(rs.getString("bug_user"));
-		bug.setPriority(rs.getInt("bug_priority"));
-		bug.setType(rs.getString("bug_type"));
-		bug.setApplication(rs.getString("bug_application"));
-		bug.setHeader(rs.getString("bug_header"));
-		bug.setBody(rs.getString("bug_body"));
-		return bug;
+	public User getCompleteUser(ResultSet rs) throws SQLException {
+		User user = new User();
+		user.setId(rs.getInt("usu_id"));
+		user.setDate(rs.getDate("usu_date"));
+		user.setStatus(rs.getInt("usu_status"));
+		user.setUser(rs.getString("usu_user"));
+		user.setName(rs.getString("usu_name"));
+		user.setPassword(rs.getString("usu_password"));
+		user.setEmail(rs.getString("usu_email"));
+		return user;
 	}
 }

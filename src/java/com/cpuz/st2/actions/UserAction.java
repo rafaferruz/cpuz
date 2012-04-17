@@ -1,3 +1,21 @@
+/*
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * CPUZ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.cpuz.st2.actions;
 
 import com.cpuz.domain.Role;
@@ -17,8 +35,7 @@ import java.util.Map;
 import org.apache.struts2.interceptor.RequestAware;
 
 /**
- *
- * @author RAFAEL FERRUZ
+ * Esta clase gestiona las operaciones CRUD de los objetos User de la aplicación
  */
 public class UserAction extends ActionSupport implements RequestAware, Serializable {
 
@@ -26,9 +43,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
     private List<User> dataList = new ArrayList<>();
     private User dataEdit = new User();
     private UserModel dataModel;
-    private Map<Integer, String> mapStatus = new HashMap<>();
-    private Map<Integer, String> mapCategories = new HashMap<>();
-    private Map<String, Object> requestáttributes = new HashMap<>();
+    private Map<String, Object> requestAttributes = new HashMap<>();
     private List<Role> rolesList;
     private List<UserRole> userRolesList;
     private RolesModel rolesModel;
@@ -36,56 +51,50 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
     private String[] authRolesSel;
     private String[] availableRolesSel;
     private String selec1;
-    private String password_again;
+    private String passwordAgain;
 
     public UserAction() {
         super();
     }
 
     @Override
-    public String execute() throws Exception {
+    public String execute(){
         return "error";
     }
 
-    public String User_new() throws Exception {
-        initMapStatus();
-        initMapCategories();
-        rolesList = rolesModel.getNewsRecords();
-        userRolesList.clear();
+    public String UserNew(){
         control.setRecCount(1);
         control.setRunAction("new");
         dataEdit.setDate(new Date());
-        requestáttributes.put("page", "/WEB-INF/views/UserEdit.jsp");
-        return "NEW";
+        requestAttributes.put("page", "/WEB-INF/views/UserEdit.jsp");
+        return "New";
     }
 
-    public String User_edit() throws Exception {
-        dataEdit = dataModel.getRecords("SELECT * FROM users WHERE usu_id = "
-                + control.getId(), "", "").get(0);
+    public String UserEdit() throws Exception {
+        dataEdit = dataModel.getById(control.getId());
         // Se lee lista de Users
-        password_again = dataEdit.getPassword();
-
+        passwordAgain = dataEdit.getPassword();
         rolesList = rolesModel.getNewsRecords();
         userRolesList = userRolesModel.getNewsRecords("SELECT * FROM  userroles "
                 + " WHERE usu_user = '" + dataEdit.getUser() + "'");
+		List<Role>removeRoles=new ArrayList<>();
         for (UserRole ur : userRolesList) {
             if (!ur.getRole().equals("")) {
                 for (Role r : rolesList) {
                     if (ur.getRole().equals(r.getRole())) {
-                        rolesList.remove(r);
+                        removeRoles.add(new Role(r.getRole()));
                         break;
                     }
                 }
             }
         }
-        initMapStatus();
-        initMapCategories();
+		rolesList.removeAll(removeRoles);
         control.setRunAction("edit");
-        requestáttributes.put("page", "/WEB-INF/views/UserEdit.jsp");
-        return "EDIT";
+        requestAttributes.put("page", "/WEB-INF/views/UserEdit.jsp");
+        return "Edit";
     }
 
-    public String User_saveNew() throws Exception {
+    public String UserSaveNew() throws Exception {
 
         try {
             if (dataModel.setNewRecord(dataEdit) == 1) {
@@ -95,21 +104,21 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
                     updateUserRoles();
                 } catch (Exception ex) {
                     this.addActionError(getText("UserEditErrorMsg"));
-                    return "NEW";
+                    return "New";
                 }
             } else {
                 this.addActionError(getText("UserEditErrorMsg"));
-                return "NEW";
+                return "New";
             }
         } catch (Exception ex) {
             this.addActionError(getText("UserEditErrorMsg"));
-            return "NEW";
+            return "New";
         }
         this.addActionMessage(getText("UserEditSaveOkMsg"));
-        return User_list();
+        return UserList();
     }
 
-    public String User_saveEdit() throws Exception {
+    public String UserSaveEdit() throws Exception {
 
         if (dataModel.keyIdExists(dataEdit.getId())) {
             try {
@@ -131,13 +140,13 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
                 this.addActionError(getText("UserEditErrorMsg"));
                 return "EDIT";
             }
-            return User_list();
+            return UserList();
 
         }
         return "NEW";
     }
 
-    public String User_delete() throws Exception {
+    public String UserDelete() throws Exception {
         if (selec1 != null) {
             String[] deletes = selec1.split(",");
             for (int i = 0; i < deletes.length; i++) {
@@ -154,13 +163,13 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
                     addActionError(deletes[i] + " " + getText("NoneDeletedUser"));
                 }
             }
-            return User_list();
+            return UserList();
         }
         addActionError(getText("NoneSelectedUser"));
-        return User_list();
+        return UserList();
     }
 
-    public String User_list() throws Exception {
+    public String UserList() throws Exception {
         if (control.getRecCount() == 0) {
             dataList = dataModel.getRecords("SELECT * FROM users ", "", "");
             control.setRecCount(dataList.size());
@@ -169,13 +178,13 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
                 + " LIMIT " + control.getRecChunk().toString()
                 + " OFFSET " + control.getRecStart().toString(), "", "");
         control.setRunAction("list");
-        requestáttributes.put("page", "/WEB-INF/views/UserList.jsp");
+        requestAttributes.put("page", "/WEB-INF/views/UserList.jsp");
         return "LIST";
     }
 
     public String User_Navigation() throws Exception {
         control.doNavigation();
-        return User_list();
+        return UserList();
     }
 
     @Override
@@ -189,22 +198,6 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 
     public void setControl(ControlParams control) {
         this.control = control;
-    }
-
-    public Map<Integer, String> getMapStatus() {
-        return mapStatus;
-    }
-
-    public void setMapStatus(HashMap<Integer, String> mapStatus) {
-        this.mapStatus = mapStatus;
-    }
-
-    public Map<Integer, String> getMapCategories() {
-        return mapCategories;
-    }
-
-    public void setMapCategories(Map<Integer, String> mapCategories) {
-        this.mapCategories = mapCategories;
     }
 
     public User getDataEdit() {
@@ -275,31 +268,17 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
         return userRolesList;
     }
 
-    public String getPassword_again() {
-        return password_again;
+    public String getPasswordAgain() {
+        return passwordAgain;
     }
 
-    public void setPassword_again(String password_again) {
-        this.password_again = password_again;
-    }
-
-    public void initMapStatus() {
-        //Prepara tipos de status para radio element
-        mapStatus.put(0, this.getText("received"));
-        mapStatus.put(1, this.getText("waiting"));
-        mapStatus.put(2, this.getText("authorized"));
-    }
-
-    public void initMapCategories() {
-        //Prepara tipos de status para radio element
-        mapCategories.put(0, this.getText("basic"));
-        mapCategories.put(1, this.getText("manager"));
-        mapCategories.put(2, this.getText("admin"));
+    public void setPasswordAgain(String password_again) {
+        this.passwordAgain = password_again;
     }
 
     @Override
     public void setRequest(Map map) {
-        this.requestáttributes = map;
+        this.requestAttributes = map;
     }
 
     private void updateUserRoles() {
@@ -309,7 +288,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
                 UserRole ur = new UserRole();
                 ur.setUser(dataEdit.getUser());
                 ur.setRole(authRolesSel[i]);
-                ur.setEstado(0);
+                ur.setStatus(0);
                 ur.setDescription("");
                 userRolesModel.setNewRecord(ur);
             }

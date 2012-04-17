@@ -1,18 +1,32 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * CPUZ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.cpuz.model;
 
+import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.User;
-import com.cpuz.DAO.impl.UserDAOImpl;
-import com.cpuz.exceptions.UserException;
+import com.cpuz.domain.UserRole;
 import com.cpuz.domain.UserType;
+import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,165 +34,82 @@ import java.util.logging.Logger;
  */
 public class UserModel {
 
-    public UserModel() {
-    }
-    public boolean keyIdExists(int ssn) {
-        try {
-            UserDAOImpl nDao = new UserDAOImpl();
-            return nDao.keyIdExists(ssn);
-        } catch (UserException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
+	private final transient Logger log = Logger.getLogger(this.getClass());
+	ControlParams control = new ControlParams();
 
-    /**
-     * Proporciona un objeto List de registros de titulares de Users
-     * con un número de registros indicado por el parámetro recChunk y
-     * a partir del indicado por el parámetro recStart. Se toma como lista
-     * base la totalidad de titulares de Users ordenados por fecha empezando
-     * por el titular más reciente y continuando al más antiguo.
-     * @param recStart N� de registro inicial
-     * @param recChunk N� de registros a incluir en la b�squeda
-     * @return Un objeto List<User> con los registros seleccionados
-     */
-    public List<User> getNewsRecords() {
-/* Requirement codes: E5-1 */
-        return this.getNewsRecords(UserType.ANONYMOUS,"");
-    }
+	public UserModel() {
+	}
 
-    public List<User> getNewsRecords(UserType userType) {
-/* Requirement codes: E5-1 */
-        return this.getNewsRecords(userType,"");
+	public boolean keyIdExists(int userId) throws SQLException {
+		User user = new DAOFactory().getUserDAO().read(userId);
+		return (user != null);
+	}
 
-    }
-    public List<User> getNewsRecords(UserType userType, String selectionClause) {
+	/**
+	 * Proporciona un objeto List de registros de Users
+	 * con un número de registros indicado por el parámetro recChunk y
+	 * a partir del indicado por el parámetro recStart.
+	 * @param recStart Nº de registro inicial
+	 * @param recChunk Nº de registros a incluir en la búsqueda
+	 * @return Un objeto List<User> con los registros seleccionados
+	 */
+	public List<User> getNewsRecords() throws SQLException {
+		control.setUserType(UserType.ANONYMOUS);
+		control.setRecStart(0);
+		control.setRecChunk(0);
+		return this.getUserList(control);
+	}
 
-        String sqlWhereClause="";
-        List<User> news = new ArrayList<User>();
-        try {
-            UserDAOImpl nDao = new UserDAOImpl();
-            if (!selectionClause.equals("")) {
-                if (!sqlWhereClause.equals("")){
-                sqlWhereClause+=" AND ("+selectionClause+") ";
-                } else {
-                    sqlWhereClause=" ("+selectionClause+") ";
-                }
-            }
-            if (!sqlWhereClause.equals("")){
-                sqlWhereClause=" WHERE " +sqlWhereClause;
-            }
+	public List<User> getNewsRecords(UserType userType) throws SQLException {
+		control.setUserType(userType);
+		control.setRecStart(0);
+		control.setRecChunk(0);
+		return this.getUserList(control);
 
-            sqlWhereClause ="SELECT * FROM users "+sqlWhereClause+
-                    " ORDER BY usu_user";
-            news = nDao.readUsers(sqlWhereClause);
-        } catch (UserException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
+	}
 
-        public List<User> getRecords(String selectClause, String whereClause, String orderClause) {
+	public List<User> getUserList(ControlParams control) throws SQLException {
 
-        String sqlClause = "";
-        List<User> records = new ArrayList<User>();
-        try {
-            UserDAOImpl nDao = new UserDAOImpl();
-            if (selectClause == null || selectClause.equals("")) {
-                sqlClause = "SELECT * FROM users ORDER BY usu_user";
-            } else {
-                sqlClause = selectClause + " " + whereClause + " " + orderClause;
-            }
+		List<User> users = new ArrayList<>();
+		users = new DAOFactory().getUserDAO().getUserList(control);
+		return users;
+	}
 
-            records = nDao.readUsers(sqlClause);
+	public int getCountRows() throws SQLException {
+		return new DAOFactory().getUserDAO().getCountRows();
+	}
 
-        } catch (UserException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return records;
-    }
+	public User getById(int userId) throws SQLException {
+		return new DAOFactory().getUserDAO().read(userId);
+	}
 
+	public int insertUser(User user) throws SQLException {
+		DAOFactory df = new DAOFactory();
+		df.startTransaction();
+		int userCount = df.getUserDAO().create(user);
+		if (userCount == 1) {
+// Eliminamos todos los UserRole que pudieran existir del User
+			df.getUserRoleDAO().deleteAllOfUser(user);
+			// Insertamos los nuevos userRole del User
+			for (UserRole userRole : user.getRoles()) {
+				df.getUserRoleDAO().create(userRole);
+			}
+			df.commit();
+		} else {
+			df.rollback(null);
+		}
+		return userCount;
+	}
 
+	public int updateUser(User User) throws SQLException {
+		return new DAOFactory().getUserDAO().update(User);
+	}
 
-    public List<User> getNewsDetails(String idNews) {
+	public int deleteUser(User User) throws SQLException {
+		return new DAOFactory().getUserDAO().delete(User.getId());
+	}
 
-        List<User> news = new ArrayList<User>();
-        try {
-            UserDAOImpl nDao = new UserDAOImpl();
-            String sqlWhereClause = "WHERE usu_id = '" + idNews + "'" +
-                    " OR usu_id= '" + idNews + "'" +
-                    " ORDER BY usu_user";
-            sqlWhereClause ="SELECT * FROM users "+sqlWhereClause;
-            news = nDao.readUsers(sqlWhereClause);
-        } catch (UserException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
-
-    public synchronized int setNewRecord(User news) {
-
-        try {
-            UserDAOImpl nDao = new UserDAOImpl();
-            return nDao.createUser(news);
-        } catch (UserException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int setUpdateRecord(User news) {
-
-        try {
-            UserDAOImpl nDao = new UserDAOImpl();
-            return nDao.updateUser(news);
-        } catch (UserException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int deleteNews(User news) {
-
-        try {
-            UserDAOImpl nDao = new UserDAOImpl();
-            return nDao.deleteUser(news);
-        } catch (UserException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
+	public int deleteUserIds(List<String> ids) throws SQLException {
+		return new DAOFactory().getUserDAO().deleteIds(ids);
+	}
 }
-
-
-
-
-
