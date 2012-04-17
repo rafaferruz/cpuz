@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+	"http://www.w3.org/TR/html4/loose.dtd">
 
 <%-- 
 Plantilla que define la estructura de las páginas de vistas de la aplicación.
@@ -22,40 +22,61 @@ La plantilla ofrece una estructura de página html con un elemento <head> y un e
 <html>
 	<%@ include file="jspf/htmlHeaders.jspf" %>
 
-    <body class="yui-skin-sam">
-		<div class="page_margins">
-			<div class="page">
-				<div id="header">
+    <body>
+		<div id="header">
+			<div class="page_margins">
+				<div class="page">
 					<%-- Se incluye una cabecera con tres filas de tabla.
 						La primera contiene el banner de cabeceracon el logotipo.
 						La segunda está pensada para una barra de noticias.
 						La tercera está pensada para uns barra de men?.
 					--%>
 					<%@ include file="jspf/bodyTop.jspf" %>
+					<!-- begin: main content area #main -->
+					<div id="main">
+						<%-- left column--%>
+						<div id="col1">
+							<div id="col1_content" class="clearfix">
+
+							</div>
+
+						</div>
+						<%-- right column--%>
+						<div id="col2">
+							<div id="col2_content" class="clearfix">
+
+							</div>
+
+						</div>
+						<%-- center column--%>
+						<div id="col3">
+							<div id="col3_content" class="clearfix">
+								<%@ include file="jspf/bodyCenter.jspf" %>
+							</div>
+							<!-- IE Column Clearing -->
+							<div id="ie_clearing">&nbsp;</div>
+						</div>
+					</div>
+					<!-- end: #main -->
+					<!-- begin: #footer -->
+					<div id="footer">
+						<%--
+	   <zorongo:links cadenamenu="Página inicial?index.jsp|
+										  //Mapa de la Web?mapaweb.jsp|
+										  Cerrar sesión?docs/cerrarsesión.jsp|
+										  Publicidad?docs/publicidad.jsp"
+										  separadoritems="?" separadormenu="|" mododisplay="pie" />
+						--%>
+						<fmt:message bundle="${bundle}" key="page.credits" /> |
+						<a href="http://www.w3.org/TR/xhtml1/" title="<fmt:message bundle="${bundle}" key="page.xhtmlCompliant" />">XHTML 1.0</a> |
+						<a href="http://www.w3.org/TR/CSS21/" title="<fmt:message bundle="${bundle}" key="page.cssCompliant" />">CSS 2.1</a> |
+						<%--
+						<a href="http://www.w3.org/WAI/" title="<codex:message key="page.waiCompliant" />">WAI-AA</a> |
+						<a href="http://www.yaml.de/" title="<fmt:message bundle="${bundle}" key="page.basedOnYaml" />">YAML</a>
+						--%>
+					</div>
+					<!-- end: #footer -->
 				</div>
-				<!-- begin: main content area #main -->
-				<div id="main">
-					<%@ include file="jspf/bodyCenter.jspf" %>
-				</div>
-				<!-- end: #main -->
-				<!-- begin: #footer -->
-				<div id="footer">
-                    <%--
-   <zorongo:links cadenamenu="Página inicial?index.jsp|
-                                      //Mapa de la Web?mapaweb.jsp|
-                                      Cerrar sesión?docs/cerrarsesión.jsp|
-                                      Publicidad?docs/publicidad.jsp"
-                                      separadoritems="?" separadormenu="|" mododisplay="pie" />
-                    --%>
-					<fmt:message bundle="${bundle}" key="page.credits" /> |
-					<a href="http://www.w3.org/TR/xhtml1/" title="<fmt:message bundle="${bundle}" key="page.xhtmlCompliant" />">XHTML 1.0</a> |
-					<a href="http://www.w3.org/TR/CSS21/" title="<fmt:message bundle="${bundle}" key="page.cssCompliant" />">CSS 2.1</a> |
-					<%--
-					<a href="http://www.w3.org/WAI/" title="<codex:message key="page.waiCompliant" />">WAI-AA</a> |
-					<a href="http://www.yaml.de/" title="<fmt:message bundle="${bundle}" key="page.basedOnYaml" />">YAML</a>
-					--%>
-				</div>
-				<!-- end: #footer -->
 			</div>
 		</div>
         <script type="text/javascript">

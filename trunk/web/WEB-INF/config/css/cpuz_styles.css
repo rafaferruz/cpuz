@@ -9,7 +9,7 @@ body {  font-family: Verdana, Arial, Helvetica, sans-serif;
         margin-right: 0px;
         margin-bottom: 0px
 }
-p {  font-size: 8pt; text-align: justify; margin-left: 8pt; margin-right: 4pt;
+p {  text-align: justify; margin-left: 8pt; margin-right: 4pt;
 }
 table{
     background-color: #3366ff;
@@ -147,7 +147,7 @@ img.advscompositionAbstract{
 }
 p.compositionTitular{
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 200.01%;
     font-weight: bold;
     text-align: center;
     margin-right: 0px;
@@ -162,7 +162,7 @@ p.compositionTitular{
 
 p.compositionSubtitulo{
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 140.01%;
     font-weight: bold;
     color: #0000cc;
     text-align: left;
@@ -175,25 +175,24 @@ p.compositionSubtitulo{
     padding-bottom: 0px;
     padding-top: 0px;
 }
-p.compositionDestácado{
+p.compositionDestacado{
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 10px;
+    font-size: 100.01%;
     font-weight: bold;
     color: #0000cc;
     text-align: left;
 }
 p.compositionAbstract{
 
-    font-size: 10px;
 }
 p.compositionDate{
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 9px;
+    font-size: 90.01%;
     color: black;
 }
 p.advscompositionTitular{
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 140.01%;
     font-weight: bold;
     text-align: left;
     margin-right: 0px;

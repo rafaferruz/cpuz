@@ -5,7 +5,7 @@
 package com.cpuz.model;
 
 import com.cpuz.domain.UserRole;
-import com.cpuz.DAO.impl.UserRoleDAOImpl;
+import com.cpuz.DAO.UserRoleDAO;
 import com.cpuz.exceptions.UserRoleException;
 import com.cpuz.domain.UserType;
 import java.sql.SQLException;
@@ -25,7 +25,7 @@ public class UserRolesModel {
 
     public boolean keyIdExists(int ssn) {
         try {
-            UserRoleDAOImpl nDao = new UserRoleDAOImpl();
+            UserRoleDAO nDao = new UserRoleDAO();
             return nDao.keyIdExists(ssn);
         } catch (UserRoleException ex) {
             Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,7 +63,7 @@ public class UserRolesModel {
         String sqlWhereClause = "";
         List<UserRole> news = new ArrayList<UserRole>();
         try {
-            UserRoleDAOImpl nDao = new UserRoleDAOImpl();
+            UserRoleDAO nDao = new UserRoleDAO();
             /* Requirement codes: E5-1 */
             if (!selectionClause.equals("")) {
                 if (!sqlWhereClause.equals("")) {
@@ -93,7 +93,7 @@ public class UserRolesModel {
 
         List<UserRole> news = new ArrayList<UserRole>();
         try {
-            UserRoleDAOImpl nDao = new UserRoleDAOImpl();
+            UserRoleDAO nDao = new UserRoleDAO();
             news = nDao.readUserRoles(sqlClause);
         } catch (UserRoleException ex) {
             Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,7 +109,7 @@ public class UserRolesModel {
 
         List<UserRole> news = new ArrayList<UserRole>();
         try {
-            UserRoleDAOImpl nDao = new UserRoleDAOImpl();
+            UserRoleDAO nDao = new UserRoleDAO();
             String sqlWhereClause = "SELECT * FROM userroles WHERE  usr_id= '" + idNews + "'"
                     + " ORDER BY usr_role";
             news = nDao.readUserRoles(sqlWhereClause);
@@ -126,7 +126,7 @@ public class UserRolesModel {
     public synchronized int setNewRecord(UserRole news) {
 
         try {
-            UserRoleDAOImpl nDao = new UserRoleDAOImpl();
+            UserRoleDAO nDao = new UserRoleDAO();
             return nDao.createUserRole(news);
         } catch (UserRoleException ex) {
             Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,7 +141,7 @@ public class UserRolesModel {
     public synchronized int setUpdateRecord(UserRole news) {
 
         try {
-            UserRoleDAOImpl nDao = new UserRoleDAOImpl();
+            UserRoleDAO nDao = new UserRoleDAO();
             return nDao.updateUserRole(news);
         } catch (UserRoleException ex) {
             Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -156,7 +156,7 @@ public class UserRolesModel {
     public synchronized int deleteNews(UserRole news) {
 
         try {
-            UserRoleDAOImpl nDao = new UserRoleDAOImpl();
+            UserRoleDAO nDao = new UserRoleDAO();
             return nDao.deleteUserRole(news);
         } catch (UserRoleException ex) {
             Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -170,7 +170,7 @@ public class UserRolesModel {
     public synchronized int deleteRecords(String deleteClause) {
 
         try {
-            UserRoleDAOImpl nDao = new UserRoleDAOImpl();
+            UserRoleDAO nDao = new UserRoleDAO();
             return nDao.deleteUserRole(deleteClause);
         } catch (UserRoleException ex) {
             Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);

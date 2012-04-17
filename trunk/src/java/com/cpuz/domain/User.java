@@ -1,11 +1,27 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * CPUZ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.cpuz.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -13,7 +29,6 @@ import java.util.Date;
  */
 public class User  implements Serializable{
 
-    private static final long serialVersionUID = 104L;
     private Integer id;
     private java.util.Date date;
     private Integer status = 0;
@@ -22,9 +37,14 @@ public class User  implements Serializable{
     private String name;
     private String password;
     private String email;
+    private List<UserRole> roles=new ArrayList<>();
 
     public User() {
     }
+
+	public User(String user) {
+		this.user = user;
+	}
 
     public String getEmail() {
         return email;
@@ -89,6 +109,14 @@ public class User  implements Serializable{
     public void setUser(String user) {
         this.user = user;
     }
+
+	public List<UserRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<UserRole> roles) {
+		this.roles = roles;
+	}
 
     @Override
     public boolean equals(Object obj) {

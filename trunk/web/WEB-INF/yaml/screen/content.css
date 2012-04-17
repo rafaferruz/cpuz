@@ -192,14 +192,16 @@
 
 	table {
 		width: auto;
-		margin: 0em;
+		margin-top: 8px;
 		border-collapse:collapse;
+		margin-bottom: 0.5em;
 		background-color: #F0F0F0;
+		border: solid 1px #A8A8A8;
 	}
 	table.full { width: 100%; }
 	table.fixed { table-layout:fixed }
 
-	th,td { padding: 0em; }
+	th,td { padding: 0.5em; }
 	td.centered{
 		text-align: center;
 	}
@@ -219,6 +221,8 @@
 		border: solid 1px #A8A8A8;
 	}
 	table tbody, table thead {
+		border-top: solid 1px #A8A8A8;
+		border-bottom: solid 1px #A8A8A8;
 	}
 	table td[rowspan] {
 		vertical-align: top;
