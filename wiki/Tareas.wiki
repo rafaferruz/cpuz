@@ -3,7 +3,8 @@
 = Tareas en curso =
 
   * *08/04/2012: Corregir y poner en marcha UserAction.java, UserDAO.java, UsersModel.java y userList.jsp*
-    *14/04/2012: Se han modificado las clases java, falta por corregir y poner en marcha la vista jsp.
+    * 14/04/2012: Se han modificado las clases java, falta por corregir y poner en marcha la vista jsp.
+    * 18/04/2012: Se han modificado las clases java de UserRole, falta por corregir y poner en marcha la vista jsp y algún error en la ejecución de estas clases.
 
 = Tareas pendientes =
 
