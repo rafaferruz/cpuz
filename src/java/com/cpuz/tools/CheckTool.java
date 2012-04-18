@@ -9,6 +9,7 @@ import com.cpuz.domain.UserType;
 import com.cpuz.misc.ConfigurationBean;
 import com.cpuz.misc.PageBean;
 import com.cpuz.model.UserModel;
+import com.cpuz.st2.beans.ControlParams;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -69,14 +70,15 @@ public class CheckTool {
 		HttpSession session = request.getSession(false);
 		UserModel usersModel = new UserModel();
 		if (request.getUserPrincipal() != null) {
-			List<User> users = usersModel.getNewsRecords(UserType.ADMIN, "usu_user = '"
-					+ request.getUserPrincipal().getName() + "'");
-			if (users != null && users.size() == 1) {
+			ControlParams controlParams=new ControlParams();
+			controlParams.setUserType(UserType.ADMIN);
+			User user = usersModel.getByCode(request.getUserPrincipal().getName());
+			if (user != null) {
 				setUserSessionAttributes(session,
-						users.get(0).getUser(),
-						users.get(0).getName(),
-						users.get(0).getCategory(),
-						users.get(0).getStatus());
+						user.getUser(),
+						user.getName(),
+						user.getCategory(),
+						user.getStatus());
 			} else {
 				setUserSessionAttributes(session, "", "", 0, 0);
 			}

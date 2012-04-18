@@ -4,6 +4,8 @@
  */
 package com.cpuz.model;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author RAFAEL FERRUZ
@@ -42,7 +44,7 @@ public class UserService {
         this.role = role;
     }
 
-    public boolean isUserInRole() {
+    public boolean isUserInRole() throws SQLException {
         return isUserInRole(this.getRole());
     }
 
@@ -50,11 +52,10 @@ public class UserService {
         this.userInRole = userInRole;
     }
 
-    public boolean isUserInRole(String role) {
+    public boolean isUserInRole(String role) throws SQLException {
         if (this.user != null && !this.user.equals("")) {
             UserRolesModel userRolesModel = new UserRolesModel();
-            return !userRolesModel.getNewsRecords("SELECT * FROM userroles WHERE usu_user = '" + this.user + "' "
-                    + " AND usr_role='" + this.role + "'").isEmpty();
+            return userRolesModel.getByUserAndRole(this.role, this.user)!=null;
         }
         return false;
     }

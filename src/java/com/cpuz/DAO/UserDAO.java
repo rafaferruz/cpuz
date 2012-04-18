@@ -98,6 +98,26 @@ public class UserDAO implements InjectableDAO {
 		}
 		return user;
 	}
+	/**
+	 * Recupera un User de la tabla 
+	 *
+	 * @param userCode		user del objeto User que se quiere recuperar de la tabla
+	 * @return			Un un objeto bug con la información recuperada de la 
+	 *					base de datos. Si no encuentra el id buscado, devuelve null.
+	 * @throws SQLException 
+	 */
+	public User read(String userCode) throws SQLException {
+		User user = null;
+		String sql = "SELECT * FROM users WHERE usu_user = ?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setString(1, userCode);
+		log.debug("UserDAO create(): " + ps.toString());
+		ResultSet rs = ps.executeQuery(sql);
+		if (rs.next()) {
+			user = getCompleteUser(rs);
+		}
+		return user;
+	}
 
 	/**
 	 * Actualiza un User en la tabla 

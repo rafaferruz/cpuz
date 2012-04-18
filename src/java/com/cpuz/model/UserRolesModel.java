@@ -1,18 +1,34 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * CPUZ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.cpuz.model;
 
+import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.UserRole;
 import com.cpuz.DAO.UserRoleDAO;
+import com.cpuz.domain.User;
 import com.cpuz.exceptions.UserRoleException;
 import com.cpuz.domain.UserType;
+import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,165 +36,45 @@ import java.util.logging.Logger;
  */
 public class UserRolesModel {
 
-    public UserRolesModel() {
-    }
+	private final transient Logger log = Logger.getLogger(this.getClass());
+	ControlParams control = new ControlParams();
 
-    public boolean keyIdExists(int ssn) {
-        try {
-            UserRoleDAO nDao = new UserRoleDAO();
-            return nDao.keyIdExists(ssn);
-        } catch (UserRoleException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
+	public UserRolesModel() {
+	}
 
-    /**
-     * Proporciona un objeto List de registros de titulares de UserRoles
-     * con un número de registros indicado por el parámetro recChunk y
-     * a partir del indicado por el parámetro recStart. Se toma como lista
-     * base la totalidad de titulares de UserRoles ordenados por fecha empezando
-     * por el titular más reciente y continuando al más antiguo.
-     * @param recStart Nº de registro inicial
-     * @param recChunk Nº de registros a incluir en la búsqueda
-     * @return Un objeto List<UserRole> con los registros seleccionados
-     */
-    public List<UserRole> getNewsRecords() {
-        /* Requirement codes: E5-1 */
-        return this.getNewsRecords(UserType.ANONYMOUS, "");
-    }
+	public boolean keyIdExists(int userRoleId) throws SQLException {
+		UserRole userRole = new DAOFactory().getUserRoleDAO().read(userRoleId);
+		return (userRole != null);
+	}
 
-    public List<UserRole> getNewsRecords(UserType userType) {
-        /* Requirement codes: E5-1 */
-        return this.getNewsRecords(userType, "");
+	public List<UserRole> getUserRoleList(String user) throws SQLException {
 
-    }
+		List<UserRole> userRoles = new ArrayList<>();
+		userRoles = new DAOFactory().getUserRoleDAO().getUserRoleList(user);
+		return userRoles;
+	}
 
-    public List<UserRole> getNewsRecords(UserType userType, String selectionClause) {
+	public UserRole getById(int userRoleId) throws SQLException {
+		return new DAOFactory().getUserRoleDAO().read(userRoleId);
+	}
 
-        String sqlWhereClause = "";
-        List<UserRole> news = new ArrayList<UserRole>();
-        try {
-            UserRoleDAO nDao = new UserRoleDAO();
-            /* Requirement codes: E5-1 */
-            if (!selectionClause.equals("")) {
-                if (!sqlWhereClause.equals("")) {
-                    sqlWhereClause += " AND (" + selectionClause + ") ";
-                } else {
-                    sqlWhereClause = " (" + selectionClause + ") ";
-                }
-            }
-            if (!sqlWhereClause.equals("")) {
-                sqlWhereClause = " WHERE " + sqlWhereClause;
-            }
+	public UserRole getByUserAndRole(String role, String userCode) throws SQLException {
+		return new DAOFactory().getUserRoleDAO().read(role, userCode);
+	}
 
-            sqlWhereClause = "SELECT * FROM userroles " + sqlWhereClause
-                    + " ORDER BY usr_role";
-            news = nDao.readUserRoles(sqlWhereClause);
-        } catch (UserRoleException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
+	public int insertUserRole(UserRole userRole) throws SQLException {
+		return new DAOFactory().getUserRoleDAO().create(userRole);
+	}
 
-    public List<UserRole> getNewsRecords(String sqlClause) {
+	public int updateUserRole(UserRole UserRole) throws SQLException {
+		return new DAOFactory().getUserRoleDAO().update(UserRole);
+	}
 
-        List<UserRole> news = new ArrayList<UserRole>();
-        try {
-            UserRoleDAO nDao = new UserRoleDAO();
-            news = nDao.readUserRoles(sqlClause);
-        } catch (UserRoleException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
+	public int deleteUserRole(UserRole UserRole) throws SQLException {
+		return new DAOFactory().getUserRoleDAO().delete(UserRole.getId());
+	}
 
-    public List<UserRole> getNewsDetails(String idNews) {
-
-        List<UserRole> news = new ArrayList<UserRole>();
-        try {
-            UserRoleDAO nDao = new UserRoleDAO();
-            String sqlWhereClause = "SELECT * FROM userroles WHERE  usr_id= '" + idNews + "'"
-                    + " ORDER BY usr_role";
-            news = nDao.readUserRoles(sqlWhereClause);
-        } catch (UserRoleException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
-
-    public synchronized int setNewRecord(UserRole news) {
-
-        try {
-            UserRoleDAO nDao = new UserRoleDAO();
-            return nDao.createUserRole(news);
-        } catch (UserRoleException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int setUpdateRecord(UserRole news) {
-
-        try {
-            UserRoleDAO nDao = new UserRoleDAO();
-            return nDao.updateUserRole(news);
-        } catch (UserRoleException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int deleteNews(UserRole news) {
-
-        try {
-            UserRoleDAO nDao = new UserRoleDAO();
-            return nDao.deleteUserRole(news);
-        } catch (UserRoleException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-    public synchronized int deleteRecords(String deleteClause) {
-
-        try {
-            UserRoleDAO nDao = new UserRoleDAO();
-            return nDao.deleteUserRole(deleteClause);
-        } catch (UserRoleException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(UserRolesModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
+	public int deleteUserRoleIds(List<Integer> ids) throws SQLException {
+		return new DAOFactory().getUserRoleDAO().deleteIds(ids);
+	}
 }
