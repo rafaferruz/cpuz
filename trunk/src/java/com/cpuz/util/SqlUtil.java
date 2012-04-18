@@ -214,7 +214,7 @@ public final class SqlUtil {
 				} else if (value instanceof Integer) {
 					ps.setInt(index, (Integer) value);
 				} else {
-					// TODO: implementar el restá de tipos
+					// TODO: implementar el resto de tipos
 					ps.setObject(index, value);
 				}
 				index++;

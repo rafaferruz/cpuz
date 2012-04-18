@@ -91,7 +91,30 @@ public class UserRoleDAO implements InjectableDAO {
 		String sql = "SELECT * FROM userroles WHERE usr_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, userRoleId);
-		log.debug("UserRoleDAO create(): " + ps.toString());
+		log.debug("UserRoleDAO read(): " + ps.toString());
+		ResultSet rs = ps.executeQuery(sql);
+		if (rs.next()) {
+			userRole = getCompleteUserRole(rs);
+		}
+		return userRole;
+	}
+
+	/**
+	 * Recupera un UserRole de la tabla 
+	 *
+	 * @param user		Nombre o Code del User que se quiere recuperar de la tabla
+	 * @param role		Role del User que se quiere recuperar de la tabla
+	 * @return			Un objeto UserRole con la información recuperada de la 
+	 *					base de datos. Si no encuentra el id buscado, devuelve null.
+	 * @throws SQLException 
+	 */
+	public UserRole read(String role, String userCode) throws SQLException {
+		UserRole userRole = null;
+		String sql = "SELECT * FROM userroles WHERE usr_role = ? AND usu_user = ?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setString(1, role);
+		ps.setString(2, userCode);
+		log.debug("UserRoleDAO read(): " + ps.toString());
 		ResultSet rs = ps.executeQuery(sql);
 		if (rs.next()) {
 			userRole = getCompleteUserRole(rs);
@@ -171,6 +194,25 @@ public class UserRoleDAO implements InjectableDAO {
 			}
 		}
 		return roles;
+	}
+
+	public Map<String, List<UserRole>> getUserRoleMap(List<String> userCodes) throws SQLException {
+		Map<String, List<UserRole>> userRoles = new HashMap<>();
+		String sql = "SELECT * FROM userroles "
+				+ "WHERE usu_user IN " + SqlUtil.getPreparedStatementInClause(userCodes) + " "
+				+ "ORDER BY usu_user";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		SqlUtil.setList(ps, userCodes);
+		log.debug("UserRoleDAO getUserList(): " + ps.toString());
+		try (ResultSet rs = ps.executeQuery()) {
+			while (rs.next()) {
+				if (userRoles.get(rs.getString("usu_user")) == null) {
+					userRoles.put(rs.getString("usu_user"), new ArrayList<UserRole>());
+				}
+				userRoles.get(rs.getString("usu_user")).add(this.getCompleteUserRole(rs));
+			}
+		}
+		return userRoles;
 	}
 
 	public int deleteIds(List<Integer> ids) throws SQLException {

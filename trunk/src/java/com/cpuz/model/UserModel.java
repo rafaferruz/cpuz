@@ -26,6 +26,7 @@ import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.apache.log4j.Logger;
 
 /**
@@ -45,29 +46,6 @@ public class UserModel {
 		return (user != null);
 	}
 
-	/**
-	 * Proporciona un objeto List de registros de Users
-	 * con un número de registros indicado por el parámetro recChunk y
-	 * a partir del indicado por el parámetro recStart.
-	 * @param recStart Nº de registro inicial
-	 * @param recChunk Nº de registros a incluir en la búsqueda
-	 * @return Un objeto List<User> con los registros seleccionados
-	 */
-	public List<User> getNewsRecords() throws SQLException {
-		control.setUserType(UserType.ANONYMOUS);
-		control.setRecStart(0);
-		control.setRecChunk(0);
-		return this.getUserList(control);
-	}
-
-	public List<User> getNewsRecords(UserType userType) throws SQLException {
-		control.setUserType(userType);
-		control.setRecStart(0);
-		control.setRecChunk(0);
-		return this.getUserList(control);
-
-	}
-
 	public List<User> getUserList(ControlParams control) throws SQLException {
 
 		List<User> users = new ArrayList<>();
@@ -80,7 +58,24 @@ public class UserModel {
 	}
 
 	public User getById(int userId) throws SQLException {
-		return new DAOFactory().getUserDAO().read(userId);
+		User user = new DAOFactory().getUserDAO().read(userId);
+		if (user != null) {
+			List<String> userCodes = new ArrayList<>();
+			userCodes.add(user.getUser());
+			Map<String,List<UserRole>> userRoles=new DAOFactory().getUserRoleDAO().getUserRoleMap(userCodes);
+			user.setRoles(userRoles.get(user.getUser()));
+		}
+		return user;
+	}
+	public User getByCode(String userCode) throws SQLException {
+		User user = new DAOFactory().getUserDAO().read(userCode);
+		if (user != null) {
+			List<String> userCodes = new ArrayList<>();
+			userCodes.add(user.getUser());
+			Map<String,List<UserRole>> userRoles=new DAOFactory().getUserRoleDAO().getUserRoleMap(userCodes);
+			user.setRoles(userRoles.get(user.getUser()));
+		}
+		return user;
 	}
 
 	public int insertUser(User user) throws SQLException {
@@ -88,7 +83,7 @@ public class UserModel {
 		df.startTransaction();
 		int userCount = df.getUserDAO().create(user);
 		if (userCount == 1) {
-// Eliminamos todos los UserRole que pudieran existir del User
+			// Eliminamos todos los UserRole que pudieran existir del User
 			df.getUserRoleDAO().deleteAllOfUser(user);
 			// Insertamos los nuevos userRole del User
 			for (UserRole userRole : user.getRoles()) {
