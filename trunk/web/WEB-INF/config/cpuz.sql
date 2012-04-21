@@ -183,7 +183,7 @@ CREATE TABLE `sections` (
 
 CREATE TABLE `userroles` (
   `usr_id` int(11) NOT NULL auto_increment,
-  `usr_estádo` int(11) default '0',
+  `usr_status` int(11) default '0',
   `usu_user` varchar(8) default '',
   `usr_role` varchar(40) default '',
   `usr_description` varchar(80) default '',
