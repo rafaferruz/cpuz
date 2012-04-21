@@ -4,11 +4,12 @@
 
 	<%-- CSS del framework YAML --%>
 	<link href="${applicationScope.dirCommonResources}/css/my_layout.css" rel="stylesheet" type="text/css"/>
+
 	<!--[if lte IE 7]>
 	<link href="/css/patches/patch_my_layout.css" rel="stylesheet" type="text/css" />
 	<![endif]-->
-	<%@include file="scripts.jspf" %>
 
+	<%@include file="scripts.jspf" %>
 
 	<%@ include file="head01.jspf" %>
 
