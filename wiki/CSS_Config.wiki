@@ -1,0 +1,19 @@
+#summary Configuración de estilos CSS.
+
+= Introducción =
+
+En esta página se expone el árbol de directorios y ficheros donde se encuentran los ficheros de estilos CSS utilizados en la aplicación, tanto en los directorios de desarrollo como en el servidor de contenidos estáticos.
+
+Los estilos CSS utilizados están soportados en su mayor parte por el framework YAML complementados por otros ficheros css propios de la aplicación.
+
+= Directorios de desarrollo =
+
+Los ficheros de estilos CSS se encuentran en la carpeta css que se encuentra bajo la carpeta WEB-INF. El contenido de la carpeta css es el siguiente:
+  * yaml (carpeta): Contiene todos los ficheros originales del framework YAML.
+  * cpuz_menus.css : Clases css para uso en los menús de la aplicación.
+  * cpuz_styles.css : Clases css específicas de la aplicación CPUZ.
+  * my_layout.css : Este fichero contiene sentencias @import de los demás ficheros css de uso general o adaptados a CPUZ procedentes de YAML y que han sido modificados para obtener los resultados deseados a aplicar.
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
