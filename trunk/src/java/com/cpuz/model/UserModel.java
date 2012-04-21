@@ -92,12 +92,28 @@ public class UserModel {
 			df.commit();
 		} else {
 			df.rollback(null);
+			return 0;
 		}
 		return userCount;
 	}
 
-	public int updateUser(User User) throws SQLException {
-		return new DAOFactory().getUserDAO().update(User);
+	public int updateUser(User user) throws SQLException {
+		DAOFactory df = new DAOFactory();
+		df.startTransaction();
+		int userCount = df.getUserDAO().update(user);
+		if (userCount == 1) {
+			// Eliminamos todos los UserRole que pudieran existir del User
+			df.getUserRoleDAO().deleteAllOfUser(user);
+			// Insertamos los nuevos userRole del User
+			for (UserRole userRole : user.getRoles()) {
+				df.getUserRoleDAO().create(userRole);
+			}
+			df.commit();
+		} else {
+			df.rollback(null);
+			return 0;
+		}
+		return userCount;
 	}
 
 	public int deleteUser(User User) throws SQLException {

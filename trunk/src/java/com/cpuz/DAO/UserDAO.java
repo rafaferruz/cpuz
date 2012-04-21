@@ -20,6 +20,7 @@ package com.cpuz.DAO;
 
 import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.domain.User;
+import com.cpuz.domain.UserRole;
 import com.cpuz.st2.beans.ControlParams;
 import com.cpuz.util.SqlUtil;
 import java.sql.*;
@@ -98,6 +99,7 @@ public class UserDAO implements InjectableDAO {
 		}
 		return user;
 	}
+
 	/**
 	 * Recupera un User de la tabla 
 	 *
@@ -108,13 +110,24 @@ public class UserDAO implements InjectableDAO {
 	 */
 	public User read(String userCode) throws SQLException {
 		User user = null;
-		String sql = "SELECT * FROM users WHERE usu_user = ?";
+		String sql = "SELECT * FROM users AS usu LEFT JOIN userroles AS usr ON usr.usu_user = usu.usu_user WHERE usu.usu_user = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setString(1, userCode);
 		log.debug("UserDAO create(): " + ps.toString());
-		ResultSet rs = ps.executeQuery(sql);
-		if (rs.next()) {
-			user = getCompleteUser(rs);
+		ResultSet rs = ps.executeQuery();
+		List<UserRole> userRoles = new ArrayList<>();
+		while (rs.next()) {
+			if (user == null) {
+				user = getCompleteUser(rs);
+				user.setRoles(userRoles);
+			}
+			UserRole userRole=new UserRole();
+			userRole.setId(rs.getInt("usr.usr_id"));
+			userRole.setStatus(rs.getInt("usr.usr_status"));
+			userRole.setUser(rs.getString("usr.usu_user"));
+			userRole.setRole(rs.getString("usr.usr_role"));
+			userRole.setDescription(rs.getString("usr.usr_description"));
+			userRoles.add(userRole);
 		}
 		return user;
 	}

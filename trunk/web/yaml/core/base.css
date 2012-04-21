@@ -57,6 +57,7 @@
     background:#fff;
     color:#000;
     text-align:left; /* LTR */
+	margin: 0 auto;
   }
 
   /* (en) avoid visible outlines on DIV containers in Webkit browsers */
