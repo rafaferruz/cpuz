@@ -56,7 +56,8 @@
     /* (de) Vorgabe der Standardfarben und Textausrichtung */
     background:#fff;
     color:#000;
-    text-align:left; /* LTR */
+    text-align:center; /* LTR */
+	margin: 0 auto;
   }
 
   /* (en) avoid visible outlines on DIV containers in Webkit browsers */
