@@ -1,0 +1,45 @@
+Esta aplicación pretende reemplazar al actual Codex.
+
+En SVN se encuentra en
+
+{{{svn+ssh://username@dev.dialsl.net/var/local/svn/codexpro/trunk}}}
+
+La aplicación en producción se encuentra en http://www.codex.pro/
+
+También hay una versión demo (mismo código, distinta base de datos) en http://www.codex.pro/demo/
+
+----
+CodexProCentros
+
+Arquitectura de la aplicación y Road Map:
+	* [[CodexProRoadMap | Roadmap]]
+	* CodexProMejoraPlanEstudios
+	* CodexProMejoraMatriculación
+	* CodexProTareasGeneral
+	* CodexProErrores
+
+----
+
+	* CodexProMatriculaciónSegundo
+	* CodexProPruebasDeAcceso
+	* [[CodexProEntorno | Puesta en marcha del desarrollo]]
+	* DatosDeLosUsuarios
+	* DatosDelCentro
+	* [[CodexProEleccionDeTecnologias | Elección de tecnologías]]
+	* CodexProDudas
+	* GestionEconomica ([[GestionEconomicaRoadMap | Roadmap]])
+	* CodexProPreinscripciones
+	* [[CodexProGestionDeUsuarios | Gestión de usuarios ]]
+	* [[CodexProGestionDeCentros | Gestión de centros ]]
+	* [[CodexProGestionDeAulas | Gestión de aulas ]]
+	* [[CodexProGestionDeOrganismos | Gestión de organismos ]]
+	* [[CodexPlanDeEstudios | Gestión de planes de estudios]]
+	* [[CodexProGestionMatriculacion | Preinscripción, matriculación, expedientes y títulos ]]
+	* [[CodexProGestionHorarios | Gestión de horarios y grupos]]
+	* [[CodexProGestionEconomica | Economía: tasas y recibos]]
+	* [[CodexProIntroduccionDeFaltas | Introducción de faltas y asistencias ]]
+	* [[CodexProIntroduccionDeCalificaciones | Introducción de notas de evaluaciones, calificaciones finales y destrezas]]
+	* [[CodexProInformes | Listados, informes, estadísticas]]
+	* [[CodexProUtilidades | Centros-NET, agenda, Moodle...]]
+	* Mecanismo de migración de Codex a CodexPro.
+	* [[CodexProMejoras | Otras mejoras y tareas]]
