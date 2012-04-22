@@ -18,11 +18,11 @@ import java.util.logging.Logger;
  *
  * @author RAFAEL FERRUZ
  */
-public class NewsCompositionsModel {
+public class NewsCompositionsService {
 
 	private int npiId;
 
-	public NewsCompositionsModel() {
+	public NewsCompositionsService() {
 	}
 
 	public boolean keyIdExists(Integer ssn) {
@@ -84,11 +84,11 @@ public class NewsCompositionsModel {
 				news.add(n);
 			}
 		} catch (NewsCompositionException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return news;
 	}
@@ -101,11 +101,11 @@ public class NewsCompositionsModel {
 				news.add(n);
 			}
 		} catch (NewsCompositionException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return news;
 	}
@@ -125,11 +125,11 @@ public class NewsCompositionsModel {
 			records = nDao.readNewsCompositions(sqlClause);
 
 		} catch (NewsCompositionException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return records;
 	}
@@ -147,11 +147,11 @@ public class NewsCompositionsModel {
 				news.add(n);
 			}
 		} catch (NewsCompositionException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return news;
 	}
@@ -162,11 +162,11 @@ public class NewsCompositionsModel {
 			NewsCompositionDAOImpl nDao = new NewsCompositionDAOImpl();
 			return nDao.createNewsComposition(news);
 		} catch (NewsCompositionException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return -1;
 	}
@@ -177,11 +177,11 @@ public class NewsCompositionsModel {
 			NewsCompositionDAOImpl nDao = new NewsCompositionDAOImpl();
 			return nDao.updateNewsComposition(news);
 		} catch (NewsCompositionException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return -1;
 	}
@@ -192,11 +192,11 @@ public class NewsCompositionsModel {
 			NewsCompositionDAOImpl nDao = new NewsCompositionDAOImpl();
 			return nDao.deleteNewsComposition(news);
 		} catch (NewsCompositionException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return -1;
 	}
@@ -207,11 +207,11 @@ public class NewsCompositionsModel {
 			NewsCompositionDAOImpl nDao = new NewsCompositionDAOImpl();
 			return nDao.deleteNewsComposition(sqlNewsComposition);
 		} catch (NewsCompositionException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsCompositionsModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return -1;
 	}

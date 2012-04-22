@@ -11,13 +11,13 @@ import com.cpuz.domain.NewsComposition;
 import com.cpuz.domain.NewsPiece;
 import com.cpuz.domain.Section;
 import com.cpuz.domain.UserRole;
-import com.cpuz.service.DocumentsModel;
-import com.cpuz.service.ImagesModel;
-import com.cpuz.service.InfoBlocksModel;
-import com.cpuz.service.NewsCompositionsModel;
-import com.cpuz.service.NewsPiecesModel;
-import com.cpuz.service.SectionsModel;
-import com.cpuz.service.UserRolesModel;
+import com.cpuz.service.DocumentsService;
+import com.cpuz.service.ImagesService;
+import com.cpuz.service.InfoBlocksService;
+import com.cpuz.service.NewsCompositionsService;
+import com.cpuz.service.NewsPiecesService;
+import com.cpuz.service.SectionsService;
+import com.cpuz.service.UserRolesService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -40,7 +40,7 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
     private ControlParams control = new ControlParams();
     private List<NewsPiece> dataList = new ArrayList<NewsPiece>();
     private NewsPiece dataEdit = new NewsPiece();
-    private NewsPiecesModel dataModel = new NewsPiecesModel();
+    private NewsPiecesService dataService = new NewsPiecesService();
     private Map<Integer, String> mapStatus = new HashMap<Integer, String>();
     private Map<Integer, String> mapScopes = new HashMap<Integer, String>();
     private Map<Integer, String> mapAccess = new HashMap<Integer, String>();
@@ -51,10 +51,10 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
     private ControlParams controlCompList = new ControlParams();
     private List<NewsComposition> dataCompList = new ArrayList<NewsComposition>();
     private NewsComposition dataCompEdit = new NewsComposition();
-    private NewsCompositionsModel dataCompModel = new NewsCompositionsModel();
+    private NewsCompositionsService dataCompService = new NewsCompositionsService();
     private String[] selec1;
     private List<Section> sectionList;
-    private SectionsModel sectionsModel = new SectionsModel();
+    private SectionsService sectionsService = new SectionsService();
     private String addComponentType;
     private Map<String, String> mapComponentTypes = new HashMap<String, String>();
     private ControlParams controlComponentType = new ControlParams();
@@ -89,10 +89,10 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
         initSectionList();
         initMapComponentTypes();
         if (control.getRunAction().equals("") == false) {
-            dataEdit = dataModel.getRecords("SELECT * FROM newspieces WHERE npi_id = "
+            dataEdit = dataService.getRecords("SELECT * FROM newspieces WHERE npi_id = "
                     + control.getId(), "", "").get(0);
             // Prepara lista de Componentes de la Noticia
-            dataCompList = dataCompModel.getRecords("SELECT * FROM newscomposition "
+            dataCompList = dataCompService.getRecords("SELECT * FROM newscomposition "
                     + " WHERE nco_npi_id = "
                     + control.getId()
                     + " ORDER BY nco_order", "", "");
@@ -133,7 +133,7 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
         dataEdit.setDatetime(new Date());
         dataEdit.setStatus(0);
 
-        if (dataModel.setNewRecord(dataEdit) == 1) {
+        if (dataService.setNewRecord(dataEdit) == 1) {
             this.addActionMessage(getText("NewsPieceEditSaveOkMsg"));
             return NewsPiece_list();
         }
@@ -142,15 +142,15 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
 
     public String NewsPiece_saveEdit() throws Exception {
 
-        if (dataModel.keyIdExists(dataEdit.getId())) {
+        if (dataService.keyIdExists(dataEdit.getId())) {
             try {
                 // Se ACTUALIZA el registro de NewsPiece que se acaba de editar
 // Actualiza el registtro de NewsPiece con el contenido obtenido al leer los parámetros de request
-                if (dataModel.setUpdateRecord(dataEdit) > 0) {
+                if (dataService.setUpdateRecord(dataEdit) > 0) {
                     dataCompList = (List<NewsComposition>) sessionAttributes.get("dataCompList");
 
 // Regenera borra los Composition de la BD
-                    dataCompModel.deleteNews(" WHERE nco_npi_id = " + dataEdit.getId() + " ");
+                    dataCompService.deleteNews(" WHERE nco_npi_id = " + dataEdit.getId() + " ");
                     int i = 0;
                     for (NewsComposition nc : dataCompList) {
 // Crea el nuevo valor de Orden de la l�nea Composition
@@ -158,7 +158,7 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
                         nc.setOrder(++i);
                         nc.setIdNpi(dataEdit.getId());
 // Graba la nueva Composition en la BD
-                        dataCompModel.setNewRecord(nc);
+                        dataCompService.setNewRecord(nc);
                     }
                     this.addActionMessage(getText("NewsPieceEditSaveOkMsg"));
                 }
@@ -192,7 +192,7 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
         if (selec1 != null) {
             for (int i = 0; i < selec1.length; i++) {
                 dataEdit.setId(Integer.parseInt(selec1[i].trim()));
-                if (dataModel.deleteNews(dataEdit) == 1) {
+                if (dataService.deleteNews(dataEdit) == 1) {
                     addActionMessage(selec1[i] + " " + getText("SuccessDeletedNewsPiece"));
                 } else {
                     addActionError(selec1[i] + " " + getText("NoneDeletedNewsPiece"));
@@ -206,10 +206,10 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
 
     public String NewsPiece_list() throws Exception {
         if (control.getRecCount() == 0) {
-            dataList = dataModel.getRecords("SELECT * FROM newspieces ", "", "");
+            dataList = dataService.getRecords("SELECT * FROM newspieces ", "", "");
             control.setRecCount(dataList.size());
         }
-        dataList = dataModel.getRecords("SELECT * FROM newspieces "
+        dataList = dataService.getRecords("SELECT * FROM newspieces "
                 + " ORDER BY npi_date DESC"
                 + " LIMIT " + control.getRecChunk().toString()
                 + " OFFSET " + control.getRecStart().toString(), "", "");
@@ -226,22 +226,22 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
         initMapComponentTypes();
 //        controlComponentType.setRecChunk(20);
         if (addComponentType.equals("InfoBlock")) {
-            InfoBlocksModel componentTypeModel = new InfoBlocksModel();
-            dataObjectsIncludeList = componentTypeModel.getRecords("SELECT * FROM infoblocks "
+            InfoBlocksService componentTypeService = new InfoBlocksService();
+            dataObjectsIncludeList = componentTypeService.getRecords("SELECT * FROM infoblocks "
                     + " ORDER BY inb_date DESC"
                     + " LIMIT " + controlComponentType.getRecChunk().toString()
                     + " OFFSET " + controlComponentType.getRecStart().toString(), "", "");
         }
         if (addComponentType.equals("Image")) {
-            ImagesModel componentTypeModel = new ImagesModel();
-            dataObjectsIncludeList = componentTypeModel.getRecords("SELECT * FROM images "
+            ImagesService componentTypeService = new ImagesService();
+            dataObjectsIncludeList = componentTypeService.getRecords("SELECT * FROM images "
                     + " ORDER BY img_date DESC"
                     + " LIMIT " + controlComponentType.getRecChunk().toString()
                     + " OFFSET " + controlComponentType.getRecStart().toString(), "", "");
         }
         if (addComponentType.equals("Document")) {
-            DocumentsModel componentTypeModel = new DocumentsModel();
-            dataObjectsIncludeList = componentTypeModel.getRecords("SELECT * FROM documents "
+            DocumentsService componentTypeService = new DocumentsService();
+            dataObjectsIncludeList = componentTypeService.getRecords("SELECT * FROM documents "
                     + " ORDER BY doc_date DESC"
                     + " LIMIT " + controlComponentType.getRecChunk().toString()
                     + " OFFSET " + controlComponentType.getRecStart().toString(), "", "");
@@ -416,8 +416,8 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
         this.dataList = dataList;
     }
 
-    public void setDataModel(NewsPiecesModel dataModel) {
-        this.dataModel = dataModel;
+    public void setDataService(NewsPiecesService dataService) {
+        this.dataService = dataService;
     }
 
     public String[] getSelec1() {
@@ -590,12 +590,12 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
     private void initSectionList() {
         String stringRoles="";
         String user = (String) sessionAttributes.get("user");
-        UserRolesModel userRolesModel = new UserRolesModel();
-        List<UserRole> userRolesList = userRolesModel.getNewsRecords("SELECT * FROM userroles WHERE usu_user = '" + user + "'");
+        UserRolesService userRolesService = new UserRolesService();
+        List<UserRole> userRolesList = userRolesService.getNewsRecords("SELECT * FROM userroles WHERE usu_user = '" + user + "'");
         for (UserRole userRole:userRolesList){
             stringRoles=stringRoles.concat(userRole.getRole()+",");
         }
-        sectionList = sectionsModel.getRecords("SELECT * FROM sections ORDER BY sec_name", "", "");
+        sectionList = sectionsService.getRecords("SELECT * FROM sections ORDER BY sec_name", "", "");
         if (!stringRoles.contains("all") && !stringRoles.contains("adminRole")){
             List<Section> unusedSections=new ArrayList<Section>();
             for (Section section:sectionList){

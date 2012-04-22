@@ -6,7 +6,7 @@ package com.cpuz.st2.actions;
 
 import com.cpuz.domain.Image;
 import com.cpuz.exceptions.ImageException;
-import com.cpuz.service.ImagesModel;
+import com.cpuz.service.ImagesService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -42,7 +42,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
     private ControlParams control = new ControlParams();
     private List<Image> dataList = new ArrayList<Image>();
     private Image dataEdit = new Image();
-    private ImagesModel dataModel;
+    private ImagesService dataService;
     private Map<Integer, String> mapStatus = new HashMap<Integer, String>();
     private List<String> listTypes = new ArrayList<String>();
     private Map<Integer, String> mapScopes = new HashMap<Integer, String>();
@@ -76,7 +76,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
     }
 
     public String Image_edit() throws Exception {
-        dataEdit = dataModel.getRecords("SELECT * FROM images WHERE img_id = "
+        dataEdit = dataService.getRecords("SELECT * FROM images WHERE img_id = "
                 + control.getId(), "", "").get(0);
         initMapStatus();
         initListTypes();
@@ -136,7 +136,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
         }
         dataEdit.setUser((String) sessionAttributes.get("user"));
         try {
-            if (dataModel.setNewRecord(dataEdit) == 1) {
+            if (dataService.setNewRecord(dataEdit) == 1) {
                 this.addActionMessage(getText("ImageEditSaveOkMsg"));
             }
         } catch (Exception ex) {
@@ -198,9 +198,9 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
                 dataEdit.setFilename(filenameStore);
             }
         }
-        if (dataModel.keyIdExists(dataEdit.getId())) {
+        if (dataService.keyIdExists(dataEdit.getId())) {
             try {
-                dataModel.setUpdateRecord(dataEdit);
+                dataService.setUpdateRecord(dataEdit);
                 this.addActionMessage(getText("ImageEditSaveOkMsg"));
             } catch (Exception ex) {
                 this.addActionError(getText("ImageEditErrorMsg"));
@@ -219,7 +219,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
             for (int i = 0; i
                     < deletes.length; i++) {
                 dataEdit.setId(Integer.parseInt(deletes[i].trim()));
-                if (dataModel.deleteNews(dataEdit) == 1) {
+                if (dataService.deleteNews(dataEdit) == 1) {
                     if (dataEdit.getRepositoryReference() != null) {
                         try {
                             deleteFileFtp((String) dataEdit.getRepositoryReference());
@@ -240,11 +240,11 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
 
     public String Image_list() {
         if (control.getRecCount() == 0) {
-            dataList = dataModel.getRecords("SELECT * FROM images "
+            dataList = dataService.getRecords("SELECT * FROM images "
                     + ((Integer) sessionAttributes.get("userCategory") == 2 ? "" : " WHERE img_user = '" + sessionAttributes.get("user") + "' "), "", "");
             control.setRecCount(dataList.size());
         }
-        dataList = dataModel.getRecords("SELECT * FROM images "
+        dataList = dataService.getRecords("SELECT * FROM images "
                 + ((Integer) sessionAttributes.get("userCategory") == 2 ? "" : " WHERE img_user = '" + sessionAttributes.get("user") + "' ")
                 + " LIMIT " + control.getRecChunk().toString()
                 + " OFFSET " + control.getRecStart().toString(), "", "");
@@ -295,8 +295,8 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
         this.dataList = dataList;
     }
 
-    public void setDataModel(ImagesModel dataModel) {
-        this.dataModel = dataModel;
+    public void setDataService(ImagesService dataService) {
+        this.dataService = dataService;
     }
 
     public String getSelec1() {

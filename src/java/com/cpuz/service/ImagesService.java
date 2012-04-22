@@ -18,9 +18,9 @@ import java.util.logging.Logger;
  *
  * @author RAFAEL FERRUZ
  */
-public class ImagesModel {
+public class ImagesService {
 
-    public ImagesModel() {
+    public ImagesService() {
     }
     public boolean keyIdExists(Integer ssn) {
         try {
@@ -86,11 +86,11 @@ public class ImagesModel {
                 news.add(n);
             }
         } catch (ImageException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return news;
     }
@@ -109,11 +109,11 @@ public class ImagesModel {
             records = nDao.readImages(sqlClause);
 
         } catch (ImageException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return records;
     }
@@ -131,11 +131,11 @@ public class ImagesModel {
                 news.add(n);
             }
         } catch (ImageException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return news;
     }
@@ -146,11 +146,11 @@ public class ImagesModel {
             ImageDAOImpl nDao = new ImageDAOImpl();
             return nDao.createImage(news);
         } catch (ImageException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -161,11 +161,11 @@ public class ImagesModel {
             ImageDAOImpl nDao = new ImageDAOImpl();
             return nDao.updateImage(news);
         } catch (ImageException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -176,11 +176,11 @@ public class ImagesModel {
             ImageDAOImpl nDao = new ImageDAOImpl();
             return nDao.deleteImage(news);
         } catch (ImageException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ImagesModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }

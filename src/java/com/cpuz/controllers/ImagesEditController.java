@@ -6,7 +6,7 @@ package com.cpuz.controllers;
 
 import com.cpuz.domain.Image;
 import com.cpuz.exceptions.ImageException;
-import com.cpuz.service.ImagesModel;
+import com.cpuz.service.ImagesService;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -38,7 +38,7 @@ import java.io.InputStreamReader;
 public class ImagesEditController extends GenericEditController {
 
     private static final long serialVersionUID = 301L;
-    protected ImagesModel nvm = new ImagesModel();
+    protected ImagesService nvm = new ImagesService();
 
     public ImagesEditController() {
         super.jspFileList = "views/imagesList.jsp";
@@ -67,7 +67,7 @@ public class ImagesEditController extends GenericEditController {
         }
         // SE GRABA EL REGISTRO EN LA BASE DE DATOS
 
-        ImagesModel nvm = new ImagesModel();
+        ImagesService nvm = new ImagesService();
 
         try {
             //Obtenemos la lista de filas listadas para a�adir las nuevas o modificar las editadas
@@ -238,7 +238,7 @@ public class ImagesEditController extends GenericEditController {
             }
             // SE GRABA EL REGISTRO EN LA BASE DE DATOS
 
-            nvm = new ImagesModel();
+            nvm = new ImagesService();
 
             if (request.getAttribute("runaction") != null
                     && request.getAttribute("runaction").equals("save_new")) {

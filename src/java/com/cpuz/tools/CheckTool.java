@@ -8,7 +8,7 @@ import com.cpuz.domain.User;
 import com.cpuz.domain.UserType;
 import com.cpuz.misc.ConfigurationBean;
 import com.cpuz.misc.PageBean;
-import com.cpuz.service.UserModel;
+import com.cpuz.service.UserService;
 import com.cpuz.st2.beans.ControlParams;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -68,7 +68,7 @@ public class CheckTool {
 	public static void checkUserCredentials(HttpServletRequest request) throws SQLException {
 
 		HttpSession session = request.getSession(false);
-		UserModel usersModel = new UserModel();
+		UserService usersModel = new UserService();
 		if (request.getUserPrincipal() != null) {
 			ControlParams controlParams=new ControlParams();
 			controlParams.setUserType(UserType.ADMIN);

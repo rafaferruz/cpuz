@@ -7,9 +7,9 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.InfoBlock;
 import com.cpuz.domain.NewsComposition;
 import com.cpuz.domain.NewsPiece;
-import com.cpuz.service.InfoBlocksModel;
-import com.cpuz.service.NewsCompositionsModel;
-import com.cpuz.service.NewsPiecesModel;
+import com.cpuz.service.InfoBlocksService;
+import com.cpuz.service.NewsCompositionsService;
+import com.cpuz.service.NewsPiecesService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -30,7 +30,7 @@ public class InfoBlockAction extends ActionSupport implements RequestAware, Sess
     private ControlParams control = new ControlParams();
     private List<InfoBlock> dataList = new ArrayList<InfoBlock>();
     private InfoBlock dataEdit = new InfoBlock();
-    private InfoBlocksModel dataModel;
+    private InfoBlocksService dataService;
     private Map<Integer, String> mapStatus = new HashMap<Integer, String>();
     private List<String> listTypes = new ArrayList<String>();
     private Map<Integer, String> mapScopes = new HashMap<Integer, String>();
@@ -60,7 +60,7 @@ public class InfoBlockAction extends ActionSupport implements RequestAware, Sess
     }
 
     public String InfoBlock_edit() throws Exception {
-        dataEdit = dataModel.getRecords("SELECT * FROM infoblocks WHERE inb_id = "
+        dataEdit = dataService.getRecords("SELECT * FROM infoblocks WHERE inb_id = "
                 + control.getId(), "", "").get(0);
         initMapStatus();
         initListTypes();
@@ -73,9 +73,9 @@ public class InfoBlockAction extends ActionSupport implements RequestAware, Sess
     public String InfoBlock_saveNew() throws Exception {
         dataEdit.setUser((String) sessionAttributes.get("user"));
 
-        if (dataModel.setNewRecord(dataEdit) == 1) {
+        if (dataService.setNewRecord(dataEdit) == 1) {
             this.addActionMessage(getText("InfoBlockEditSaveOkMsg"));
-            dataList = dataModel.getRecords("SELECT * FROM infoblocks "
+            dataList = dataService.getRecords("SELECT * FROM infoblocks "
                     + " ORDER BY inb_date DESC "
                     + " LIMIT " + control.getRecChunk().toString()
                     + " OFFSET " + control.getRecStart().toString(), "", "");
@@ -89,15 +89,15 @@ public class InfoBlockAction extends ActionSupport implements RequestAware, Sess
 
     public String InfoBlock_saveEdit() throws Exception {
 
-        if (dataModel.keyIdExists(dataEdit.getId())) {
+        if (dataService.keyIdExists(dataEdit.getId())) {
             try {
-                dataModel.setUpdateRecord(dataEdit);
+                dataService.setUpdateRecord(dataEdit);
                 this.addActionMessage(getText("InfoBlockEditSaveOkMsg"));
             } catch (Exception ex) {
                 this.addActionError(getText("InfoBlockEditErrorMsg"));
                 return "EDIT";
             }
-            dataList = dataModel.getRecords("SELECT * FROM infoblocks "
+            dataList = dataService.getRecords("SELECT * FROM infoblocks "
                     + " LIMIT " + control.getRecChunk().toString()
                     + " OFFSET " + control.getRecStart().toString(), "", "");
             control.setRecCount(dataList.size());
@@ -113,7 +113,7 @@ public class InfoBlockAction extends ActionSupport implements RequestAware, Sess
             String[] deletes = selec1.split(",");
             for (int i = 0; i < deletes.length; i++) {
                 dataEdit.setId(Integer.parseInt(deletes[i].trim()));
-                if (dataModel.deleteNews(dataEdit) == 1) {
+                if (dataService.deleteNews(dataEdit) == 1) {
                     addActionMessage(deletes[i] + " " + getText("SuccessDeletedInfoBlock"));
                 } else {
                     addActionError(deletes[i] + " " + getText("NoneDeletedInfoBlock"));
@@ -127,11 +127,11 @@ public class InfoBlockAction extends ActionSupport implements RequestAware, Sess
 
     public String InfoBlock_list() throws Exception {
         if (control.getRecCount() == 0) {
-            dataList = dataModel.getRecords("SELECT * FROM infoblocks "
+            dataList = dataService.getRecords("SELECT * FROM infoblocks "
                     + ((Integer) sessionAttributes.get("userCategory") == 2 ? "" : " WHERE inb_user = '" + sessionAttributes.get("user") + "' "), "", "");
             control.setRecCount(dataList.size());
         }
-        dataList = dataModel.getRecords("SELECT * FROM infoblocks "
+        dataList = dataService.getRecords("SELECT * FROM infoblocks "
                 + ((Integer) sessionAttributes.get("userCategory") == 2 ? "" : " WHERE inb_user = '" + sessionAttributes.get("user") + "' ")
                 + " ORDER BY inb_date DESC "
                 + " LIMIT " + control.getRecChunk().toString()
@@ -183,8 +183,8 @@ public class InfoBlockAction extends ActionSupport implements RequestAware, Sess
         this.dataList = dataList;
     }
 
-    public void setDataModel(InfoBlocksModel dataModel) {
-        this.dataModel = dataModel;
+    public void setDataService(InfoBlocksService dataService) {
+        this.dataService = dataService;
     }
 
     public String getSelec1() {
@@ -258,8 +258,8 @@ public class InfoBlockAction extends ActionSupport implements RequestAware, Sess
         dataNewsPiece.setDescription(dataEdit.getHeader());
         dataNewsPiece.setScope(1);
 
-        NewsPiecesModel newsPieceModel = new NewsPiecesModel();
-        if (newsPieceModel.setNewRecord(dataNewsPiece) == 1) {
+        NewsPiecesService newsPieceService = new NewsPiecesService();
+        if (newsPieceService.setNewRecord(dataNewsPiece) == 1) {
             control.setId(dataNewsPiece.getId());
             NewsComposition dataNewsComposition = new NewsComposition();
             dataNewsComposition.setOrder(1);
@@ -273,8 +273,8 @@ public class InfoBlockAction extends ActionSupport implements RequestAware, Sess
             dataNewsComposition.setImageWidth(0);
             dataNewsComposition.setLinkedElement("");
 // Graba la nueva Composition en la BD
-            NewsCompositionsModel newsCompositionsModel = new NewsCompositionsModel();
-            newsCompositionsModel.setNewRecord(dataNewsComposition);
+            NewsCompositionsService newsCompositionsService = new NewsCompositionsService();
+            newsCompositionsService.setNewRecord(dataNewsComposition);
         }
         return "EDIT_NEWSPIECE";
     }

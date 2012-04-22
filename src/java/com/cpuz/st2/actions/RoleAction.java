@@ -20,7 +20,7 @@ package com.cpuz.st2.actions;
 
 import com.cpuz.domain.Role;
 import com.cpuz.domain.UserType;
-import com.cpuz.service.RolesModel;
+import com.cpuz.service.RolesService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -40,7 +40,7 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 	private ControlParams control = new ControlParams();
 	private List<Role> dataList = new ArrayList<>();
 	private Role dataEdit = new Role();
-	private RolesModel dataModel;
+	private RolesService dataService;
 	private Map<Integer, String> mapStatus = new HashMap<>();
 	private Map<String, Object> requestAttributes = new HashMap<>();
 	private String selec1;
@@ -62,14 +62,14 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 	}
 
 	public String roleEdit() throws SQLException {
-		dataEdit = dataModel.getById(control.getId());
+		dataEdit = dataService.getById(control.getId());
 		control.setRunAction("Edit");
 		requestAttributes.put("page", "/WEB-INF/views/roleEdit.jsp");
 		return "EDIT";
 	}
 
 	public String roleSaveNew() throws SQLException{
-		if (dataModel.insertRole(dataEdit) == 1) {
+		if (dataService.insertRole(dataEdit) == 1) {
 			this.addActionMessage(getText("RoleEditSaveOkMsg"));
 			return roleList();
 		}
@@ -78,9 +78,9 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 
 	public String roleSaveEdit() throws SQLException {
 
-		if (dataModel.keyIdExists(dataEdit.getId())) {
+		if (dataService.keyIdExists(dataEdit.getId())) {
 			try {
-				dataModel.updateRole(dataEdit);
+				dataService.updateRole(dataEdit);
 				this.addActionMessage(getText("RoleEditSaveOkMsg"));
 			} catch (SQLException ex) {
 				this.addActionError(getText("RoleEditErrorMsg"));
@@ -94,7 +94,7 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 	public String roleDeleteIds() throws SQLException {
 		if (selec1 != null) {
 			String[] deletes = selec1.split(",");
-			if (dataModel.deleteRoleIds(Arrays.asList(deletes)) > 0) {
+			if (dataService.deleteRoleIds(Arrays.asList(deletes)) > 0) {
 				addActionMessage(getText("SuccessDeletedRoles"));
 			} else {
 				addActionError(getText("NoneDeletedRole"));
@@ -107,10 +107,10 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 
 	public String roleList() throws SQLException {
 		if (control.getRecCount() == 0) {
-			control.setRecCount(dataModel.getCountRows());
+			control.setRecCount(dataService.getCountRows());
 		}
 		control.setUserType(UserType.ADMIN);
-		dataList = dataModel.getRoleList(control);
+		dataList = dataService.getRoleList(control);
 		control.setRunAction("List");
 		requestAttributes.put("page", "/WEB-INF/views/roleList.jsp");
 		return "LIST";
@@ -158,8 +158,8 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 		this.dataList = dataList;
 	}
 
-	public void setDataModel(RolesModel dataModel) {
-		this.dataModel = dataModel;
+	public void setDataService(RolesService dataService) {
+		this.dataService = dataService;
 	}
 
 	public String getSelec1() {

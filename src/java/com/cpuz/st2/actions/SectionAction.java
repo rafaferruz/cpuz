@@ -7,9 +7,9 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.Role;
 import com.cpuz.domain.Section;
 import com.cpuz.domain.UserRole;
-import com.cpuz.service.RolesModel;
-import com.cpuz.service.SectionsModel;
-import com.cpuz.service.UserRolesModel;
+import com.cpuz.service.RolesService;
+import com.cpuz.service.SectionsService;
+import com.cpuz.service.UserRolesService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -28,12 +28,12 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
     private ControlParams control = new ControlParams();
     private List<Section> dataList = new ArrayList<Section>();
     private Section dataEdit = new Section();
-    private SectionsModel dataModel;
+    private SectionsService dataService;
     private Map<Integer, String> mapStatus = new HashMap<Integer, String>();
     private Map<String, Object> requestáttributes = new HashMap<String, Object>();
     private List<Role> availableRolesList;
     private List<String> authRolesList;
-    private RolesModel rolesModel;
+    private RolesService rolesService;
     private String authRolesSel;
     private String[] availableRolesSel;
     private String selec1;
@@ -48,7 +48,7 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
     }
 
     public String Section_new() throws Exception {
-        availableRolesList = rolesModel.getNewsRecords();
+        availableRolesList = rolesService.getNewsRecords();
 
         control.setRecCount(1);
         control.setRunAction("new");
@@ -57,10 +57,10 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
     }
 
     public String Section_edit() throws Exception {
-        dataEdit = dataModel.getRecords("SELECT * FROM sections WHERE sec_id = '"
+        dataEdit = dataService.getRecords("SELECT * FROM sections WHERE sec_id = '"
                 + control.getId() + "'", "", "").get(0);
         // Se lee lista de Roles
-        availableRolesList = rolesModel.getNewsRecords();
+        availableRolesList = rolesService.getNewsRecords();
 
         authRolesList.clear();
         if (dataEdit.getAuthorizedRoles() != null
@@ -86,7 +86,7 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
 
     public String Section_saveNew() throws Exception {
         dataEdit.setAuthorizedRoles(authRolesSel.replaceAll(" ", ""));
-        if (dataModel.setNewRecord(dataEdit) == 1) {
+        if (dataService.setNewRecord(dataEdit) == 1) {
             this.addActionMessage(getText("SectionEditSaveOkMsg"));
             return Section_list();
         }
@@ -96,9 +96,9 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
     public String Section_saveEdit() throws Exception {
 
         dataEdit.setAuthorizedRoles(authRolesSel.replaceAll(" ", ""));
-        if (dataModel.keyIdExists(dataEdit.getId().toString())) {
+        if (dataService.keyIdExists(dataEdit.getId().toString())) {
             try {
-                dataModel.setUpdateRecord(dataEdit);
+                dataService.setUpdateRecord(dataEdit);
                 this.addActionMessage(getText("SectionEditSaveOkMsg"));
             } catch (Exception ex) {
                 this.addActionError(getText("SectionEditErrorMsg"));
@@ -114,7 +114,7 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
             String[] deletes = selec1.split(",");
             for (int i = 0; i < deletes.length; i++) {
                 dataEdit.setId(deletes[i].trim());
-                if (dataModel.deleteNews(dataEdit) == 1) {
+                if (dataService.deleteNews(dataEdit) == 1) {
                     addActionMessage(deletes[i] + " " + getText("SuccessDeletedSection"));
                 } else {
                     addActionError(deletes[i] + " " + getText("NoneDeletedSection"));
@@ -128,10 +128,10 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
 
     public String Section_list() throws Exception {
         if (control.getRecCount() == 0) {
-            dataList = dataModel.getRecords("SELECT * FROM sections ", "", "");
+            dataList = dataService.getRecords("SELECT * FROM sections ", "", "");
             control.setRecCount(dataList.size());
         }
-        dataList = dataModel.getRecords("SELECT * FROM sections "
+        dataList = dataService.getRecords("SELECT * FROM sections "
                 + " LIMIT " + control.getRecChunk().toString()
                 + " OFFSET " + control.getRecStart().toString(), "", "");
         control.setRunAction("list");
@@ -181,8 +181,8 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
         this.dataList = dataList;
     }
 
-    public void setDataModel(SectionsModel dataModel) {
-        this.dataModel = dataModel;
+    public void setDataService(SectionsService dataService) {
+        this.dataService = dataService;
     }
 
     public void setAuthRolesList(List<String> authRolesList) {
@@ -193,8 +193,8 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
         this.availableRolesList = availableRolesList;
     }
 
-    public void setRolesModel(RolesModel rolesModel) {
-        this.rolesModel = rolesModel;
+    public void setRolesService(RolesService rolesService) {
+        this.rolesService = rolesService;
     }
 
     public String getAuthRolesSel() {

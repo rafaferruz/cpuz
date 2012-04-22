@@ -4,7 +4,7 @@
  */
 package com.cpuz.model;
 
-import com.cpuz.service.RolesModel;
+import com.cpuz.service.RolesService;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import com.cpuz.domain.Role;
@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
  *
  * @author ESTHER
  */
-public class RolesModelTest extends RolesModel {
+public class RolesModelTest extends RolesService {
 
 	Integer rows;
 
@@ -113,13 +113,13 @@ public class RolesModelTest extends RolesModel {
 	}
 
 	/**
-	 * Test of keyIdExists method, of class RolesModel.
+	 * Test of keyIdExists method, of class RolesService.
 	 */
 	@Test
 	public void testKeyIdExists() throws Exception {
 		System.out.println("keyIdExists");
 		Integer rolId = null;
-		RolesModel instance = new RolesModel();
+		RolesService instance = new RolesService();
 		boolean expResult = false;
 		boolean result = instance.keyIdExists(rolId);
 		assertEquals(expResult, result);
@@ -128,12 +128,12 @@ public class RolesModelTest extends RolesModel {
 	}
 
 	/**
-	 * Test of getNewsRecords method, of class RolesModel.
+	 * Test of getNewsRecords method, of class RolesService.
 	 */
 	@Test
 	public void testGetNewsRecords_0args() throws Exception {
 		System.out.println("getNewsRecords");
-		RolesModel instance = new RolesModel();
+		RolesService instance = new RolesService();
 		List expResult = null;
 		List result = instance.getNewsRecords();
 		assertEquals(expResult, result);
@@ -142,13 +142,13 @@ public class RolesModelTest extends RolesModel {
 	}
 
 	/**
-	 * Test of getNewsRecords method, of class RolesModel.
+	 * Test of getNewsRecords method, of class RolesService.
 	 */
 	@Test
 	public void testGetNewsRecords_UserType() throws Exception {
 		System.out.println("getNewsRecords");
 		UserType userType = null;
-		RolesModel instance = new RolesModel();
+		RolesService instance = new RolesService();
 		List expResult = null;
 		List result = instance.getNewsRecords(userType);
 		assertEquals(expResult, result);
@@ -157,13 +157,13 @@ public class RolesModelTest extends RolesModel {
 	}
 
 	/**
-	 * Test of getRoleList method, of class RolesModel.
+	 * Test of getRoleList method, of class RolesService.
 	 */
 	@Test
 	public void testGetRoleList() throws Exception {
 		System.out.println("getRoleList");
 		ControlParams control = null;
-		RolesModel instance = new RolesModel();
+		RolesService instance = new RolesService();
 		List expResult = null;
 		List result = instance.getRoleList(control);
 		assertEquals(expResult, result);
@@ -172,12 +172,12 @@ public class RolesModelTest extends RolesModel {
 	}
 
 	/**
-	 * Test of getCountRows method, of class RolesModel.
+	 * Test of getCountRows method, of class RolesService.
 	 */
 	@Test
 	public void testGetCountRows() throws SQLException {
 		System.out.println("getCountRows");
-		RolesModel instance = new RolesModel();
+		RolesService instance = new RolesService();
 		int expResult = 0;
 		int result = instance.getCountRows();
 		assertEquals(expResult, result);
@@ -186,13 +186,13 @@ public class RolesModelTest extends RolesModel {
 	}
 
 	/**
-	 * Test of getById method, of class RolesModel.
+	 * Test of getById method, of class RolesService.
 	 */
 	@Test
 	public void testGetById() throws Exception {
 		System.out.println("getById");
 		int rolId = 0;
-		RolesModel instance = new RolesModel();
+		RolesService instance = new RolesService();
 		Role expResult = null;
 		Role result = instance.getById(rolId);
 		assertEquals(expResult, result);
@@ -201,13 +201,13 @@ public class RolesModelTest extends RolesModel {
 	}
 
 	/**
-	 * Test of insertRole method, of class RolesModel.
+	 * Test of insertRole method, of class RolesService.
 	 */
 	@Test
 	public void testInsertRole() throws Exception {
 		System.out.println("insertRole");
 		Role role = null;
-		RolesModel instance = new RolesModel();
+		RolesService instance = new RolesService();
 		int expResult = 0;
 		int result = instance.insertRole(role);
 		assertEquals(expResult, result);
@@ -216,13 +216,13 @@ public class RolesModelTest extends RolesModel {
 	}
 
 	/**
-	 * Test of updateRole method, of class RolesModel.
+	 * Test of updateRole method, of class RolesService.
 	 */
 	@Test
 	public void testUpdateRole() throws Exception {
 		System.out.println("updateRole");
 		Role role = null;
-		RolesModel instance = new RolesModel();
+		RolesService instance = new RolesService();
 		int expResult = 0;
 		int result = instance.updateRole(role);
 		assertEquals(expResult, result);
@@ -231,13 +231,13 @@ public class RolesModelTest extends RolesModel {
 	}
 
 	/**
-	 * Test of deleteRole method, of class RolesModel.
+	 * Test of deleteRole method, of class RolesService.
 	 */
 	@Test
 	public void testDeleteRole() throws Exception {
 		System.out.println("deleteRole");
 		Role role = null;
-		RolesModel instance = new RolesModel();
+		RolesService instance = new RolesService();
 		int expResult = 0;
 		int result = instance.deleteRole(role);
 		assertEquals(expResult, result);
@@ -246,13 +246,13 @@ public class RolesModelTest extends RolesModel {
 	}
 
 	/**
-	 * Test of deleteRoleIds method, of class RolesModel.
+	 * Test of deleteRoleIds method, of class RolesService.
 	 */
 	@Test
 	public void testDeleteRoleIds() throws Exception {
 		System.out.println("deleteRoleIds");
 		List<String> ids = null;
-		RolesModel instance = new RolesModel();
+		RolesService instance = new RolesService();
 		int expResult = 0;
 		int result = instance.deleteRoleIds(ids);
 		assertEquals(expResult, result);

@@ -23,7 +23,7 @@
     <%-- La segunda fila contiene una tabla sobre la que se presentan
         las opciones del menú navegador principal --%>
 
-    <jsp:useBean class="com.cpuz.model.UserService" id="userService2"/>
+    <jsp:useBean class="com.cpuz.service.UserService" id="userService2"/>
     <jsp:setProperty name="userService2" property="user" value="${user}"/>
     <jsp:setProperty name="userService2" property="role" value="readerContact"/>
     <tr>

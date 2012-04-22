@@ -21,7 +21,7 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.Bug;
 import com.cpuz.domain.BugStatusType;
 import com.cpuz.domain.BugType;
-import com.cpuz.service.BugsModel;
+import com.cpuz.service.BugsService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -42,7 +42,7 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 	private ControlParams control = new ControlParams();
 	private List<Bug> dataList = new ArrayList<>();
 	private Bug dataEdit = new Bug();
-	private BugsModel dataModel;
+	private BugsService dataService;
 	private Map<Integer, String> mapStatus = new HashMap<>();
 	private List<String> listTypes = new ArrayList<>();
 	private Map<Integer, String> mapScopes = new HashMap<>();
@@ -70,7 +70,7 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 	}
 
 	public String bugEdit() throws Exception {
-		dataEdit = dataModel.getById(control.getId());
+		dataEdit = dataService.getById(control.getId());
 		initMapStatus();
 		initListTypes();
 		control.setRunAction("Edit");
@@ -81,7 +81,7 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 	public String bugSaveNew() throws Exception {
 		dataEdit.setUser((String) sessionAttributes.get("user"));
 
-		if (dataModel.insertBug(dataEdit) == 1) {
+		if (dataService.insertBug(dataEdit) == 1) {
 			this.addActionMessage(getText("BugEditSaveOkMsg"));
 			return bugList();
 		}
@@ -90,9 +90,9 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 
 	public String bugSaveEdit() throws Exception {
 
-		if (dataModel.keyIdExists(dataEdit.getId())) {
+		if (dataService.keyIdExists(dataEdit.getId())) {
 			try {
-				dataModel.updateBug(dataEdit);
+				dataService.updateBug(dataEdit);
 				this.addActionMessage(getText("BugEditSaveOkMsg"));
 			} catch (Exception ex) {
 				this.addActionError(getText("BugEditErrorMsg"));
@@ -106,7 +106,7 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 	public String bugDelete() throws Exception {
 		if (selec1 != null) {
 			String[] deletes = selec1.split(",");
-			if (dataModel.deleteBugIds(Arrays.asList(deletes)) > 0) {
+			if (dataService.deleteBugIds(Arrays.asList(deletes)) > 0) {
 				addActionMessage(getText("SuccessDeletedBugs"));
 			} else {
 				addActionError(getText("NoneDeletedBug"));
@@ -119,9 +119,9 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 
 	public String bugList() throws Exception {
 		if (control.getRecCount() == 0) {
-			control.setRecCount(dataModel.getCountRows());
+			control.setRecCount(dataService.getCountRows());
 		}
-		dataList = dataModel.getBugList(control);
+		dataList = dataService.getBugList(control);
 		control.setRunAction("List");
 		requestAttributes.put("page", "/WEB-INF/views/bugList.jsp");
 		return "LIST";
@@ -169,8 +169,8 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 		this.dataList = dataList;
 	}
 
-	public void setDataModel(BugsModel dataModel) {
-		this.dataModel = dataModel;
+	public void setDataService(BugsService dataService) {
+		this.dataService = dataService;
 	}
 
 	public String getSelec1() {

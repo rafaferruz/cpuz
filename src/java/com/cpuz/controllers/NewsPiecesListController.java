@@ -8,9 +8,9 @@ import com.cpuz.domain.NewsComposition;
 import com.cpuz.domain.NewsPiece;
 import com.cpuz.domain.Section;
 import com.cpuz.domain.UserType;
-import com.cpuz.service.NewsCompositionsModel;
-import com.cpuz.service.NewsPiecesModel;
-import com.cpuz.service.SectionsModel;
+import com.cpuz.service.NewsCompositionsService;
+import com.cpuz.service.NewsPiecesService;
+import com.cpuz.service.SectionsService;
 import com.cpuz.domain.UserType;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 public class NewsPiecesListController extends GenericListController {
 
     private static final long serialVersionUID = 302L;
-    protected NewsPiecesModel nvm = new NewsPiecesModel();
-    NewsCompositionsModel compvm = new NewsCompositionsModel();
+    protected NewsPiecesService nvm = new NewsPiecesService();
+    NewsCompositionsService compvm = new NewsCompositionsService();
 
     /*    protected String jspFileList = "views/NewsPiecesList.jsp";
     protected String jspFileEdit = "views/NewsPiecesEdit.jsp";
@@ -39,7 +39,7 @@ public class NewsPiecesListController extends GenericListController {
         super.jspFileEdit = "views/NewsPiecesEdit.jsp";
         super.jspFileSelec = "views/SelecConditions.jsp";
         super.attrNameListRecs = "NewsPiecesListNews";
-//        super.nvm = new NewsPiecesModel();
+//        super.nvm = new NewsPiecesService();
     }
 
     protected synchronized void doListSelec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -105,7 +105,7 @@ public class NewsPiecesListController extends GenericListController {
                 request.getSession().setAttribute("recSections", getSections());
 
 // Crea la lista de Composición de la News y la pasa a la vista
-                NewsCompositionsModel compvm = new NewsCompositionsModel();
+                NewsCompositionsService compvm = new NewsCompositionsService();
                 List<NewsComposition> compositionList = compvm.getNewsRecords(UserType.ANONYMOUS, " nco_npi_id = " + request.getParameter("identificador") + " ");
                 request.getSession().setAttribute("recComposition", compositionList);
 
@@ -142,7 +142,7 @@ public class NewsPiecesListController extends GenericListController {
                 for (Object n : recs) {
                     if (checkIdNew(n, idNew)) {
                         recs.remove(n);
-                        NewsCompositionsModel compvm = new NewsCompositionsModel();
+                        NewsCompositionsService compvm = new NewsCompositionsService();
                         compvm.deleteNews(" WHERE nco_npi_id = " + idNew);
                         break;
                     }
@@ -251,7 +251,7 @@ public class NewsPiecesListController extends GenericListController {
 
     private List getSections() {
 
-        SectionsModel estám = new SectionsModel();
+        SectionsService estám = new SectionsService();
         List<Section> sec = estám.getRecords();
         return sec;
     }

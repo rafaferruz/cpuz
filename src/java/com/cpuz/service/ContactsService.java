@@ -18,9 +18,9 @@ import java.util.logging.Logger;
  *
  * @author RAFAEL FERRUZ
  */
-public class ContactsModel {
+public class ContactsService {
 
-    public ContactsModel() {
+    public ContactsService() {
     }
 
     public boolean keyIdExists(Integer ssn) {
@@ -86,11 +86,11 @@ public class ContactsModel {
                 news.add(n);
             }
         } catch (ContactException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return news;
     }
@@ -110,11 +110,11 @@ public class ContactsModel {
             records = nDao.readContacts(sqlClause);
 
         } catch (ContactException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return records;
     }
@@ -131,11 +131,11 @@ public class ContactsModel {
                 news.add(n);
             }
         } catch (ContactException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return news;
     }
@@ -146,11 +146,11 @@ public class ContactsModel {
             ContactDAOImpl nDao = new ContactDAOImpl();
             return nDao.createContact(news);
         } catch (ContactException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -161,11 +161,11 @@ public class ContactsModel {
             ContactDAOImpl nDao = new ContactDAOImpl();
             return nDao.updateContact(news);
         } catch (ContactException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -176,11 +176,11 @@ public class ContactsModel {
             ContactDAOImpl nDao = new ContactDAOImpl();
             return nDao.deleteContact(news);
         } catch (ContactException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ContactsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }

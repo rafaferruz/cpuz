@@ -5,7 +5,7 @@
 package com.cpuz.controllers;
 
 import com.cpuz.domain.InfoBlock;
-import com.cpuz.service.InfoBlocksModel;
+import com.cpuz.service.InfoBlocksService;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class InfoBlocksEditController extends GenericEditController {
 
     private static final long serialVersionUID = 301L;
-    protected InfoBlocksModel nvm = new InfoBlocksModel();
+    protected InfoBlocksService nvm = new InfoBlocksService();
 
     public InfoBlocksEditController() {
         super.jspFileList = "views/infoBlocksList.jsp";
@@ -52,7 +52,7 @@ public class InfoBlocksEditController extends GenericEditController {
         }
         // SE GRABA EL REGISTRO EN LA BASE DE DATOS
 
-        InfoBlocksModel nvm = new InfoBlocksModel();
+        InfoBlocksService nvm = new InfoBlocksService();
 
         try {
             //Obtenemos la lista de filas listadas para a�adir las nuevas o modificar las editadas

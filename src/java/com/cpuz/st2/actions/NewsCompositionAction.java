@@ -6,7 +6,7 @@ package com.cpuz.st2.actions;
 
 import com.cpuz.domain.NewsComposition;
 import com.cpuz.domain.Section;
-import com.cpuz.service.NewsCompositionsModel;
+import com.cpuz.service.NewsCompositionsService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -27,7 +27,7 @@ public class NewsCompositionAction extends ActionSupport implements RequestAware
     private ControlParams control = new ControlParams();
     private List<NewsComposition> dataList = new ArrayList<NewsComposition>();
     private NewsComposition dataEdit = new NewsComposition();
-    private NewsCompositionsModel dataModel;
+    private NewsCompositionsService dataService;
     private Map<Integer, String> mapStatus = new HashMap<Integer, String>();
     private Map<Integer, String> mapScopes = new HashMap<Integer, String>();
     private Map<Integer, String> mapAccess = new HashMap<Integer, String>();
@@ -69,7 +69,7 @@ public class NewsCompositionAction extends ActionSupport implements RequestAware
             this.setNewsCompId((String) parameter[0]);
 // SE QUITA PARA QUE COMPILE PERO HAY QUE REPONER ESTA LINEA            control.setId(getNewsCompId());
         }
-        dataEdit = dataModel.getRecords("SELECT * FROM newscomposition WHERE nco_composition_id = "
+        dataEdit = dataService.getRecords("SELECT * FROM newscomposition WHERE nco_composition_id = "
                 + control.getId(), "", "").get(0);
         initMapStatus();
         initMapAccess();
@@ -86,7 +86,7 @@ public class NewsCompositionAction extends ActionSupport implements RequestAware
     //    dataEdit.setDatetime(new Date());
     //    dataEdit.setStatus(0);
 
-        if (dataModel.setNewRecord(dataEdit) == 1) {
+        if (dataService.setNewRecord(dataEdit) == 1) {
             this.addActionMessage(getText("NewsCompositionEditSaveOkMsg"));
             return NewsComposition_list();
         }
@@ -95,9 +95,9 @@ public class NewsCompositionAction extends ActionSupport implements RequestAware
 
     public String NewsComposition_saveEdit() throws Exception {
 
-        if (dataModel.keyIdExists(dataEdit.getId())) {
+        if (dataService.keyIdExists(dataEdit.getId())) {
             try {
-                dataModel.setUpdateRecord(dataEdit);
+                dataService.setUpdateRecord(dataEdit);
                 this.addActionMessage(getText("NewsCompositionEditSaveOkMsg"));
             } catch (Exception ex) {
                 this.addActionError(getText("NewsCompositionEditErrorMsg"));
@@ -112,7 +112,7 @@ public class NewsCompositionAction extends ActionSupport implements RequestAware
         if (selec1 != null) {
             for (int i = 0; i < selec1.length; i++) {
                 dataEdit.setId(Integer.parseInt(selec1[i].trim()));
-                if (dataModel.deleteNews(dataEdit) == 1) {
+                if (dataService.deleteNews(dataEdit) == 1) {
                     addActionMessage(selec1[i] + " " + getText("SuccessDeletedNewsComposition"));
                 } else {
                     addActionError(selec1[i] + " " + getText("NoneDeletedNewsComposition"));
@@ -129,7 +129,7 @@ public class NewsCompositionAction extends ActionSupport implements RequestAware
         if ( act.getParameters().get("NewsPieceId")!=null){
             String[] parameter =(String[])act.getParameters().get("NewsPieceId");
             this.setNewsPieceId((String) parameter[0]);
-            dataList = dataModel.getRecords("SELECT * FROM newscomposition "+
+            dataList = dataService.getRecords("SELECT * FROM newscomposition "+
                     " WHERE nco_npi_id = "+
                     getNewsPieceId()+
                     " ORDER BY nco_order", "", "");
@@ -183,8 +183,8 @@ public class NewsCompositionAction extends ActionSupport implements RequestAware
         this.dataList = dataList;
     }
 
-    public void setDataModel(NewsCompositionsModel dataModel) {
-        this.dataModel = dataModel;
+    public void setDataService(NewsCompositionsService dataService) {
+        this.dataService = dataService;
     }
 
     public String[] getSelec1() {

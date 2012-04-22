@@ -7,9 +7,9 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.NewsComposition;
 import com.cpuz.domain.NewsPiece;
 import com.cpuz.domain.Section;
-import com.cpuz.service.NewsCompositionsModel;
-import com.cpuz.service.NewsPiecesModel;
-import com.cpuz.service.SectionsModel;
+import com.cpuz.service.NewsCompositionsService;
+import com.cpuz.service.NewsPiecesService;
+import com.cpuz.service.SectionsService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -30,7 +30,7 @@ public class NewsPresentationAction extends ActionSupport implements RequestAwar
 	private ControlParams control = new ControlParams();
 	private List<NewsComposition> dataList = new ArrayList<>();
 	private NewsComposition dataEdit = new NewsComposition();
-	private NewsCompositionsModel dataModel;
+	private NewsCompositionsService dataService;
 	private Map<Integer, String> mapStatus = new HashMap<>();
 	private Map<Integer, String> mapScopes = new HashMap<>();
 	private Map<Integer, String> mapAccess = new HashMap<>();
@@ -50,11 +50,11 @@ public class NewsPresentationAction extends ActionSupport implements RequestAwar
 	@Override
 	public String execute() throws Exception {
 		// Obtenemos las secciones
-		SectionsModel sectionsModel = new SectionsModel();
-		sectionList = sectionsModel.getRecords();
+		SectionsService sectionsService = new SectionsService();
+		sectionList = sectionsService.getRecords();
 		// Obtenemos las noticias de cada sección
-		NewsPiecesModel newsPiecesModel = new NewsPiecesModel();
-		List<NewsPiece> newsPieceList=newsPiecesModel.getNewsRecords();
+		NewsPiecesService newsPiecesService = new NewsPiecesService();
+		List<NewsPiece> newsPieceList=newsPiecesService.getNewsRecords();
 
 		return "SHOW";
 	}
@@ -78,7 +78,7 @@ public class NewsPresentationAction extends ActionSupport implements RequestAwar
 			this.setNewsCompId((String) parameter[0]);
 // SE QUITA PARA QUE COMPILE PERO HAY QUE REPONER ESTA LINEA            control.setId(getNewsCompId());
 		}
-		dataEdit = dataModel.getRecords("SELECT * FROM newscomposition WHERE nco_composition_id = "
+		dataEdit = dataService.getRecords("SELECT * FROM newscomposition WHERE nco_composition_id = "
 				+ control.getId(), "", "").get(0);
 		initMapStatus();
 		initMapAccess();
@@ -95,7 +95,7 @@ public class NewsPresentationAction extends ActionSupport implements RequestAwar
 		//    dataEdit.setDatetime(new Date());
 		//    dataEdit.setStatus(0);
 
-		if (dataModel.setNewRecord(dataEdit) == 1) {
+		if (dataService.setNewRecord(dataEdit) == 1) {
 			this.addActionMessage(getText("NewsCompositionEditSaveOkMsg"));
 			return NewsComposition_list();
 		}
@@ -104,9 +104,9 @@ public class NewsPresentationAction extends ActionSupport implements RequestAwar
 
 	public String NewsComposition_saveEdit() throws Exception {
 
-		if (dataModel.keyIdExists(dataEdit.getId())) {
+		if (dataService.keyIdExists(dataEdit.getId())) {
 			try {
-				dataModel.setUpdateRecord(dataEdit);
+				dataService.setUpdateRecord(dataEdit);
 				this.addActionMessage(getText("NewsCompositionEditSaveOkMsg"));
 			} catch (Exception ex) {
 				this.addActionError(getText("NewsCompositionEditErrorMsg"));
@@ -121,7 +121,7 @@ public class NewsPresentationAction extends ActionSupport implements RequestAwar
 		if (selec1 != null) {
 			for (int i = 0; i < selec1.length; i++) {
 				dataEdit.setId(Integer.parseInt(selec1[i].trim()));
-				if (dataModel.deleteNews(dataEdit) == 1) {
+				if (dataService.deleteNews(dataEdit) == 1) {
 					addActionMessage(selec1[i] + " " + getText("SuccessDeletedNewsComposition"));
 				} else {
 					addActionError(selec1[i] + " " + getText("NoneDeletedNewsComposition"));
@@ -138,7 +138,7 @@ public class NewsPresentationAction extends ActionSupport implements RequestAwar
 		if (act.getParameters().get("NewsPieceId") != null) {
 			String[] parameter = (String[]) act.getParameters().get("NewsPieceId");
 			this.setNewsPieceId((String) parameter[0]);
-			dataList = dataModel.getRecords("SELECT * FROM newscomposition "
+			dataList = dataService.getRecords("SELECT * FROM newscomposition "
 					+ " WHERE nco_npi_id = "
 					+ getNewsPieceId()
 					+ " ORDER BY nco_order", "", "");
@@ -192,8 +192,8 @@ public class NewsPresentationAction extends ActionSupport implements RequestAwar
 		this.dataList = dataList;
 	}
 
-	public void setDataModel(NewsCompositionsModel dataModel) {
-		this.dataModel = dataModel;
+	public void setDataService(NewsCompositionsService dataService) {
+		this.dataService = dataService;
 	}
 
 	public String[] getSelec1() {

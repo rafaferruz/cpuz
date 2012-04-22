@@ -6,7 +6,7 @@ package com.cpuz.st2.actions;
 
 import com.cpuz.domain.Document;
 import com.cpuz.exceptions.DocumentException;
-import com.cpuz.service.DocumentsModel;
+import com.cpuz.service.DocumentsService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -43,7 +43,7 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
     private ControlParams control = new ControlParams();
     private List<Document> dataList = new ArrayList<Document>();
     private Document dataEdit = new Document();
-    private DocumentsModel dataModel;
+    private DocumentsService dataService;
     private Map<Integer, String> mapStatus = new HashMap<Integer, String>();
     private List<String> listTypes = new ArrayList<String>();
     private Map<Integer, String> mapScopes = new HashMap<Integer, String>();
@@ -77,7 +77,7 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
     }
 
     public String Document_edit() throws Exception {
-        dataEdit = dataModel.getRecords("SELECT * FROM documents WHERE doc_id = "
+        dataEdit = dataService.getRecords("SELECT * FROM documents WHERE doc_id = "
                 + control.getId(), "", "").get(0);
         initMapStatus();
         initListTypes();
@@ -137,7 +137,7 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
         }
         dataEdit.setUser((String) sessionAttributes.get("user"));
         try {
-            if (dataModel.setNewRecord(dataEdit) == 1) {
+            if (dataService.setNewRecord(dataEdit) == 1) {
                 this.addActionMessage(getText("DocumentEditSaveOkMsg"));
             }
         } catch (Exception ex) {
@@ -199,9 +199,9 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
                 dataEdit.setFilename(filenameStore);
             }
         }
-        if (dataModel.keyIdExists(dataEdit.getId())) {
+        if (dataService.keyIdExists(dataEdit.getId())) {
             try {
-                dataModel.setUpdateRecord(dataEdit);
+                dataService.setUpdateRecord(dataEdit);
                 this.addActionMessage(getText("DocumentEditSaveOkMsg"));
             } catch (Exception ex) {
                 this.addActionError(getText("DocumentEditErrorMsg"));
@@ -220,7 +220,7 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
             for (int i = 0; i
                     < deletes.length; i++) {
                 dataEdit.setId(Integer.parseInt(deletes[i].trim()));
-                if (dataModel.deleteNews(dataEdit) == 1) {
+                if (dataService.deleteNews(dataEdit) == 1) {
                     if (dataEdit.getRepositoryReference() != null) {
                         try {
                             deleteFileFtp((String) dataEdit.getRepositoryReference());
@@ -241,11 +241,11 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
 
     public String Document_list() {
         if (control.getRecCount() == 0) {
-            dataList = dataModel.getRecords("SELECT * FROM documents "
+            dataList = dataService.getRecords("SELECT * FROM documents "
                     + ((Integer) sessionAttributes.get("userCategory") == 2 ? "" : " WHERE doc_user = '" + sessionAttributes.get("user") + "' "), "", "");
             control.setRecCount(dataList.size());
         }
-        dataList = dataModel.getRecords("SELECT * FROM documents "
+        dataList = dataService.getRecords("SELECT * FROM documents "
                 + ((Integer) sessionAttributes.get("userCategory") == 2 ? "" : " WHERE doc_user = '" + sessionAttributes.get("user") + "' ")
                 + " LIMIT " + control.getRecChunk().toString()
                 + " OFFSET " + control.getRecStart().toString(), "", "");
@@ -296,8 +296,8 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
         this.dataList = dataList;
     }
 
-    public void setDataModel(DocumentsModel dataModel) {
-        this.dataModel = dataModel;
+    public void setDataService(DocumentsService dataService) {
+        this.dataService = dataService;
     }
 
     public String getSelec1() {

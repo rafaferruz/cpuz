@@ -2,7 +2,7 @@ package com.cpuz.st2.actions;
 
 import com.cpuz.domain.NewsPiece;
 import com.cpuz.domain.Role;
-import com.cpuz.service.InitModel;
+import com.cpuz.service.InitService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -19,7 +19,7 @@ public class LogoutAction extends ActionSupport implements RequestAware, Seriali
 
     private ControlParams control = new ControlParams();
     private List<NewsPiece> dataList = new ArrayList<>();
-    private InitModel initModel;
+    private InitService initService;
     private Map<Integer, String> mapStatus = new HashMap<>();
     private Map<String, Object> requestAttributes = new HashMap<>();
     private String selec1;
@@ -38,16 +38,16 @@ public class LogoutAction extends ActionSupport implements RequestAware, Seriali
 	public void setRequest(Map<String, Object> map) {
         this.requestAttributes = map;
 	}
-    public void setDataModel(InitModel initModel) {
-        this.initModel = initModel;
+    public void setDataService(InitService initService) {
+        this.initService = initService;
     }
 
-	public InitModel getInitModel() {
-		return initModel;
+	public InitService getInitService() {
+		return initService;
 	}
 
-	public void setInitModel(InitModel initModel) {
-		this.initModel = initModel;
+	public void setInitService(InitService initService) {
+		this.initService = initService;
 	}
 
 	public Map<String, Object> getRequestAttributes() {

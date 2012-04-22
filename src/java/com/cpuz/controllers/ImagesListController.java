@@ -2,7 +2,7 @@ package com.cpuz.controllers;
 
 import com.cpuz.domain.Image;
 import com.cpuz.domain.UserType;
-import com.cpuz.service.ImagesModel;
+import com.cpuz.service.ImagesService;
 import com.cpuz.domain.UserType;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ImagesListController extends GenericListController {
 
     private static final long serialVersionUID = 302L;
-    protected ImagesModel nvm = new ImagesModel();
+    protected ImagesService nvm = new ImagesService();
 /*    protected String jspFileList = "views/imagesList.jsp";
     protected String jspFileEdit = "views/imagesEdit.jsp";
     protected String jspFileSelec = "views/imagesSelec.jsp";
@@ -29,7 +29,7 @@ public class ImagesListController extends GenericListController {
         super.jspFileEdit = "views/imagesEdit.jsp";
         super.jspFileSelec = "views/selecConditions.jsp";
         super.attrNameListRecs = "ImagesListNews";
-//        super.nvm = new ImagesModel();
+//        super.nvm = new ImagesService();
     }
 
     protected synchronized void doListSelec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

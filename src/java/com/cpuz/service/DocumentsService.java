@@ -18,9 +18,9 @@ import java.util.logging.Logger;
  *
  * @author RAFAEL FERRUZ
  */
-public class DocumentsModel {
+public class DocumentsService {
 
-    public DocumentsModel() {
+    public DocumentsService() {
     }
     public boolean keyIdExists(Integer ssn) {
         try {
@@ -86,11 +86,11 @@ public class DocumentsModel {
                 news.add(n);
             }
         } catch (DocumentException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return news;
     }
@@ -109,11 +109,11 @@ public class DocumentsModel {
             records = nDao.readDocuments(sqlClause);
 
         } catch (DocumentException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return records;
     }
@@ -131,11 +131,11 @@ public class DocumentsModel {
                 news.add(n);
             }
         } catch (DocumentException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return news;
     }
@@ -146,11 +146,11 @@ public class DocumentsModel {
             DocumentDAOImpl nDao = new DocumentDAOImpl();
             return nDao.createDocument(news);
         } catch (DocumentException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -161,11 +161,11 @@ public class DocumentsModel {
             DocumentDAOImpl nDao = new DocumentDAOImpl();
             return nDao.updateDocument(news);
         } catch (DocumentException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -176,11 +176,11 @@ public class DocumentsModel {
             DocumentDAOImpl nDao = new DocumentDAOImpl();
             return nDao.deleteDocument(news);
         } catch (DocumentException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(DocumentsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DocumentsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }

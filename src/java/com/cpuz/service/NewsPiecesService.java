@@ -21,14 +21,14 @@ import java.util.logging.Logger;
  *
  * @author RAFAEL FERRUZ
  */
-public class NewsPiecesModel {
+public class NewsPiecesService {
 
 	List<Integer> statusList = new ArrayList();
 	List<Integer> scopeList = new ArrayList();
 	Date fromDate;
 	Date toDate;
 
-	public NewsPiecesModel() {
+	public NewsPiecesService() {
 	}
 
 	public boolean keyIdExists(Integer ssn) {
@@ -87,11 +87,11 @@ public class NewsPiecesModel {
 			NewsPieceDAOImpl nDao = new NewsPieceDAOImpl();
 			return nDao.readNewsPieces(statusList, scopeList, fromDate, toDate);
 		} catch (NewsPieceException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return new ArrayList<>();
 	}
@@ -111,11 +111,11 @@ public class NewsPiecesModel {
 			records = nDao.readNewsPieces(sqlClause);
 
 		} catch (NewsPieceException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return records;
 	}
@@ -132,11 +132,11 @@ public class NewsPiecesModel {
 				news.add(n);
 			}
 		} catch (NewsPieceException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return news;
 	}
@@ -147,11 +147,11 @@ public class NewsPiecesModel {
 			NewsPieceDAOImpl nDao = new NewsPieceDAOImpl();
 			return nDao.createNewsPiece(news);
 		} catch (NewsPieceException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return -1;
 	}
@@ -162,11 +162,11 @@ public class NewsPiecesModel {
 			NewsPieceDAOImpl nDao = new NewsPieceDAOImpl();
 			return nDao.updateNewsPiece(news);
 		} catch (NewsPieceException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return -1;
 	}
@@ -177,11 +177,11 @@ public class NewsPiecesModel {
 			NewsPieceDAOImpl nDao = new NewsPieceDAOImpl();
 			return nDao.deleteNewsPiece(news);
 		} catch (NewsPieceException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (Exception ex) {
-			Logger.getLogger(NewsPiecesModel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(NewsPiecesService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return -1;
 	}

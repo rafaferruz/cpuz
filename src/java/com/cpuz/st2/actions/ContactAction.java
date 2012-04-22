@@ -5,8 +5,7 @@
 package com.cpuz.st2.actions;
 
 import com.cpuz.domain.Contact;
-import com.cpuz.service.ContactsModel;
-import com.cpuz.service.UserService;
+import com.cpuz.service.ContactsService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -25,12 +24,12 @@ import org.apache.struts2.interceptor.SessionAware;
 public class ContactAction extends ActionSupport implements RequestAware, SessionAware, Serializable {
 
     private ControlParams control = new ControlParams();
-    private List<Contact> dataList = new ArrayList<Contact>();
+    private List<Contact> dataList = new ArrayList<>();
     private Contact dataEdit = new Contact();
-    private ContactsModel dataModel;
-    private Map<Integer, String> mapStatus = new HashMap<Integer, String>();
-    private List<String> listTargets = new ArrayList<String>();
-    private Map<Integer, String> mapScopes = new HashMap<Integer, String>();
+    private ContactsService dataService;
+    private Map<Integer, String> mapStatus = new HashMap<>();
+    private List<String> listTargets = new ArrayList<>();
+    private Map<Integer, String> mapScopes = new HashMap<>();
     private Map<String, Object> requestáttributes;
     private Map<String, Object> sessionAttributes;
     private String selec1;
@@ -57,7 +56,7 @@ public class ContactAction extends ActionSupport implements RequestAware, Sessio
     }
 
     public String Contact_edit() throws Exception {
-        dataEdit = dataModel.getRecords("SELECT * FROM contacts WHERE con_id = "
+        dataEdit = dataService.getRecords("SELECT * FROM contacts WHERE con_id = "
                 + control.getId(), "", "").get(0);
         initMapStatus();
         initListTargets();
@@ -70,9 +69,9 @@ public class ContactAction extends ActionSupport implements RequestAware, Sessio
     public String Contact_saveNew() throws Exception {
         dataEdit.setUser((String) sessionAttributes.get("user"));
 
-        if (dataModel.setNewRecord(dataEdit) == 1) {
+        if (dataService.setNewRecord(dataEdit) == 1) {
             this.addActionMessage(getText("ContactEditSaveOkMsg"));
-            dataList = dataModel.getRecords("SELECT * FROM contacts "
+            dataList = dataService.getRecords("SELECT * FROM contacts "
                     + " ORDER BY con_date DESC "
                     + " LIMIT " + control.getRecChunk().toString()
                     + " OFFSET " + control.getRecStart().toString(), "", "");
@@ -86,15 +85,15 @@ public class ContactAction extends ActionSupport implements RequestAware, Sessio
 
     public String Contact_saveEdit() throws Exception {
 
-        if (dataModel.keyIdExists(dataEdit.getId())) {
+        if (dataService.keyIdExists(dataEdit.getId())) {
             try {
-                dataModel.setUpdateRecord(dataEdit);
+                dataService.setUpdateRecord(dataEdit);
                 this.addActionMessage(getText("ContactEditSaveOkMsg"));
             } catch (Exception ex) {
                 this.addActionError(getText("ContactEditErrorMsg"));
                 return "EDIT";
             }
-            dataList = dataModel.getRecords("SELECT * FROM contacts "
+            dataList = dataService.getRecords("SELECT * FROM contacts "
                     + " LIMIT " + control.getRecChunk().toString()
                     + " OFFSET " + control.getRecStart().toString(), "", "");
             control.setRecCount(dataList.size());
@@ -110,7 +109,7 @@ public class ContactAction extends ActionSupport implements RequestAware, Sessio
             String[] deletes = selec1.split(",");
             for (int i = 0; i < deletes.length; i++) {
                 dataEdit.setId(Integer.parseInt(deletes[i].trim()));
-                if (dataModel.deleteNews(dataEdit) == 1) {
+                if (dataService.deleteNews(dataEdit) == 1) {
                     addActionMessage(deletes[i] + " " + getText("SuccessDeletedContact"));
                 } else {
                     addActionError(deletes[i] + " " + getText("NoneDeletedContact"));
@@ -124,11 +123,11 @@ public class ContactAction extends ActionSupport implements RequestAware, Sessio
 
     public String Contact_list() throws Exception {
         if (control.getRecCount() == 0) {
-            dataList = dataModel.getRecords("SELECT * FROM contacts ", "", "");
+            dataList = dataService.getRecords("SELECT * FROM contacts ", "", "");
             control.setRecCount(dataList.size());
         }
  
-        dataList = dataModel.getRecords("SELECT * FROM contacts "
+        dataList = dataService.getRecords("SELECT * FROM contacts "
                 + " ORDER BY con_date DESC "
                 + " LIMIT " + control.getRecChunk().toString()
                 + " OFFSET " + control.getRecStart().toString(), "", "");
@@ -179,8 +178,8 @@ public class ContactAction extends ActionSupport implements RequestAware, Sessio
         this.dataList = dataList;
     }
 
-    public void setDataModel(ContactsModel dataModel) {
-        this.dataModel = dataModel;
+    public void setDataService(ContactsService dataService) {
+        this.dataService = dataService;
     }
 
     public String getSelec1() {

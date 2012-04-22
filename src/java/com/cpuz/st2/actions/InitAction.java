@@ -19,7 +19,7 @@
 package com.cpuz.st2.actions;
 
 import com.cpuz.domain.NewsPiece;
-import com.cpuz.service.InitModel;
+import com.cpuz.service.InitService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -34,12 +34,8 @@ import org.apache.struts2.interceptor.RequestAware;
  */
 public class InitAction extends ActionSupport implements RequestAware, Serializable {
 
-    private ControlParams control = new ControlParams();
-    private List<NewsPiece> dataList = new ArrayList<>();
-    private InitModel initModel;
-    private Map<Integer, String> mapStatus = new HashMap<>();
+    private InitService initService;
     private Map<String, Object> requestAttributes = new HashMap<>();
-    private String selec1;
 
     public InitAction() {
         super();
@@ -47,7 +43,7 @@ public class InitAction extends ActionSupport implements RequestAware, Serializa
 
     @Override
     public String execute() throws Exception {
-		requestAttributes.put("recentNews",initModel.getWhatsNew());
+		requestAttributes.put("recentNews",initService.getWhatsNew());
         requestAttributes.put("page", "/WEB-INF/pages/index.jsp");
         return "whatsNew";
     }
@@ -56,16 +52,16 @@ public class InitAction extends ActionSupport implements RequestAware, Serializa
 	public void setRequest(Map<String, Object> map) {
         this.requestAttributes = map;
 	}
-    public void setDataModel(InitModel initModel) {
-        this.initModel = initModel;
+    public void setDataService(InitService initService) {
+        this.initService = initService;
     }
 
-	public InitModel getInitModel() {
-		return initModel;
+	public InitService getInitService() {
+		return initService;
 	}
 
-	public void setInitModel(InitModel initModel) {
-		this.initModel = initModel;
+	public void setInitService(InitService initService) {
+		this.initService = initService;
 	}
 
 	public Map<String, Object> getRequestAttributes() {
