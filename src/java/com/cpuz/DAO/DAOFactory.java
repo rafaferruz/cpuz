@@ -134,6 +134,10 @@ public class DAOFactory {
 		return (BugDAO) this.getDAO(BugDAO.class);
 	}
 
+	public SectionDAO getSectionDAO() {
+		return (SectionDAO) this.getDAO(SectionDAO.class);
+	}
+
 	public NewsPieceDAOImpl getNewsPieceDAOImpl() {
 		return (NewsPieceDAOImpl) this.getDAO(NewsPieceDAOImpl.class);
 	}

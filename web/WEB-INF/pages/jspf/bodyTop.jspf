@@ -24,8 +24,8 @@
         las opciones del menú navegador principal --%>
 
     <jsp:useBean class="com.cpuz.service.UserService" id="userService2"/>
-    <jsp:setProperty name="userService2" property="user" value="${user}"/>
-    <jsp:setProperty name="userService2" property="role" value="readerContact"/>
+    <jsp:setProperty name="userService2" property="userCode" value="${user}"/>
+    <jsp:setProperty name="userService2" property="roleName" value="readerContact"/>
     <tr>
         <td class="navigationbar" width="100%">
             <%-- menú barra navegación --%>
@@ -47,11 +47,11 @@
 						   Roles de Usuario¿admin/RoleList.action¿2|
 						   Usuarios¿admin/UserList.action¿2|
 						   Bugs¿admin/BugList.action¿2|
-						   Secciones de Noticias¿admin/Section_list.action¿2|
-						   Bloques de Información¿admin/InfoBlock_list.action¿1|
-						   Imágenes¿admin/Image_list.action¿1|
-						   Documentos¿admin/Document_list.action¿1|
-						   Noticias¿admin/NewsPiece_list.action¿1|
+						   Secciones de Noticias¿admin/SectionList.action¿2|
+						   Bloques de Información¿admin/InfoBlockList.action¿1|
+						   Imágenes¿admin/ImageList.action¿1|
+						   Documentos¿admin/DocumentList.action¿1|
+						   Noticias¿admin/NewsPieceList.action¿1|
 						   INICIO¿|
 						   Página de INICIO¿init.action|
 						   //Conócenos¿docs/presentacionzorongo.jsp|

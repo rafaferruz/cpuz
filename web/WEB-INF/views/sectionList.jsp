@@ -4,7 +4,7 @@
     Author     : RAFAEL FERRUZ
 --%>
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -64,7 +64,7 @@
                     <s:property value="#row.group"/>
                 </td>
                 <s:if test="#session.userCategory == 2">
-                    <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="news_edit('%{#row.id}')"/></td>
+                    <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="newsEdit('%{#row.id}')"/></td>
                     <td align="center"><s:checkbox theme="simple" name="selec1" fieldValue="%{#row.id}"/></td>
                 </s:if>
             </tr>
@@ -73,26 +73,26 @@
     </s:if>
 
 
-    <%@include  file="/WEB-INF/views/ListTableFootButtons.jspf" %>
+    <%@include  file="/WEB-INF/views/listTableFootButtons.jspf" %>
 
 </s:form>
 
 <script type="text/javascript">
-    function orden_ejecutar(accion) {
-        window.document.sectionslist_form.runAction.value = accion;
-        window.document.sectionslist_form.action = "Section_"+accion+".action";
+    function actionExecute(action) {
+        window.document.sectionslist_form.runAction.value = action;
+        window.document.sectionslist_form.action = "Section"+action+".action";
         window.document.sectionslist_form.submit();
         return 0;
     }
     function DoNavigation(nav_rule) {
         window.document.sectionslist_form.runAction.value = nav_rule;
-        window.document.sectionslist_form.action = "Section_Navigation.action";
+        window.document.sectionslist_form.action = "SectionNavigation.action";
         window.document.sectionslist_form.submit();
         return 0;
     }
-    function news_edit(id) {
+    function newsEdit(id) {
         window.document.sectionslist_form.idKey.value = id;
-        orden_ejecutar('edit');
+        actionExecute('Edit');
         return 0;
     }
 </script>
