@@ -2,6 +2,12 @@
 
 = Tareas finalizadas =
 
+  * * 22/04/2012: Finalizada.*
+  * * 08/04/2012: Corregir y poner en marcha UserAction.java, UserDAO.java, UsersModel.java y userList.jsp*
+    * 14/04/2012: Se han modificado las clases java, falta por corregir y poner en marcha la vista jsp.
+    * 18/04/2012: Se han modificado las clases java de UserRole, falta por corregir y poner en marcha la vista jsp y algún error en la ejecución de estas clases.
+
+
   * *03/04/2012: Implementar estilos CSS según arquitectura YAML para diseñar la ventana principal: Tamaños, Columnas y Colores generales*
     * 09/04/2012: Se ha iniciado la adaptación de los estilos CSS a la arquitectura y conceptos del framework YAML.
     * 12/04/2012: Se ha iniciado el diseño con YAML definiendo 3 columna de información y una columna vacía a la derecha.
