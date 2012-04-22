@@ -4,6 +4,4 @@
 
 = Tareas pendientes =
 
-  * *08/04/2012: Corregir errores de renderización de páginas HTML con componentes Struts2:
-    * rolelist.jsp
-    * bugsList.jsp
+  * * 22/04/2012. Poner en funcionamiento SectionAction.java, SectionService.java, SectionDAO.java y SectionList.jsp*
