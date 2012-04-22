@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Relación de tareas programadas ya finalizadas.
 
 = Tareas finalizadas =
 
