@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cpuz.st2.actions;
+package com.cpuz.actions.admin;
 
 import com.cpuz.domain.Role;
 import com.cpuz.domain.User;
@@ -64,7 +64,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		return "error";
 	}
 
-	public String UserNew() {
+	public String userNew() {
 		control.setRecCount(1);
 		control.setRunAction("New");
 		dataEdit.setDate(new Date());
@@ -72,7 +72,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		return "NEW";
 	}
 
-	public String UserEdit() throws Exception {
+	public String userEdit() throws Exception {
 		dataEdit = dataService.getById(control.getId());
 		// Se lee lista de Users
 		passwordAgain = dataEdit.getPassword();
@@ -95,17 +95,17 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		return "EDIT";
 	}
 
-	public String UserSaveNew() throws SQLException, Exception {
+	public String userSaveNew() throws SQLException, Exception {
 
 		if (dataService.insertUser(dataEdit) != 1) {
 			this.addActionError(getText("UserEditErrorMsg"));
 			return "NEW";
 		}
 		this.addActionMessage(getText("UserEditSaveOkMsg"));
-		return UserList();
+		return userList();
 	}
 
-	public String UserSaveEdit() throws Exception {
+	public String userSaveEdit() throws Exception {
 
 		if (dataService.updateUser(dataEdit) != 1) {
 			this.addActionError(getText("UserEditErrorMsg"));
@@ -115,7 +115,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		return "NEW";
 	}
 
-	public String UserDelete() throws Exception {
+	public String userDelete() throws Exception {
 		if (selec1 != null) {
 			List<String> deletes = Arrays.asList(selec1.split(","));
 			List<Integer> deleteIds = new ArrayList<>();
@@ -124,17 +124,17 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 			}
 			if (dataService.deleteUserIds(deletes) == 0) {
 				addActionError(getText("NoneDeletedUser"));
-				return UserList();
+				return userList();
 			} else {
 				this.addActionMessage(getText("DeletedSelectedUserOkMsg"));
-				return UserList();
+				return userList();
 			}
 		}
 		addActionError(getText("NoneSelectedUser"));
-		return UserList();
+		return userList();
 	}
 
-	public String UserList() throws Exception {
+	public String userList() throws Exception {
 		if (control.getRecCount() == 0) {
 			control.setRecCount(dataService.getCountRows());
 		}
@@ -144,9 +144,9 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		return "LIST";
 	}
 
-	public String User_Navigation() throws Exception {
+	public String userNavigation() throws Exception {
 		control.doNavigation();
-		return UserList();
+		return userList();
 	}
 
 	@Override

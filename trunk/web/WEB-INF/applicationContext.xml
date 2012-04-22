@@ -40,21 +40,21 @@
     <bean id="UserRolesList"
         class="java.util.ArrayList" />
 
-    <bean id="springInitAction" class="com.cpuz.st2.actions.InitAction"
+    <bean id="springInitAction" class="com.cpuz.actions.admin.InitAction"
         scope="prototype">
         <property name="initService" ref="InitService"/>
     </bean>
-    <bean id="springLogoutAction" class="com.cpuz.st2.actions.LogoutAction"
+    <bean id="springLogoutAction" class="com.cpuz.actions.admin.LogoutAction"
         scope="prototype">
         <property name="initService" ref="InitService"/>
     </bean>
 
-    <bean id="springRoleAction" class="com.cpuz.st2.actions.RoleAction"
+    <bean id="springRoleAction" class="com.cpuz.actions.admin.RoleAction"
         scope="prototype">
         <property name="dataService" ref="RolesService"/>
     </bean>
 
-    <bean id="springUserAction" class="com.cpuz.st2.actions.UserAction"
+    <bean id="springUserAction" class="com.cpuz.actions.admin.UserAction"
         scope="prototype">
         <property name="dataService" ref="UsersService"/>
         <property name="rolesService" ref="RolesService"/>
@@ -63,12 +63,12 @@
         <property name="userRolesList" ref="UserRolesList"/>
     </bean>
 
-    <bean id="springBugAction" class="com.cpuz.st2.actions.BugAction"
+    <bean id="springBugAction" class="com.cpuz.actions.admin.BugAction"
         scope="prototype">
         <property name="dataService" ref="BugsService"/>
     </bean>
 
-    <bean id="springSectionAction" class="com.cpuz.st2.actions.SectionAction"
+    <bean id="springSectionAction" class="com.cpuz.actions.admin.SectionAction"
         scope="prototype">
         <property name="dataService" ref="SectionsService"/>
         <property name="availableRolesList" ref="availableRolesList"/>
@@ -76,32 +76,32 @@
         <property name="rolesService" ref="RolesService"/>
     </bean>
 
-    <bean id="springInfoBlockAction" class="com.cpuz.st2.actions.InfoBlockAction"
+    <bean id="springInfoBlockAction" class="com.cpuz.actions.admin.InfoBlockAction"
         scope="prototype">
         <property name="dataService" ref="InfoBlocksService"/>
     </bean>
 
-    <bean id="springImageAction" class="com.cpuz.st2.actions.ImageAction"
+    <bean id="springImageAction" class="com.cpuz.actions.admin.ImageAction"
         scope="prototype">
         <property name="dataService" ref="ImagesService"/>
     </bean>
 
-    <bean id="springDocumentAction" class="com.cpuz.st2.actions.DocumentAction"
+    <bean id="springDocumentAction" class="com.cpuz.actions.admin.DocumentAction"
         scope="prototype">
         <property name="dataService" ref="DocumentsService"/>
     </bean>
 
-    <bean id="springNewsPieceAction" class="com.cpuz.st2.actions.NewsPieceAction"
+    <bean id="springNewsPieceAction" class="com.cpuz.actions.admin.NewsPieceAction"
          scope="prototype">
         <property name="dataService" ref="NewsPiecesService"/>
     </bean>
 
-    <bean id="springNewsCompositionAction" class="com.cpuz.st2.actions.NewsCompositionAction"
+    <bean id="springNewsCompositionAction" class="com.cpuz.actions.admin.NewsCompositionAction"
          scope="prototype">
         <property name="dataService" ref="NewsCompositionsService"/>
     </bean>
 
-    <bean id="springContactAction" class="com.cpuz.st2.actions.ContactAction"
+    <bean id="springContactAction" class="com.cpuz.actions.admin.ContactAction"
         scope="prototype">
         <property name="dataService" ref="ContactsService"/>
     </bean>

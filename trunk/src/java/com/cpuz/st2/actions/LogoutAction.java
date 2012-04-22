@@ -1,4 +1,4 @@
-package com.cpuz.st2.actions;
+package com.cpuz.actions.admin;
 
 import com.cpuz.domain.NewsPiece;
 import com.cpuz.domain.Role;

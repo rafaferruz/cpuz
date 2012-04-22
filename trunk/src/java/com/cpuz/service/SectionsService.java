@@ -1,177 +1,76 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * CPUZ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.cpuz.service;
 
+import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.Section;
-import com.cpuz.DAO.impl.SectionDAOImpl;
-import com.cpuz.exceptions.SectionException;
-import com.cpuz.domain.UserType;
+import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author RAFAEL FERRUZ
  */
 public class SectionsService {
+	private final transient Logger log = Logger.getLogger(this.getClass());
+	ControlParams control=new ControlParams();
 
     public SectionsService() {
     }
-
-    public boolean keyIdExists(String ssn) {
-        try {
-            SectionDAOImpl nDao = new SectionDAOImpl();
-            return nDao.keyIdExists(ssn);
-
-        } catch (Exception ex) {
-            return false;
-        }
+    public boolean keyIdExists(String sectionId) throws SQLException {
+            Section section = new DAOFactory().getSectionDAO().read(sectionId);
+		return (section != null);
     }
 
-    /**
-     * Proporciona un objeto List de registros de titulares de Sections
-     * con un número de registros indicado por el parámetro recChunk y
-     * a partir del indicado por el parámetro recStart. Se toma como lista
-     * base la totalidad de titulares de Sections ordenados por fecha empezando
-     * por el titular más reciente y continuando al más antiguo.
-     * @param recStart N� de registro inicial
-     * @param recChunk N� de registros a incluir en la b�squeda
-     * @return Un objeto List<Section> con los registros seleccionados
-     */
-    public List<Section> getRecords() {
-        /* Requirement codes: E5-1 */
-        return this.getRecords(UserType.ANONYMOUS, "");
-    }
+	public List<Section> getSectionList(ControlParams control) throws SQLException  {
 
-    public List<Section> getRecords(UserType userType) {
-        /* Requirement codes: E5-1 */
-        return this.getRecords(userType, "");
+		List<Section> sections = new ArrayList<>();
+		sections = new DAOFactory().getSectionDAO().getSectionList(control);
+		return sections;
+	}
 
-    }
+	public int getCountRows() throws SQLException {
+		return new DAOFactory().getSectionDAO().getCountRows();
+	}
 
-    public List<Section> getRecords(UserType userType, String selectionClause) {
+	public Section getById(String sectionId) throws SQLException{
+		return new DAOFactory().getSectionDAO().read(sectionId);
+	}
 
-        String sqlClause = "";
-        List<Section> news = new ArrayList<Section>();
-        try {
-            SectionDAOImpl nDao = new SectionDAOImpl();
-            if (!selectionClause.equals("")) {
-                if (!sqlClause.equals("")) {
-                    sqlClause += " AND (" + selectionClause + ") ";
-                } else {
-                    sqlClause = " (" + selectionClause + ") ";
-                }
-            }
-            if (!sqlClause.equals("")) {
-                sqlClause = " WHERE " + sqlClause;
-            }
+	public int insertSection(Section section) throws SQLException {
+		return new DAOFactory().getSectionDAO().create(section);
+	}
 
-            sqlClause +=
-                    " ORDER BY sec_id";
-            news = nDao.readSections(sqlClause);
-        } catch (SectionException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
+	public int updateSection(Section section) throws SQLException{
+		return new DAOFactory().getSectionDAO().update(section);
+	}
 
-    public List<Section> getRecords(String selectClause, String whereClause, String orderClause) {
+	public int deleteSection(Section section) throws SQLException {
+		return new DAOFactory().getSectionDAO().delete(section.getId());
+	}
 
-        String sqlClause = "";
-        List<Section> records = new ArrayList<Section>();
-        try {
-            SectionDAOImpl nDao = new SectionDAOImpl();
-            if (selectClause == null || selectClause.equals("")) {
-                sqlClause = "SELECT * FROM sections ORDER BY sec_id";
-            } else {
-                sqlClause = selectClause + " " + whereClause + " " + orderClause;
-            }
-
-            records = nDao.readSections(sqlClause);
-
-        } catch (SectionException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return records;
-    }
-
-    public List<Section> getDetails(String idNews) {
-
-        List<Section> news = new ArrayList<Section>();
-        try {
-            SectionDAOImpl nDao = new SectionDAOImpl();
-            String sqlClause = "SELECT * FROM sections "
-                    +" WHERE sec_id = '" + idNews + "'"
-                    + " OR sec_id= '" + idNews + "'"
-                    + " ORDER BY sec_id";
-            news = nDao.readSections(sqlClause);
-        } catch (SectionException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
-
-    public synchronized int setNewRecord(Section news) {
-
-        try {
-            SectionDAOImpl nDao = new SectionDAOImpl();
-            return nDao.createSection(news);
-        } catch (SectionException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int setUpdateRecord(Section news) {
-
-        try {
-            SectionDAOImpl nDao = new SectionDAOImpl();
-            return nDao.updateSection(news);
-        } catch (SectionException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int deleteNews(Section news) {
-
-        try {
-            SectionDAOImpl nDao = new SectionDAOImpl();
-            return nDao.deleteSection(news);
-        } catch (SectionException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
+	public int deleteSectionIds(List<String> ids) throws SQLException {
+		return new DAOFactory().getSectionDAO().deleteIds(ids);
+	}
 }
 
 

@@ -4,9 +4,9 @@
     Author     : RAFAEL FERRUZ
 --%>
 
-<jsp:useBean id="userService" class="com.cpuz.model.UserService"/>
-<jsp:setProperty name="userService" property="user" value="${sessionScope['user']}"/>
-<jsp:setProperty name="userService" property="role" value="regularRole"/>
+<jsp:useBean id="userService" class="com.cpuz.service.UserService"/>
+<jsp:setProperty name="userService" property="userCode" value="${sessionScope['user']}"/>
+<jsp:setProperty name="userService" property="roleName" value="regularRole"/>
 <c:set var="regularRole">
     <jsp:getProperty name="userService" property="userInRole"/>
 </c:set>
@@ -56,7 +56,7 @@
                         </tr>
                         <tr>
                             <td class="visitsection">
-                                <a href="/CPUZ/pages/NewsSection.jsp?section=${section.sec_id}"  class="visitsection">Visita la Sección:&nbsp;${section.sec_name}&nbsp;>></a>
+                                <a href="/CPUZ/pages/NewsSection.jsp?section=${section.sec_id}"  class="visitsection">Visita la Secciï¿½n:&nbsp;${section.sec_name}&nbsp;>></a>
                             </td>
                         </tr>
                     </table>

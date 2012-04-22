@@ -92,7 +92,7 @@ public class BugDAO implements InjectableDAO {
 		String sql = "SELECT * FROM bugs WHERE bug_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, bugId);
-		log.debug("BugDAO create(): " + ps.toString());
+		log.debug("BugDAO read(): " + ps.toString());
 		ResultSet rs = ps.executeQuery(sql);
 		if (rs.next()) {
 			bug = getCompleteBug(rs);
@@ -149,7 +149,7 @@ public class BugDAO implements InjectableDAO {
 	}
 
 	public List<Bug> getBugList(ControlParams control) throws SQLException {
-		List<Bug> roles = new ArrayList<>();
+		List<Bug> bugs = new ArrayList<>();
 		String sql = "SELECT * FROM bugs ORDER BY bug_id ";
 		String limit = control.getRecChunk() > 0 ? " LIMIT ? OFFSET ?" : "";
 		sql = sql + limit;
@@ -161,10 +161,10 @@ public class BugDAO implements InjectableDAO {
 		log.debug("BugDAO getBugList(): " + ps.toString());
 		try (ResultSet rs = ps.executeQuery()) {
 			while (rs.next()) {
-				roles.add(getCompleteBug(rs));
+				bugs.add(getCompleteBug(rs));
 			}
 		}
-		return roles;
+		return bugs;
 	}
 
 	public int deleteIds(List<String> ids) throws SQLException {

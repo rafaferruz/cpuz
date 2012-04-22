@@ -1,242 +1,239 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * CPUZ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cpuz.st2.actions;
+package com.cpuz.actions.admin;
 
 import com.cpuz.domain.Role;
 import com.cpuz.domain.Section;
-import com.cpuz.domain.UserRole;
 import com.cpuz.service.RolesService;
 import com.cpuz.service.SectionsService;
-import com.cpuz.service.UserRolesService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.struts2.interceptor.RequestAware;
 
 /**
- *
- * @author RAFAEL FERRUZ
+ * Clase Action de Struts usada como Controller en el patrón MVC
+ * 
  */
 public class SectionAction extends ActionSupport implements RequestAware, Serializable {
 
-    private ControlParams control = new ControlParams();
-    private List<Section> dataList = new ArrayList<Section>();
-    private Section dataEdit = new Section();
-    private SectionsService dataService;
-    private Map<Integer, String> mapStatus = new HashMap<Integer, String>();
-    private Map<String, Object> requestáttributes = new HashMap<String, Object>();
-    private List<Role> availableRolesList;
-    private List<String> authRolesList;
-    private RolesService rolesService;
-    private String authRolesSel;
-    private String[] availableRolesSel;
-    private String selec1;
+	private ControlParams control = new ControlParams();
+	private List<Section> dataList = new ArrayList<>();
+	private Section dataEdit = new Section();
+	private SectionsService dataService;
+	private Map<Integer, String> mapStatus = new HashMap<>();
+	private Map<String, Object> requestAttributes = new HashMap<>();
+	private List<Role> availableRolesList;
+	private List<String> authRolesList;
+	private RolesService rolesService;
+	private String authRolesSel;
+	private String[] availableRolesSel;
+	private String selec1;
 
-    public SectionAction() {
-        super();
-    }
+	public SectionAction() {
+		super();
+	}
 
-    @Override
-    public String execute() throws Exception {
-        return "error";
-    }
+	@Override
+	public String execute() throws Exception {
+		return "error";
+	}
 
-    public String Section_new() throws Exception {
-        availableRolesList = rolesService.getNewsRecords();
+	public String sectionNew() throws Exception {
+		availableRolesList = rolesService.getNewsRecords();
+		control.setRecCount(1);
+		control.setRunAction("New");
+		requestAttributes.put("page", "/WEB-INF/views/SectionEdit.jsp");
+		return "NEW";
+	}
 
-        control.setRecCount(1);
-        control.setRunAction("new");
-        requestáttributes.put("page", "/WEB-INF/views/SectionEdit.jsp");
-        return "NEW";
-    }
+	public String sectionEdit() throws Exception {
+		dataEdit = dataService.getById(control.getId().toString());
+		// Se lee lista de Roles
+		availableRolesList = rolesService.getNewsRecords();
 
-    public String Section_edit() throws Exception {
-        dataEdit = dataService.getRecords("SELECT * FROM sections WHERE sec_id = '"
-                + control.getId() + "'", "", "").get(0);
-        // Se lee lista de Roles
-        availableRolesList = rolesService.getNewsRecords();
+		authRolesList.clear();
+		if (dataEdit.getAuthorizedRoles() != null
+				&& !dataEdit.getAuthorizedRoles().isEmpty()) {
+			for (String role : dataEdit.getAuthorizedRoles().split(",")) {
+				if (!role.equals("")) {
+					authRolesList.add(role);
+					availableRolesList.remove(new Role(role));
+				}
+			}
+		}
+		control.setRunAction("Edit");
+		requestAttributes.put("page", "/WEB-INF/views/SectionEdit.jsp");
+		return "EDIT";
+	}
+	public String sectionSaveNew() throws Exception {
+		dataEdit.setAuthorizedRoles(authRolesSel.replaceAll(" ", ""));
+		if (dataService.insertSection(dataEdit) == 1) {
+			this.addActionMessage(getText("SectionEditSaveOkMsg"));
+			return sectionList();
+		}
+		return "EDIT";
+	}
 
-        authRolesList.clear();
-        if (dataEdit.getAuthorizedRoles() != null
-                && !dataEdit.getAuthorizedRoles().isEmpty()) {
-            String[] roles = dataEdit.getAuthorizedRoles().split(",");
-            for (int i = 0; i < roles.length; i++) {
-                if (!roles[i].equals("")) {
-                    authRolesList.add(roles[i]);
-                    for (int j = 0; j < availableRolesList.size(); j++) {
-                        if (availableRolesList.get(j).getRole().equals(roles[i])) {
-                            availableRolesList.remove(j);
-                            j = availableRolesList.size();
-                        }
-                    }
-                }
-            }
-        }
-//        initMapStatus();
-        control.setRunAction("edit");
-        requestáttributes.put("page", "/WEB-INF/views/SectionEdit.jsp");
-        return "EDIT";
-    }
+	public String sectionSaveEdit() throws Exception {
 
-    public String Section_saveNew() throws Exception {
-        dataEdit.setAuthorizedRoles(authRolesSel.replaceAll(" ", ""));
-        if (dataService.setNewRecord(dataEdit) == 1) {
-            this.addActionMessage(getText("SectionEditSaveOkMsg"));
-            return Section_list();
-        }
-        return "EDIT";
-    }
+		dataEdit.setAuthorizedRoles(authRolesSel.replaceAll(" ", ""));
+		if (dataService.keyIdExists(dataEdit.getId().toString())) {
+			try {
+				dataService.updateSection(dataEdit);
+				this.addActionMessage(getText("SectionEditSaveOkMsg"));
+			} catch (Exception ex) {
+				this.addActionError(getText("SectionEditErrorMsg"));
+				return "EDIT";
+			}
+			return sectionList();
+		}
+		return "NEW";
+	}
+	public String bugDelete() throws Exception {
+		if (selec1 != null) {
+			String[] deletes = selec1.split(",");
+			if (dataService.deleteSectionIds(Arrays.asList(deletes)) > 0) {
+				addActionMessage(getText("SuccessDeletedBugs"));
+			} else {
+				addActionError(getText("NoneDeletedBug"));
+			}
+			return sectionList();
+		}
+		addActionError(getText("NoneSelectedRole"));
+		return sectionList();
+	}
 
-    public String Section_saveEdit() throws Exception {
+	public String sectionList() throws Exception {
+		if (control.getRecCount() == 0) {
+			control.setRecCount(dataService.getCountRows());
+		}
+		dataList = dataService.getSectionList(control);
+		control.setRunAction("List");
+		requestAttributes.put("page", "/WEB-INF/views/sectionList.jsp");
+		return "LIST";
+	}
 
-        dataEdit.setAuthorizedRoles(authRolesSel.replaceAll(" ", ""));
-        if (dataService.keyIdExists(dataEdit.getId().toString())) {
-            try {
-                dataService.setUpdateRecord(dataEdit);
-                this.addActionMessage(getText("SectionEditSaveOkMsg"));
-            } catch (Exception ex) {
-                this.addActionError(getText("SectionEditErrorMsg"));
-                return "EDIT";
-            }
-            return Section_list();
-        }
-        return "NEW";
-    }
 
-    public String Section_delete() throws Exception {
-        if (selec1 != null) {
-            String[] deletes = selec1.split(",");
-            for (int i = 0; i < deletes.length; i++) {
-                dataEdit.setId(deletes[i].trim());
-                if (dataService.deleteNews(dataEdit) == 1) {
-                    addActionMessage(deletes[i] + " " + getText("SuccessDeletedSection"));
-                } else {
-                    addActionError(deletes[i] + " " + getText("NoneDeletedSection"));
-                }
-            }
-            return Section_list();
-        }
-        addActionError(getText("NoneSelectedSection"));
-        return Section_list();
-    }
+	public String SectionNavigation() throws Exception {
+		control.doNavigation();
+		return sectionList();
+	}
 
-    public String Section_list() throws Exception {
-        if (control.getRecCount() == 0) {
-            dataList = dataService.getRecords("SELECT * FROM sections ", "", "");
-            control.setRecCount(dataList.size());
-        }
-        dataList = dataService.getRecords("SELECT * FROM sections "
-                + " LIMIT " + control.getRecChunk().toString()
-                + " OFFSET " + control.getRecStart().toString(), "", "");
-        control.setRunAction("list");
-        requestáttributes.put("page", "/WEB-INF/views/SectionList.jsp");
-        return "LIST";
-    }
+	@Override
+	public void validate() {
+		super.validate();
+	}
 
-    public String Section_Navigation() throws Exception {
-        control.doNavigation();
-        return Section_list();
-    }
+	public ControlParams getControl() {
+		return control;
+	}
 
-    @Override
-    public void validate() {
-        super.validate();
-    }
+	public void setControl(ControlParams control) {
+		this.control = control;
+	}
 
-    public ControlParams getControl() {
-        return control;
-    }
+	public Map<Integer, String> getMapStatus() {
+		return mapStatus;
+	}
 
-    public void setControl(ControlParams control) {
-        this.control = control;
-    }
+	public void setMapStatus(HashMap<Integer, String> mapStatus) {
+		this.mapStatus = mapStatus;
+	}
 
-    public Map<Integer, String> getMapStatus() {
-        return mapStatus;
-    }
+	public Section getDataEdit() {
+		return dataEdit;
+	}
 
-    public void setMapStatus(HashMap<Integer, String> mapStatus) {
-        this.mapStatus = mapStatus;
-    }
+	public void setDataEdit(Section dataEdit) {
+		this.dataEdit = dataEdit;
+	}
 
-    public Section getDataEdit() {
-        return dataEdit;
-    }
+	public List<Section> getDataList() {
+		return dataList;
+	}
 
-    public void setDataEdit(Section dataEdit) {
-        this.dataEdit = dataEdit;
-    }
+	public void setDataList(List<Section> dataList) {
+		this.dataList = dataList;
+	}
 
-    public List<Section> getDataList() {
-        return dataList;
-    }
+	public void setDataService(SectionsService dataService) {
+		this.dataService = dataService;
+	}
 
-    public void setDataList(List<Section> dataList) {
-        this.dataList = dataList;
-    }
+	public void setAuthRolesList(List<String> authRolesList) {
+		this.authRolesList = authRolesList;
+	}
 
-    public void setDataService(SectionsService dataService) {
-        this.dataService = dataService;
-    }
+	public void setAvailableRolesList(List<Role> availableRolesList) {
+		this.availableRolesList = availableRolesList;
+	}
 
-    public void setAuthRolesList(List<String> authRolesList) {
-        this.authRolesList = authRolesList;
-    }
+	public void setRolesService(RolesService rolesService) {
+		this.rolesService = rolesService;
+	}
 
-    public void setAvailableRolesList(List<Role> availableRolesList) {
-        this.availableRolesList = availableRolesList;
-    }
+	public String getAuthRolesSel() {
+		return authRolesSel;
+	}
 
-    public void setRolesService(RolesService rolesService) {
-        this.rolesService = rolesService;
-    }
+	public void setAuthRolesSel(String authRolesSel) {
+		this.authRolesSel = authRolesSel;
+	}
 
-    public String getAuthRolesSel() {
-        return authRolesSel;
-    }
+	public String[] getAvailableRolesSel() {
+		return availableRolesSel;
+	}
 
-    public void setAuthRolesSel(String authRolesSel) {
-        this.authRolesSel = authRolesSel;
-    }
+	public void setAvailableRolesSel(String[] availableRolesSel) {
+		this.availableRolesSel = availableRolesSel;
+	}
 
-    public String[] getAvailableRolesSel() {
-        return availableRolesSel;
-    }
+	public List<String> getAuthRolesList() {
+		return authRolesList;
+	}
 
-    public void setAvailableRolesSel(String[] availableRolesSel) {
-        this.availableRolesSel = availableRolesSel;
-    }
+	public List<Role> getAvailableRolesList() {
+		return availableRolesList;
+	}
 
-    public List<String> getAuthRolesList() {
-        return authRolesList;
-    }
+	public String getSelec1() {
+		return selec1;
+	}
 
-    public List<Role> getAvailableRolesList() {
-        return availableRolesList;
-    }
+	public void setSelec1(String selec1) {
+		this.selec1 = selec1;
+	}
 
-    public String getSelec1() {
-        return selec1;
-    }
+	public void initMapStatus() {
+		//Prepara tipos de status para radio element
+		mapStatus.put(0, this.getText("received"));
+		mapStatus.put(1, this.getText("waiting"));
+		mapStatus.put(2, this.getText("authorized"));
+	}
 
-    public void setSelec1(String selec1) {
-        this.selec1 = selec1;
-    }
-
-    public void initMapStatus() {
-        //Prepara tipos de status para radio element
-        mapStatus.put(0, this.getText("received"));
-        mapStatus.put(1, this.getText("waiting"));
-        mapStatus.put(2, this.getText("authorized"));
-    }
-
-    public void setRequest(Map map) {
-        this.requestáttributes = map;
-    }
+	public void setRequest(Map map) {
+		this.requestAttributes = map;
+	}
 }

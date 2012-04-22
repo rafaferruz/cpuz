@@ -37,8 +37,8 @@ public class UserService {
 
 	private final transient Logger log = Logger.getLogger(this.getClass());
 	ControlParams control;
-	User user;
-	Role role;
+	String userCode;
+	String roleName;
 
 	public UserService() {
 	}
@@ -51,20 +51,20 @@ public class UserService {
 		this.control = control;
 	}
 
-	public Role getRole() {
-		return role;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserCode() {
+		return userCode;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
 	}
 
 	public boolean keyIdExists(int userId) throws SQLException {
@@ -88,17 +88,18 @@ public class UserService {
 		if (user != null) {
 			List<String> userCodes = new ArrayList<>();
 			userCodes.add(user.getUser());
-			Map<String,List<UserRole>> userRoles=new DAOFactory().getUserRoleDAO().getUserRoleMap(userCodes);
+			Map<String, List<UserRole>> userRoles = new DAOFactory().getUserRoleDAO().getUserRoleMap(userCodes);
 			user.setRoles(userRoles.get(user.getUser()));
 		}
 		return user;
 	}
+
 	public User getByCode(String userCode) throws SQLException {
 		User user = new DAOFactory().getUserDAO().read(userCode);
 		if (user != null) {
 			List<String> userCodes = new ArrayList<>();
 			userCodes.add(user.getUser());
-			Map<String,List<UserRole>> userRoles=new DAOFactory().getUserRoleDAO().getUserRoleMap(userCodes);
+			Map<String, List<UserRole>> userRoles = new DAOFactory().getUserRoleDAO().getUserRoleMap(userCodes);
 			user.setRoles(userRoles.get(user.getUser()));
 		}
 		return user;
@@ -148,5 +149,13 @@ public class UserService {
 
 	public int deleteUserIds(List<String> ids) throws SQLException {
 		return new DAOFactory().getUserDAO().deleteIds(ids);
+	}
+
+	public boolean isUserInRole() throws SQLException {
+		if (this.userCode != null && !this.userCode.equals("")) {
+			UserRolesService userRolesService = new UserRolesService();
+			return (userRolesService.getByUserAndRole(roleName, userCode) != null);
+		}
+		return false;
 	}
 }

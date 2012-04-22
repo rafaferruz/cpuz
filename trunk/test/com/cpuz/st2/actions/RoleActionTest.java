@@ -4,6 +4,7 @@
  */
 package com.cpuz.st2.actions;
 
+import com.cpuz.actions.admin.RoleAction;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import com.cpuz.model.RolesModelTest;

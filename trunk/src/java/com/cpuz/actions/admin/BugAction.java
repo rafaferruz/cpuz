@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cpuz.st2.actions;
+package com.cpuz.actions.admin;
 
 import com.cpuz.domain.Bug;
 import com.cpuz.domain.BugStatusType;

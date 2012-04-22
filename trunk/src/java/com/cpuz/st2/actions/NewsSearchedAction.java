@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cpuz.st2.actions;
+package com.cpuz.actions.admin;
 
 import com.cpuz.DAO.query.entities.NewsPieceComposition;
 import com.cpuz.DAO.query.models.NewsPieceCompositionModel;

@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cpuz.st2.actions;
+package com.cpuz.actions.admin;
 
-import com.cpuz.domain.Image;
-import com.cpuz.exceptions.ImageException;
-import com.cpuz.service.ImagesService;
+import com.cpuz.domain.Document;
+import com.cpuz.exceptions.DocumentException;
+import com.cpuz.service.DocumentsService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -26,6 +26,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,12 +38,12 @@ import org.apache.struts2.interceptor.ServletRequestAware;
  *
  * @author RAFAEL FERRUZ
  */
-public class ImageAction extends ActionSupport implements ServletRequestAware, RequestAware, SessionAware, ApplicationAware, Serializable {
+public class DocumentAction extends ActionSupport implements ServletRequestAware, RequestAware, SessionAware, ApplicationAware, Serializable {
 
     private ControlParams control = new ControlParams();
-    private List<Image> dataList = new ArrayList<Image>();
-    private Image dataEdit = new Image();
-    private ImagesService dataService;
+    private List<Document> dataList = new ArrayList<Document>();
+    private Document dataEdit = new Document();
+    private DocumentsService dataService;
     private Map<Integer, String> mapStatus = new HashMap<Integer, String>();
     private List<String> listTypes = new ArrayList<String>();
     private Map<Integer, String> mapScopes = new HashMap<Integer, String>();
@@ -54,7 +55,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
     private String filenameStore = "";
     private String temporaryFileName = "";
 
-    public ImageAction() {
+    public DocumentAction() {
         super();
     }
 
@@ -63,7 +64,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
         return "error";
     }
 
-    public String Image_new() throws Exception {
+    public String Document_new() throws Exception {
         initDataEdit();
         initMapStatus();
         initListTypes();
@@ -71,61 +72,61 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
         control.setRecCount(1);
         control.setRunAction("new");
         filenameStore = "";
-        requestáttributes.put("page", "/WEB-INF/views/imageEdit.jsp");
+        requestáttributes.put("page", "/WEB-INF/views/documentEdit.jsp");
         return "NEW";
     }
 
-    public String Image_edit() throws Exception {
-        dataEdit = dataService.getRecords("SELECT * FROM images WHERE img_id = "
+    public String Document_edit() throws Exception {
+        dataEdit = dataService.getRecords("SELECT * FROM documents WHERE doc_id = "
                 + control.getId(), "", "").get(0);
         initMapStatus();
         initListTypes();
         initMapScopes();
         control.setRunAction("edit");
-        requestáttributes.put("page", "/WEB-INF/views/imageEdit.jsp");
+        requestáttributes.put("page", "/WEB-INF/views/documentEdit.jsp");
         setFilenameStore(dataEdit.getFilename());
         return "EDIT";
     }
 
-    public String Image_saveNew() throws Exception {
+    public String Document_saveNew() throws Exception {
         if (dataEdit.getFileFileName() != null && !dataEdit.getFileFileName().equals("")) {
             try {
-                // Pasa la imagen en memoria a un fichero temporal
+                // Pasa la documento en memoria a un fichero temporal
                 temporaryFileName = String.format("%1$015d", (new Date()).getTime()) + "_" + dataEdit.getFileFileName();
-                doSaveTemporaryImageFile(dataEdit.getFile(), dataEdit.getFileContentType(), dataEdit.getFileFileName());
+                doSaveTemporaryDocumentFile(dataEdit.getFile(), dataEdit.getFileContentType(), dataEdit.getFileFileName());
                 // Elimina el fichero que haya en el repositorio si el cliente env�a uno nuevo
                 if (dataEdit.getRepositoryReference() != null) {
                     try {
                         deleteFileFtp((String) dataEdit.getRepositoryReference());
-                    } catch (ImageException ex) {
-                        Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (DocumentException ex) {
+                        Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             } catch (Exception ex) {
-                Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
                 control.setRunAction("new");
-                addActionError(getText("ImagesEditErrorUploadFile"));
+                addActionError(getText("DocumentsEditErrorUploadFile"));
                 return "NEW";
             }
             try {
                 putFileFtp(applicationAttributes.get("dirRealApplicationPath") + ("WEB-INF/temp"), temporaryFileName);
                 dataEdit.setRepositoryReference(temporaryFileName);
-            } catch (ImageException ex) {
-                Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
                 control.setRunAction("edit");
-                addActionError(getText("ImagesEditErrorUploadFile"));
+                addActionError(getText("DocumentsEditErrorUploadFile"));
                 return "EDIT";
             } catch (IOException ex) {
-                Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
                 control.setRunAction("edit");
-                addActionError(getText("ImagesEditErrorUploadFile"));
+                addActionError(getText("DocumentsEditErrorUploadFile"));
                 return "EDIT";
             }
 // Elimina el fichero temporal
             if (!temporaryFileName.equals("")) {
-                File fileImage = new File(applicationAttributes.get("dirRealApplicationPath") + ("WEB-INF/temp/" + temporaryFileName));
-                if (fileImage.exists()) {
-                    // fileImage.delete();
+                File fileDocument = new File(applicationAttributes.get("dirRealApplicationPath") + ("WEB-INF/temp/" + temporaryFileName));
+                if (fileDocument.exists()) {
+                    // fileDocument.delete();
                 }
             }
             dataEdit.setFilename(dataEdit.getFileFileName());
@@ -137,59 +138,59 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
         dataEdit.setUser((String) sessionAttributes.get("user"));
         try {
             if (dataService.setNewRecord(dataEdit) == 1) {
-                this.addActionMessage(getText("ImageEditSaveOkMsg"));
+                this.addActionMessage(getText("DocumentEditSaveOkMsg"));
             }
         } catch (Exception ex) {
-            this.addActionError(getText("ImageEditErrorMsg"));
+            this.addActionError(getText("DocumentEditErrorMsg"));
             return "EDIT";
         }
         filenameStore = dataEdit.getFilename();
-        return Image_list();
+        return Document_list();
     }
 
-    public String Image_saveEdit() {
+    public String Document_saveEdit() {
         if (dataEdit.getFileFileName() != null && !dataEdit.getFileFileName().equals("")) {
             try {
-                // Pasa la imagen en memoria a un fichero temporal
+                // Pasa la documento en memoria a un fichero temporal
                 temporaryFileName = String.format("%1$015d", (new Date()).getTime()) + "_" + dataEdit.getFileFileName();
-                doSaveTemporaryImageFile(
+                doSaveTemporaryDocumentFile(
                         dataEdit.getFile(), dataEdit.getFileContentType(), dataEdit.getFileFileName());
                 // Elimina el fichero que haya en el repositorio si el cliente env�a uno nuevo
                 if (dataEdit.getRepositoryReference() != null) {
                     try {
                         deleteFileFtp((String) dataEdit.getRepositoryReference());
-                    } catch (ImageException ex) {
-                        Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (DocumentException ex) {
+                        Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             } catch (Exception ex) {
-                Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
                 control.setRunAction(
                         "edit");
-                addActionError(getText("ImagesEditErrorUploadFile"));
+                addActionError(getText("DocumentsEditErrorUploadFile"));
                 return "EDIT";
             }
             try {
                 putFileFtp(applicationAttributes.get("dirRealApplicationPath") + ("WEB-INF/temp"), temporaryFileName);
                 dataEdit.setRepositoryReference(temporaryFileName);
-            } catch (ImageException ex) {
-                Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
                 control.setRunAction(
                         "edit");
-                addActionError(getText("ImagesEditErrorUploadFile"));
+                addActionError(getText("DocumentsEditErrorUploadFile"));
                 return "EDIT";
             } catch (IOException ex) {
-                Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
                 control.setRunAction(
                         "edit");
-                addActionError(getText("ImagesEditErrorUploadFile"));
+                addActionError(getText("DocumentsEditErrorUploadFile"));
                 return "EDIT";
             }
 // Elimina el fichero temporal
             if (!temporaryFileName.equals("")) {
-                File fileImage = new File(applicationAttributes.get("dirRealApplicationPath") + ("WEB-INF/temp/" + temporaryFileName));
-                if (fileImage.exists()) {
-                    // fileImage.delete();
+                File fileDocument = new File(applicationAttributes.get("dirRealApplicationPath") + ("WEB-INF/temp/" + temporaryFileName));
+                if (fileDocument.exists()) {
+                    // fileDocument.delete();
                 }
             }
             dataEdit.setFilename(dataEdit.getFileFileName());
@@ -201,19 +202,19 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
         if (dataService.keyIdExists(dataEdit.getId())) {
             try {
                 dataService.setUpdateRecord(dataEdit);
-                this.addActionMessage(getText("ImageEditSaveOkMsg"));
+                this.addActionMessage(getText("DocumentEditSaveOkMsg"));
             } catch (Exception ex) {
-                this.addActionError(getText("ImageEditErrorMsg"));
+                this.addActionError(getText("DocumentEditErrorMsg"));
                 return "EDIT";
             }
             filenameStore = dataEdit.getFilename();
-            return Image_list();
+            return Document_list();
         }
         filenameStore = dataEdit.getFilename();
         return "EDIT";
     }
 
-    public String Image_delete() throws Exception {
+    public String Document_delete() throws Exception {
         if (selec1 != null) {
             String[] deletes = selec1.split(",");
             for (int i = 0; i
@@ -223,39 +224,39 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
                     if (dataEdit.getRepositoryReference() != null) {
                         try {
                             deleteFileFtp((String) dataEdit.getRepositoryReference());
-                        } catch (ImageException ex) {
-                            Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (DocumentException ex) {
+                            Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                    addActionMessage(deletes[i] + " " + getText("SuccessDeletedImage"));
+                    addActionMessage(deletes[i] + " " + getText("SuccessDeletedDocument"));
                 } else {
-                    addActionError(deletes[i] + " " + getText("NoneDeletedImage"));
+                    addActionError(deletes[i] + " " + getText("NoneDeletedDocument"));
                 }
             }
-            return Image_list();
+            return Document_list();
         }
-        addActionError(getText("NoneSelectedImage"));
-        return Image_list();
+        addActionError(getText("NoneSelectedDocument"));
+        return Document_list();
     }
 
-    public String Image_list() {
+    public String Document_list() {
         if (control.getRecCount() == 0) {
-            dataList = dataService.getRecords("SELECT * FROM images "
-                    + ((Integer) sessionAttributes.get("userCategory") == 2 ? "" : " WHERE img_user = '" + sessionAttributes.get("user") + "' "), "", "");
+            dataList = dataService.getRecords("SELECT * FROM documents "
+                    + ((Integer) sessionAttributes.get("userCategory") == 2 ? "" : " WHERE doc_user = '" + sessionAttributes.get("user") + "' "), "", "");
             control.setRecCount(dataList.size());
         }
-        dataList = dataService.getRecords("SELECT * FROM images "
-                + ((Integer) sessionAttributes.get("userCategory") == 2 ? "" : " WHERE img_user = '" + sessionAttributes.get("user") + "' ")
+        dataList = dataService.getRecords("SELECT * FROM documents "
+                + ((Integer) sessionAttributes.get("userCategory") == 2 ? "" : " WHERE doc_user = '" + sessionAttributes.get("user") + "' ")
                 + " LIMIT " + control.getRecChunk().toString()
                 + " OFFSET " + control.getRecStart().toString(), "", "");
         control.setRunAction("list");
-        requestáttributes.put("page", "/WEB-INF/views/imageList.jsp");
+        requestáttributes.put("page", "/WEB-INF/views/documentList.jsp");
         return "LIST";
     }
 
-    public String Image_Navigation() throws Exception {
+    public String Document_Navigation() throws Exception {
         control.doNavigation();
-        return Image_list();
+        return Document_list();
     }
 
     @Override
@@ -279,23 +280,23 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
         this.mapStatus = mapStatus;
     }
 
-    public Image getDataEdit() {
+    public Document getDataEdit() {
         return dataEdit;
     }
 
-    public void setDataEdit(Image dataEdit) {
+    public void setDataEdit(Document dataEdit) {
         this.dataEdit = dataEdit;
     }
 
-    public List<Image> getDataList() {
+    public List<Document> getDataList() {
         return dataList;
     }
 
-    public void setDataList(List<Image> dataList) {
+    public void setDataList(List<Document> dataList) {
         this.dataList = dataList;
     }
 
-    public void setDataService(ImagesService dataService) {
+    public void setDataService(DocumentsService dataService) {
         this.dataService = dataService;
     }
 
@@ -381,7 +382,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
         //dataEdit.setUser();
     }
 
-    protected void doSaveTemporaryImageFile(File file, String fileContentType, String fileFileName) throws IOException {
+    protected void doSaveTemporaryDocumentFile(File file, String fileContentType, String fileFileName) throws IOException {
         File temporaryFile = new File(applicationAttributes.get("dirRealApplicationPath") + ("WEB-INF/temp/" + temporaryFileName));
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
@@ -399,7 +400,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
         fos.close();
     }
 
-    private void putFileFtp(String localDir, String localFileName) throws ImageException, IOException {
+    private void putFileFtp(String localDir, String localFileName) throws DocumentException, IOException {
         String[] argsFtp = {"ftp://ftp.laboraldetarragona.com", "-user", "ecosysw@laboraldetarragona.com"};
         FtpConnect ftpConx = FtpConnect.newConnect(argsFtp);
         ftpConx.setPassWord("cragogru");
@@ -412,29 +413,29 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
             ftpObj.connect(ftpConx);
         } catch (IOException e) {
             System.out.println(e);
-            throw new ImageException("Conection FTP Error: " + e);
+            throw new DocumentException("Conection FTP Error: " + e);
         } // El m�todo pwd devuelve el directorio actual
         CoFile dir = new FtpFile(ftpObj.pwd(), ftpObj);
-        if (ftpObj.cd("CPUZ/images")) {
+        if (ftpObj.cd("CPUZ/documents")) {
             CoFile file = new FtpFile(localFileName, ftpObj);
             CoFile localFile = new LocalFile(localDir, localFileName);
             if (file.exists()) {
                 if (file.isFile()) {
                     if (!file.delete()) {
-                        throw new ImageException("El fichero ya existe y no puede ser reemplazado: ");
+                        throw new DocumentException("El fichero ya existe y no puede ser reemplazado: ");
                     }
                 }
             }
             if (!CoLoad.copy(file, localFile)) {
-                throw new ImageException("No ha sido posible copiar el fichero en el servidor: ");
+                throw new DocumentException("No ha sido posible copiar el fichero en el servidor: ");
             }
         } else {
-            throw new ImageException("No se encuentra el repositorio de im�genes");
+            throw new DocumentException("No se encuentra el repositorio de documentos");
         } /* this must be always run */
         ftpObj.disconnect();
     }
 
-    private void deleteFileFtp(String fileToDelete) throws ImageException {
+    private void deleteFileFtp(String fileToDelete) throws DocumentException {
         String[] argsFtp = {"ftp://ftp.laboraldetarragona.com", "-user", "ecosysw@laboraldetarragona.com"};
         FtpConnect ftpConx = FtpConnect.newConnect(argsFtp);
         ftpConx.setPassWord("cragogru");
@@ -443,21 +444,20 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
             ftpObj.connect(ftpConx);
         } catch (IOException e) {
             System.out.println(e);
-            throw new ImageException("Conection FTP Error: " + e);
+            throw new DocumentException("Conection FTP Error: " + e);
         }
-        if (ftpObj.cd("CPUZ/images")) {
+        if (ftpObj.cd("CPUZ/documents")) {
             CoFile file = new FtpFile(fileToDelete, ftpObj);
             if (file.exists()) {
                 if (file.isFile()) {
                     if (!file.delete()) {
-                        throw new ImageException("El fichero ya existe y no puede ser reemplazado: ");
+                        throw new DocumentException("El fichero ya existe y no puede ser reemplazado: ");
                     }
                 }
             }
         } else {
-            throw new ImageException("No se encuentra el repositorio de im�genes");
+            throw new DocumentException("No se encuentra el repositorio de documentos");
         } /* this must be always run */
         ftpObj.disconnect();
     }
-
 }
