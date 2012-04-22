@@ -15,11 +15,11 @@ import org.apache.log4j.Logger;
  * llamadas DAO.
  * 
  */
-public class InitModel {
+public class InitService {
 
 	private final transient Logger log = Logger.getLogger(this.getClass());
 
-	public InitModel() {
+	public InitService() {
 	}
 
 	/**

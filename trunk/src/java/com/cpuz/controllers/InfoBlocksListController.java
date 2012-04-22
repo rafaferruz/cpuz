@@ -6,7 +6,7 @@ package com.cpuz.controllers;
 
 import com.cpuz.domain.InfoBlock;
 import com.cpuz.domain.UserType;
-import com.cpuz.service.InfoBlocksModel;
+import com.cpuz.service.InfoBlocksService;
 import com.cpuz.domain.UserType;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class InfoBlocksListController extends GenericListController {
 
     private static final long serialVersionUID = 302L;
-    protected InfoBlocksModel nvm = new InfoBlocksModel();
+    protected InfoBlocksService nvm = new InfoBlocksService();
 /*    protected String jspFileList = "views/infoBlocksList.jsp";
     protected String jspFileEdit = "views/infoBlocksEdit.jsp";
     protected String jspFileSelec = "views/infoBlocksSelec.jsp";
@@ -33,7 +33,7 @@ public class InfoBlocksListController extends GenericListController {
         super.jspFileEdit = "views/infoBlocksEdit.jsp";
         super.jspFileSelec = "views/selecConditions.jsp";
         super.attrNameListRecs = "InfoBlocksListNews";
-//        super.nvm = new InfoBlocksModel();
+//        super.nvm = new InfoBlocksService();
     }
 
     protected synchronized void doListSelec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

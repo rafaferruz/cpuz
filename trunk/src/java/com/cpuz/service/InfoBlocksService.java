@@ -18,9 +18,9 @@ import java.util.logging.Logger;
  *
  * @author RAFAEL FERRUZ
  */
-public class InfoBlocksModel {
+public class InfoBlocksService {
 
-    public InfoBlocksModel() {
+    public InfoBlocksService() {
     }
 
     public boolean keyIdExists(Integer ssn) {
@@ -86,11 +86,11 @@ public class InfoBlocksModel {
                 news.add(n);
             }
         } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return news;
     }
@@ -110,11 +110,11 @@ public class InfoBlocksModel {
             records = nDao.readInfoBlocks(sqlClause);
 
         } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return records;
     }
@@ -131,11 +131,11 @@ public class InfoBlocksModel {
                 news.add(n);
             }
         } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return news;
     }
@@ -146,11 +146,11 @@ public class InfoBlocksModel {
             InfoBlockDAOImpl nDao = new InfoBlockDAOImpl();
             return nDao.createInfoBlock(news);
         } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -161,11 +161,11 @@ public class InfoBlocksModel {
             InfoBlockDAOImpl nDao = new InfoBlockDAOImpl();
             return nDao.updateInfoBlock(news);
         } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -176,11 +176,11 @@ public class InfoBlocksModel {
             InfoBlockDAOImpl nDao = new InfoBlockDAOImpl();
             return nDao.deleteInfoBlock(news);
         } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }

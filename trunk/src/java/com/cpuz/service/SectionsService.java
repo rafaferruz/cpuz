@@ -18,9 +18,9 @@ import java.util.logging.Logger;
  *
  * @author RAFAEL FERRUZ
  */
-public class SectionsModel {
+public class SectionsService {
 
-    public SectionsModel() {
+    public SectionsService() {
     }
 
     public boolean keyIdExists(String ssn) {
@@ -75,11 +75,11 @@ public class SectionsModel {
                     " ORDER BY sec_id";
             news = nDao.readSections(sqlClause);
         } catch (SectionException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return news;
     }
@@ -99,11 +99,11 @@ public class SectionsModel {
             records = nDao.readSections(sqlClause);
 
         } catch (SectionException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return records;
     }
@@ -119,11 +119,11 @@ public class SectionsModel {
                     + " ORDER BY sec_id";
             news = nDao.readSections(sqlClause);
         } catch (SectionException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return news;
     }
@@ -134,11 +134,11 @@ public class SectionsModel {
             SectionDAOImpl nDao = new SectionDAOImpl();
             return nDao.createSection(news);
         } catch (SectionException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -149,11 +149,11 @@ public class SectionsModel {
             SectionDAOImpl nDao = new SectionDAOImpl();
             return nDao.updateSection(news);
         } catch (SectionException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -164,11 +164,11 @@ public class SectionsModel {
             SectionDAOImpl nDao = new SectionDAOImpl();
             return nDao.deleteSection(news);
         } catch (SectionException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(SectionsModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SectionsService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }

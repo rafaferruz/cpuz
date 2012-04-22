@@ -20,10 +20,6 @@ package com.cpuz.service;
 
 import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.UserRole;
-import com.cpuz.DAO.UserRoleDAO;
-import com.cpuz.domain.User;
-import com.cpuz.exceptions.UserRoleException;
-import com.cpuz.domain.UserType;
 import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,12 +30,12 @@ import org.apache.log4j.Logger;
  *
  * @author RAFAEL FERRUZ
  */
-public class UserRolesModel {
+public class UserRolesService {
 
 	private final transient Logger log = Logger.getLogger(this.getClass());
 	ControlParams control = new ControlParams();
 
-	public UserRolesModel() {
+	public UserRolesService() {
 	}
 
 	public boolean keyIdExists(int userRoleId) throws SQLException {

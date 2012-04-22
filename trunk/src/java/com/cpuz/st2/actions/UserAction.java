@@ -21,9 +21,9 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.Role;
 import com.cpuz.domain.User;
 import com.cpuz.domain.UserRole;
-import com.cpuz.service.RolesModel;
-import com.cpuz.service.UserRolesModel;
-import com.cpuz.service.UserModel;
+import com.cpuz.service.RolesService;
+import com.cpuz.service.UserRolesService;
+import com.cpuz.service.UserService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -44,12 +44,12 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 	private ControlParams control = new ControlParams();
 	private List<User> dataList = new ArrayList<>();
 	private User dataEdit = new User();
-	private UserModel dataModel;
+	private UserService dataService;
 	private Map<String, Object> requestAttributes = new HashMap<>();
 	private List<Role> rolesList;
 	private List<UserRole> userRolesList;
-	private RolesModel rolesModel;
-	private UserRolesModel userRolesModel;
+	private RolesService rolesService;
+	private UserRolesService userRolesService;
 	private String[] authRolesSel;
 	private String[] availableRolesSel;
 	private String selec1;
@@ -73,10 +73,10 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 	}
 
 	public String UserEdit() throws Exception {
-		dataEdit = dataModel.getById(control.getId());
+		dataEdit = dataService.getById(control.getId());
 		// Se lee lista de Users
 		passwordAgain = dataEdit.getPassword();
-		rolesList = rolesModel.getNewsRecords();
+		rolesList = rolesService.getNewsRecords();
 		userRolesList = dataEdit.getRoles();
 		List<Role> removeRoles = new ArrayList<>();
 		for (UserRole ur : userRolesList) {
@@ -97,7 +97,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 
 	public String UserSaveNew() throws SQLException, Exception {
 
-		if (dataModel.insertUser(dataEdit) != 1) {
+		if (dataService.insertUser(dataEdit) != 1) {
 			this.addActionError(getText("UserEditErrorMsg"));
 			return "NEW";
 		}
@@ -107,7 +107,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 
 	public String UserSaveEdit() throws Exception {
 
-		if (dataModel.updateUser(dataEdit) != 1) {
+		if (dataService.updateUser(dataEdit) != 1) {
 			this.addActionError(getText("UserEditErrorMsg"));
 			return "NEW";
 		}
@@ -122,7 +122,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 			for (String id : deletes) {
 				deleteIds.add(Integer.parseInt(id));
 			}
-			if (dataModel.deleteUserIds(deletes) == 0) {
+			if (dataService.deleteUserIds(deletes) == 0) {
 				addActionError(getText("NoneDeletedUser"));
 				return UserList();
 			} else {
@@ -136,9 +136,9 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 
 	public String UserList() throws Exception {
 		if (control.getRecCount() == 0) {
-			control.setRecCount(dataModel.getCountRows());
+			control.setRecCount(dataService.getCountRows());
 		}
-		dataList = dataModel.getUserList(control);
+		dataList = dataService.getUserList(control);
 		control.setRunAction("List");
 		requestAttributes.put("page", "/WEB-INF/views/UserList.jsp");
 		return "LIST";
@@ -178,8 +178,8 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		this.dataList = dataList;
 	}
 
-	public void setDataModel(UserModel dataModel) {
-		this.dataModel = dataModel;
+	public void setDataService(UserService dataService) {
+		this.dataService = dataService;
 	}
 
 	public String[] getAuthRolesSel() {
@@ -206,12 +206,12 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		this.selec1 = selec1;
 	}
 
-	public void setRolesModel(RolesModel rolesModel) {
-		this.rolesModel = rolesModel;
+	public void setRolesService(RolesService rolesService) {
+		this.rolesService = rolesService;
 	}
 
-	public void setUserRolesModel(UserRolesModel userRolesModel) {
-		this.userRolesModel = userRolesModel;
+	public void setUserRolesService(UserRolesService userRolesService) {
+		this.userRolesService = userRolesService;
 	}
 
 	public void setRolesList(List<Role> rolesList) {
