@@ -2,7 +2,7 @@ package com.cpuz.st2.actions;
 
 import com.cpuz.domain.NewsPiece;
 import com.cpuz.domain.Role;
-import com.cpuz.model.InitModel;
+import com.cpuz.service.InitModel;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;

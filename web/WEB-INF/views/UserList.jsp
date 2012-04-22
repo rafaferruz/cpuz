@@ -6,7 +6,7 @@
 <s:actionerror/>
 
 
-<s:form id="userlist_form" name="userlist_form" method="post" cssClass="data_table">
+<s:form id="userListForm" name="userListForm" method="post" cssClass="data_table">
     <s:hidden name="control.runAction" id="runAction"/>
     <s:hidden name="control.idKey" id="idKey" />
     <s:hidden name="control.recStart" id="recStart"/>
@@ -56,33 +56,33 @@
                     <s:property value="#row.nombre"/>
                 </td>
                 <s:if test="#session.userCategory == 2">
-                    <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="news_edit('%{#row.id}')"/></td>
+                    <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="newsEdit('%{#row.id}')"/></td>
                     <td align="center"><s:checkbox theme="simple" name="selec1" fieldValue="%{#row.id+';'+#row.user}"/></td>
                 </s:if>
             </tr>
         </s:iterator>
     </s:if>
 
-    <%@include  file="/WEB-INF/views/ListTableFootButtons.jspf" %>
+    <%@include  file="/WEB-INF/views/listTableFootButtons.jspf" %>
 
 </s:form>
 
 <script type="text/javascript">
-    function orden_ejecutar(accion) {
-        window.document.userlist_form.runAction.value = accion;
-        window.document.userlist_form.action = "User_"+accion+".action";
-        window.document.userlist_form.submit();
+    function actionExecute(action) {
+        window.document.userListForm.runAction.value = action;
+        window.document.userListForm.action = "User"+action+".action";
+        window.document.userListForm.submit();
         return 0;
     }
-    function DoNavigation(nav_rule) {
-        window.document.userlist_form.runAction.value = nav_rule;
-        window.document.userlist_form.action = "User_Navigation.action";
-        window.document.userlist_form.submit();
+    function doNavigation(navRule) {
+        window.document.userListForm.runAction.value = navRule;
+        window.document.userListForm.action = "UserNavigation.action";
+        window.document.userListForm.submit();
         return 0;
     }
-    function news_edit(id) {
-        window.document.userlist_form.idKey.value = id;
-        orden_ejecutar('edit');
+    function newsEdit(id) {
+        window.document.userListForm.idKey.value = id;
+        actionExecute('Edit');
         return 0;
     }
 </script>

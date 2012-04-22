@@ -6,7 +6,7 @@ package com.cpuz.st2.actions;
 
 import com.cpuz.domain.NewsComposition;
 import com.cpuz.domain.Section;
-import com.cpuz.model.NewsCompositionsModel;
+import com.cpuz.service.NewsCompositionsModel;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;

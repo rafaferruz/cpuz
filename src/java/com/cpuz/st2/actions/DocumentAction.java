@@ -6,7 +6,7 @@ package com.cpuz.st2.actions;
 
 import com.cpuz.domain.Document;
 import com.cpuz.exceptions.DocumentException;
-import com.cpuz.model.DocumentsModel;
+import com.cpuz.service.DocumentsModel;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;

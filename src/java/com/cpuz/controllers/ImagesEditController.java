@@ -6,7 +6,7 @@ package com.cpuz.controllers;
 
 import com.cpuz.domain.Image;
 import com.cpuz.exceptions.ImageException;
-import com.cpuz.model.ImagesModel;
+import com.cpuz.service.ImagesModel;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;

@@ -4,6 +4,7 @@
  */
 package com.cpuz.model;
 
+import com.cpuz.service.RolesModel;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import com.cpuz.domain.Role;

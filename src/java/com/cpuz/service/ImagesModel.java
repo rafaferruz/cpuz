@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cpuz.model;
+package com.cpuz.service;
 
 import com.cpuz.domain.Image;
 import com.cpuz.DAO.impl.ImageDAOImpl;

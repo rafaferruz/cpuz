@@ -5,8 +5,8 @@
 package com.cpuz.st2.actions;
 
 import com.cpuz.domain.Contact;
-import com.cpuz.model.ContactsModel;
-import com.cpuz.model.UserService;
+import com.cpuz.service.ContactsModel;
+import com.cpuz.service.UserService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;

@@ -2,7 +2,7 @@ package com.cpuz.controllers;
 
 import com.cpuz.domain.Image;
 import com.cpuz.domain.UserType;
-import com.cpuz.model.ImagesModel;
+import com.cpuz.service.ImagesModel;
 import com.cpuz.domain.UserType;
 import java.io.IOException;
 import java.util.ArrayList;

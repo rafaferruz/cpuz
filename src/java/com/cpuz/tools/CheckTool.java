@@ -8,7 +8,7 @@ import com.cpuz.domain.User;
 import com.cpuz.domain.UserType;
 import com.cpuz.misc.ConfigurationBean;
 import com.cpuz.misc.PageBean;
-import com.cpuz.model.UserModel;
+import com.cpuz.service.UserModel;
 import com.cpuz.st2.beans.ControlParams;
 import java.io.IOException;
 import java.sql.SQLException;

@@ -6,7 +6,7 @@ package com.cpuz.st2.actions;
 
 import com.cpuz.domain.Image;
 import com.cpuz.exceptions.ImageException;
-import com.cpuz.model.ImagesModel;
+import com.cpuz.service.ImagesModel;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;

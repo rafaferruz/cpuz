@@ -21,7 +21,7 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.Bug;
 import com.cpuz.domain.BugStatusType;
 import com.cpuz.domain.BugType;
-import com.cpuz.model.BugsModel;
+import com.cpuz.service.BugsModel;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -64,16 +64,16 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 		initMapStatus();
 		initListTypes();
 		control.setRecCount(1);
-		control.setRunAction("new");
+		control.setRunAction("New");
 		requestAttributes.put("page", "/WEB-INF/views/bugEdit.jsp");
-		return "New";
+		return "NEW";
 	}
 
 	public String bugEdit() throws Exception {
 		dataEdit = dataModel.getById(control.getId());
 		initMapStatus();
 		initListTypes();
-		control.setRunAction("edit");
+		control.setRunAction("Edit");
 		requestAttributes.put("page", "/WEB-INF/views/bugEdit.jsp");
 		return "Edit";
 	}
@@ -85,7 +85,7 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 			this.addActionMessage(getText("BugEditSaveOkMsg"));
 			return bugList();
 		}
-		return "Edit";
+		return "EDIT";
 	}
 
 	public String bugSaveEdit() throws Exception {
@@ -96,11 +96,11 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 				this.addActionMessage(getText("BugEditSaveOkMsg"));
 			} catch (Exception ex) {
 				this.addActionError(getText("BugEditErrorMsg"));
-				return "Edit";
+				return "EDIT";
 			}
 			return bugList();
 		}
-		return "New";
+		return "NEW";
 	}
 
 	public String bugDelete() throws Exception {
@@ -122,9 +122,9 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 			control.setRecCount(dataModel.getCountRows());
 		}
 		dataList = dataModel.getBugList(control);
-		control.setRunAction("list");
+		control.setRunAction("List");
 		requestAttributes.put("page", "/WEB-INF/views/bugList.jsp");
-		return "List";
+		return "LIST";
 	}
 
 	public String BugNavigation() throws Exception {
