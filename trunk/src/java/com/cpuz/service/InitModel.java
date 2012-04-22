@@ -1,4 +1,4 @@
-package com.cpuz.model;
+package com.cpuz.service;
 
 import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.NewsPiece;

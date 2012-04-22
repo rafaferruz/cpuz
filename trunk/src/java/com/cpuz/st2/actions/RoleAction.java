@@ -20,7 +20,7 @@ package com.cpuz.st2.actions;
 
 import com.cpuz.domain.Role;
 import com.cpuz.domain.UserType;
-import com.cpuz.model.RolesModel;
+import com.cpuz.service.RolesModel;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -56,16 +56,16 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 
 	public String roleNew() {
 		control.setRecCount(1);
-		control.setRunAction("new");
+		control.setRunAction("New");
 		requestAttributes.put("page", "/WEB-INF/views/roleEdit.jsp");
-		return "New";
+		return "NEW";
 	}
 
 	public String roleEdit() throws SQLException {
 		dataEdit = dataModel.getById(control.getId());
-		control.setRunAction("edit");
+		control.setRunAction("Edit");
 		requestAttributes.put("page", "/WEB-INF/views/roleEdit.jsp");
-		return "Edit";
+		return "EDIT";
 	}
 
 	public String roleSaveNew() throws SQLException{
@@ -73,7 +73,7 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 			this.addActionMessage(getText("RoleEditSaveOkMsg"));
 			return roleList();
 		}
-		return "Edit";
+		return "EDIT";
 	}
 
 	public String roleSaveEdit() throws SQLException {
@@ -84,11 +84,11 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 				this.addActionMessage(getText("RoleEditSaveOkMsg"));
 			} catch (SQLException ex) {
 				this.addActionError(getText("RoleEditErrorMsg"));
-				return "Edit";
+				return "EDIT";
 			}
 			return roleList();
 		}
-		return "New";
+		return "NEW";
 	}
 
 	public String roleDeleteIds() throws SQLException {
@@ -113,7 +113,7 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 		dataList = dataModel.getRoleList(control);
 		control.setRunAction("List");
 		requestAttributes.put("page", "/WEB-INF/views/roleList.jsp");
-		return "List";
+		return "LIST";
 	}
 
 	public String roleNavigation() throws SQLException {

@@ -45,7 +45,7 @@
 			<zorongo:links cadenamenu='
 						   GESTION_WEB¿¿1|
 						   Roles de Usuario¿admin/RoleList.action¿2|
-						   Usuarios¿admin/User_list.action¿2|
+						   Usuarios¿admin/UserList.action¿2|
 						   Bugs¿admin/BugList.action¿2|
 						   Secciones de Noticias¿admin/Section_list.action¿2|
 						   Bloques de Información¿admin/InfoBlock_list.action¿1|

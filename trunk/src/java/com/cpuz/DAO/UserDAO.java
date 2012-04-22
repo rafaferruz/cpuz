@@ -227,6 +227,7 @@ public class UserDAO implements InjectableDAO {
 		user.setId(rs.getInt("usu_id"));
 		user.setDate(rs.getDate("usu_date"));
 		user.setStatus(rs.getInt("usu_status"));
+		user.setCategory(rs.getInt("usu_category"));
 		user.setUser(rs.getString("usu_user"));
 		user.setName(rs.getString("usu_name"));
 		user.setPassword(rs.getString("usu_password"));

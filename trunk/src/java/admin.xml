@@ -8,24 +8,24 @@
     <package name="admin" namespace="/admin" extends="struts-default">
 
         <action name="Role*" method="role{1}" class="springRoleAction" >
-            <result name="List">/WEB-INF/pages/main.jsp</result>
-            <result name="New">/WEB-INF/pages/main.jsp</result>
-            <result name="Edit">/WEB-INF/pages/main.jsp</result>
-            <result name="Input">/WEB-INF/pages/main.jsp</result>
-            <result>/WEB-INF/pages/main.jsp</result>
-        </action>
-        <action name="User_*" method="User_{1}" class="springUserAction" >
             <result name="LIST">/WEB-INF/pages/main.jsp</result>
             <result name="NEW">/WEB-INF/pages/main.jsp</result>
             <result name="EDIT">/WEB-INF/pages/main.jsp</result>
-            <result name="input">/WEB-INF/pages/main.jsp</result>
+            <result name="INPUT">/WEB-INF/pages/main.jsp</result>
+            <result>/WEB-INF/pages/main.jsp</result>
+        </action>
+        <action name="User*" method="User{1}" class="springUserAction" >
+            <result name="LIST">/WEB-INF/pages/main.jsp</result>
+            <result name="NEW">/WEB-INF/pages/main.jsp</result>
+            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
+            <result name="INPUT">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
         <action name="Bug*" method="bug{1}" class="springBugAction" >
-            <result name="List">/WEB-INF/pages/main.jsp</result>
-            <result name="New">/WEB-INF/pages/main.jsp</result>
-            <result name="Edit">/WEB-INF/pages/main.jsp</result>
-            <result name="Input">/WEB-INF/pages/main.jsp</result>
+            <result name="LIST">/WEB-INF/pages/main.jsp</result>
+            <result name="NEW">/WEB-INF/pages/main.jsp</result>
+            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
+            <result name="INPUT">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
         <action name="Section_*" method="Section_{1}" class="springSectionAction" >

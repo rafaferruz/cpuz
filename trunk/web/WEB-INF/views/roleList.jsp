@@ -5,7 +5,7 @@
 <s:actionerror/>
 
 
-<s:form id="roleslist_form" name="roleslist_form" method="post" cssClass="data_table">
+<s:form id="roleslistForm" name="roleslistForm" method="post" cssClass="data_table">
     <s:hidden name="control.runAction" id="runAction"/>
     <s:hidden name="control.idKey" id="idKey" />
     <s:hidden name="control.recStart" id="recStart"/>
@@ -46,7 +46,7 @@
                     <s:property value="#row.description"/>
                 </td>
                 <s:if test="#session.userCategory == 2">
-                    <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="news_edit('%{#row.id}','%{#row.role}')"/></td>
+                    <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="newsEdit('%{#row.id}','%{#row.role}')"/></td>
                     <td align="center"><s:checkbox theme="simple" name="selec1" fieldValue="%{#row.id}"/></td>
                 </s:if>
             </tr>
@@ -59,22 +59,22 @@
 </s:form>
 
 <script type="text/javascript">
-    function orden_ejecutar(accion) {
-        window.document.roleslist_form.runAction.value = accion;
-        window.document.roleslist_form.action = "Role_"+accion+".action";
-        window.document.roleslist_form.submit();
+    function actionExecute(action) {
+        window.document.roleslistForm.runAction.value = action;
+        window.document.roleslistForm.action = "Role"+action+".action";
+        window.document.roleslistForm.submit();
         return 0;
     }
-    function DoNavigation(nav_rule) {
-        window.document.roleslist_form.runAction.value = nav_rule;
-        window.document.roleslist_form.action = "Role_Navigation.action";
-        window.document.roleslist_form.submit();
+    function DoNavigation(navRule) {
+        window.document.roleslistForm.runAction.value = navRule;
+        window.document.roleslistForm.action = "RoleNavigation.action";
+        window.document.roleslistForm.submit();
         return 0;
     }
-    function news_edit(id,titular) {
-        window.document.roleslist_form.identificador.value = id;
-        window.document.roleslist_form.role.value = titular;
-        orden_ejecutar('edit');
+    function newsEdit(id,titular) {
+        window.document.roleslistForm.identificador.value = id;
+        window.document.roleslistForm.role.value = titular;
+        actionExecute('Edit');
         return 0;
     }
 </script>

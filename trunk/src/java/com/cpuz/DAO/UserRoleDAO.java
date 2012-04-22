@@ -115,7 +115,7 @@ public class UserRoleDAO implements InjectableDAO {
 		ps.setString(1, role);
 		ps.setString(2, userCode);
 		log.debug("UserRoleDAO read(): " + ps.toString());
-		ResultSet rs = ps.executeQuery(sql);
+		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
 			userRole = getCompleteUserRole(rs);
 		}

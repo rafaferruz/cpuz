@@ -21,9 +21,9 @@ package com.cpuz.st2.actions;
 import com.cpuz.domain.Role;
 import com.cpuz.domain.User;
 import com.cpuz.domain.UserRole;
-import com.cpuz.model.RolesModel;
-import com.cpuz.model.UserRolesModel;
-import com.cpuz.model.UserModel;
+import com.cpuz.service.RolesModel;
+import com.cpuz.service.UserRolesModel;
+import com.cpuz.service.UserModel;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
@@ -66,10 +66,10 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 
 	public String UserNew() {
 		control.setRecCount(1);
-		control.setRunAction("new");
+		control.setRunAction("New");
 		dataEdit.setDate(new Date());
 		requestAttributes.put("page", "/WEB-INF/views/UserEdit.jsp");
-		return "New";
+		return "NEW";
 	}
 
 	public String UserEdit() throws Exception {
@@ -90,16 +90,16 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 			}
 		}
 		rolesList.removeAll(removeRoles);
-		control.setRunAction("edit");
+		control.setRunAction("Edit");
 		requestAttributes.put("page", "/WEB-INF/views/UserEdit.jsp");
-		return "Edit";
+		return "EDIT";
 	}
 
 	public String UserSaveNew() throws SQLException, Exception {
 
 		if (dataModel.insertUser(dataEdit) != 1) {
 			this.addActionError(getText("UserEditErrorMsg"));
-			return "New";
+			return "NEW";
 		}
 		this.addActionMessage(getText("UserEditSaveOkMsg"));
 		return UserList();
@@ -109,10 +109,10 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 
 		if (dataModel.updateUser(dataEdit) != 1) {
 			this.addActionError(getText("UserEditErrorMsg"));
-			return "New";
+			return "NEW";
 		}
 		this.addActionMessage(getText("UserEditSaveOkMsg"));
-		return "New";
+		return "NEW";
 	}
 
 	public String UserDelete() throws Exception {
@@ -139,9 +139,9 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 			control.setRecCount(dataModel.getCountRows());
 		}
 		dataList = dataModel.getUserList(control);
-		control.setRunAction("list");
+		control.setRunAction("List");
 		requestAttributes.put("page", "/WEB-INF/views/UserList.jsp");
-		return "List";
+		return "LIST";
 	}
 
 	public String User_Navigation() throws Exception {

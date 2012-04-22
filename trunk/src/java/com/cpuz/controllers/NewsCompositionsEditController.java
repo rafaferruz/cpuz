@@ -5,7 +5,7 @@
 package com.cpuz.controllers;
 
 import com.cpuz.domain.InfoBlock;
-import com.cpuz.model.InfoBlocksModel;
+import com.cpuz.service.InfoBlocksModel;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

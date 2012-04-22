@@ -6,7 +6,7 @@ package com.cpuz.controllers;
 
 import com.cpuz.domain.InfoBlock;
 import com.cpuz.domain.UserType;
-import com.cpuz.model.InfoBlocksModel;
+import com.cpuz.service.InfoBlocksModel;
 import com.cpuz.domain.UserType;
 import java.io.IOException;
 import java.util.ArrayList;
