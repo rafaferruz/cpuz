@@ -1,0 +1,7 @@
+#summary Administración de la base de datos MySql.
+
+= Backup de seguridad =
+
+  * Para realizar la copia de seguridad de la base de datos:
+
+`mysqldump - u root -p cpuz > cpuz_dump.sql`.
