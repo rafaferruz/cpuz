@@ -1,6 +1,10 @@
-#summary Relación de tareas programadas ya finalizadas.
+#summary Relación de tareas programadas ya finalizadas. Abril 2012.
 
 = Tareas finalizadas =
+
+  * * 22/04/2012: Finalizada.*
+  * * 22/04/2012. Poner en funcionamiento SectionAction.java, SectionService.java, SectionDAO.java y SectionList.jsp*
+    * 22/04/2012: Modificadas las clases implicadas para poder ejecutar correctamente la vista sectionList.jsp.
 
   * * 22/04/2012: Finalizada.*
   * *08/04/2012: Corregir errores de renderización de páginas HTML con componentes Struts2:*
