@@ -5,3 +5,5 @@
   * Para realizar la copia de seguridad de la base de datos:
 
 `mysqldump - u root -p cpuz > cpuz_dump.sql`.
+
+El comando solicitará la contraseña de la base de datos para el usuario 'root'. Se generará el fichero de salida 'cpuz_dump.sql' en el directorio donde se encuentre situado el usuario que ejecuta el comando. Se puede indicar una ruta y nombre diferente para el fichero de salida.
