@@ -3,7 +3,7 @@
 = Tareas finalizadas =
 
   * * 22/04/2012: Finalizada.*
-  * *08/04/2012: Corregir errores de renderización de páginas HTML con componentes Struts2:
+  * *08/04/2012: Corregir errores de renderización de páginas HTML con componentes Struts2:*
     * rolelist.jsp
     * bugsList.jsp
 
