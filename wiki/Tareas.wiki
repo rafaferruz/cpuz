@@ -4,4 +4,6 @@
 
 = Tareas pendientes =
 
-  * * 22/04/2012. Poner en funcionamiento SectionAction.java, SectionService.java, SectionDAO.java y SectionList.jsp*
+  * * 23/04/2012. Integrar los ficheros de texto con copia de seguridad de tablas de mysql.cpuz database en base de datos local.*
+
+  * * 23/04/2012. Comenzar a cambiar estilos css de tablas de listados de objetos de dominio.*
