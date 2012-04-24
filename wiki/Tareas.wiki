@@ -2,8 +2,11 @@
 
 = Tareas en curso =
 
+  * * 23/04/2012. Comenzar a cambiar estilos css de tablas de listados de objetos de dominio.*
+    * 24/04/2012: Se ha comenzado ha modificar las clases en los ficheros css base.css, basemod.css, content.css y cpuz_styles.css, teniendo en este momento definidos los estilos de la página de inicio.
+    * Se ha modificado ligeramente el estilo de las vistas jsp de listados de objetos de dominio. Hay que modificar el texto 'Listado de...' por 'Relación de ...' e internacionalizar dicho texto.
+
 = Tareas pendientes =
 
   * * 23/04/2012. Integrar los ficheros de texto con copia de seguridad de tablas de mysql.cpuz database en base de datos local.*
-
-  * * 23/04/2012. Comenzar a cambiar estilos css de tablas de listados de objetos de dominio.*
+    * 24/04/2012. Esta tarea no podrá realizarse con los ficheros TXT que se disponen actualmente ya que no son de la aplicación CPUZ como se suponía.
