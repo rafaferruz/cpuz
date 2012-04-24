@@ -10,3 +10,5 @@
 
   * * 23/04/2012. Integrar los ficheros de texto con copia de seguridad de tablas de mysql.cpuz database en base de datos local.*
     * 24/04/2012. Esta tarea no podrá realizarse con los ficheros TXT que se disponen actualmente ya que no son de la aplicación CPUZ como se suponía.
+
+  * * 24/04/2012: Poner en marcha, de nuevo, el servidor Tomcat de la bodega para desplegar la aplicación CPUZ y hacer pruebas de despliegue, configuración de Tomcat, logs, prácticas de Linux, etc. A definir en próximas tareas.
