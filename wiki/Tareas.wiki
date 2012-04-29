@@ -6,8 +6,11 @@
     * 29/04/2012: El servidor está de nuevo funcionando. Para poder desplegar la aplicación es necesario actualizar a Tomcat 7 y JDK 7. También debo actualizar la versión de Fedora a la más reciente.
     * 29/04/2012: Se hacen necesarias las siguientes fases:
       * Actualizar Fedora Core a la versión 16 desde DVD de instalación.
+        * Se ha descargado la imagen ISO y se va a hacer un DVD desde el que instalar.
       * Instalar Netbeans 7.1 y JDK 7
+        * Se han descargado he instalado el JDK7 y se ha instalado pero hay que esperar a la actualización de Fedora para ver si esta actualización es correcta.
       * Actualizar a Tomcat 7
+        * Esta descargada la versión 7 y pendiente de instalar
       * Actualizar a MySql 5.5
 
   * * 23/04/2012. Comenzar a cambiar estilos css de tablas de listados de objetos de dominio.*
