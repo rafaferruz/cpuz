@@ -2,6 +2,9 @@
 
 = Tareas finalizadas =
 
+  * * 29/04/2012: Finalizada.*
+  * * 29/04/2012. Se han puesto en funcionamiento todas las vistas que muestran Relaciones de los diferentes objetos de dominio en el menú de Gestión Web, aunque no figuraban programadas.*
+
   * * 27/04/2012: Finalizada.*
   * * 27/04/2012. Poner en funcionamiento InfoBlockAction.java, InfoBlockService.java, InfoBlockDAO.java y InfoBlockList.jsp*
     * 27/04/2012: Modificadas las clases implicadas para poder ejecutar correctamente la vista InfoBlockList.jsp.
