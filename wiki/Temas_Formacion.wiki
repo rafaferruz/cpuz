@@ -1,0 +1,19 @@
+#summary Temas a incluir en el programa de formación.
+
+= Temas de Formación =
+
+  * * Struts 2*
+
+  * * JUnit*
+
+  * * Linux*
+
+  * * Tomcat 7*
+
+  * * Mysql - administración - *
+
+  * * Refactorización*
+
+  * * Jquery*
+
+  * * Css - Yaml*
