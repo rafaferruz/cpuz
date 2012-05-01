@@ -14,7 +14,7 @@
 
   * * Refactorización*
 
-  * * Jquery*
+  * * JQuery*
 
   * * Css - Yaml*
 
