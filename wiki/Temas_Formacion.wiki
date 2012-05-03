@@ -7,6 +7,7 @@
   * * JUnit*
 
   * * Linux*
+    * [http://docs.fedoraproject.org/en-US/Fedora/16/html/Security_Guide/sect-Security_Guide-Vulnerability_Assessment-Defining_Assessment_and_Testing.html Fedora. Security Guide.]
 
   * * Tomcat 7*
 
