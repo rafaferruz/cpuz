@@ -8,8 +8,8 @@
 
   * * Linux*
     * [http://docs.fedoraproject.org/en-US/Fedora/16/html/Security_Guide/sect-Security_Guide-Vulnerability_Assessment-Defining_Assessment_and_Testing.html Fedora. Security Guide.]
-    * [http://docs.fedoraproject.org/en-US/Fedora/16/pdf/System_Administrators_Guide/Fedora-16-System_Administrators_Guide-en-US.html Fedora. Amnistration Guide (html).]
-    * [http://docs.fedoraproject.org/en-US/Fedora/16/pdf/System_Administrators_Guide/Fedora-16-System_Administrators_Guide-en-US.pdf Fedora. Amnistration Guide.]
+    * [http://docs.fedoraproject.org/en-US/Fedora/16/pdf/System_Administrators_Guide/Fedora-16-System_Administrators_Guide-en-US.html Fedora. Administration Guide (html).]
+    * [http://docs.fedoraproject.org/en-US/Fedora/16/pdf/System_Administrators_Guide/Fedora-16-System_Administrators_Guide-en-US.pdf Fedora. Administration Guide.]
   * * Tomcat 7*
 
   * * Mysql - administración - *
