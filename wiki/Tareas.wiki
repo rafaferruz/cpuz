@@ -7,6 +7,7 @@
     * 29/04/2012: Se hacen necesarias las siguientes fases:
       * Actualizar Fedora Core a la versión 16 desde DVD de instalación.
         * Se ha descargado la imagen ISO y se va a hacer un DVD desde el que instalar.
+        * 06/05/2012: Debido a las características del hardware sobre el que está montado Fedora, no es posible instalar desde un DVD bootable con la versión integra de Fedora. Se ha descargado una ISO netinst de la versión 10 y se ha instalado Fedora 10 integramente. El siguiente paso es instalar desde una ISO netinst de Fedora 16.
       * Instalar Netbeans 7.1 y JDK 7
         * Se han descargado he instalado el JDK7 y se ha instalado pero hay que esperar a la actualización de Fedora para ver si esta actualización es correcta.
       * Actualizar a Tomcat 7
