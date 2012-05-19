@@ -5,22 +5,22 @@
 				<td align="center">
 			<s:set var="disabled" value="false"/>
 			<s:if test="control.recStart==0">
-				  <s:set var="disabled" value="true"/>
+				<s:set var="disabled" value="true"/>
 			</s:if>
 			<s:submit theme="simple" type="submit" value="|<<" name="nav_first" onclick="DoNavigation('nav_first')" disabled="%{#disabled}"/>
 			<s:submit theme="simple" type="submit" value=" < " name="nav_prev" onclick="DoNavigation('nav_prev')" disabled="%{#disabled}"/>
 			<s:set var="disabled" value="false"/>
 			<s:if test="(control.recStart+control.recChunk)>control.recCount">
-				  <s:set var="disabled" value="true"/>
+				<s:set var="disabled" value="true"/>
 			</s:if>
 			<s:submit theme="simple" type="submit" value=" > " name="nav_next" onclick="DoNavigation('nav_next')" disabled="%{#disabled}"/>
 			<s:submit theme="simple" type="submit" value=">>|" name="nav_last" onclick="DoNavigation('nav_last')" disabled="%{#disabled}"/>
 	</td>
 	<%-- Requirement codes: E5-2 --%>
-	<td align="center"><s:submit theme="simple" type="button" name="newButton" id="newButton" value="%{getText('New')}"  onclick="orden_ejecutar('new')"/></td>
+	<td align="center"><s:submit theme="simple" type="button" name="newButton" id="newButton" value="%{getText('New')}"  onclick="actionExecute('New')"/></td>
 <s:set var="confirm" value="getText('ConfirmDeleteQuestion')"/>
-<td align="center"><s:submit theme="simple" type="button" name="delete" id="delete" value="%{getText('Delete')}"   onclick="if (confirm('%{#confirm}')) orden_ejecutar('delete')"/></td>
-<td align="center"><s:submit theme="simple" type="button" name="selec" id="selec" value="%{getText('SearchSelect')}"  onclick="orden_ejecutar('selec')"/></td>
+<td align="center"><s:submit theme="simple" type="button" name="delete" id="delete" value="%{getText('Delete')}"   onclick="if (confirm('%{#confirm}')) actionExecute('Delete')"/></td>
+<td align="center"><s:submit theme="simple" type="button" name="selec" id="selec" value="%{getText('SearchSelect')}"  onclick="actionExecute('selec')"/></td>
 </tr>
 </table>
 </td>

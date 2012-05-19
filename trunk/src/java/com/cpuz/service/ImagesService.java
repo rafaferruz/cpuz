@@ -1,18 +1,30 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * CPUZ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.cpuz.service;
 
+import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.Image;
-import com.cpuz.DAO.impl.ImageDAOImpl;
-import com.cpuz.domain.UserType;
-import com.cpuz.exceptions.ImageException;
+import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,170 +32,47 @@ import java.util.logging.Logger;
  */
 public class ImagesService {
 
+	private final transient Logger log = Logger.getLogger(this.getClass());
+	ControlParams control=new ControlParams();
+
     public ImagesService() {
     }
-    public boolean keyIdExists(Integer ssn) {
-        try {
-            ImageDAOImpl nDao = new ImageDAOImpl();
-            return nDao.keyIdExists(ssn);
-
-        } catch (Exception ex) {
-            return false;
-        }
+    public boolean keyIdExists(int imageId) throws SQLException {
+            Image image = new DAOFactory().getImageDAO().read(imageId);
+		return (image != null);
     }
 
 
-    /**
-     * Proporciona un objeto List de registros de titulares de Images
-     * con un número de registros indicado por el parámetro recChunk y
-     * a partir del indicado por el parámetro recStart. Se toma como lista
-     * base la totalidad de titulares de Images ordenados por fecha empezando
-     * por el titular más reciente y continuando al más antiguo.
-     * @param recStart N� de registro inicial
-     * @param recChunk N� de registros a incluir en la b�squeda
-     * @return Un objeto List<Image> con los registros seleccionados
-     */
-    public List<Image> getNewsRecords() {
-/* Requirement codes: E5-1 */
-        return this.getNewsRecords(UserType.ANONYMOUS,"");
-    }
+	public List<Image> getImageList(ControlParams control) throws SQLException  {
 
-    public List<Image> getNewsRecords(UserType userType) {
-/* Requirement codes: E5-1 */
-        return this.getNewsRecords(userType,"");
+		List<Image> images = new ArrayList<>();
+		images = new DAOFactory().getImageDAO().getImageList(control);
+		return images;
+	}
 
-    }
-    public List<Image> getNewsRecords(UserType userType, String selectionClause) {
+	public int getCountRows() throws SQLException {
+		return new DAOFactory().getImageDAO().getCountRows();
+	}
 
-        String sqlWhereClause="";
-        List<Image> news = new ArrayList<>();
-        try {
-            ImageDAOImpl nDao = new ImageDAOImpl();
-/* Requirement codes: E5-1 */
-/*            if (userType != UserType.ADMIN) {
-                sqlWhereClause = " img_status = 2 ";
-            }
- * */
-            if (!selectionClause.equals("")) {
-                if (!sqlWhereClause.equals("")){
-                sqlWhereClause+=" AND ("+selectionClause+") ";
-                } else {
-                    sqlWhereClause=" ("+selectionClause+") ";
-                }
-            }
-            if (!sqlWhereClause.equals("")){
-                sqlWhereClause=" WHERE " +sqlWhereClause;
-            }
+	public Image getById(int imageId) throws SQLException{
+		return new DAOFactory().getImageDAO().read(imageId);
+	}
 
-            /*            String sqlWhereClause = "WHERE img_user=null" +
-            " OR img_user=0 " +
-            " OR img_user=img_id " +
-            " ORDER BY img_FECHA DESC, img_id DESC";
-             * */
-            sqlWhereClause ="SELECT * FROM images "+sqlWhereClause+
-                    " ORDER BY img_date DESC, img_id DESC";
-            for (Image n : nDao.readImages(sqlWhereClause)) {
-                news.add(n);
-            }
-        } catch (ImageException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
-    public List<Image> getRecords(String selectClause, String whereClause, String orderClause) {
+	public int insertImage(Image image) throws SQLException {
+		return new DAOFactory().getImageDAO().create(image);
+	}
 
-        String sqlClause = "";
-        List<Image> records = new ArrayList<>();
-        try {
-            ImageDAOImpl nDao = new ImageDAOImpl();
-            if (selectClause == null || selectClause.equals("")) {
-                sqlClause = "SELECT * FROM roles ORDER BY rol_role";
-            } else {
-                sqlClause = selectClause + " " + whereClause + " " + orderClause;
-            }
+	public int updateImage(Image image) throws SQLException{
+		return new DAOFactory().getImageDAO().update(image);
+	}
 
-            records = nDao.readImages(sqlClause);
+	public int deleteImage(Image image) throws SQLException {
+		return new DAOFactory().getImageDAO().delete(image.getId());
+	}
 
-        } catch (ImageException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return records;
-    }
-
-
-    public List<Image> getNewsDetails(String idNews) {
-
-        List<Image> news = new ArrayList<>();
-        try {
-            ImageDAOImpl nDao = new ImageDAOImpl();
-            String sqlWhereClause = "WHERE img_user = '" + idNews + "'" +
-                    " OR img_id= '" + idNews + "'" +
-                    " ORDER BY img_date DESC, img_id";
-            for (Image n : nDao.readImages(sqlWhereClause)) {
-                news.add(n);
-            }
-        } catch (ImageException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
-
-    public synchronized int setNewRecord(Image news) {
-
-        try {
-            ImageDAOImpl nDao = new ImageDAOImpl();
-            return nDao.createImage(news);
-        } catch (ImageException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int setUpdateRecord(Image news) {
-
-        try {
-            ImageDAOImpl nDao = new ImageDAOImpl();
-            return nDao.updateImage(news);
-        } catch (ImageException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int deleteNews(Image news) {
-
-        try {
-            ImageDAOImpl nDao = new ImageDAOImpl();
-            return nDao.deleteImage(news);
-        } catch (ImageException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ImagesService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
+	public int deleteImageIds(List<Integer> ids) throws SQLException {
+		return new DAOFactory().getImageDAO().deleteIds(ids);
+	}
 }
 
 

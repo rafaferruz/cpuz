@@ -20,12 +20,10 @@ package com.cpuz.DAO;
 
 import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.domain.Section;
-import com.cpuz.exceptions.SectionException;
 import com.cpuz.st2.beans.ControlParams;
 import com.cpuz.util.SqlUtil;
 import java.sql.*;
 import java.util.*;
-import javax.naming.NamingException;
 import org.apache.log4j.Logger;
 
 /**
@@ -89,6 +87,7 @@ public class SectionDAO implements InjectableDAO {
 		}
 		return section;
 	}
+
 	/**
 	 * Actualiza un Section en la tabla 
 	 *
@@ -102,7 +101,7 @@ public class SectionDAO implements InjectableDAO {
 		String sql = "UPDATE sections SET " + ""
 				+ "sec_name = ?, "
 				+ "sec_authorized_roles = ?, "
-				+ "sec_group = ? " 
+				+ "sec_group = ? "
 				+ " WHERE sec_id = ?";
 
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -114,6 +113,7 @@ public class SectionDAO implements InjectableDAO {
 		rowCount = ps.executeUpdate();
 		return rowCount;
 	}
+
 	/**
 	 * Elimina un Section de la tabla 
 	 *
@@ -175,7 +175,6 @@ public class SectionDAO implements InjectableDAO {
 		}
 		return 0;
 	}
-
 
 	public Section getCompleteSection(ResultSet rs) throws SQLException {
 		Section section = new Section();

@@ -31,7 +31,7 @@ public class InitService {
 	 */
 	public List<NewsPiece> getWhatsNew() throws SQLException, NewsPieceException, NewsCompositionException {
 		List<NewsPiece> newsPieces = new ArrayList<>();
-		newsPieces = new DAOFactory().getNewsPieceDAOImpl().getCompleteNewsPieces();
+		newsPieces = new DAOFactory().getNewsPieceDAO().getCompleteNewsPieces();
 		return newsPieces;
 	}
 }

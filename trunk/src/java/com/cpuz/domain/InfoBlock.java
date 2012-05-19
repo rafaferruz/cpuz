@@ -19,13 +19,13 @@ public class InfoBlock implements Serializable {
 
     private static final long serialVersionUID = 101L;
     private Integer id;
-    private java.util.Date datetime;
-    private Integer status;
+    private Date datetime=new Date();
+    private Integer status = 0;
     private String user;
     private String type;
-    private String header;
-    private String body;
-    private Integer scope;
+    private String header="";
+    private String body="";
+    private Integer scope = ScopeType.VECINITY.getId();
     private boolean registered;
 
     public InfoBlock() {

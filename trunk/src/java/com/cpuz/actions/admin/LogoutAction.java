@@ -33,6 +33,11 @@ public class LogoutAction extends ActionSupport implements RequestAware, Seriali
         requestAttributes.put("page", "/WEB-INF/pages/logout.jsp");
         return "logout";
     }
+    @Override
+    public void validate() {
+        super.validate();
+    }
+
 
 	@Override
 	public void setRequest(Map<String, Object> map) {

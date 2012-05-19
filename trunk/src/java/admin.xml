@@ -8,64 +8,64 @@
     <package name="admin" namespace="/admin" extends="struts-default">
 
         <action name="Role*" method="role{1}" class="springRoleAction" >
-            <result name="LIST">/WEB-INF/pages/main.jsp</result>
-            <result name="NEW">/WEB-INF/pages/main.jsp</result>
-            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
-            <result name="INPUT">/WEB-INF/pages/main.jsp</result>
+            <result name="list">/WEB-INF/pages/main.jsp</result>
+            <result name="new">/WEB-INF/pages/main.jsp</result>
+            <result name="edit">/WEB-INF/pages/main.jsp</result>
+            <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
         <action name="User*" method="user{1}" class="springUserAction" >
-            <result name="LIST">/WEB-INF/pages/main.jsp</result>
-            <result name="NEW">/WEB-INF/pages/main.jsp</result>
-            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
-            <result name="INPUT">/WEB-INF/pages/main.jsp</result>
+            <result name="list">/WEB-INF/pages/main.jsp</result>
+            <result name="new">/WEB-INF/pages/main.jsp</result>
+            <result name="edit">/WEB-INF/pages/main.jsp</result>
+            <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
         <action name="Bug*" method="bug{1}" class="springBugAction" >
-            <result name="LIST">/WEB-INF/pages/main.jsp</result>
-            <result name="NEW">/WEB-INF/pages/main.jsp</result>
-            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
-            <result name="INPUT">/WEB-INF/pages/main.jsp</result>
+            <result name="list">/WEB-INF/pages/main.jsp</result>
+            <result name="new">/WEB-INF/pages/main.jsp</result>
+            <result name="edit">/WEB-INF/pages/main.jsp</result>
+            <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
         <action name="Section*" method="section{1}" class="springSectionAction" >
-            <result name="LIST">/WEB-INF/pages/main.jsp</result>
-            <result name="NEW">/WEB-INF/pages/main.jsp</result>
-            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
+            <result name="list">/WEB-INF/pages/main.jsp</result>
+            <result name="new">/WEB-INF/pages/main.jsp</result>
+            <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="InfoBlock_*" method="InfoBlock_{1}" class="springInfoBlockAction" >
-            <result name="LIST">/WEB-INF/pages/main.jsp</result>
-            <result name="NEW">/WEB-INF/pages/main.jsp</result>
-            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
+        <action name="InfoBlock*" method="infoBlock{1}" class="springInfoBlockAction" >
+            <result name="list">/WEB-INF/pages/main.jsp</result>
+            <result name="new">/WEB-INF/pages/main.jsp</result>
+            <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="Image_*" method="Image_{1}" class="springImageAction" >
-            <result name="LIST">/WEB-INF/pages/main.jsp</result>
-            <result name="NEW">/WEB-INF/pages/main.jsp</result>
-            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
+        <action name="Image*" method="image{1}" class="springImageAction" >
+            <result name="list">/WEB-INF/pages/main.jsp</result>
+            <result name="new">/WEB-INF/pages/main.jsp</result>
+            <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="Document_*" method="Document_{1}" class="springDocumentAction" >
-            <result name="LIST">/WEB-INF/pages/main.jsp</result>
-            <result name="NEW">/WEB-INF/pages/main.jsp</result>
-            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
+        <action name="Document*" method="document{1}" class="springDocumentAction" >
+            <result name="list">/WEB-INF/pages/main.jsp</result>
+            <result name="new">/WEB-INF/pages/main.jsp</result>
+            <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="NewsPiece_*" method="NewsPiece_{1}" class="springNewsPieceAction" >
-            <result name="LIST">/WEB-INF/pages/main.jsp</result>
-            <result name="NEW">/WEB-INF/pages/main.jsp</result>
-            <result name="EDIT">/WEB-INF/pages/main.jsp</result>
+        <action name="NewsPiece*" method="newsPiece{1}" class="springNewsPieceAction" >
+            <result name="list">/WEB-INF/pages/main.jsp</result>
+            <result name="new">/WEB-INF/pages/main.jsp</result>
+            <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="NewsComp_*" method="NewsComposition_{1}" class="springNewsCompositionAction" >
-            <result name="LIST">/WEB-INF/views/newsCompList.jsp</result>
-            <result name="EDIT">/WEB-INF/views/newsCompEdit.jsp</result>
+        <action name="NewsComp*" method="newsComposition{1}" class="springNewsCompositionAction" >
+            <result name="list">/WEB-INF/views/newsCompList.jsp</result>
+            <result name="edit">/WEB-INF/views/newsCompEdit.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
 

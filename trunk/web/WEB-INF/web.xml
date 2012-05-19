@@ -14,11 +14,11 @@
     <context-param>
         <description>Directorio base de los rescursos estáticos</description>
         <param-name>dirHomeResources</param-name>
-        <param-value>http://www.ecosysw.com/ZORONGO</param-value>
+        <param-value>http://www.laboraldetarragona.com/ZORONGO</param-value>
     </context-param>
     <context-param>
         <param-name>dirCommonResources</param-name>
-        <param-value>http://www.ecosysw.com/comunes</param-value>
+        <param-value>http://www.laboraldetarragona.com/comunes</param-value>
     </context-param>
     <context-param>
         <param-name>contextConfigLocation</param-name>

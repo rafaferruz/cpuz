@@ -10,7 +10,8 @@ import java.util.List;
 public enum ComponentType {
 	INFOBLOCK(0, "InfoBlock"), // Bloque de Información
 	IMAGE(1, "Image"), // Imagen
-	DOCUMENT(2, "Document"); // Fichero de documento
+	DOCUMENT(2, "Document"), // Fichero de documento
+	NEWS(3, "News"); // Noticia
 	private final int id;
 	private final String key;
 
@@ -45,6 +46,8 @@ public enum ComponentType {
 				return ComponentType.IMAGE;
 			case 2:
 				return ComponentType.DOCUMENT;
+			case 3:
+				return ComponentType.NEWS;
 			default:
 				throw new EnumConstantNotPresentException(ComponentType.class, i
 						+ ": Identificador para tipo de Componente no permitido");
@@ -59,6 +62,8 @@ public enum ComponentType {
 				return ComponentType.IMAGE;
 			case "Document":
 				return ComponentType.DOCUMENT;
+			case "News":
+				return ComponentType.NEWS;
 			default:
 				throw new EnumConstantNotPresentException(ComponentType.class, key
 						+ ": Identificador para tipo de Componente no permitido");

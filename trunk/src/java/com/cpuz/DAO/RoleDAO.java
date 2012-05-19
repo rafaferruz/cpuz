@@ -73,8 +73,9 @@ public class RoleDAO implements InjectableDAO {
 	 */
 	public Role read(int rolId) throws SQLException {
 		Role role = null;
-		String sql = "SELECT * FROM roles WHERE role_id = ?";
+		String sql = "SELECT * FROM roles WHERE rol_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, rolId);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
 			role = getCompleteRole(rs);

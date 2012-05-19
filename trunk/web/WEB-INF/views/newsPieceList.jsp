@@ -1,10 +1,10 @@
 <%-- 
-    Document   : infoBlocksList.jsp
+    Document   : NewsPiecesList.jsp
     Created on : 23-dic-2009, 13:30:17
     Author     : RAFAEL FERRUZ
 --%>
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -13,37 +13,36 @@
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<h3 align="center"><s:text name="InfoBlocksList"/></h3>
+<h1 align="center"><s:text name="NewsPiecesList"/></h1>
 
 <s:actionmessage/>
 <s:actionerror/>
 
 
-<s:form id="infoblockslist_form" name="infoblockslist_form" method="post" cssClass="data_table">
+<s:form id="newspieceslist_form" name="newspieceslist_form" method="post" cssClass="data_table">
     <s:hidden name="control.runAction" id="runAction"/>
     <s:hidden name="control.idKey" id="idKey" />
     <s:hidden name="control.recStart" id="recStart"/>
     <s:hidden name="control.recChunk" id="recChunk"/>
     <s:hidden name="control.recCount" id="recCount"/>
 
-    <%-- Recibe una lista de InfoBlocks y las presenta en pantalla --%>
+    <%-- Recibe una lista de NewsPieces y las presenta en pantalla --%>
     <tr>
         <%-- Requirement codes: E5-2 --%>
-        <s:if test="#session.userCategory >= 1">
+        <s:if test="#session.userCategory == 2">
             <th><s:text name="ID" /></th>
         </s:if>
         <th><s:text name="Date" /></th>
         <th><s:text name="Status" /></th>
-        <s:if test="#session.userCategory == 2">
-            <th><s:text name="User" /></th>
-        </s:if>
-        <th><s:text name="Type" /></th>
-        <th><s:text name="Header" /></th>
+        <th><s:text name="Section" /></th>
+        <th><s:text name="Description" /></th>
         <th><s:text name="Scope" /></th>
+        <th><s:text name="Access" /></th>
         <th><s:text name="action"/></th>
         <th><s:text name="sel"/></th>
         <%-- Requirement codes: E5-2 --%>
     </tr>
+
     <!-- column data -->
     <s:if test="control.recCount>0">
 
@@ -55,7 +54,7 @@
                 <s:set var="trClass" value="getText('trClassEvenRows')"/>
             </s:else>
             <tr class="<s:property value="#trClass"/>">
-                <s:if test="#session.userCategory >= 1">
+                <s:if test="#session.userCategory == 2">
                     <td align="center">
                         <s:property value="#row.id"/>
                     </td>
@@ -67,21 +66,19 @@
                 <td>
                     <s:property value="#row.status"/>
                 </td>
-                <s:if test="#session.userCategory == 2">
-                    <td align="center">
-                        <s:property value="#row.user"/>
-                    </td>
-                </s:if>
                 <td>
-                    <s:property value="#row.type"/>
+                    <s:property value="#row.section"/>
                 </td>
-                <td onmouseover="this.style.cursor='pointer'" onclick="infoblocks_issue('%{#row.id}')">
-                    <b><s:property value="#row.header" /></b>
-                </td >
+                <td  onmouseover="this.style.cursor='pointer'" onclick="newsPiecesIssue('%{#row.id}')">
+                    <b><s:property value="#row.description" /></b>
+                </td>
                 <td>
                     <s:property value="#row.scope"/>
                 </td>
-                <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="infoblocks_edit('%{#row.id}')"/></td>
+                <td>
+                    <s:property value="#row.access"/>
+                </td>
+                <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="newsPiecesEdit('%{#row.id}')"/></td>
                 <td align="center"><s:checkbox theme="simple" name="selec1" fieldValue="%{#row.id}"/></td>
             </tr>
         </s:iterator>
@@ -93,33 +90,36 @@
 </s:form>
 
 <script type="text/javascript">
-    function orden_ejecutar(accion) {
-        window.document.infoblockslist_form.runAction.value = accion;
-        window.document.infoblockslist_form.action = "InfoBlock_"+accion+".action";
-        window.document.infoblockslist_form.submit();
+    function actionExecute(action) {
+        window.document.newspieceslist_form.runAction.value = action;
+        window.document.newspieceslist_form.action = "newsPiece"+action+".action";
+        window.document.newspieceslist_form.submit();
         return 0;
     }
-    function DoNavigation(nav_rule) {
-        window.document.infoblockslist_form.runAction.value = nav_rule;
-        window.document.infoblockslist_form.action = "InfoBlock_Navigation.action";
-        window.document.infoblockslist_form.submit();
+    function DoNavigation(navRule) {
+        window.document.newspieceslist_form.runAction.value = navRule;
+        window.document.newspieceslist_form.action = "newsPieceNavigation.action";
+        window.document.newspieceslist_form.submit();
         return 0;
     }
-    function infoblocks_details(id,header) {
-        window.document.infoblockslist_form.idKey.value = id;
-        window.document.infoblockslist_form.header.value = header;
-        orden_ejecutar('details');
+    function newsPiecesDetails(id,description) {
+        window.document.newspieceslist_form.idKey.value = id;
+        window.document.newspieceslist_form.description.value = description;
+        actionExecute('Details');
         return 0;
     }
-    function infoblocks_edit(id) {
-        window.document.infoblockslist_form.idKey.value = id;
-        orden_ejecutar('edit');
+    function newsPiecesEdit(id) {
+        window.document.newspieceslist_form.idKey.value = id;
+        actionExecute('Edit');
         return 0;
     }
-    function infoblocks_issue(id,header) {
-        window.document.infoblockslist_form.idKey.value = id;
-        window.document.infoblockslist_form.header.value = header;
-        orden_ejecutar('issue');
+    function newsPiecesIssue(id,description) {
+        window.document.newspieceslist_form.idKey.value = id;
+        window.document.newspieceslist_form.description.value = description;
+        actionExecute('Issue');
         return 0;
     }
 </script>
+
+
+

@@ -1,7 +1,4 @@
-body {  font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 9px;
-        font-style: normal;
-        line-height: normal;
+body {  
         background-color: #000000;
         text-align: justify;
 }
@@ -9,18 +6,23 @@ p {  text-align: justify; margin-left: 8pt; margin-right: 4pt;
 }
 table{
     background-color: #3366ff;
-    color: #000000;
+}
+button{
+
+	font-size: 1em;
 }
 .data_table{
     background-color: #000066;
 }
 h3 {
-    font-size: 16pt;
-    font-weight: bold;
     margin-right: 6pt;
     margin-left: 6pt
 }
-h5 {  font-size: 12pt; font-weight: bold; margin-right: 6pt; margin-left: 6pt}
+h5 { 
+	font-weight: bold;
+	margin-right: 6pt; 
+	margin-left: 6pt
+}
 .tabladerecha {
     background-color: #3366ff;
     margin-top: 0pt;
@@ -36,7 +38,9 @@ h5 {  font-size: 12pt; font-weight: bold; margin-right: 6pt; margin-left: 6pt}
     border-bottom-width: 0px;
     border-top-width: 0px;
 }
-h6 {  font-size: 10pt; font-weight: bold; margin-bottom: 0pt}
+h6 {  
+	margin-bottom: 0pt
+}
 
 .homepagenews{
     font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -143,12 +147,12 @@ img.advscompositionAbstract{
 }
 p.compositionTitular{
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 200.01%;
+    font-size: 160.01%;
     font-weight: bold;
     text-align: center;
     margin-right: 0px;
     margin-left: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 0.5em;
     margin-top: 0px;
     padding-right: 0px;
     padding-left: 0px;

@@ -1,5 +1,5 @@
 
-<h3 align="center"><s:text name="RolesList"/></h3>
+<h1 align="center"><s:text name="RolesList"/></h1>
 
 <s:actionmessage/>
 <s:actionerror/>
@@ -7,7 +7,7 @@
 
 <s:form id="roleslistForm" name="roleslistForm" method="post" cssClass="data_table">
     <s:hidden name="control.runAction" id="runAction"/>
-    <s:hidden name="control.idKey" id="idKey" />
+    <s:hidden name="control.id" id="id" />
     <s:hidden name="control.recStart" id="recStart"/>
     <s:hidden name="control.recChunk" id="recChunk"/>
     <s:hidden name="control.recCount" id="recCount"/>
@@ -46,7 +46,7 @@
                     <s:property value="#row.description"/>
                 </td>
                 <s:if test="#session.userCategory == 2">
-                    <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="newsEdit('%{#row.id}','%{#row.role}')"/></td>
+                    <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="newsEdit('%{#row.id}')"/></td>
                     <td align="center"><s:checkbox theme="simple" name="selec1" fieldValue="%{#row.id}"/></td>
                 </s:if>
             </tr>
@@ -54,7 +54,7 @@
 
     </s:if>
 
-    <%@include  file="/WEB-INF/views/listTableFootButtons.jspf" %>
+    <%@include  file="/WEB-INF/views/listTableFootButtons.jspf"%>
 
 </s:form>
 
@@ -71,9 +71,8 @@
         window.document.roleslistForm.submit();
         return 0;
     }
-    function newsEdit(id,titular) {
-        window.document.roleslistForm.identificador.value = id;
-        window.document.roleslistForm.role.value = titular;
+    function newsEdit(id) {
+        window.document.roleslistForm.id.value = id;
         actionExecute('Edit');
         return 0;
     }

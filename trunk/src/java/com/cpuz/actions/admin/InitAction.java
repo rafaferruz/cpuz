@@ -47,6 +47,11 @@ public class InitAction extends ActionSupport implements RequestAware, Serializa
         requestAttributes.put("page", "/WEB-INF/pages/index.jsp");
         return "whatsNew";
     }
+    @Override
+    public void validate() {
+        super.validate();
+    }
+
 
 	@Override
 	public void setRequest(Map<String, Object> map) {

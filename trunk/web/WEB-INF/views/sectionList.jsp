@@ -13,7 +13,7 @@
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<h3 align="center"><s:text name="SectionsList"/></h3>
+<h1 align="center"><s:text name="SectionsList"/></h1>
 
 <s:actionmessage/>
 <s:actionerror/>
