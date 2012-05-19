@@ -2,13 +2,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@taglib prefix="s" uri="/struts-tags" %>
 
-<s:if test="control.runAction == 'edit'" >
+<s:if test="control.runAction == 'Edit'" >
     <h3 align="center"><s:text name="RoleEdition"/></h3>
 </s:if>
 
-<s:if test="control.runAction == 'new'" >
+<s:if test="control.runAction == 'New'" >
     <h3 align="center"><s:text name="RoleMailBox"/></h3>
     <ul>
         <li><s:text name="RoleEditFull_Msg1"/></li>
@@ -21,21 +21,21 @@
 
 
 <s:form id="roles_form" name="roles_form" method="post" cssClass="form_data" cssStyle="width: 80%;" onsubmit="return onSubmitFunction();" >
-    <s:if test="control.runAction == 'new'" >
-        <s:hidden name="control.runAction" id="runAction" value="saveNew"/>
+    <s:if test="control.runAction == 'New'" >
+        <s:hidden name="control.runAction" id="runAction" value="SaveNew"/>
     </s:if>
-    <s:if test="control.runAction == 'edit'" >
-        <s:hidden name="control.runAction" id="runAction" value="saveNew"/>
-        <s:hidden name="control.idKey" id="idKey" value="%{dataEdit.id}"/>
+    <s:if test="control.runAction == 'Edit'" >
+        <s:hidden name="control.runAction" id="runAction" value="SaveNew"/>
+        <s:hidden name="control.id" id="id" value="%{dataEdit.id}"/>
     </s:if>
-    <s:if test="control.runAction == 'new'" >
+    <s:if test="control.runAction == 'New'" >
         <s:set var="readonly" value="true"/>
     </s:if>
-    <s:if test="control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'Edit'" >
         <s:set var="readonly" value="true"/>
     </s:if>
     <s:textfield key="dataEdit.id"
-                 id="identificador"
+                 id="identifier"
                  size="5" maxlength="5"
                  readonly="#readonly"/>
     <s:textfield key="dataEdit.role" id="role"
@@ -52,13 +52,13 @@
                     <td align="center"><s:submit type="button" name="return"
                               id="return" value="%{getText('Return')}"
                               onclick="window.back()" theme="simple"/></td>
-                        <s:if test="control.runAction == 'edit'" >
+                        <s:if test="control.runAction == 'Edit'" >
                         <td align="center"><s:submit type="button" name="newButton"
                                   id="newButton" value="%{getText('New')}"
-                                  onclick="orden_ejecutar('new');" theme="simple"/></td>
+                                  onclick="actionExecute('New');" theme="simple"/></td>
                         </s:if>
                     <td align="center"><s:submit type="button" name="guardar"
-                              id="enviar" value="%{getText('Save')}"
+                              id="send" value="%{getText('Save')}"
                               onClick="check_roles_form()" theme="simple"/></td>
                 </tr>
             </table>
@@ -68,9 +68,9 @@
 
 <script type="text/javascript">
     var onSubmitAction=true;
-    function orden_ejecutar(accion) {
+    function actionExecute(accion) {
         window.document.roles_form.runAction.value = accion;
-        window.document.roles_form.action = "Role_"+accion+".action";
+        window.document.roles_form.action = "Role"+accion+".action";
         window.document.roles_form.submit();
     }
 
@@ -90,12 +90,12 @@
             //el formulario se envia
             alert("<s:text name="thanksforform"/>");
 
-    <s:if test="control.runAction == 'new'" >
-                orden_ejecutar("saveNew");
+    <s:if test="control.runAction == 'New'" >
+                actionExecute("SaveNew");
                 return;
     </s:if>
-    <s:if test="control.runAction == 'edit'" >
-                orden_ejecutar("saveEdit");
+    <s:if test="control.runAction == 'Edit'" >
+                actionExecute("SaveEdit");
                 return;
     </s:if>
 

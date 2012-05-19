@@ -1,18 +1,30 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * CPUZ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.cpuz.service;
 
+import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.InfoBlock;
-import com.cpuz.DAO.impl.InfoBlockDAOImpl;
-import com.cpuz.domain.UserType;
-import com.cpuz.exceptions.InfoBlockException;
+import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,168 +32,47 @@ import java.util.logging.Logger;
  */
 public class InfoBlocksService {
 
+	private final transient Logger log = Logger.getLogger(this.getClass());
+	ControlParams control=new ControlParams();
+
     public InfoBlocksService() {
     }
-
-    public boolean keyIdExists(Integer ssn) {
-        try {
-            InfoBlockDAOImpl nDao = new InfoBlockDAOImpl();
-            return nDao.keyIdExists(ssn);
-
-        } catch (Exception ex) {
-            return false;
-        }
+    public boolean keyIdExists(int infoId) throws SQLException {
+            InfoBlock infoBlock = new DAOFactory().getInfoBlockDAO().read(infoId);
+		return (infoBlock != null);
     }
 
-    /**
-     * Proporciona un objeto List de registros de titulares de InfoBlocks
-     * con un número de registros indicado por el parámetro recChunk y
-     * a partir del indicado por el parámetro recStart. Se toma como lista
-     * base la totalidad de titulares de InfoBlocks ordenados por fecha empezando
-     * por el titular más reciente y continuando al más antiguo.
-     * @param recStart N� de registro inicial
-     * @param recChunk N� de registros a incluir en la b�squeda
-     * @return Un objeto List<InfoBlock> con los registros seleccionados
-     */
-    public List<InfoBlock> getNewsRecords() {
-        /* Requirement codes: E5-1 */
-        return this.getNewsRecords(UserType.ANONYMOUS, "");
-    }
 
-    public List<InfoBlock> getNewsRecords(UserType userType) {
-        /* Requirement codes: E5-1 */
-        return this.getNewsRecords(userType, "");
+	public List<InfoBlock> getInfoBlockList(ControlParams control) throws SQLException  {
 
-    }
+		List<InfoBlock> infoBlocks = new ArrayList<>();
+		infoBlocks = new DAOFactory().getInfoBlockDAO().getInfoBlockList(control);
+		return infoBlocks;
+	}
 
-    public List<InfoBlock> getNewsRecords(UserType userType, String selectionClause) {
+	public int getCountRows() throws SQLException {
+		return new DAOFactory().getInfoBlockDAO().getCountRows();
+	}
 
-        String sqlWhereClause = "";
-        List<InfoBlock> news = new ArrayList<>();
-        try {
-            InfoBlockDAOImpl nDao = new InfoBlockDAOImpl();
-            /* Requirement codes: E5-1 */
-            if (userType != UserType.ADMIN) {
-                sqlWhereClause = " inb_status = 2 ";
-            }
-            if (!selectionClause.equals("")) {
-                if (!sqlWhereClause.equals("")) {
-                    sqlWhereClause += " AND (" + selectionClause + ") ";
-                } else {
-                    sqlWhereClause = " (" + selectionClause + ") ";
-                }
-            }
-            if (!sqlWhereClause.equals("")) {
-                sqlWhereClause = " WHERE " + sqlWhereClause;
-            }
+	public InfoBlock getById(int infoBlockId) throws SQLException{
+		return new DAOFactory().getInfoBlockDAO().read(infoBlockId);
+	}
 
-            /*            String sqlWhereClause = "WHERE inb_user=null" +
-            " OR inb_user=0 " +
-            " OR inb_user=inb_id " +
-            " ORDER BY inb_FECHA DESC, inb_id DESC";
-             * */
-            sqlWhereClause = "SELECT * FROM infoblocks " + sqlWhereClause
-                    + " ORDER BY inb_date DESC, inb_id DESC";
-            for (InfoBlock n : nDao.readInfoBlocks(sqlWhereClause)) {
-                news.add(n);
-            }
-        } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
+	public int insertInfoBlock(InfoBlock infoBlock) throws SQLException {
+		return new DAOFactory().getInfoBlockDAO().create(infoBlock);
+	}
 
-    public List<InfoBlock> getRecords(String selectClause, String whereClause, String orderClause) {
+	public int updateInfoBlock(InfoBlock infoBlock) throws SQLException{
+		return new DAOFactory().getInfoBlockDAO().update(infoBlock);
+	}
 
-        String sqlClause = "";
-        List<InfoBlock> records = new ArrayList<InfoBlock>();
-        try {
-            InfoBlockDAOImpl nDao = new InfoBlockDAOImpl();
-            if (selectClause == null || selectClause.equals("")) {
-                sqlClause = "SELECT * FROM infoblocks ORDER BY inb_date DESC, inb_id DESC";
-            } else {
-                sqlClause = selectClause + " " + whereClause + " " + orderClause;
-            }
+	public int deleteInfoBlock(InfoBlock infoBlock) throws SQLException {
+		return new DAOFactory().getInfoBlockDAO().delete(infoBlock.getId());
+	}
 
-            records = nDao.readInfoBlocks(sqlClause);
+	public int deleteInfoBlockIds(List<Integer> ids) throws SQLException {
+		return new DAOFactory().getInfoBlockDAO().deleteIds(ids);
+	}
 
-        } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return records;
-    }
 
-    public List<InfoBlock> getNewsDetails(String idNews) {
-
-        List<InfoBlock> news = new ArrayList<InfoBlock>();
-        try {
-            InfoBlockDAOImpl nDao = new InfoBlockDAOImpl();
-            String sqlWhereClause = "WHERE inb_user = '" + idNews + "'"
-                    + " OR inb_id= '" + idNews + "'"
-                    + " ORDER BY inb_date DESC, inb_id";
-            for (InfoBlock n : nDao.readInfoBlocks(sqlWhereClause)) {
-                news.add(n);
-            }
-        } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return news;
-    }
-
-    public synchronized int setNewRecord(InfoBlock news) {
-
-        try {
-            InfoBlockDAOImpl nDao = new InfoBlockDAOImpl();
-            return nDao.createInfoBlock(news);
-        } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int setUpdateRecord(InfoBlock news) {
-
-        try {
-            InfoBlockDAOImpl nDao = new InfoBlockDAOImpl();
-            return nDao.updateInfoBlock(news);
-        } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
-
-    public synchronized int deleteNews(InfoBlock news) {
-
-        try {
-            InfoBlockDAOImpl nDao = new InfoBlockDAOImpl();
-            return nDao.deleteInfoBlock(news);
-        } catch (InfoBlockException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(InfoBlocksService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return -1;
-    }
 }

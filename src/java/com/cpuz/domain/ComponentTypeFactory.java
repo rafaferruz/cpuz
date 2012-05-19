@@ -13,5 +13,8 @@ public class ComponentTypeFactory {
 	public ComponentType getDocument() {
 		return ComponentType.DOCUMENT;
 	}
+	public ComponentType getNews() {
+		return ComponentType.NEWS;
+	}
 
 }

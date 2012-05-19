@@ -18,39 +18,39 @@
 <s:actionerror/>
 
 <s:form id="users_form" name="users_form" method="post" cssClass="form_data" cssStyle="width: 80%;" onsubmit="return onSubmitFunction();" >
-    <s:if test="control.runAction == 'new'" >
-        <s:hidden name="control.runAction" id="runAction" value="saveNew"/>
-        <s:date name="dataEdit.fecha" id="fecha" format="dd/MM/yyyy" var="fechaformat" />
-        <s:hidden name="dataEdit.fecha" id="fecha" value="%{#fechaformat}"/>
+    <s:if test="control.runAction == 'New'" >
+        <s:hidden name="control.runAction" id="runAction" value="SaveNew"/>
+        <s:date name="dataEdit.date" id="dateVar" format="dd/MM/yyyy" var="dateFormat" />
+        <s:hidden name="dataEdit.date" id="date" value="%{#dateFormat}"/>
     </s:if>
-    <s:if test="control.runAction == 'edit'" >
-        <s:hidden name="control.runAction" id="runAction" value="saveEdit"/>
-        <s:hidden name="control.idKey" id="idKey" value="%{dataEdit.id}"/>
+    <s:if test="control.runAction == 'Edit'" >
+        <s:hidden name="control.runAction" id="runAction" value="SaveEdit"/>
+        <s:hidden name="control.id" id="id" value="%{dataEdit.id}"/>
         <s:set var="readonly" value="true"/>
         <s:textfield key="dataEdit.id"
-                     id="identificador"
+                     id="identifier"
                      size="5" maxlength="8"
                      readonly="true"/>
-        <s:date name="dataEdit.fecha" id="fecha" format="dd/MM/yyyy" var="fechaformat" />
-        <s:textfield key="dataEdit.fecha" id="fecha"  maxlength="10"
-                     value="%{#fechaformat}" onBlur="ValidarFecha(this)"
+        <s:date name="dataEdit.date" id="dateVar" format="dd/MM/yyyy" var="dateFormat" />
+        <s:textfield key="dataEdit.date" id="date"  maxlength="10"
+                     value="%{#fechaFormat}" onBlur="validateDate(this)"
                      readonly="true"/>
     </s:if>
-    <s:if test="control.runAction == 'new'" >
+    <s:if test="control.runAction == 'New'" >
         <s:set var="readonly" value="false"/>
-        <s:hidden name="dataEdit.fecha" id="fecha" value="%{dataEdit.fecha}"/>
+        <s:hidden name="dataEdit.date" id="date" value="%{dataEdit.date}"/>
     </s:if>
 
     <s:textfield key="dataEdit.user" id="user"
                  size="8" maxlength="8"  readonly="#readonly"/>
-    <s:textfield key="dataEdit.nombre" id="nombre"
+    <s:textfield key="dataEdit.name" id="name"
                  size="30" maxlength="40"/>
 
-    <s:radio key="dataEdit.estado" list="mapStatus" id="status"/>
+    <s:radio key="dataEdit.status" list="mapStatus" id="status"/>
 
     <s:radio key="dataEdit.category" list="mapCategories" id="category"/>
 
-    <%-- Se muest�an dos select con los roles autorizados y todos los roles disponobles            --%>
+    <%-- Se muestran dos select con los roles autorizados y todos los roles disponobles            --%>
     <tr>
         <td>
             <s:label value="%{getText('RolesAuthorization')}" theme="simple"/>
@@ -112,10 +112,10 @@
                     <td align="center"><s:submit type="button" name="return"
                               id="return" value="%{getText('Return')}"
                               onclick="window.back()" theme="simple"/></td>
-                        <s:if test="control.runAction == 'edit'" >
+                        <s:if test="control.runAction == 'Edit'" >
                         <td align="center"><s:submit type="button" name="newButton"
                                   id="newButton" value="%{getText('New')}"
-                                  onclick="orden_ejecutar('new');" theme="simple"/></td>
+                                  onclick="actionExecute('New');" theme="simple"/></td>
                         </s:if>
                     <td align="center"><s:submit type="button" name="guardar"
                               id="enviar" value="%{getText('Save')}"
@@ -132,9 +132,9 @@
 
 <script type="text/javascript">
     var onSubmitAction=true;
-    function orden_ejecutar(accion) {
+    function actionExecute(accion) {
         window.document.users_form.runAction.value = accion;
-        window.document.users_form.action = "User_"+accion+".action";
+        window.document.users_form.action = "User"+accion+".action";
         window.document.users_form.submit();
     }
     function pass_available_owned(){
@@ -168,7 +168,7 @@
         if (document.users_form.nombre.value.length<5){
             mensaje = mensaje + "<s:text name="needNameUserLongMin"/>" + "\n"
         }
-    <s:if test="control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'Edit'" >
             if (document.users_form.password.value.length!=0 || document.users_form.password.value.length!=0){
     </s:if>
                 if (document.users_form.password.value.length<6){
@@ -177,7 +177,7 @@
                 if (document.users_form.password.value != document.users_form.password_again.value){
                     mensaje = mensaje + "<s:text name="needPassWordEquals"/>"+"\n"
                 }
-    <s:if test="control.runAction == 'edit'" >
+    <s:if test="control.runAction == 'Edit'" >
             }
     </s:if>
             if (document.users_form.email.value.length<6){
@@ -198,12 +198,12 @@
                     window.document.users_form.ownedRoles.options[i].selected=true;
                 }
 
-    <s:if test="control.runAction == 'new'" >
-                orden_ejecutar("saveNew");
+    <s:if test="control.runAction == 'New'" >
+                actionExecute("SaveNew");
                 return;
     </s:if>
-    <s:if test="control.runAction == 'edit'" >
-                orden_ejecutar("saveEdit");
+    <s:if test="control.runAction == 'Edit'" >
+                actionExecute("SaveEdit");
                 return;
     </s:if>
 

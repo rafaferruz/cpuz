@@ -58,14 +58,14 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 		control.setRecCount(1);
 		control.setRunAction("New");
 		requestAttributes.put("page", "/WEB-INF/views/roleEdit.jsp");
-		return "NEW";
+		return "new";
 	}
 
 	public String roleEdit() throws SQLException {
 		dataEdit = dataService.getById(control.getId());
 		control.setRunAction("Edit");
 		requestAttributes.put("page", "/WEB-INF/views/roleEdit.jsp");
-		return "EDIT";
+		return "edit";
 	}
 
 	public String roleSaveNew() throws SQLException{
@@ -73,7 +73,7 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 			this.addActionMessage(getText("RoleEditSaveOkMsg"));
 			return roleList();
 		}
-		return "EDIT";
+		return "edit";
 	}
 
 	public String roleSaveEdit() throws SQLException {
@@ -84,14 +84,14 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 				this.addActionMessage(getText("RoleEditSaveOkMsg"));
 			} catch (SQLException ex) {
 				this.addActionError(getText("RoleEditErrorMsg"));
-				return "EDIT";
+				return "edit";
 			}
 			return roleList();
 		}
-		return "NEW";
+		return "new";
 	}
 
-	public String roleDeleteIds() throws SQLException {
+	public String roleDelete() throws SQLException {
 		if (selec1 != null) {
 			String[] deletes = selec1.split(",");
 			if (dataService.deleteRoleIds(Arrays.asList(deletes)) > 0) {
@@ -113,7 +113,7 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 		dataList = dataService.getRoleList(control);
 		control.setRunAction("List");
 		requestAttributes.put("page", "/WEB-INF/views/roleList.jsp");
-		return "LIST";
+		return "list";
 	}
 
 	public String roleNavigation() throws SQLException {

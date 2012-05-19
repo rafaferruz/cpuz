@@ -19,7 +19,6 @@
 package com.cpuz.DAO;
 
 import com.cpuz.DAO.impl.InjectableDAO;
-import com.cpuz.DAO.impl.NewsPieceDAOImpl;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -138,7 +137,19 @@ public class DAOFactory {
 		return (SectionDAO) this.getDAO(SectionDAO.class);
 	}
 
-	public NewsPieceDAOImpl getNewsPieceDAOImpl() {
-		return (NewsPieceDAOImpl) this.getDAO(NewsPieceDAOImpl.class);
+	public InfoBlockDAO getInfoBlockDAO() {
+		return (InfoBlockDAO) this.getDAO(InfoBlockDAO.class);
+	}
+
+	public ImageDAO getImageDAO() {
+		return (ImageDAO) this.getDAO(ImageDAO.class);
+	}
+
+	public DocumentDAO getDocumentDAO() {
+		return (DocumentDAO) this.getDAO(DocumentDAO.class);
+	}
+
+	public NewsPieceDAO getNewsPieceDAO() {
+		return (NewsPieceDAO) this.getDAO(NewsPieceDAO.class);
 	}
 }

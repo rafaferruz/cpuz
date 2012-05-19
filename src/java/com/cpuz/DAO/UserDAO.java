@@ -92,8 +92,8 @@ public class UserDAO implements InjectableDAO {
 		String sql = "SELECT * FROM users WHERE usu_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, userId);
-		log.debug("UserDAO create(): " + ps.toString());
-		ResultSet rs = ps.executeQuery(sql);
+		log.debug("UserDAO read(): " + ps.toString());
+		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
 			user = getCompleteUser(rs);
 		}

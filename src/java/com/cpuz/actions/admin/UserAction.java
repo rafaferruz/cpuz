@@ -20,7 +20,9 @@ package com.cpuz.actions.admin;
 
 import com.cpuz.domain.Role;
 import com.cpuz.domain.User;
+import com.cpuz.domain.UserCategoryType;
 import com.cpuz.domain.UserRole;
+import com.cpuz.domain.UserStatusType;
 import com.cpuz.service.RolesService;
 import com.cpuz.service.UserRolesService;
 import com.cpuz.service.UserService;
@@ -69,7 +71,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		control.setRunAction("New");
 		dataEdit.setDate(new Date());
 		requestAttributes.put("page", "/WEB-INF/views/UserEdit.jsp");
-		return "NEW";
+		return "new";
 	}
 
 	public String userEdit() throws Exception {
@@ -91,15 +93,15 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		}
 		rolesList.removeAll(removeRoles);
 		control.setRunAction("Edit");
-		requestAttributes.put("page", "/WEB-INF/views/UserEdit.jsp");
-		return "EDIT";
+		requestAttributes.put("page", "/WEB-INF/views/userEdit.jsp");
+		return "edit";
 	}
 
 	public String userSaveNew() throws SQLException, Exception {
 
 		if (dataService.insertUser(dataEdit) != 1) {
 			this.addActionError(getText("UserEditErrorMsg"));
-			return "NEW";
+			return "new";
 		}
 		this.addActionMessage(getText("UserEditSaveOkMsg"));
 		return userList();
@@ -109,10 +111,10 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 
 		if (dataService.updateUser(dataEdit) != 1) {
 			this.addActionError(getText("UserEditErrorMsg"));
-			return "NEW";
+			return "new";
 		}
 		this.addActionMessage(getText("UserEditSaveOkMsg"));
-		return "NEW";
+		return "new";
 	}
 
 	public String userDelete() throws Exception {
@@ -140,8 +142,8 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		}
 		dataList = dataService.getUserList(control);
 		control.setRunAction("List");
-		requestAttributes.put("page", "/WEB-INF/views/UserList.jsp");
-		return "LIST";
+		requestAttributes.put("page", "/WEB-INF/views/userList.jsp");
+		return "list";
 	}
 
 	public String userNavigation() throws Exception {
@@ -238,9 +240,24 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		this.passwordAgain = password_again;
 	}
 
+	public Map<Integer, String> mapStatus() {
+		Map<Integer, String> mapStatus = new HashMap<>();
+		for (UserStatusType userStatusType : UserStatusType.list()) {
+			mapStatus.put(userStatusType.getId(), userStatusType.getKey());
+		}
+		return mapStatus;
+	}
+
+	public Map<Integer, String> mapCategory() {
+		Map<Integer, String> mapCategory = new HashMap<>();
+		for (UserCategoryType userCategoryType : UserCategoryType.list()) {
+			mapCategory.put(userCategoryType.getId(), userCategoryType.getKey());
+		}
+		return mapCategory;
+	}
+
 	@Override
 	public void setRequest(Map map) {
 		this.requestAttributes = map;
 	}
-
 }

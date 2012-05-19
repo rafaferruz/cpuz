@@ -66,7 +66,7 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 		control.setRecCount(1);
 		control.setRunAction("New");
 		requestAttributes.put("page", "/WEB-INF/views/bugEdit.jsp");
-		return "NEW";
+		return "new";
 	}
 
 	public String bugEdit() throws Exception {
@@ -75,7 +75,7 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 		initListTypes();
 		control.setRunAction("Edit");
 		requestAttributes.put("page", "/WEB-INF/views/bugEdit.jsp");
-		return "Edit";
+		return "edit";
 	}
 
 	public String bugSaveNew() throws Exception {
@@ -85,7 +85,7 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 			this.addActionMessage(getText("BugEditSaveOkMsg"));
 			return bugList();
 		}
-		return "EDIT";
+		return "edit";
 	}
 
 	public String bugSaveEdit() throws Exception {
@@ -96,11 +96,11 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 				this.addActionMessage(getText("BugEditSaveOkMsg"));
 			} catch (Exception ex) {
 				this.addActionError(getText("BugEditErrorMsg"));
-				return "EDIT";
+				return "edit";
 			}
 			return bugList();
 		}
-		return "NEW";
+		return "new";
 	}
 
 	public String bugDelete() throws Exception {
@@ -124,7 +124,7 @@ public class BugAction extends ActionSupport implements RequestAware, SessionAwa
 		dataList = dataService.getBugList(control);
 		control.setRunAction("List");
 		requestAttributes.put("page", "/WEB-INF/views/bugList.jsp");
-		return "LIST";
+		return "list";
 	}
 
 	public String BugNavigation() throws Exception {

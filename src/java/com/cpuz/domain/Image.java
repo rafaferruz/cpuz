@@ -22,12 +22,12 @@ public class Image implements Serializable{
     private static final long serialVersionUID = 108L;
 
     private Integer id;
-    private Date datetime;
+    private Date datetime = new Date();
     private String user;
-    private String userReference;
-    private String filename;
-    private String repositoryReference;
-    private Integer scope;
+    private String userReference="";
+    private String filename="";
+    private String repositoryReference="";
+    private Integer scope=ScopeType.VECINITY.getId();
     private boolean registered;
     private File file;
     private String fileContentType;

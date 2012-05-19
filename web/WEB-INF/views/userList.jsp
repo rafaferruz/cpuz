@@ -1,6 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<h3 align="center"><s:text name="UsersList"/></h3>
+<h1 align="center"><s:text name="UsersList"/></h1>
 
 <s:actionmessage/>
 <s:actionerror/>
@@ -8,7 +8,7 @@
 
 <s:form id="userListForm" name="userListForm" method="post" cssClass="data_table">
     <s:hidden name="control.runAction" id="runAction"/>
-    <s:hidden name="control.idKey" id="idKey" />
+    <s:hidden name="control.id" id="id" />
     <s:hidden name="control.recStart" id="recStart"/>
     <s:hidden name="control.recChunk" id="recChunk"/>
     <s:hidden name="control.recCount" id="recCount"/>
@@ -44,7 +44,7 @@
                     </td>
                 </s:if>
                 <td>
-                    <s:property value="#row.estado"/>
+                    <s:property value="#row.status"/>
                 </td>
                 <td>
                     <s:property value="#row.category"/>
@@ -53,7 +53,7 @@
                     <s:property value="#row.user"/>
                 </td>
                 <td>
-                    <s:property value="#row.nombre"/>
+                    <s:property value="#row.name"/>
                 </td>
                 <s:if test="#session.userCategory == 2">
                     <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="newsEdit('%{#row.id}')"/></td>
@@ -81,7 +81,7 @@
         return 0;
     }
     function newsEdit(id) {
-        window.document.userListForm.idKey.value = id;
+        window.document.userListForm.id.value = id;
         actionExecute('Edit');
         return 0;
     }

@@ -1,5 +1,5 @@
 
-<h3 align="center"><s:text name="BugsList"/></h3>
+<h1 align="center"><s:text name="BugsList"/></h1>
 
 <s:actionmessage/>
 <s:actionerror/>

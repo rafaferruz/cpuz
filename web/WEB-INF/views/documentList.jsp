@@ -1,10 +1,10 @@
 <%-- 
-    Document   : imagesList.jsp
+    Document   : documentList.jsp
     Created on : 23-dic-2009, 13:30:17
     Author     : RAFAEL FERRUZ
 --%>
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -13,13 +13,13 @@
 --%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<h3 align="center"><s:text name="ImagesList"/></h3>
+<h1 align="center"><s:text name="DocumentsList"/></h1>
 
 <s:actionmessage/>
 <s:actionerror/>
 
 
-<s:form id="imageslist_form" name="imageslist_form" method="post" cssClass="data_table">
+<s:form id="documentslist_form" name="documentslist_form" method="post" cssClass="data_table">
     <s:hidden name="control.runAction" id="runAction"/>
     <s:hidden name="control.idKey" id="idKey" />
     <s:hidden name="control.recStart" id="recStart"/>
@@ -27,7 +27,7 @@
     <s:hidden name="control.recCount" id="recCount"/>
     <s:hidden name="dataEdit.filename" id="filename" />
 
-    <%-- Recibe una lista de Images y las presenta en pantalla --%>
+    <%-- Recibe una lista de Documents y las presenta en pantalla --%>
     <tr>
         <%-- Requirement codes: E5-2 --%>
         <s:if test="#session.userCategory == 2">
@@ -35,7 +35,7 @@
             <th><s:text name="Date" /></th>
             <th><s:text name="UserReference" /></th>
             <th><s:text name="FileName" /></th>
-            <th><s:text name="Image" /></th>
+            <th><s:text name="Document" /></th>
             <th><s:text name="Scope" /></th>
             <th><s:text name="action"/></th>
             <th><s:text name="sel"/></th>
@@ -67,19 +67,19 @@
                         <s:property value="#row.userReference"/>
                     </td>
                 </s:if>
-                <td onmouseover="this.style.cursor='pointer'" onclick="images_issue('${row.id}')">
+                <td onmouseover="this.style.cursor='pointer'" onclick="documentsIssue('${row.id}')">
                     <s:property value="#row.filename"/>
                 </td>
                 <td align="center">
-                    <img src="${applicationScope.dirHomeResources}/../CPUZ/images/${row.repositoryReference}"
-                         alt="${applicationScope.dirHomeResources}/../CPUZ/images/${row.repositoryReference}"
-                         height="90" width="120"/>
+                    <a href="${applicationScope.dirHomeResources}/../CPUZ/documents/${row.repositoryReference}" target="_blank" >
+                         <s:text name="OpenDoc" />
+                    </a>
                 </td>
                 <td>
                     <s:property value="#row.scope"/>
                 </td>
                 <s:if test="#session.userCategory == 2">
-                    <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="images_edit('%{#row.id}')"/></td>
+                    <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="documentsEdit('%{#row.id}')"/></td>
                     <td align="center"><s:checkbox theme="simple" name="selec1" fieldValue="%{#row.id}"/></td>
                 </s:if>
             </tr>
@@ -93,33 +93,33 @@
 
 
 <script type="text/javascript">
-    function orden_ejecutar(accion) {
-        window.document.imageslist_form.runAction.value = accion;
-        window.document.imageslist_form.action = "Image_"+accion+".action";
-        window.document.imageslist_form.submit();
+    function actionExecute(action) {
+        window.document.documentslist_form.runAction.value = action;
+        window.document.documentslist_form.action = "document"+action+".action";
+        window.document.documentslist_form.submit();
         return 0;
     }
-    function DoNavigation(nav_rule) {
-        window.document.imageslist_form.runAction.value = nav_rule;
-        window.document.imageslist_form.action = "Image_Navigation.action";
-        window.document.imageslist_form.submit();
+    function DoNavigation(navRule) {
+        window.document.documentslist_form.runAction.value = navRule;
+        window.document.documentslist_form.action = "documentNavigation.action";
+        window.document.documentslist_form.submit();
         return 0;
     }
-    function images_details(id,filename) {
-        window.document.imageslist_form.idKey.value = id;
-        window.document.imageslist_form.filename.value = filename;
-        orden_ejecutar('details');
+    function documentsDetails(id,filename) {
+        window.document.documentslist_form.idKey.value = id;
+        window.document.documentslist_form.filename.value = filename;
+        actionExecute('Details');
         return 0;
     }
-    function images_edit(id) {
-        window.document.imageslist_form.idKey.value = id;
-        orden_ejecutar('edit');
+    function documentsEdit(id) {
+        window.document.documentslist_form.idKey.value = id;
+        actionExecute('Edit');
         return 0;
     }
-    function images_issue(id,filename) {
-        window.document.imageslist_form.idKey.value = id;
-        window.document.imageslist_form.filename.value = filename;
-        orden_ejecutar('issue');
+    function documentsIssue(id,filename) {
+        window.document.documentslist_form.idKey.value = id;
+        window.document.documentslist_form.filename.value = filename;
+        actionExecute('issue');
         return 0;
     }
 </script>

@@ -7,7 +7,7 @@
 <script>
     function orden_ejecutar(accion) {
         window.document.formFechas.runaction.value = accion;
-    <%--        validarFormularioPáginasSeleccionar();--%>
+    <%--        validarFormularioPï¿½ginasSeleccionar();--%>
             window.document.formFechas.submit();
         }
 
@@ -52,7 +52,7 @@
                         </td>
                         <%--
                         <td>
-                            <html:img src="http://www.ecosysw.com/ZORONGO/WEB-INF/imagenes/calendar2.gif" alt="c" onmousedown="mostrarCalendario(event)" onmouseover="JavaScript: calendario='desde'"/>
+                            <html:img src="http://www.laboraldetarragona.com/ecosysw.com/ZORONGO/WEB-INF/imagenes/calendar2.gif" alt="c" onmousedown="mostrarCalendario(event)" onmouseover="JavaScript: calendario='desde'"/>
                         </td>
                         --%>
                         <td>
@@ -80,7 +80,7 @@
                             </html:select>
                         </td>
                         <%--
-                        <td><img src="http://www.ecosysw.com/ZORONGO/WEB-INF/imagenes/calendar2.gif" alt="c" onmousedown="mostrarCalendario(event)" onmouseover="JavaScript: calendario='hasta'"/></td>
+                        <td><img src="http://www.laboraldetarragona.com/ecosysw.com/ZORONGO/WEB-INF/imagenes/calendar2.gif" alt="c" onmousedown="mostrarCalendario(event)" onmouseover="JavaScript: calendario='hasta'"/></td>
                         --%>
                     </tr>
                 </table>
@@ -116,9 +116,9 @@
 <div id='divCalendario' align='center' class="div_Calendario">
     <table id="tblCalendar" width="126" border="0" cellspacing="0" cellpadding="0" height="10">
         <tr>
-            <td height="1" bgcolor="#CCCCCC"><div align="center"><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#FFFFFF"><a href="JavaScript:PreviousMonth()"><img src="http://www.ecosysw.com/ZORONGO/WEB-INF/imagenes/anterior.gif" width="7" height="7" border="0" /></a></font></div></td>
+            <td height="1" bgcolor="#CCCCCC"><div align="center"><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#FFFFFF"><a href="JavaScript:PreviousMonth()"><img src="http://www.laboraldetarragona.com/ecosysw.com/ZORONGO/WEB-INF/imagenes/anterior.gif" width="7" height="7" border="0" /></a></font></div></td>
             <td height="1" colspan="5" bgcolor="#CCCCCC"><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#FFFFFF"></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#FFFFFF"></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#FFFFFF"></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#FFFFFF"></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#FFFFFF"></font></td>
-            <td height="1" bgcolor="#CCCCCC"><div align="center"><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#FFFFFF"><a href="JavaScript:NextMonth()"><img src="http://www.ecosysw.com/ZORONGO/WEB-INF/imagenes/siguiente.gif" width="7" height="7" border="0" /></a></font></div></td>
+            <td height="1" bgcolor="#CCCCCC"><div align="center"><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#FFFFFF"><a href="JavaScript:NextMonth()"><img src="http://www.laboraldetarragona.com/ecosysw.com/ZORONGO/WEB-INF/imagenes/siguiente.gif" width="7" height="7" border="0" /></a></font></div></td>
         </tr>
         <tr>
             <td width="18" height="1"><div align="center"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">L</font></div></td>

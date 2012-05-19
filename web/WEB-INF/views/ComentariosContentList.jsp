@@ -87,14 +87,14 @@
                                             <c:out value="${row.parcela}"/>
                                         </c:if>
                                     </td>
-                                    <%-- El Título se imprime en todos los casos --%>
+                                    <%-- El Tï¿½tulo se imprime en todos los casos --%>
                                     <td width="85%" valign="top">
 
                                         <b><c:out value="${row.titulo}"/></b>
                                         <br/>
                                         <c:if test="${row.ficheroImagen > '' }"  >
 
-                                            <img src="http://www.ecosysw.com/ZORONGO/WEB-INF/imagenes/comentarios/<c:out value="${row.ficheroImagen}"/>" alt="${row.ficheroImagen}" width="200" height="150"  hspace="10" vspace="10" align="right" />
+                                            <img src="http://www.laboraldetarragona.com/ecosysw.com/ZORONGO/WEB-INF/imagenes/comentarios/<c:out value="${row.ficheroImagen}"/>" alt="${row.ficheroImagen}" width="200" height="150"  hspace="10" vspace="10" align="right" />
                                         </c:if>
                                         <zorongo:changenewline value="${row.comentario}" />
                                         <br/><br/>

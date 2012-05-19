@@ -65,7 +65,7 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
 		control.setRecCount(1);
 		control.setRunAction("New");
 		requestAttributes.put("page", "/WEB-INF/views/SectionEdit.jsp");
-		return "NEW";
+		return "new";
 	}
 
 	public String sectionEdit() throws Exception {
@@ -85,7 +85,7 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
 		}
 		control.setRunAction("Edit");
 		requestAttributes.put("page", "/WEB-INF/views/SectionEdit.jsp");
-		return "EDIT";
+		return "edit";
 	}
 	public String sectionSaveNew() throws Exception {
 		dataEdit.setAuthorizedRoles(authRolesSel.replaceAll(" ", ""));
@@ -93,7 +93,7 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
 			this.addActionMessage(getText("SectionEditSaveOkMsg"));
 			return sectionList();
 		}
-		return "EDIT";
+		return "edit";
 	}
 
 	public String sectionSaveEdit() throws Exception {
@@ -105,11 +105,11 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
 				this.addActionMessage(getText("SectionEditSaveOkMsg"));
 			} catch (Exception ex) {
 				this.addActionError(getText("SectionEditErrorMsg"));
-				return "EDIT";
+				return "edit";
 			}
 			return sectionList();
 		}
-		return "NEW";
+		return "new";
 	}
 	public String bugDelete() throws Exception {
 		if (selec1 != null) {
@@ -132,7 +132,7 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
 		dataList = dataService.getSectionList(control);
 		control.setRunAction("List");
 		requestAttributes.put("page", "/WEB-INF/views/sectionList.jsp");
-		return "LIST";
+		return "list";
 	}
 
 
