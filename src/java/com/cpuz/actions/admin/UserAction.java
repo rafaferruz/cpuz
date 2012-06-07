@@ -48,11 +48,13 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 	private User dataEdit = new User();
 	private UserService dataService;
 	private Map<String, Object> requestAttributes = new HashMap<>();
+	private Map<Integer, String> mapStatus = new HashMap<>();
+	private Map<Integer, String> mapCategories = new HashMap<>();
 	private List<Role> rolesList;
 	private List<UserRole> userRolesList;
 	private RolesService rolesService;
 	private UserRolesService userRolesService;
-	private String[] authRolesSel;
+	private List<String> authRolesSel = new ArrayList<>();
 	private String[] availableRolesSel;
 	private String selec1;
 	private String passwordAgain;
@@ -66,15 +68,16 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		return "error";
 	}
 
-	public String userNew() {
+	public String userNew() throws SQLException {
 		control.setRecCount(1);
 		control.setRunAction("New");
 		dataEdit.setDate(new Date());
-		requestAttributes.put("page", "/WEB-INF/views/UserEdit.jsp");
+		rolesList = rolesService.getNewsRecords();
+		requestAttributes.put("page", "/WEB-INF/views/userEdit.jsp");
 		return "new";
 	}
 
-	public String userEdit() throws Exception {
+	public String userEdit() throws SQLException {
 		dataEdit = dataService.getById(control.getId());
 		// Se lee lista de Users
 		passwordAgain = dataEdit.getPassword();
@@ -92,13 +95,17 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 			}
 		}
 		rolesList.removeAll(removeRoles);
+		mapStatus = getMapStatus();
+		mapCategories = getMapCategory();
 		control.setRunAction("Edit");
 		requestAttributes.put("page", "/WEB-INF/views/userEdit.jsp");
 		return "edit";
 	}
 
 	public String userSaveNew() throws SQLException, Exception {
-
+		// Creamos la lista de roles del objeto User
+		dataEdit.setRoles(getAuthUserRoles(dataEdit.getUser(), authRolesSel));
+		// Persistimos el objeto User
 		if (dataService.insertUser(dataEdit) != 1) {
 			this.addActionError(getText("UserEditErrorMsg"));
 			return "new";
@@ -108,13 +115,15 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 	}
 
 	public String userSaveEdit() throws Exception {
-
+		// Creamos la lista de roles del objeto User
+		dataEdit.setRoles(getAuthUserRoles(dataEdit.getUser(), authRolesSel));
+		// Persistimos el objeto User
 		if (dataService.updateUser(dataEdit) != 1) {
 			this.addActionError(getText("UserEditErrorMsg"));
-			return "new";
+			return "edit";
 		}
 		this.addActionMessage(getText("UserEditSaveOkMsg"));
-		return "new";
+		return userList();
 	}
 
 	public String userDelete() throws Exception {
@@ -184,11 +193,11 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		this.dataService = dataService;
 	}
 
-	public String[] getAuthRolesSel() {
+	public List<String> getAuthRolesSel() {
 		return authRolesSel;
 	}
 
-	public void setAuthRolesSel(String[] authRolesSel) {
+	public void setAuthRolesSel(List<String> authRolesSel) {
 		this.authRolesSel = authRolesSel;
 	}
 
@@ -240,7 +249,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		this.passwordAgain = password_again;
 	}
 
-	public Map<Integer, String> mapStatus() {
+	public Map<Integer, String> getMapStatus() {
 		Map<Integer, String> mapStatus = new HashMap<>();
 		for (UserStatusType userStatusType : UserStatusType.list()) {
 			mapStatus.put(userStatusType.getId(), userStatusType.getKey());
@@ -248,7 +257,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		return mapStatus;
 	}
 
-	public Map<Integer, String> mapCategory() {
+	public Map<Integer, String> getMapCategory() {
 		Map<Integer, String> mapCategory = new HashMap<>();
 		for (UserCategoryType userCategoryType : UserCategoryType.list()) {
 			mapCategory.put(userCategoryType.getId(), userCategoryType.getKey());
@@ -259,5 +268,16 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 	@Override
 	public void setRequest(Map map) {
 		this.requestAttributes = map;
+	}
+
+	// Creamos la lista de roles del objeto User
+	private List<UserRole> getAuthUserRoles(String user, List<String> authUserRoles) {
+		List<UserRole> userRoles = new ArrayList<>();
+		if (authRolesSel != null) {
+			for (String role : authRolesSel) {
+				userRoles.add(new UserRole(user, role));
+			}
+		}
+		return userRoles;
 	}
 }

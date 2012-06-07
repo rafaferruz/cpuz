@@ -1,11 +1,11 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<s:if test="control.runAction == 'edit'" >
-    <h3 align="center"><s:text name="UserEdition"/></h3>
+<s:if test="control.runAction == 'Edit'" >
+    <h1 align="center"><s:text name="UserEdition"/></h1>
 </s:if>
 
-<s:if test="control.runAction == 'new'" >
-    <h3 align="center"><s:text name="UserMailBox"/></h3>
+<s:if test="control.runAction == 'New'" >
+    <h1 align="center"><s:text name="UserMailBox"/></h1>
     <ul>
         <li><s:text name="UserEditFull_Msg1"/></li>
         <li><s:text name="UserEditFull_Msg2"/></li>
@@ -33,7 +33,7 @@
                      readonly="true"/>
         <s:date name="dataEdit.date" id="dateVar" format="dd/MM/yyyy" var="dateFormat" />
         <s:textfield key="dataEdit.date" id="date"  maxlength="10"
-                     value="%{#fechaFormat}" onBlur="validateDate(this)"
+                     value="%{#dateFormat}" onBlur="validateDate(this)"
                      readonly="true"/>
     </s:if>
     <s:if test="control.runAction == 'New'" >
@@ -48,7 +48,7 @@
 
     <s:radio key="dataEdit.status" list="mapStatus" id="status"/>
 
-    <s:radio key="dataEdit.category" list="mapCategories" id="category"/>
+    <s:radio key="dataEdit.category" list="mapCategory" id="category"/>
 
     <%-- Se muestran dos select con los roles autorizados y todos los roles disponobles            --%>
     <tr>
@@ -62,7 +62,7 @@
                         <s:label for="ownedRoles" value="%{getText('AuthorizedRoles')}" theme="simple"/>
                         <s:select labelposition="top" list="userRolesList"
                                   id="ownedRoles"
-                                  listKey="role" listValue="role"
+                                  listKey="role" listValue="role" 
                                   cssStyle="width:120px" size="4" multiple="true"
                                   name="authRolesSel" theme="simple"/>
                     </td>
@@ -140,7 +140,7 @@
     function pass_available_owned(){
         for (i=0;i<window.document.users_form.availableRoles.length;i++){
             if (window.document.users_form.availableRoles.options[i].selected==true) {
-                window.document.users_form.ownedRoles.options[window.document.users_form.ownedRoles.length] = new Option(window.document.users_form.availableRoles.options[i].value, window.document.users_form.availableRoles.options[i].value, false,false)
+                window.document.users_form.ownedRoles.options[window.document.users_form.ownedRoles.length] = new Option(window.document.users_form.availableRoles.options[i].text, window.document.users_form.availableRoles.options[i].value, false,false)
                 window.document.users_form.availableRoles.options[i]=null;
                 i--;
             }
@@ -151,7 +151,7 @@
     function pass_owned_available(){
         for (i=0;i<window.document.users_form.ownedRoles.length;i++){
             if (window.document.users_form.ownedRoles.options[i].selected==true) {
-                window.document.users_form.availableRoles.options[window.document.users_form.availableRoles.length] = new Option(window.document.users_form.ownedRoles.options[i].value, window.document.users_form.ownedRoles.options[i].value, false,false)
+                window.document.users_form.availableRoles.options[window.document.users_form.availableRoles.length] = new Option(window.document.users_form.ownedRoles.options[i].text, window.document.users_form.ownedRoles.options[i].value, false,false)
                 window.document.users_form.ownedRoles.options[i]=null;
                 i--;
             }
@@ -165,11 +165,11 @@
         if (document.users_form.user.value.length<5){
             mensaje = mensaje + "<s:text name="needUserLongMin"/>" + "\n"
         }
-        if (document.users_form.nombre.value.length<5){
+        if (document.users_form.name.value.length<5){
             mensaje = mensaje + "<s:text name="needNameUserLongMin"/>" + "\n"
         }
     <s:if test="control.runAction == 'Edit'" >
-            if (document.users_form.password.value.length!=0 || document.users_form.password.value.length!=0){
+            if (document.users_form.password.value.length!=0 || document.users_form.password_again.value.length!=0){
     </s:if>
                 if (document.users_form.password.value.length<6){
                     mensaje = mensaje + "<s:text name="needPassWordLongMin"/>" + "\n"
@@ -187,7 +187,7 @@
             if (mensaje.length!=0){
                 mensaje = "<s:text name="founderrors"/>" + ":\n\n" + mensaje
                 alert(mensaje)
-                document.users_form.nombre.focus();
+                document.users_form.name.focus();
                 return 0;
             } else {
                 //el formulario se envia

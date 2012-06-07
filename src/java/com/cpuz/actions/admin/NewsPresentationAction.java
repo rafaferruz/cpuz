@@ -51,10 +51,10 @@ public class NewsPresentationAction extends ActionSupport implements RequestAwar
 	public String execute() throws Exception {
 		// Obtenemos las secciones
 		SectionsService sectionsService = new SectionsService();
-		sectionList = sectionsService.getRecords();
+//		sectionList = sectionsService.getRecords();
 		// Obtenemos las noticias de cada sección
 		NewsPiecesService newsPiecesService = new NewsPiecesService();
-		List<NewsPiece> newsPieceList=newsPiecesService.getNewsRecords();
+//		List<NewsPiece> newsPieceList=newsPiecesService.getNewsRecords();
 
 		return "SHOW";
 	}

@@ -50,7 +50,11 @@ public class RoleDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public int create(Role role) throws SQLException {
+	public int create(Role role) throws SQLException, RoleException {
+		if (role == null || role.getRole() == null || role.getRole().equals("")
+				|| role.getDescription() == null || role.getDescription().equals("")) {
+			throw new RoleException("roleException.nullOrEmptyField");
+		}
 		String sql = "INSERT INTO roles ("
 				+ "rol_role, "
 				+ "rol_description) "
@@ -69,7 +73,7 @@ public class RoleDAO implements InjectableDAO {
 	 * @param rolId		Id del objeto Role que se quiere recuperar de la tabla
 	 * @return			Un entero indicando el número de filas afectadas por la sentencia
 	 *					SQL; en está caso será igual a 1 si se ha recuperado con éxito.
-	 * @throws RoleException 
+	 * @throws SQLException 
 	 */
 	public Role read(int rolId) throws SQLException {
 		Role role = null;
@@ -89,9 +93,13 @@ public class RoleDAO implements InjectableDAO {
 	 * @param role		Objeto Role que se quiere actualizar en la tabla
 	 * @return			Un entero indicando el número de filas afectadas por la sentencia
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
-	 * @throws RoleException 
+	 * @throws SQLException 
 	 */
-	public int update(Role role) throws SQLException {
+	public int update(Role role) throws SQLException, RoleException {
+		if (role == null || role.getId() == null || role.getRole() == null
+				|| role.getRole().equals("") || role.getDescription() == null || role.getDescription().equals("")) {
+			throw new RoleException("roleException.nullOrEmptyField");
+		}
 		int rowCount = 0;
 		String sql = "UPDATE roles SET "
 				+ "rol_role = ?, "
@@ -132,10 +140,25 @@ public class RoleDAO implements InjectableDAO {
 		return role;
 	}
 
+	/*
+	 * Devuelve una List<Role> con los roles encontrados en la tabla roles con
+	 * un número máximo de filas indicada por control.getRecChunk y a partir de la
+	 * fila indicada por control.getRecStart. Si control.RecChunk es igual a 0,
+	 * se devuelven todos los roles que haya en la tabla.
+	 * 
+	 * @param control		Pasa el objeto ControlParams que define variables de 
+	 *						comportamiento de la consulta: Nº máximo de filas devueltas,
+	 *						desde que fila hay que tomar, qué tipo de usuario accede 
+	 *						(ver API de ControlParams). Si control es null, no se 
+	 *						realiza ningún filtro y se devuelven todas las filas de la tabla
+	 * @return				Una List<Role> de filas encontradas. Si no se encuentra ninguna
+	 *						fila en la consulta, se devuelve una List<Role> vacía.
+	 * @throws SQLException 
+	 */
 	public List<Role> getRoleList(ControlParams control) throws SQLException {
 		List<Role> roles = new ArrayList<>();
 		String sql = "SELECT * FROM roles ORDER BY rol_role ";
-		String limit = control.getRecChunk() > 0 ? " LIMIT ? OFFSET ?" : "";
+		String limit = control != null && control.getRecChunk() > 0 ? " LIMIT ? OFFSET ?" : "";
 		sql = sql + limit;
 		PreparedStatement ps = conn.prepareStatement(sql);
 		if (!limit.isEmpty()) {
@@ -151,6 +174,9 @@ public class RoleDAO implements InjectableDAO {
 	}
 
 	public int deleteIds(List<String> ids) throws SQLException {
+		if (ids==null || ids.isEmpty()){
+			return 0;
+		}
 		String sql = "DELETE FROM roles WHERE rol_id IN "
 				+ SqlUtil.getPreparedStatementInClause(ids);
 		PreparedStatement ps = conn.prepareStatement(sql);

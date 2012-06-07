@@ -18,13 +18,12 @@
  */
 package com.cpuz.service;
 
-import com.cpuz.DAO.DAOFactory;
+import com.cpuz.DAO.RoleDAO;
 import com.cpuz.domain.Role;
 import com.cpuz.domain.UserType;
 import com.cpuz.exceptions.RoleException;
 import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
@@ -37,9 +36,14 @@ import org.apache.log4j.Logger;
 public class RolesService {
 
 	private final transient Logger log = Logger.getLogger(this.getClass());
-	ControlParams control=new ControlParams();
+	private ControlParams control = new ControlParams();
+	RoleDAO roleDAO;
 
 	public RolesService() {
+	}
+
+	public void setRoleDAO(RoleDAO roleDAO) {
+		this.roleDAO = roleDAO;
 	}
 
 	/**
@@ -47,10 +51,13 @@ public class RolesService {
 	 * 
 	 * @param rolId		id del rol a consultar
 	 * @return			true si encuentra una fila con el id recibido, false si no lo encuentra.
-	 * @throws RoleException 
+	 * @throws RoleException	Si recibe un parámetro rolId igual null 
 	 */
-	public boolean keyIdExists(Integer rolId) throws SQLException {
-		Role role = new DAOFactory().getRoleDAO().read(rolId);
+	public boolean keyIdExists(Integer rolId) throws SQLException, RoleException {
+		if (rolId == null) {
+			throw new RoleException("roleException.rolIdNull");
+		}
+		Role role = roleDAO.read(rolId);
 		return (role != null);
 	}
 
@@ -64,49 +71,69 @@ public class RolesService {
 	 * @param recChunk Nº de registros a incluir en la búsqueda
 	 * @return Un objeto List<Role> con los registros seleccionados
 	 */
-	public List<Role> getNewsRecords() throws SQLException  {
+	public List<Role> getNewsRecords() throws SQLException {
 		control.setUserType(UserType.ANONYMOUS);
 		control.setRecStart(0);
 		control.setRecChunk(0);
 		return this.getRoleList(control);
 	}
 
-	public List<Role> getNewsRecords(UserType userType) throws SQLException {
-		control.setUserType(userType);
-		control.setRecStart(0);
-		control.setRecChunk(0);
-		return this.getRoleList(control);
-
-	}
-
-	public List<Role> getRoleList(ControlParams control) throws SQLException  {
-
-		List<Role> roles = new ArrayList<>();
-		roles = new DAOFactory().getRoleDAO().getRoleList(control);
+	/**
+	 * Devuelve una List<Role> con los roles encontrados en la tabla roles con
+	 * un número máximo de filas indicada por control.getRecChunk y a partir de la
+	 * fila indicada por control.getRecStart. Si control.RecChunk es igual a 0,
+	 * se devuelven todos los roles que haya en la tabla.
+	 * 
+	 * @param control		Pasa el objeto ControlParams que define variables de 
+	 *						comportamiento de la consulta: Nº máximo de filas devueltas,
+	 *						desde que fila hay que tomar, qué tipo de usuario accede 
+	 *						(ver API de ControlParams). Si control es null, no se 
+	 *						realiza ningún filtro y se devuelven todas las filas de la tabla
+	 * @return				Una List<Role> de filas encontradas. Si no se encuentra ninguna
+	 *						fila en la consulta, se devuelve una List<Role> vacía.
+	 * @throws SQLException 
+	 */
+	public List<Role> getRoleList(ControlParams control) throws SQLException {
+		List<Role> roles = roleDAO.getRoleList(control);
 		return roles;
 	}
 
 	public int getCountRows() throws SQLException {
-		return new DAOFactory().getRoleDAO().getCountRows();
+		return roleDAO.getCountRows();
 	}
 
-	public Role getById(int rolId) throws SQLException{
-		return new DAOFactory().getRoleDAO().read(rolId);
+	public Role getById(int rolId) throws SQLException {
+		return roleDAO.read(rolId);
 	}
 
-	public int insertRole(Role role) throws SQLException {
-		return new DAOFactory().getRoleDAO().create(role);
+	public int insertRole(Role role) throws SQLException, RoleException {
+		return roleDAO.create(role);
 	}
 
-	public int updateRole(Role role) throws SQLException{
-		return new DAOFactory().getRoleDAO().update(role);
+	public int updateRole(Role role) throws SQLException, RoleException {
+		return roleDAO.update(role);
 	}
 
-	public int deleteRole(Role role) throws SQLException {
-		return new DAOFactory().getRoleDAO().delete(role.getId());
+	public int deleteRole(Role role) throws SQLException, RoleException {
+		if (role == null) {
+			throw new RoleException("roleException.roleNull");
+		}
+		if (role.getId() == null) {
+			throw new RoleException("roleException.rolIdNull");
+		}
+		return roleDAO.delete(role.getId());
 	}
 
 	public int deleteRoleIds(List<String> ids) throws SQLException {
-		return new DAOFactory().getRoleDAO().deleteIds(ids);
+		return roleDAO.deleteIds(ids);
 	}
+
+	public ControlParams getControl() {
+		return control;
+	}
+
+	public void setControl(ControlParams control) {
+		this.control = control;
+	}
+	
 }

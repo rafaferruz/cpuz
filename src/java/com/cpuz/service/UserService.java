@@ -89,7 +89,7 @@ public class UserService {
 			List<String> userCodes = new ArrayList<>();
 			userCodes.add(user.getUser());
 			Map<String, List<UserRole>> userRoles = new DAOFactory().getUserRoleDAO().getUserRoleMap(userCodes);
-			user.setRoles(userRoles.get(user.getUser()));
+			user.setRoles(userRoles.get(user.getUser())!=null?userRoles.get(user.getUser()):new ArrayList<UserRole>());
 		}
 		return user;
 	}

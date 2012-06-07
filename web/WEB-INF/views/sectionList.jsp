@@ -1,16 +1,3 @@
-<%--
-    Document   : SectionsList
-    Created on : 05-feb-2010, 18:33:22
-    Author     : RAFAEL FERRUZ
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
-
-<%--
-<%@page errorPage="error.jsp" %>
---%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <h1 align="center"><s:text name="SectionsList"/></h1>
@@ -19,9 +6,9 @@
 <s:actionerror/>
 
 
-<s:form id="sectionslist_form" name="sectionslist_form" method="post" cssClass="data_table">
+<s:form id="sectionsListForm" name="sectionsListForm" method="post" cssClass="data_table">
     <s:hidden name="control.runAction" id="runAction"/>
-    <s:hidden name="control.idKey" id="idKey" />
+    <s:hidden name="control.id" id="id" />
     <s:hidden name="control.recStart" id="recStart"/>
     <s:hidden name="control.recChunk" id="recChunk"/>
     <s:hidden name="control.recCount" id="recCount"/>
@@ -79,19 +66,19 @@
 
 <script type="text/javascript">
     function actionExecute(action) {
-        window.document.sectionslist_form.runAction.value = action;
-        window.document.sectionslist_form.action = "Section"+action+".action";
-        window.document.sectionslist_form.submit();
+        window.document.sectionsListForm.runAction.value = action;
+        window.document.sectionsListForm.action = "Section"+action+".action";
+        window.document.sectionsListForm.submit();
         return 0;
     }
     function DoNavigation(nav_rule) {
-        window.document.sectionslist_form.runAction.value = nav_rule;
-        window.document.sectionslist_form.action = "SectionNavigation.action";
-        window.document.sectionslist_form.submit();
+        window.document.sectionsListForm.runAction.value = nav_rule;
+        window.document.sectionsListForm.action = "SectionNavigation.action";
+        window.document.sectionsListForm.submit();
         return 0;
     }
     function newsEdit(id) {
-        window.document.sectionslist_form.idKey.value = id;
+        window.document.sectionsListForm.id.value = id;
         actionExecute('Edit');
         return 0;
     }

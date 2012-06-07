@@ -52,15 +52,15 @@ public class UserRoleDAO implements InjectableDAO {
 
 		String sql = "INSERT INTO userroles "
 				+ "(usr_id, "
-				+ "usr_estádo, "
+				+ "usr_status, "
 				+ "usu_user, "
 				+ "usr_role, "
 				+ "usr_description) "
 				+ " VALUES ("
 				+ rec.getId() + ","
-				+ " " + rec.getStatus() + " ,"
-				+ "'" + rec.getUser() + "',"
-				+ "'" + rec.getRole() + "',"
+				+ " " + rec.getStatus() + ", "
+				+ "'" + rec.getUser() + "', "
+				+ "'" + rec.getRole() + "', "
 				+ "'" + rec.getDescription() + "')";
 		int rowCount = 0;
 
@@ -133,7 +133,7 @@ public class UserRoleDAO implements InjectableDAO {
 	public int update(UserRole rec) throws SQLException {
 		int rowCount = 0;
 		String sql = "UPDATE userroles SET "
-				+ "usr_estado = ?, usu_user = ?, usr_role = ?, usr_description = ? "
+				+ "usr_status = ?, usu_user = ?, usr_role = ?, usr_description = ? "
 				+ " WHERE usr_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, rec.getStatus());
