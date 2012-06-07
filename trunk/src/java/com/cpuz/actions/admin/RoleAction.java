@@ -18,8 +18,10 @@
  */
 package com.cpuz.actions.admin;
 
+import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.Role;
 import com.cpuz.domain.UserType;
+import com.cpuz.exceptions.RoleException;
 import com.cpuz.service.RolesService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
@@ -63,12 +65,15 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 
 	public String roleEdit() throws SQLException {
 		dataEdit = dataService.getById(control.getId());
+		if (dataEdit==null){
+			return roleList();
+		}
 		control.setRunAction("Edit");
 		requestAttributes.put("page", "/WEB-INF/views/roleEdit.jsp");
 		return "edit";
 	}
 
-	public String roleSaveNew() throws SQLException{
+	public String roleSaveNew() throws SQLException, RoleException{
 		if (dataService.insertRole(dataEdit) == 1) {
 			this.addActionMessage(getText("RoleEditSaveOkMsg"));
 			return roleList();
@@ -76,7 +81,7 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 		return "edit";
 	}
 
-	public String roleSaveEdit() throws SQLException {
+	public String roleSaveEdit() throws SQLException, RoleException {
 
 		if (dataService.keyIdExists(dataEdit.getId())) {
 			try {
@@ -158,8 +163,13 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 		this.dataList = dataList;
 	}
 
+	public RolesService getDataService() {
+		return dataService;
+	}
+
 	public void setDataService(RolesService dataService) {
 		this.dataService = dataService;
+		this.dataService.setRoleDAO(new DAOFactory().getRoleDAO());
 	}
 
 	public String getSelec1() {
@@ -180,4 +190,9 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 	public void setRequest(Map map) {
 		this.requestAttributes = map;
 	}
+
+	public Map<String, Object> getRequestAttributes() {
+		return requestAttributes;
+	}
+
 }

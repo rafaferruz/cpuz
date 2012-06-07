@@ -5,11 +5,11 @@
 <%@taglib prefix="s" uri="/struts-tags" %>
 
 <s:if test="control.runAction == 'Edit'" >
-    <h3 align="center"><s:text name="RoleEdition"/></h3>
+    <h1 align="center"><s:text name="RoleEdition"/></h1>
 </s:if>
 
 <s:if test="control.runAction == 'New'" >
-    <h3 align="center"><s:text name="RoleMailBox"/></h3>
+    <h1 align="center"><s:text name="RoleMailBox"/></h1>
     <ul>
         <li><s:text name="RoleEditFull_Msg1"/></li>
     </ul>

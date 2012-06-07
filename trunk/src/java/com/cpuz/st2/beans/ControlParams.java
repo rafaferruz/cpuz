@@ -15,7 +15,7 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package com.cpuz.st2.beans;
 
 import com.cpuz.domain.UserType;
@@ -28,55 +28,55 @@ import java.io.Serializable;
  */
 public class ControlParams implements Serializable {
 
-    private String runAction = "";
-    private Integer id = 0;
-    private Integer recStart = 0;
-    private Integer recChunk = Const.LIMIT_SQL_RECORDS_SELECTED_MANAGEMENT;
-    private Integer recCount = 0;
-	private UserType userType;
+	private String runAction = "";
+	private int id;
+	private int recStart;
+	private int recChunk = Const.LIMIT_SQL_RECORDS_SELECTED_MANAGEMENT;
+	private int recCount;
+	private UserType userType = UserType.ANONYMOUS;
 
-    public ControlParams() {
-    }
+	public ControlParams() {
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public Integer getRecChunk() {
-        return recChunk;
-    }
+	public int getRecChunk() {
+		return recChunk;
+	}
 
-    public void setRecChunk(Integer recChunk) {
-        this.recChunk = recChunk;
-    }
+	public void setRecChunk(int recChunk) {
+		this.recChunk = recChunk;
+	}
 
-    public Integer getRecCount() {
-        return recCount;
-    }
+	public int getRecCount() {
+		return recCount;
+	}
 
-    public void setRecCount(Integer recCount) {
-        this.recCount = recCount;
-    }
+	public void setRecCount(int recCount) {
+		this.recCount = recCount;
+	}
 
-    public Integer getRecStart() {
-        return recStart;
-    }
+	public int getRecStart() {
+		return recStart;
+	}
 
-    public void setRecStart(Integer recStart) {
-        this.recStart = recStart;
-    }
+	public void setRecStart(int recStart) {
+		this.recStart = recStart;
+	}
 
-    public String getRunAction() {
-        return runAction;
-    }
+	public String getRunAction() {
+		return runAction;
+	}
 
-    public void setRunAction(String runAction) {
-        this.runAction = runAction;
-    }
+	public void setRunAction(String runAction) {
+		this.runAction = runAction;
+	}
 
 	public UserType getUserType() {
 		return userType;
@@ -86,7 +86,7 @@ public class ControlParams implements Serializable {
 		this.userType = userType;
 	}
 
-    public void doNavigation()  {
+	public void doNavigation() {
 		switch (getRunAction()) {
 			case "nav_first":
 				nav_first();
@@ -101,21 +101,21 @@ public class ControlParams implements Serializable {
 				nav_last();
 				break;
 		}
-    }
+	}
 
-    private void nav_first() {
-        this.setRecStart(0);
-    }
+	private void nav_first() {
+		this.setRecStart(0);
+	}
 
-    private void nav_prev(){
-        this.setRecStart(Math.max(0, (this.getRecStart() - this.getRecChunk())));
-    }
+	private void nav_prev() {
+		this.setRecStart(Math.max(0, (this.getRecStart() - this.getRecChunk())));
+	}
 
-    private void nav_next(){
-        this.setRecStart(this.getRecStart() + this.getRecChunk());
-    }
+	private void nav_next() {
+		this.setRecStart(this.getRecStart() + this.getRecChunk());
+	}
 
-    private void nav_last()  {
-        this.setRecStart(Math.max(0, (this.getRecCount() - this.getRecChunk())));
-    }
+	private void nav_last() {
+		this.setRecStart(Math.max(0, (this.getRecCount() - this.getRecChunk())));
+	}
 }

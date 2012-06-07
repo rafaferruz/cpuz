@@ -144,7 +144,7 @@ public class UserDAO implements InjectableDAO {
 		int rowCount = 0;
 		String sql = "UPDATE users SET "
 				+ "usu_date = ?, usu_status = ?, usu_category = ?, "
-				+ "usu_user = ?, usu_name = ?, usu_password = ?, user_email = ? "
+				+ "usu_user = ?, usu_name = ?, usu_password = ?, usu_email = ? "
 				+ " WHERE usu_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setDate(1, new java.sql.Date(user.getDate().getTime()));
