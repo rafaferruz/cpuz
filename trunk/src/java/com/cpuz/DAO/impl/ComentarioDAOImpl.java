@@ -7,7 +7,7 @@
 package com.cpuz.DAO.impl;
 
 import com.cpuz.domain.Comentario;
-import com.cpuz.exceptions.ComentarioException;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.tools.JDBCHelper;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -56,7 +56,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
      * Adds the Comentario to the Comentario model
      */
     public synchronized int createComentario(Comentario rec)
-            throws ComentarioException, SQLException {
+            throws UserException, SQLException {
         Connection connection = null;
         // Declarar variables de uso en la frase SQL
         //** crear la frase INSERT SQL
@@ -102,7 +102,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
             }
         } catch (Exception e) {
             e.toString();
-            throw new ComentarioException("ComentarioDAOImpl.createComentario\n" + e);
+            throw new UserException("ComentarioDAOImpl.createComentario\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -113,7 +113,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
      * deletes the Comentario from the Comentario model
      */
     public int deleteComentario(Comentario rec)
-            throws ComentarioException, SQLException {
+            throws UserException, SQLException {
         Connection connection = null;
         int rowCount = 0;
         int keyId;
@@ -131,7 +131,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
             selectStatement.close();
         } catch (Exception e) {
             e.toString();
-            throw new ComentarioException("ComentarioModelImpl.deleteComentario\n" + e);
+            throw new UserException("ComentarioModelImpl.deleteComentario\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -144,10 +144,10 @@ public class ComentarioDAOImpl implements ComentarioDAO {
      *                       para un borrado m�ltiple de filas. debe comenzar por
      *                       WHERE y continuar con el restá de la frase SQL
      * @return El número de filas eliminadas
-     * @throws com.cpuz.exceptions.ComentarioException
+     * @throws com.cpuz.exceptions.UserException
      * @throws java.sql.SQLException
      */
-    public int deleteComentario(String sqlWhereClause) throws ComentarioException, SQLException {
+    public int deleteComentario(String sqlWhereClause) throws UserException, SQLException {
         Connection connection = null;
         int rowCount = 0;
         //** crear la frase DELETE SQL de tabla1
@@ -162,7 +162,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
             selectStatement.close();
         } catch (Exception e) {
             e.toString();
-            throw new ComentarioException("ComentarioModelImpl.deleteComentario\n" + e);
+            throw new UserException("ComentarioModelImpl.deleteComentario\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -173,7 +173,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
      * Updates the Comentario in the Comentario model
      */
     public int updateComentario(Comentario rec)
-            throws ComentarioException, SQLException {
+            throws UserException, SQLException {
         Connection connection = null;
         int rowCount = 0;
         //** crear la frase UPDATE SQL
@@ -199,7 +199,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
             rowCount = selectStatement.executeUpdate(request);
         } catch (Exception e) {
             e.toString();
-            throw new ComentarioException("ComentarioModelImpl.updateComentarioInfo\n" + e);
+            throw new UserException("ComentarioModelImpl.updateComentarioInfo\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -211,7 +211,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
      * Given an ssn, returns the Comentario from the model
      */
     public Comentario readComentario(String keyId)
-            throws ComentarioException, SQLException, NamingException {
+            throws UserException, SQLException, NamingException {
         // Declarar variables de uso en la frase SQL
         Connection connection = null;
         //** crear la frase SELECT SQL
@@ -232,14 +232,14 @@ public class ComentarioDAOImpl implements ComentarioDAO {
                 this.setPropertiesComentario(cr, result); //m�todo ayudante
             } else {
                 // if query failed
-                throw new ComentarioException("Comentario for " + keyId + " not found.");
+                throw new UserException("Comentario for " + keyId + " not found.");
             }
             result.close();
             // return cr
             return cr;
         } catch (SQLException e) {
             e.toString();
-            throw new ComentarioException("ComentarioModelImpl.readComentario\n" + e);
+            throw new UserException("ComentarioModelImpl.readComentario\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -249,12 +249,12 @@ public class ComentarioDAOImpl implements ComentarioDAO {
      * Returns all Comentarios in the Comentario model
      */
     public Comentario[] readAllComentarios()
-            throws ComentarioException, SQLException, NamingException {
+            throws UserException, SQLException, NamingException {
 
         return this.readAllComentarios("");
     }
 
-    public Comentario[] readAllComentarios(String sqlWhereClause) throws ComentarioException, SQLException, NamingException {
+    public Comentario[] readAllComentarios(String sqlWhereClause) throws UserException, SQLException, NamingException {
         Connection connection = null;
         //** crear la frase SELECT SQL
         String request= "SELECT * FROM COMENTARIOS " + sqlWhereClause;
@@ -295,14 +295,14 @@ public class ComentarioDAOImpl implements ComentarioDAO {
         } catch (SQLException e) {
             all = null;
             e.toString();
-            throw new ComentarioException("ComentarioDAOImpl.readAllComentario\n" + e);
+            throw new UserException("ComentarioDAOImpl.readAllComentario\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
         return all;
     }
 
-    public void setPropertiesComentario(Comentario rec, ResultSet rs) throws ComentarioException {
+    public void setPropertiesComentario(Comentario rec, ResultSet rs) throws UserException {
         try {
             rec.setId(rs.getInt("COM_id"));
             rec.setFecha(rs.getDate("COM_FECHA"));
@@ -316,7 +316,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
             rec.setComentario(rs.getString("COM_COMENTARIO"));
             rec.setFicheroImagen(rs.getString("COM_FICHERO_IMAGEN"));
         } catch (SQLException e) {
-            throw new ComentarioException("ComentarioDAOImpl.setPropertiesComentario\n" + e);
+            throw new UserException("ComentarioDAOImpl.setPropertiesComentario\n" + e);
         }
     }
 }

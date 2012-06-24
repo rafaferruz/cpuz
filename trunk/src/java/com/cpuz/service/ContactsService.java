@@ -7,7 +7,7 @@ package com.cpuz.service;
 import com.cpuz.domain.Contact;
 import com.cpuz.DAO.impl.ContactDAOImpl;
 import com.cpuz.domain.UserType;
-import com.cpuz.exceptions.ContactException;
+import com.cpuz.exceptions.UserException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +85,7 @@ public class ContactsService {
             for (Contact n : nDao.readContacts(sqlWhereClause)) {
                 news.add(n);
             }
-        } catch (ContactException ex) {
+        } catch (UserException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,7 +109,7 @@ public class ContactsService {
 
             records = nDao.readContacts(sqlClause);
 
-        } catch (ContactException ex) {
+        } catch (UserException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -130,7 +130,7 @@ public class ContactsService {
             for (Contact n : nDao.readContacts(sqlWhereClause)) {
                 news.add(n);
             }
-        } catch (ContactException ex) {
+        } catch (UserException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,7 +145,7 @@ public class ContactsService {
         try {
             ContactDAOImpl nDao = new ContactDAOImpl();
             return nDao.createContact(news);
-        } catch (ContactException ex) {
+        } catch (UserException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -160,7 +160,7 @@ public class ContactsService {
         try {
             ContactDAOImpl nDao = new ContactDAOImpl();
             return nDao.updateContact(news);
-        } catch (ContactException ex) {
+        } catch (UserException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -175,7 +175,7 @@ public class ContactsService {
         try {
             ContactDAOImpl nDao = new ContactDAOImpl();
             return nDao.deleteContact(news);
-        } catch (ContactException ex) {
+        } catch (UserException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ContactsService.class.getName()).log(Level.SEVERE, null, ex);

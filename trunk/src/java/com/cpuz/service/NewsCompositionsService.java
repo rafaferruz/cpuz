@@ -7,7 +7,7 @@ package com.cpuz.service;
 import com.cpuz.domain.NewsComposition;
 import com.cpuz.DAO.impl.NewsCompositionDAOImpl;
 import com.cpuz.domain.UserType;
-import com.cpuz.exceptions.NewsCompositionException;
+import com.cpuz.exceptions.UserException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +83,7 @@ public class NewsCompositionsService {
 			for (NewsComposition n : nDao.readNewsCompositions(sqlWhereClause)) {
 				news.add(n);
 			}
-		} catch (NewsCompositionException ex) {
+		} catch (UserException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -100,7 +100,7 @@ public class NewsCompositionsService {
 			for (NewsComposition n : nDao.readCompositionItems(this.getNpiId())) {
 				news.add(n);
 			}
-		} catch (NewsCompositionException ex) {
+		} catch (UserException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,7 +124,7 @@ public class NewsCompositionsService {
 
 			records = nDao.readNewsCompositions(sqlClause);
 
-		} catch (NewsCompositionException ex) {
+		} catch (UserException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -146,7 +146,7 @@ public class NewsCompositionsService {
 			for (NewsComposition n : nDao.readNewsCompositions(sqlWhereClause)) {
 				news.add(n);
 			}
-		} catch (NewsCompositionException ex) {
+		} catch (UserException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -161,7 +161,7 @@ public class NewsCompositionsService {
 		try {
 			NewsCompositionDAOImpl nDao = new NewsCompositionDAOImpl();
 			return nDao.createNewsComposition(news);
-		} catch (NewsCompositionException ex) {
+		} catch (UserException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -176,7 +176,7 @@ public class NewsCompositionsService {
 		try {
 			NewsCompositionDAOImpl nDao = new NewsCompositionDAOImpl();
 			return nDao.updateNewsComposition(news);
-		} catch (NewsCompositionException ex) {
+		} catch (UserException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -191,7 +191,7 @@ public class NewsCompositionsService {
 		try {
 			NewsCompositionDAOImpl nDao = new NewsCompositionDAOImpl();
 			return nDao.deleteNewsComposition(news);
-		} catch (NewsCompositionException ex) {
+		} catch (UserException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
@@ -206,7 +206,7 @@ public class NewsCompositionsService {
 		try {
 			NewsCompositionDAOImpl nDao = new NewsCompositionDAOImpl();
 			return nDao.deleteNewsComposition(sqlNewsComposition);
-		} catch (NewsCompositionException ex) {
+		} catch (UserException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SQLException ex) {
 			Logger.getLogger(NewsCompositionsService.class.getName()).log(Level.SEVERE, null, ex);

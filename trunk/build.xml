@@ -119,4 +119,39 @@
 		<delete file="cobertura.ser" />
 	</target>
 
+	<target name="-init-macrodef-junit">
+		<macrodef name="junit" uri="http://www.netbeans.org/ns/web-project/2">
+			<attribute default="${includes}" name="includes"/>
+			<attribute default="${excludes}" name="excludes"/>
+			<attribute default="**" name="testincludes"/>
+			<sequential>
+				<junit dir="${basedir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true" showoutput="true" tempdir="${java.io.tmpdir}">
+					<batchtest todir="${build.test.results.dir}">
+						<fileset dir="${test.src.dir}" excludes="@{excludes},${excludes}" includes="@{includes}">
+							<filename name="@{testincludes}"/>
+						</fileset>
+					</batchtest>
+					<!--
+						Specify the name of the coverage data file to use.
+						The value specified below is the default.
+					-->
+					<sysproperty key="net.sourceforge.cobertura.datafile"
+						file="${basedir}/cobertura.ser" />
+					<classpath>
+						<path path="${run.test.classpath}:${j2ee.platform.classpath}:${j2ee.platform.embeddableejb.classpath}"/>
+					</classpath>
+					<syspropertyset>
+						<propertyref prefix="test-sys-prop."/>
+						<mapper from="test-sys-prop.*" to="*" type="glob"/>
+					</syspropertyset>
+					<formatter type="brief" usefile="false"/>
+					<formatter type="xml"/>
+					<jvmarg line="${endorsed.classpath.cmd.line.arg}"/>
+					<jvmarg value="-ea"/>
+					<jvmarg line="${runmain.jvmargs}"/>
+				</junit>
+			</sequential>
+		</macrodef>
+	</target>
+
 </project>

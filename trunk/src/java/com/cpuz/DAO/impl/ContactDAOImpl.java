@@ -7,7 +7,7 @@
 package com.cpuz.DAO.impl;
 
 import com.cpuz.domain.Contact;
-import com.cpuz.exceptions.ContactException;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.tools.JDBCHelper;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -56,7 +56,7 @@ public class ContactDAOImpl implements ContactDAO {
      * Adds the Contact to the Contact model
      */
     public synchronized int createContact(Contact rec)
-            throws ContactException, SQLException {
+            throws UserException, SQLException {
 
         String pattern = "yyyy-MM-dd hh:mm:ss";
         SimpleDateFormat sdf = new SimpleDateFormat();
@@ -102,7 +102,7 @@ public class ContactDAOImpl implements ContactDAO {
             }
         } catch (Exception e) {
             e.toString();
-            throw new ContactException("ContactDAOImpl.createContact\n" + e);
+            throw new UserException("ContactDAOImpl.createContact\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -113,7 +113,7 @@ public class ContactDAOImpl implements ContactDAO {
      * deletes the Contact from the Contact model
      */
     public int deleteContact(Contact rec)
-            throws ContactException, SQLException {
+            throws UserException, SQLException {
         Connection connection = null;
         int rowCount = 0;
         int keyId;
@@ -131,7 +131,7 @@ public class ContactDAOImpl implements ContactDAO {
             selectStatement.close();
         } catch (Exception e) {
             e.toString();
-            throw new ContactException("ContactModelImpl.deleteContact\n" + e);
+            throw new UserException("ContactModelImpl.deleteContact\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -144,10 +144,10 @@ public class ContactDAOImpl implements ContactDAO {
      *                       para un borrado m�ltiple de filas. debe comenzar por
      *                       WHERE y continuar con el restá de la frase SQL
      * @return El número de filas eliminadas
-     * @throws com.cpuz.exceptions.ContactException
+     * @throws com.cpuz.exceptions.UserException
      * @throws java.sql.SQLException
      */
-    public int deleteContact(String sqlWhereClause) throws ContactException, SQLException {
+    public int deleteContact(String sqlWhereClause) throws UserException, SQLException {
         Connection connection = null;
         int rowCount = 0;
         //** crear la frase DELETE SQL de tabla1
@@ -162,7 +162,7 @@ public class ContactDAOImpl implements ContactDAO {
             selectStatement.close();
         } catch (Exception e) {
             e.toString();
-            throw new ContactException("ContactModelImpl.deleteContact\n" + e);
+            throw new UserException("ContactModelImpl.deleteContact\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -173,7 +173,7 @@ public class ContactDAOImpl implements ContactDAO {
      * Updates the Contact in the Contact model
      */
     public int updateContact(Contact rec)
-            throws ContactException, SQLException {
+            throws UserException, SQLException {
         Connection connection = null;
         /*        String s = rec.getContenido();
         int inicio=0;
@@ -201,7 +201,7 @@ public class ContactDAOImpl implements ContactDAO {
             rowCount = selectStatement.executeUpdate(request);
         } catch (Exception e) {
             e.toString();
-            throw new ContactException("ContactModelImpl.updateContactInfo\n" + e);
+            throw new UserException("ContactModelImpl.updateContactInfo\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -213,7 +213,7 @@ public class ContactDAOImpl implements ContactDAO {
      * Given an ssn, returns the Contact from the model
      */
     public Contact readContact(String keyId)
-            throws ContactException, SQLException, NamingException {
+            throws UserException, SQLException, NamingException {
         // Declarar variables de uso en la frase SQL
         Connection connection = null;
         //** crear la frase SELECT SQL
@@ -234,14 +234,14 @@ public class ContactDAOImpl implements ContactDAO {
                 this.setPropertiesContact(cr, result); //m�todo ayudante
             } else {
                 // if query failed
-                throw new ContactException("Contact for " + keyId + " not found.");
+                throw new UserException("Contact for " + keyId + " not found.");
             }
             result.close();
             // return cr
             return cr;
         } catch (SQLException e) {
             e.toString();
-            throw new ContactException("ContactModelImpl.readContact\n" + e);
+            throw new UserException("ContactModelImpl.readContact\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -254,12 +254,12 @@ public class ContactDAOImpl implements ContactDAO {
      * Returns all Contacts in the Contact model
      */
     public List<Contact> readContacts()
-            throws ContactException, SQLException, NamingException {
+            throws UserException, SQLException, NamingException {
 
         return this.readContacts("");
     }
 
-    public List<Contact> readContacts(String sqlClause) throws ContactException, SQLException, NamingException {
+    public List<Contact> readContacts(String sqlClause) throws UserException, SQLException, NamingException {
         Connection connection = null;
         //** crear la frase SELECT SQL
         List<Contact> aList = new ArrayList<Contact>();
@@ -292,14 +292,14 @@ public class ContactDAOImpl implements ContactDAO {
             result.close();
         } catch (SQLException e) {
             e.toString();
-            throw new ContactException("ContactDAOImpl.readAllContact\n" + e);
+            throw new UserException("ContactDAOImpl.readAllContact\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
         return aList;
     }
 
-    public void setPropertiesContact(Contact rec, ResultSet rs) throws ContactException {
+    public void setPropertiesContact(Contact rec, ResultSet rs) throws UserException {
         try {
             rec.setId(rs.getInt("con_id"));
             rec.setDatetime(rs.getTimestamp("con_date"));
@@ -310,7 +310,7 @@ public class ContactDAOImpl implements ContactDAO {
             rec.setBody(rs.getString("con_body"));
             rec.setEmail(rs.getString("con_email"));
         } catch (SQLException e) {
-            throw new ContactException("ContactDAOImpl.setPropertiesContact\n" + e);
+            throw new UserException("ContactDAOImpl.setPropertiesContact\n" + e);
         }
     }
 }

@@ -7,7 +7,7 @@
 package com.cpuz.DAO.impl;
 
 import com.cpuz.domain.NewsComposition;
-import com.cpuz.exceptions.NewsCompositionException;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.tools.JDBCHelper;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -56,7 +56,7 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 	 * Adds the NewsComposition to the NewsComposition model
 	 */
 	public synchronized int createNewsComposition(NewsComposition rec)
-			throws NewsCompositionException, SQLException {
+			throws UserException, SQLException {
 
 		String pattern = "yyyy-MM-dd hh:mm:ss";
 		SimpleDateFormat sdf = new SimpleDateFormat();
@@ -110,7 +110,7 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 			}
 		} catch (Exception e) {
 			e.toString();
-			throw new NewsCompositionException("NewsCompositionDAOImpl.createNewsComposition\n" + e);
+			throw new UserException("NewsCompositionDAOImpl.createNewsComposition\n" + e);
 		} finally {
 			jdbcHelper.cleanup(connection, selectStatement, null);
 		}
@@ -121,7 +121,7 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 	 * deletes the NewsComposition from the NewsComposition model
 	 */
 	public int deleteNewsComposition(NewsComposition rec)
-			throws NewsCompositionException, SQLException {
+			throws UserException, SQLException {
 		Connection connection = null;
 		int rowCount = 0;
 		int keyId;
@@ -139,7 +139,7 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 			selectStatement.close();
 		} catch (Exception e) {
 			e.toString();
-			throw new NewsCompositionException("NewsCompositionModelImpl.deleteNewsComposition\n" + e);
+			throw new UserException("NewsCompositionModelImpl.deleteNewsComposition\n" + e);
 		} finally {
 			jdbcHelper.cleanup(connection, selectStatement, null);
 		}
@@ -152,10 +152,10 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 	 *                       para un borrado m�ltiple de filas. debe comenzar por
 	 *                       WHERE y continuar con el resto de la frase SQL
 	 * @return El número de filas eliminadas
-	 * @throws com.cpuz.exceptions.NewsCompositionException
+	 * @throws com.cpuz.exceptions.UserException
 	 * @throws java.sql.SQLException
 	 */
-	public int deleteNewsComposition(String sqlWhereClause) throws NewsCompositionException, SQLException {
+	public int deleteNewsComposition(String sqlWhereClause) throws UserException, SQLException {
 		Connection connection = null;
 		int rowCount = 0;
 		//** crear la frase DELETE SQL de tabla1
@@ -170,7 +170,7 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 			selectStatement.close();
 		} catch (Exception e) {
 			e.toString();
-			throw new NewsCompositionException("NewsCompositionModelImpl.deleteNewsComposition\n" + e);
+			throw new UserException("NewsCompositionModelImpl.deleteNewsComposition\n" + e);
 		} finally {
 			jdbcHelper.cleanup(connection, selectStatement, null);
 		}
@@ -181,7 +181,7 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 	 * Updates the NewsComposition in the NewsComposition model
 	 */
 	public int updateNewsComposition(NewsComposition rec)
-			throws NewsCompositionException, SQLException {
+			throws UserException, SQLException {
 		Connection connection = null;
 		/*        String s = rec.getContenido();
 		int inicio=0;
@@ -214,7 +214,7 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 			rowCount = selectStatement.executeUpdate(request);
 		} catch (Exception e) {
 			e.toString();
-			throw new NewsCompositionException("NewsCompositionModelImpl.updateNewsCompositionInfo\n" + e);
+			throw new UserException("NewsCompositionModelImpl.updateNewsCompositionInfo\n" + e);
 		} finally {
 			jdbcHelper.cleanup(connection, selectStatement, null);
 		}
@@ -226,7 +226,7 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 	 * Given an ssn, returns the NewsComposition from the model
 	 */
 	public NewsComposition readNewsComposition(String keyId)
-			throws NewsCompositionException, SQLException, NamingException {
+			throws UserException, SQLException, NamingException {
 		// Declarar variables de uso en la frase SQL
 		Connection connection = null;
 		//** crear la frase SELECT SQL
@@ -241,13 +241,13 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 					cr = this.getNewsCompositionFromResultSet(result);
 				} else {
 					// if query failed
-					throw new NewsCompositionException("NewsComposition for " + keyId + " not found.");
+					throw new UserException("NewsComposition for " + keyId + " not found.");
 				}
 			}
 			return cr;
 		} catch (SQLException e) {
 			e.toString();
-			throw new NewsCompositionException("NewsCompositionModelImpl.readNewsComposition\n" + e);
+			throw new UserException("NewsCompositionModelImpl.readNewsComposition\n" + e);
 		} finally {
 			jdbcHelper.cleanup(connection, selectStatement, null);
 		}
@@ -257,12 +257,12 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 	 * Returns all NewsCompositions in the NewsComposition model
 	 */
 	public List<NewsComposition> readNewsCompositions()
-			throws NewsCompositionException, SQLException, NamingException {
+			throws UserException, SQLException, NamingException {
 
 		return this.readNewsCompositions("");
 	}
 
-	public List<NewsComposition> readNewsCompositions(String sqlClause) throws NamingException, NewsCompositionException, SQLException {
+	public List<NewsComposition> readNewsCompositions(String sqlClause) throws NamingException, UserException, SQLException {
 		Connection connection = null;
 		//** crear la frase SELECT SQL
 		List<NewsComposition> aList = new ArrayList<>();
@@ -285,14 +285,14 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 			}
 		} catch (SQLException e) {
 			e.toString();
-			throw new NewsCompositionException("NewsCompositionDAOImpl.readNewsComposition\n" + e);
+			throw new UserException("NewsCompositionDAOImpl.readNewsComposition\n" + e);
 		} finally {
 			jdbcHelper.cleanup(connection, selectStatement, null);
 		}
 		return aList;
 	}
 
-	public List<NewsComposition> readCompositionItems(int npiId) throws NamingException, NewsCompositionException, SQLException {
+	public List<NewsComposition> readCompositionItems(int npiId) throws NamingException, UserException, SQLException {
 		Connection connection = null;
 		//** crear la frase SELECT SQL
 		List<NewsComposition> aList = new ArrayList<>();
@@ -316,14 +316,14 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 			}
 		} catch (SQLException e) {
 			e.toString();
-			throw new NewsCompositionException("NewsCompositionDAOImpl.readNewsComposition\n" + e);
+			throw new UserException("NewsCompositionDAOImpl.readNewsComposition\n" + e);
 		} finally {
 			jdbcHelper.cleanup(connection, selectStatement, null);
 		}
 		return aList;
 	}
 
-	public static NewsComposition getNewsCompositionFromResultSet(ResultSet rs) throws NewsCompositionException {
+	public static NewsComposition getNewsCompositionFromResultSet(ResultSet rs) throws UserException {
 		NewsComposition rec = new NewsComposition();
 		try {
 			rec.setId(rs.getInt("nco_composition_id"));
@@ -338,7 +338,7 @@ public class NewsCompositionDAOImpl implements NewsCompositionDAO {
 			rec.setImageWidth(rs.getInt("nco_image_width"));
 			rec.setLinkedElement(rs.getString("nco_linked_element"));
 		} catch (SQLException e) {
-			throw new NewsCompositionException("NewsCompositionDAOImpl.setPropertiesNewsComposition\n" + e);
+			throw new UserException("NewsCompositionDAOImpl.setPropertiesNewsComposition\n" + e);
 		}
 		return rec;
 	}

@@ -7,7 +7,7 @@
 package com.cpuz.DAO.impl;
 
 import com.cpuz.domain.Noticia;
-import com.cpuz.exceptions.NoticiaException;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.tools.JDBCHelper;
 import com.cpuz.tools.Tools;
 import java.sql.*;
@@ -57,7 +57,7 @@ public class NoticiaDAOImpl implements NoticiaDAO {
      * Adds the Noticia to the Noticia model
      */
     public synchronized int createNoticia(Noticia rec)
-            throws NoticiaException, SQLException {
+            throws UserException, SQLException {
         Connection connection = null;
         // Declarar variables de uso en la frase SQL
         //** crear la frase INSERT SQL
@@ -114,7 +114,7 @@ public class NoticiaDAOImpl implements NoticiaDAO {
             }
         } catch (Exception e) {
             e.toString();
-            throw new NoticiaException("NoticiaDAOImpl.createNoticia\n" + e);
+            throw new UserException("NoticiaDAOImpl.createNoticia\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -125,7 +125,7 @@ public class NoticiaDAOImpl implements NoticiaDAO {
      * deletes the Noticia from the Noticia model
      */
     public int deleteNoticia(Noticia rec)
-            throws NoticiaException, SQLException {
+            throws UserException, SQLException {
         Connection connection = null;
         int rowCount = 0;
         int keyId;
@@ -143,7 +143,7 @@ public class NoticiaDAOImpl implements NoticiaDAO {
             selectStatement.close();
         } catch (Exception e) {
             e.toString();
-            throw new NoticiaException("NoticiaModelImpl.deleteNoticia\n" + e);
+            throw new UserException("NoticiaModelImpl.deleteNoticia\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -156,10 +156,10 @@ public class NoticiaDAOImpl implements NoticiaDAO {
      *                       para un borrado m�ltiple de filas. debe comenzar por
      *                       WHERE y continuar con el restá de la frase SQL
      * @return El número de filas eliminadas
-     * @throws com.cpuz.exceptions.NoticiaException
+     * @throws com.cpuz.exceptions.UserException
      * @throws java.sql.SQLException
      */
-    public int deleteNoticia(String sqlWhereClause) throws NoticiaException, SQLException {
+    public int deleteNoticia(String sqlWhereClause) throws UserException, SQLException {
         Connection connection = null;
         int rowCount = 0;
         //** crear la frase DELETE SQL de tabla1
@@ -174,7 +174,7 @@ public class NoticiaDAOImpl implements NoticiaDAO {
             selectStatement.close();
         } catch (Exception e) {
             e.toString();
-            throw new NoticiaException("NoticiaModelImpl.deleteNoticia\n" + e);
+            throw new UserException("NoticiaModelImpl.deleteNoticia\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -185,7 +185,7 @@ public class NoticiaDAOImpl implements NoticiaDAO {
      * Updates the Noticia in the Noticia model
      */
     public int updateNoticia(Noticia rec)
-            throws NoticiaException, SQLException {
+            throws UserException, SQLException {
         Connection connection = null;
         String s = rec.getContenido();
         int inicio=0;
@@ -223,7 +223,7 @@ public class NoticiaDAOImpl implements NoticiaDAO {
             rowCount = selectStatement.executeUpdate(request);
         } catch (Exception e) {
             e.toString();
-            throw new NoticiaException("NoticiaModelImpl.updateNoticiaInfo\n" + e);
+            throw new UserException("NoticiaModelImpl.updateNoticiaInfo\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -235,7 +235,7 @@ public class NoticiaDAOImpl implements NoticiaDAO {
      * Given an ssn, returns the Noticia from the model
      */
     public Noticia readNoticia(String keyId)
-            throws NoticiaException, SQLException, NamingException {
+            throws UserException, SQLException, NamingException {
         // Declarar variables de uso en la frase SQL
         Connection connection = null;
         //** crear la frase SELECT SQL
@@ -256,14 +256,14 @@ public class NoticiaDAOImpl implements NoticiaDAO {
                 this.setPropertiesNoticia(cr, result); //m�todo ayudante
             } else {
                 // if query failed
-                throw new NoticiaException("Noticia for " + keyId + " not found.");
+                throw new UserException("Noticia for " + keyId + " not found.");
             }
             result.close();
             // return cr
             return cr;
         } catch (SQLException e) {
             e.toString();
-            throw new NoticiaException("NoticiaModelImpl.readNoticia\n" + e);
+            throw new UserException("NoticiaModelImpl.readNoticia\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
@@ -273,12 +273,12 @@ public class NoticiaDAOImpl implements NoticiaDAO {
      * Returns all Noticias in the Noticia model
      */
     public Noticia[] readAllNoticias()
-            throws NoticiaException, SQLException, NamingException {
+            throws UserException, SQLException, NamingException {
 
         return this.readAllNoticias("");
     }
 
-    public Noticia[] readAllNoticias(String sqlWhereClause) throws NoticiaException, SQLException, NamingException {
+    public Noticia[] readAllNoticias(String sqlWhereClause) throws UserException, SQLException, NamingException {
         Connection connection = null;
         //** crear la frase SELECT SQL
         String request= "SELECT * FROM NOTICIAS " + sqlWhereClause;
@@ -319,14 +319,14 @@ public class NoticiaDAOImpl implements NoticiaDAO {
         } catch (SQLException e) {
             all = null;
             e.toString();
-            throw new NoticiaException("NoticiaDAOImpl.readAllNoticia\n" + e);
+            throw new UserException("NoticiaDAOImpl.readAllNoticia\n" + e);
         } finally {
             jdbcHelper.cleanup(connection, selectStatement, null);
         }
             return all;
     }
 
-    public void setPropertiesNoticia(Noticia rec, ResultSet rs) throws NoticiaException {
+    public void setPropertiesNoticia(Noticia rec, ResultSet rs) throws UserException {
         try {
             rec.setId(rs.getInt("NOT_id"));
             rec.setFecha(rs.getDate("NOT_FECHA"));
@@ -345,7 +345,7 @@ public class NoticiaDAOImpl implements NoticiaDAO {
             rec.setAltoImagen(rs.getInt("NOT_ALTO_IMAGEN"));
             rec.setPosicionImagen(rs.getString("NOT_POSICION_IMAGEN"));
         } catch (SQLException e) {
-            throw new NoticiaException("NoticiaDAOImpl.setPropertiesNoticia\n" + e);
+            throw new UserException("NoticiaDAOImpl.setPropertiesNoticia\n" + e);
         }
     }
 }

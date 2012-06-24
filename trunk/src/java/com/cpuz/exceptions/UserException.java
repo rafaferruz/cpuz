@@ -2,16 +2,15 @@ package com.cpuz.exceptions;
 
 public class UserException extends Exception{
 
-    private static final long serialVersionUID = 901L;
     /**
-     * Creates new <code>NoticiaException</code> without detail message.
+     * Creates new <code>UserException</code> without detail message.
      */
     public UserException() {
-        this("NoticiaException");
+        this("UserException");
     }
     
     /**
-     * Constructs an <code>NoticiaException</code> with the specified
+     * Constructs an <code>UserException</code> with the specified
      * detail message.
      * @param msg the detail message.
      */

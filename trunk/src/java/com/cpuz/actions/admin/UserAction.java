@@ -23,12 +23,11 @@ import com.cpuz.domain.User;
 import com.cpuz.domain.UserCategoryType;
 import com.cpuz.domain.UserRole;
 import com.cpuz.domain.UserStatusType;
+import com.cpuz.domain.UserType;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.service.RolesService;
 import com.cpuz.service.UserRolesService;
 import com.cpuz.service.UserService;
-import com.cpuz.st2.beans.ControlParams;
-import com.opensymphony.xwork2.ActionSupport;
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,19 +35,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.struts2.interceptor.RequestAware;
 
 /**
  * Esta clase gestiona las operaciones CRUD de los objetos User de la aplicación
  */
-public class UserAction extends ActionSupport implements RequestAware, Serializable {
+public class UserAction extends GenericAction<User> {
 
-	private ControlParams control = new ControlParams();
-	private List<User> dataList = new ArrayList<>();
-	private User dataEdit = new User();
-	private UserService dataService;
-	private Map<String, Object> requestAttributes = new HashMap<>();
-	private Map<Integer, String> mapStatus = new HashMap<>();
 	private Map<Integer, String> mapCategories = new HashMap<>();
 	private List<Role> rolesList;
 	private List<UserRole> userRolesList;
@@ -56,11 +48,12 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 	private UserRolesService userRolesService;
 	private List<String> authRolesSel = new ArrayList<>();
 	private String[] availableRolesSel;
-	private String selec1;
 	private String passwordAgain;
+	private UserService dataService;
 
 	public UserAction() {
 		super();
+		dataEdit = new User();
 	}
 
 	@Override
@@ -68,7 +61,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		return "error";
 	}
 
-	public String userNew() throws SQLException {
+	public String objectNew() throws SQLException {
 		control.setRecCount(1);
 		control.setRunAction("New");
 		dataEdit.setDate(new Date());
@@ -77,9 +70,12 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		return "new";
 	}
 
-	public String userEdit() throws SQLException {
+	public String objectEdit() throws SQLException {
 		dataEdit = dataService.getById(control.getId());
-		// Se lee lista de Users
+		// Si no se encuentra el User buscado se lee lista de Users
+		if (dataEdit == null) {
+			return objectList();
+		}
 		passwordAgain = dataEdit.getPassword();
 		rolesList = rolesService.getNewsRecords();
 		userRolesList = dataEdit.getRoles();
@@ -102,7 +98,7 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		return "edit";
 	}
 
-	public String userSaveNew() throws SQLException, Exception {
+	public String objectSaveNew() throws SQLException, UserException {
 		// Creamos la lista de roles del objeto User
 		dataEdit.setRoles(getAuthUserRoles(dataEdit.getUser(), authRolesSel));
 		// Persistimos el objeto User
@@ -111,10 +107,10 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 			return "new";
 		}
 		this.addActionMessage(getText("UserEditSaveOkMsg"));
-		return userList();
+		return objectList();
 	}
 
-	public String userSaveEdit() throws Exception {
+	public String objectSaveEdit() throws SQLException, UserException {
 		// Creamos la lista de roles del objeto User
 		dataEdit.setRoles(getAuthUserRoles(dataEdit.getUser(), authRolesSel));
 		// Persistimos el objeto User
@@ -123,74 +119,32 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 			return "edit";
 		}
 		this.addActionMessage(getText("UserEditSaveOkMsg"));
-		return userList();
+		return objectList();
 	}
 
-	public String userDelete() throws Exception {
+	public String objectDelete() throws SQLException {
 		if (selec1 != null) {
-			List<String> deletes = Arrays.asList(selec1.split(","));
-			List<Integer> deleteIds = new ArrayList<>();
-			for (String id : deletes) {
-				deleteIds.add(Integer.parseInt(id));
-			}
-			if (dataService.deleteUserIds(deletes) == 0) {
-				addActionError(getText("NoneDeletedUser"));
-				return userList();
+			String[] deletes = selec1.split(",");
+			if (dataService.deleteUserIds(Arrays.asList(deletes)) > 0) {
+				addActionMessage(getText("SuccessDeletedUsers"));
 			} else {
-				this.addActionMessage(getText("DeletedSelectedUserOkMsg"));
-				return userList();
+				addActionError(getText("NoneDeletedUser"));
 			}
+			return objectList();
 		}
 		addActionError(getText("NoneSelectedUser"));
-		return userList();
+		return objectList();
 	}
 
-	public String userList() throws Exception {
+	public String objectList() throws SQLException {
 		if (control.getRecCount() == 0) {
 			control.setRecCount(dataService.getCountRows());
 		}
+		control.setUserType(UserType.ADMIN);
 		dataList = dataService.getUserList(control);
 		control.setRunAction("List");
 		requestAttributes.put("page", "/WEB-INF/views/userList.jsp");
 		return "list";
-	}
-
-	public String userNavigation() throws Exception {
-		control.doNavigation();
-		return userList();
-	}
-
-	@Override
-	public void validate() {
-		super.validate();
-	}
-
-	public ControlParams getControl() {
-		return control;
-	}
-
-	public void setControl(ControlParams control) {
-		this.control = control;
-	}
-
-	public User getDataEdit() {
-		return dataEdit;
-	}
-
-	public void setDataEdit(User dataEdit) {
-		this.dataEdit = dataEdit;
-	}
-
-	public List<User> getDataList() {
-		return dataList;
-	}
-
-	public void setDataList(List<User> dataList) {
-		this.dataList = dataList;
-	}
-
-	public void setDataService(UserService dataService) {
-		this.dataService = dataService;
 	}
 
 	public List<String> getAuthRolesSel() {
@@ -209,12 +163,8 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 		this.availableRolesSel = availableRolesSel;
 	}
 
-	public String getSelec1() {
-		return selec1;
-	}
-
-	public void setSelec1(String selec1) {
-		this.selec1 = selec1;
+	public RolesService getRolesService() {
+		return rolesService;
 	}
 
 	public void setRolesService(RolesService rolesService) {
@@ -250,7 +200,6 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 	}
 
 	public Map<Integer, String> getMapStatus() {
-		Map<Integer, String> mapStatus = new HashMap<>();
 		for (UserStatusType userStatusType : UserStatusType.list()) {
 			mapStatus.put(userStatusType.getId(), userStatusType.getKey());
 		}
@@ -258,16 +207,10 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 	}
 
 	public Map<Integer, String> getMapCategory() {
-		Map<Integer, String> mapCategory = new HashMap<>();
 		for (UserCategoryType userCategoryType : UserCategoryType.list()) {
-			mapCategory.put(userCategoryType.getId(), userCategoryType.getKey());
+			mapCategories.put(userCategoryType.getId(), userCategoryType.getKey());
 		}
-		return mapCategory;
-	}
-
-	@Override
-	public void setRequest(Map map) {
-		this.requestAttributes = map;
+		return mapCategories;
 	}
 
 	// Creamos la lista de roles del objeto User
@@ -279,5 +222,13 @@ public class UserAction extends ActionSupport implements RequestAware, Serializa
 			}
 		}
 		return userRoles;
+	}
+
+	public UserService getDataService() {
+		return dataService;
+	}
+
+	public void setDataService(Object dataService) {
+		this.dataService = (UserService) dataService;
 	}
 }

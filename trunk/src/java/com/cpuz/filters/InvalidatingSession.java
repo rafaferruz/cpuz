@@ -3,7 +3,7 @@
  * Es llamado solamente por determinados procesos:
  *  - logout.jsp
  * 
- * @author ESTHER
+ * @author RAFAEL FERRUZ
  */
 
 package com.cpuz.filters;
