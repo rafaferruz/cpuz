@@ -2,8 +2,8 @@ package com.cpuz.service;
 
 import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.NewsPiece;
-import com.cpuz.exceptions.NewsCompositionException;
-import com.cpuz.exceptions.NewsPieceException;
+import com.cpuz.exceptions.UserException;
+import com.cpuz.exceptions.UserException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class InitService {
 	 * @return	Objeto List con las NewsPiece seleccionadas. Si no ha encontrado
 	 * ninguna, devuelve una lista vacía.
 	 */
-	public List<NewsPiece> getWhatsNew() throws SQLException, NewsPieceException, NewsCompositionException {
+	public List<NewsPiece> getWhatsNew() throws SQLException, UserException, UserException {
 		List<NewsPiece> newsPieces = new ArrayList<>();
 		newsPieces = new DAOFactory().getNewsPieceDAO().getCompleteNewsPieces();
 		return newsPieces;

@@ -21,8 +21,7 @@ package com.cpuz.DAO;
 import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.DAO.impl.NewsCompositionDAOImpl;
 import com.cpuz.domain.NewsPiece;
-import com.cpuz.exceptions.NewsCompositionException;
-import com.cpuz.exceptions.NewsPieceException;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.st2.beans.ControlParams;
 import com.cpuz.util.SqlUtil;
 import java.sql.*;
@@ -205,7 +204,7 @@ public class NewsPieceDAO implements InjectableDAO {
 		return newsPiece;
 	}
 
-	public List<NewsPiece> getCompleteNewsPieces() throws SQLException, NewsPieceException, NewsCompositionException {
+	public List<NewsPiece> getCompleteNewsPieces() throws SQLException, UserException, UserException {
 		List<NewsPiece> newsPieces = new ArrayList<>();
 		String sql = "SELECT * FROM newspieces "
 				+ "LEFT JOIN newscomposition ON nco_npi_id = npi_id, "

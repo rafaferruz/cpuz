@@ -18,71 +18,51 @@
  */
 package com.cpuz.actions.admin;
 
-import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.Role;
 import com.cpuz.domain.UserType;
-import com.cpuz.exceptions.RoleException;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.service.RolesService;
-import com.cpuz.st2.beans.ControlParams;
-import com.opensymphony.xwork2.ActionSupport;
-import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.apache.struts2.interceptor.RequestAware;
 
 /**
  * Esta clase gestiona las operaciones CRUD de los objetos Role de la aplicación
  */
-public class RoleAction extends ActionSupport implements RequestAware, Serializable {
+public class RoleAction extends GenericAction<Role> {
 
-	private ControlParams control = new ControlParams();
-	private List<Role> dataList = new ArrayList<>();
-	private Role dataEdit = new Role();
 	private RolesService dataService;
-	private Map<Integer, String> mapStatus = new HashMap<>();
-	private Map<String, Object> requestAttributes = new HashMap<>();
-	private String selec1;
 
 	public RoleAction() {
 		super();
+		dataEdit=new Role();
 	}
 
-	@Override
-	public String execute() {
-		return "error";
-	}
-
-	public String roleNew() {
+	public String objectNew() {
 		control.setRecCount(1);
 		control.setRunAction("New");
 		requestAttributes.put("page", "/WEB-INF/views/roleEdit.jsp");
 		return "new";
 	}
 
-	public String roleEdit() throws SQLException {
+	public String objectEdit() throws SQLException {
 		dataEdit = dataService.getById(control.getId());
-		if (dataEdit==null){
-			return roleList();
+		if (dataEdit == null) {
+			return objectList();
 		}
 		control.setRunAction("Edit");
 		requestAttributes.put("page", "/WEB-INF/views/roleEdit.jsp");
 		return "edit";
 	}
 
-	public String roleSaveNew() throws SQLException, RoleException{
+	public String objectSaveNew() throws SQLException, UserException {
 		if (dataService.insertRole(dataEdit) == 1) {
 			this.addActionMessage(getText("RoleEditSaveOkMsg"));
-			return roleList();
+			return objectList();
 		}
 		return "edit";
 	}
 
-	public String roleSaveEdit() throws SQLException, RoleException {
-
+	public String objectSaveEdit() throws SQLException, UserException {
 		if (dataService.keyIdExists(dataEdit.getId())) {
 			try {
 				dataService.updateRole(dataEdit);
@@ -91,12 +71,12 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 				this.addActionError(getText("RoleEditErrorMsg"));
 				return "edit";
 			}
-			return roleList();
+			return objectList();
 		}
 		return "new";
 	}
 
-	public String roleDelete() throws SQLException {
+	public String objectDelete() throws SQLException {
 		if (selec1 != null) {
 			String[] deletes = selec1.split(",");
 			if (dataService.deleteRoleIds(Arrays.asList(deletes)) > 0) {
@@ -104,13 +84,13 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 			} else {
 				addActionError(getText("NoneDeletedRole"));
 			}
-			return roleList();
+			return objectList();
 		}
 		addActionError(getText("NoneSelectedRole"));
-		return roleList();
+		return objectList();
 	}
 
-	public String roleList() throws SQLException {
+	public String objectList() throws SQLException {
 		if (control.getRecCount() == 0) {
 			control.setRecCount(dataService.getCountRows());
 		}
@@ -121,78 +101,12 @@ public class RoleAction extends ActionSupport implements RequestAware, Serializa
 		return "list";
 	}
 
-	public String roleNavigation() throws SQLException {
-		control.doNavigation();
-		return roleList();
-	}
-
-	@Override
-	public void validate() {
-		super.validate();
-	}
-
-	public ControlParams getControl() {
-		return control;
-	}
-
-	public void setControl(ControlParams control) {
-		this.control = control;
-	}
-
-	public Map<Integer, String> getMapStatus() {
-		return mapStatus;
-	}
-
-	public void setMapStatus(Map<Integer, String> mapStatus) {
-		this.mapStatus = mapStatus;
-	}
-
-	public Role getDataEdit() {
-		return dataEdit;
-	}
-
-	public void setDataEdit(Role dataEdit) {
-		this.dataEdit = dataEdit;
-	}
-
-	public List<Role> getDataList() {
-		return dataList;
-	}
-
-	public void setDataList(List<Role> dataList) {
-		this.dataList = dataList;
-	}
-
 	public RolesService getDataService() {
 		return dataService;
 	}
 
-	public void setDataService(RolesService dataService) {
-		this.dataService = dataService;
-		this.dataService.setRoleDAO(new DAOFactory().getRoleDAO());
-	}
-
-	public String getSelec1() {
-		return selec1;
-	}
-
-	public void setSelec1(String selec1) {
-		this.selec1 = selec1;
-	}
-
-	public void initMapStatus() {
-		//Prepara tipos de status para radio element
-		mapStatus.put(0, this.getText("received"));
-		mapStatus.put(1, this.getText("waiting"));
-		mapStatus.put(2, this.getText("authorized"));
-	}
-
-	public void setRequest(Map map) {
-		this.requestAttributes = map;
-	}
-
-	public Map<String, Object> getRequestAttributes() {
-		return requestAttributes;
+	public void setDataService(Object dataService) {
+		this.dataService = (RolesService) dataService;
 	}
 
 }

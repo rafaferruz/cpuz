@@ -5,7 +5,7 @@
 package com.cpuz.controllers;
 
 import com.cpuz.domain.Image;
-import com.cpuz.exceptions.ImageException;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.service.ImagesService;
 import java.io.File;
 import java.io.IOException;
@@ -223,7 +223,7 @@ public class ImagesEditController extends GenericEditController {
                             if (request.getAttribute("repositoryReference") != null) {
                                 try {
                                     deleteFileFtp((String) request.getAttribute("repositoryReference"));
-                                } catch (ImageException ex) {
+                                } catch (UserException ex) {
                                     Logger.getLogger(ImagesEditController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                             }
@@ -267,7 +267,7 @@ public class ImagesEditController extends GenericEditController {
                         request.setAttribute("ImagesEditSaveOkMsg", "ImagesEditSaveOkMsg");
                     }
                     request.setAttribute("runaction", "new");
-                } catch (ImageException ex) {
+                } catch (UserException ex) {
                     request.setAttribute("runaction", "edit");
                     request.setAttribute("ImagesEditErrorMsg", "ImagesEditErrorMsg");
                 } catch (IOException ex) {
@@ -309,7 +309,7 @@ public class ImagesEditController extends GenericEditController {
                         request.setAttribute("runaction", "list");
                         request.setAttribute("ImagesEditSaveOkMsg", "ImagesEditSaveOkMsg");
                     }
-                } catch (ImageException ex) {
+                } catch (UserException ex) {
                     request.setAttribute("runaction", "edit");
                     request.setAttribute("ImagesEditErrorMsg", "ImagesEditErrorMsg");
                 } catch (IOException ex) {
@@ -337,7 +337,7 @@ public class ImagesEditController extends GenericEditController {
         }
     }
 
-    private void putFileFtp(String localDir, String localFileName) throws ImageException, IOException {
+    private void putFileFtp(String localDir, String localFileName) throws UserException, IOException {
 
         String[] argsFtp = {"ftp://ftp.laboraldetarragona.com", "-user", "ecosysw@laboraldetarragona.com"};
 
@@ -355,7 +355,7 @@ public class ImagesEditController extends GenericEditController {
             ftpObj.connect(ftpConx);
         } catch (IOException e) {
             System.out.println(e);
-            throw new ImageException("Conection FTP Error: " + e);
+            throw new UserException("Conection FTP Error: " + e);
         }
         // El m�todo pwd devuelve el directorio actual
         CoFile dir = new FtpFile(ftpObj.pwd(), ftpObj);
@@ -365,15 +365,15 @@ public class ImagesEditController extends GenericEditController {
             if (file.exists()) {
                 if (file.isFile()) {
                     if (!file.delete()) {
-                        throw new ImageException("El fichero ya existe y no puede ser reemplazado: ");
+                        throw new UserException("El fichero ya existe y no puede ser reemplazado: ");
                     }
                 }
             }
             if (!CoLoad.copy(file, localFile)) {
-                throw new ImageException("No ha sido posible copiar el fichero en el servidor: ");
+                throw new UserException("No ha sido posible copiar el fichero en el servidor: ");
             }
         } else {
-            throw new ImageException("No se encuentra el repositorio de im�genes");
+            throw new UserException("No se encuentra el repositorio de im�genes");
 
         }
         /* this must be always run */
@@ -381,7 +381,7 @@ public class ImagesEditController extends GenericEditController {
 
     }
 
-    private void deleteFileFtp(String fileToDelete) throws ImageException {
+    private void deleteFileFtp(String fileToDelete) throws UserException {
         String[] argsFtp = {"ftp://ftp.laboraldetarragona.com", "-user", "ecosysw@laboraldetarragona.com"};
 
         FtpConnect ftpConx = FtpConnect.newConnect(argsFtp);
@@ -393,19 +393,19 @@ public class ImagesEditController extends GenericEditController {
             ftpObj.connect(ftpConx);
         } catch (IOException e) {
             System.out.println(e);
-            throw new ImageException("Conection FTP Error: " + e);
+            throw new UserException("Conection FTP Error: " + e);
         }
         if (ftpObj.cd("CPUZ/images")) {
             CoFile file = new FtpFile(fileToDelete, ftpObj);
             if (file.exists()) {
                 if (file.isFile()) {
                     if (!file.delete()) {
-                        throw new ImageException("El fichero ya existe y no puede ser reemplazado: ");
+                        throw new UserException("El fichero ya existe y no puede ser reemplazado: ");
                     }
                 }
             }
         } else {
-            throw new ImageException("No se encuentra el repositorio de im�genes");
+            throw new UserException("No se encuentra el repositorio de im�genes");
         }
         /* this must be always run */
         ftpObj.disconnect();

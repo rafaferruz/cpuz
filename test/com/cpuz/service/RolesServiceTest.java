@@ -4,9 +4,9 @@
  */
 package com.cpuz.service;
 
+import com.cpuz.dummy.DAOFactoryDummy;
 import java.util.ArrayList;
-import com.cpuz.exceptions.RoleException;
-import com.cpuz.dummy.RoleDAOdummy;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.domain.Role;
 import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author ESTHER
+ * @author RAFAEL FERRUZ
  */
 public class RolesServiceTest {
 
@@ -44,7 +44,7 @@ public class RolesServiceTest {
 
 	private RolesService createRoleService() {
 		RolesService rolesService = new RolesService();
-		rolesService.setRoleDAO(new RoleDAOdummy());
+		rolesService.setDAOFactory(new DAOFactoryDummy());
 		return rolesService;
 	}
 
@@ -55,8 +55,8 @@ public class RolesServiceTest {
 	/**
 	 * Test of keyIdExists method, of class RolesService.
 	 */
-	@Test(expected = RoleException.class)
-	public void testKeyIdExists_whenRolIdNull() throws SQLException, RoleException {
+	@Test(expected = UserException.class)
+	public void testKeyIdExists_whenRolIdNull() throws SQLException, UserException {
 		System.out.println("keyIdExists");
 		Integer rolId = null;
 		boolean result = instance.keyIdExists(rolId);
@@ -66,7 +66,7 @@ public class RolesServiceTest {
 	 * Test of keyIdExists method, of class RolesService.
 	 */
 	@Test(expected = SQLException.class)
-	public void testKeyIdExists_whenSQLException() throws SQLException, RoleException {
+	public void testKeyIdExists_whenSQLException() throws SQLException, UserException {
 		System.out.println("keyIdExists");
 		Integer rolId = -1;	// Provocamos SQLException
 		boolean result = instance.keyIdExists(rolId);
@@ -76,7 +76,7 @@ public class RolesServiceTest {
 	 * Test of keyIdExists method, of class RolesService.
 	 */
 	@Test
-	public void testKeyIdExists_whenIdNotFound() throws SQLException, RoleException {
+	public void testKeyIdExists_whenIdNotFound() throws SQLException, UserException {
 		System.out.println("keyIdExists");
 		Integer rolId = 0;	// Provocamos rolId not found
 		assertFalse("rolId no debería ser encontrado", instance.keyIdExists(rolId));
@@ -86,7 +86,7 @@ public class RolesServiceTest {
 	 * Test of keyIdExists method, of class RolesService.
 	 */
 	@Test
-	public void testKeyIdExists_whenIdIsFound() throws SQLException, RoleException {
+	public void testKeyIdExists_whenIdIsFound() throws SQLException, UserException {
 		System.out.println("keyIdExists");
 		Integer rolId = 1;	// Provocamos rolId is found
 		assertTrue("rolId debería haber sido encontrado", instance.keyIdExists(rolId));
@@ -98,8 +98,8 @@ public class RolesServiceTest {
 	@Test(expected = SQLException.class)
 	public void testGetRoleList_whenSQLException() throws SQLException {
 		System.out.println("getRoleList");
-		ControlParams control = null;
-		instance.getRoleList(control);
+		instance.getControl().setRecChunk(-1);
+		instance.getRoleList(instance.getControl());
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -108,7 +108,7 @@ public class RolesServiceTest {
 	 * Test of getRoleList method, of class RolesService.
 	 */
 	@Test
-	public void testGetRoleList_whenEmptyList() throws SQLException, RoleException {
+	public void testGetRoleList_whenEmptyList() throws SQLException, UserException {
 		System.out.println("getRoleList");
 		ControlParams control = new ControlParams();
 		control.setRecCount(0);	// Provocamos que devuelva una lista vacía
@@ -119,7 +119,7 @@ public class RolesServiceTest {
 	 * Test of getRoleList method, of class RolesService.
 	 */
 	@Test
-	public void testGetRoleList_whenNotEmptyList() throws SQLException, RoleException {
+	public void testGetRoleList_whenNotEmptyList() throws SQLException, UserException {
 		System.out.println("getRoleList");
 		ControlParams control = new ControlParams();
 		control.setRecCount(2);	// Provocamos que devuelva una lista con 2 objetos
@@ -150,7 +150,7 @@ public class RolesServiceTest {
 	 * Test of keyIdExists method, of class RolesService.
 	 */
 	@Test(expected = SQLException.class)
-	public void testGetById_whenSQLException() throws SQLException, RoleException {
+	public void testGetById_whenSQLException() throws SQLException, UserException {
 		System.out.println("getById");
 		int rolId = -1;	// Provocamos SQLException
 		instance.getById(rolId);
@@ -160,7 +160,7 @@ public class RolesServiceTest {
 	 * Test of keyIdExists method, of class RolesService.
 	 */
 	@Test
-	public void testGetById_whenIdNotFound() throws SQLException, RoleException {
+	public void testGetById_whenIdNotFound() throws SQLException, UserException {
 		System.out.println("getById");
 		int rolId = 0;	// Provocamos rolId not found
 		assertNull("Debería devolver un objeto null", instance.getById(rolId));
@@ -170,7 +170,7 @@ public class RolesServiceTest {
 	 * Test of keyIdExists method, of class RolesService.
 	 */
 	@Test
-	public void testGetById_whenIdIsFound() throws SQLException, RoleException {
+	public void testGetById_whenIdIsFound() throws SQLException, UserException {
 		System.out.println("getById");
 		int rolId = 1;	// Provocamos rolId is found
 		assertTrue("Debería devolver un objeto Role", instance.getById(rolId).getClass().getName().equals("com.cpuz.domain.Role"));
@@ -179,8 +179,8 @@ public class RolesServiceTest {
 	/**
 	 * Test of insertRole method, of class RolesService.
 	 */
-	@Test(expected = RoleException.class)
-	public void testInsertRoleRoleException() throws Exception {
+	@Test(expected = UserException.class)
+	public void testInsertRoleUserException() throws Exception {
 		System.out.println("insertRole");
 		Role role = null;
 		instance.insertRole(role);
@@ -241,8 +241,8 @@ public class RolesServiceTest {
 	/**
 	 * Test of updateRole method, of class RolesService.
 	 */
-	@Test(expected = RoleException.class)
-	public void testUpdateRoleRoleException() throws Exception {
+	@Test(expected = UserException.class)
+	public void testUpdateRoleUserException() throws Exception {
 		System.out.println("updateRole");
 		Role role = new Role();
 		instance.updateRole(role);
@@ -277,11 +277,11 @@ public class RolesServiceTest {
 	/**
 	 * Test of deleteRole method, of class RolesService.
 	 */
-	@Test(expected = RoleException.class)
-	public void testDeleteRole_whenRoleException() throws SQLException, RoleException {
+	@Test(expected = UserException.class)
+	public void testDeleteRole_whenUserException() throws SQLException, UserException {
 		System.out.println("deleteRole");
 		Role role = new Role();
-		role.setId(null);	// Provocamos RoleException
+		role.setId(null);	// Provocamos UserException
 		instance.deleteRole(role);
 	}
 
@@ -289,7 +289,7 @@ public class RolesServiceTest {
 	 * Test of deleteRole method, of class RolesService.
 	 */
 	@Test(expected = SQLException.class)
-	public void testDeleteRole_whenSQLException() throws SQLException, RoleException {
+	public void testDeleteRole_whenSQLException() throws SQLException, UserException {
 		System.out.println("deleteRole");
 		Role role = new Role();
 		role.setId(-1);	// Provocamos SQLException
@@ -300,7 +300,7 @@ public class RolesServiceTest {
 	 * Test of deleteRole method, of class RolesService.
 	 */
 	@Test
-	public void testDeleteRole_FailDelete() throws SQLException, RoleException {
+	public void testDeleteRole_FailDelete() throws SQLException, UserException {
 		System.out.println("deleteRole");
 		Role role = new Role();
 		role.setId(0);	// Provocamos fallo en la eliminación
@@ -311,7 +311,7 @@ public class RolesServiceTest {
 	 * Test of deleteRole method, of class RolesService.
 	 */
 	@Test
-	public void testDeleteRole_OkDelete() throws SQLException, RoleException {
+	public void testDeleteRole_OkDelete() throws SQLException, UserException {
 		System.out.println("deleteRole");
 		Role role = new Role();
 		role.setId(1);	// Provocamos eliminación correcta
@@ -334,9 +334,8 @@ public class RolesServiceTest {
 	@Test(expected=SQLException.class)
 	public void testDeleteRoleIds_whenSQLException() throws SQLException {
 		System.out.println("deleteRoleIds");
-		String id=null;
 		List<String> ids = new ArrayList<>();
-		ids.add(id);
+		ids.add("");
 		instance.deleteRoleIds(ids);
 	}
 

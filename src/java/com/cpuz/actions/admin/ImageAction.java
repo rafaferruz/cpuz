@@ -20,7 +20,7 @@ package com.cpuz.actions.admin;
 
 import com.cpuz.domain.Image;
 import com.cpuz.domain.UserType;
-import com.cpuz.exceptions.ImageException;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.service.ImagesService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
@@ -105,7 +105,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
 				if (dataEdit.getRepositoryReference() != null) {
 					try {
 						deleteFileFtp((String) dataEdit.getRepositoryReference());
-					} catch (ImageException ex) {
+					} catch (UserException ex) {
 						Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
 					}
 				}
@@ -118,7 +118,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
 			try {
 				putFileFtp(applicationAttributes.get("dirRealApplicationPath") + ("WEB-INF/temp"), temporaryFileName);
 				dataEdit.setRepositoryReference(temporaryFileName);
-			} catch (ImageException ex) {
+			} catch (UserException ex) {
 				Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
 				control.setRunAction("Edit");
 				addActionError(getText("ImagesEditErrorUploadFile"));
@@ -166,7 +166,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
 				if (dataEdit.getRepositoryReference() != null) {
 					try {
 						deleteFileFtp((String) dataEdit.getRepositoryReference());
-					} catch (ImageException ex) {
+					} catch (UserException ex) {
 						Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
 					}
 				}
@@ -180,7 +180,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
 			try {
 				putFileFtp(applicationAttributes.get("dirRealApplicationPath") + ("WEB-INF/temp"), temporaryFileName);
 				dataEdit.setRepositoryReference(temporaryFileName);
-			} catch (ImageException ex) {
+			} catch (UserException ex) {
 				Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
 				control.setRunAction("Edit");
 				addActionError(getText("ImagesEditErrorUploadFile"));
@@ -230,7 +230,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
 				if (dataEdit.getRepositoryReference() != null) {
 					try {
 						deleteFileFtp((String) dataEdit.getRepositoryReference());
-					} catch (ImageException ex) {
+					} catch (UserException ex) {
 						Logger.getLogger(ImageAction.class.getName()).log(Level.SEVERE, null, ex);
 					}
 				}
@@ -372,7 +372,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
 		fos.close();
 	}
 
-	private void putFileFtp(String localDir, String localFileName) throws ImageException, IOException {
+	private void putFileFtp(String localDir, String localFileName) throws UserException, IOException {
 		String[] argsFtp = {"ftp://ftp.laboraldetarragona.com", "-user", "ecosysw@laboraldetarragona.com"};
 		FtpConnect ftpConx = FtpConnect.newConnect(argsFtp);
 		ftpConx.setPassWord("cragogru");
@@ -385,7 +385,7 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
 			ftpObj.connect(ftpConx);
 		} catch (IOException e) {
 			System.out.println(e);
-			throw new ImageException("Conection FTP Error: " + e);
+			throw new UserException("Conection FTP Error: " + e);
 		} // El m�todo pwd devuelve el directorio actual
 		CoFile dir = new FtpFile(ftpObj.pwd(), ftpObj);
 		if (ftpObj.cd("CPUZ/images")) {
@@ -394,20 +394,20 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
 			if (file.exists()) {
 				if (file.isFile()) {
 					if (!file.delete()) {
-						throw new ImageException("El fichero ya existe y no puede ser reemplazado: ");
+						throw new UserException("El fichero ya existe y no puede ser reemplazado: ");
 					}
 				}
 			}
 			if (!CoLoad.copy(file, localFile)) {
-				throw new ImageException("No ha sido posible copiar el fichero en el servidor: ");
+				throw new UserException("No ha sido posible copiar el fichero en el servidor: ");
 			}
 		} else {
-			throw new ImageException("No se encuentra el repositorio de im�genes");
+			throw new UserException("No se encuentra el repositorio de im�genes");
 		} /* this must be always run */
 		ftpObj.disconnect();
 	}
 
-	private void deleteFileFtp(String fileToDelete) throws ImageException {
+	private void deleteFileFtp(String fileToDelete) throws UserException {
 		String[] argsFtp = {"ftp://ftp.laboraldetarragona.com", "-user", "ecosysw@laboraldetarragona.com"};
 		FtpConnect ftpConx = FtpConnect.newConnect(argsFtp);
 		ftpConx.setPassWord("cragogru");
@@ -416,19 +416,19 @@ public class ImageAction extends ActionSupport implements ServletRequestAware, R
 			ftpObj.connect(ftpConx);
 		} catch (IOException e) {
 			System.out.println(e);
-			throw new ImageException("Conection FTP Error: " + e);
+			throw new UserException("Conection FTP Error: " + e);
 		}
 		if (ftpObj.cd("CPUZ/images")) {
 			CoFile file = new FtpFile(fileToDelete, ftpObj);
 			if (file.exists()) {
 				if (file.isFile()) {
 					if (!file.delete()) {
-						throw new ImageException("El fichero ya existe y no puede ser reemplazado: ");
+						throw new UserException("El fichero ya existe y no puede ser reemplazado: ");
 					}
 				}
 			}
 		} else {
-			throw new ImageException("No se encuentra el repositorio de imágenes");
+			throw new UserException("No se encuentra el repositorio de imágenes");
 		} /* this must be always run */
 		ftpObj.disconnect();
 	}

@@ -18,10 +18,10 @@
  */
 package com.cpuz.service;
 
-import com.cpuz.DAO.RoleDAO;
+import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.Role;
 import com.cpuz.domain.UserType;
-import com.cpuz.exceptions.RoleException;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
 import java.util.List;
@@ -37,13 +37,17 @@ public class RolesService {
 
 	private final transient Logger log = Logger.getLogger(this.getClass());
 	private ControlParams control = new ControlParams();
-	RoleDAO roleDAO;
+	DAOFactory DAOFactory;
 
 	public RolesService() {
 	}
 
-	public void setRoleDAO(RoleDAO roleDAO) {
-		this.roleDAO = roleDAO;
+	public DAOFactory getDAOFactory() {
+		return DAOFactory;
+	}
+
+	public void setDAOFactory(DAOFactory DAOFactory) {
+		this.DAOFactory = DAOFactory;
 	}
 
 	/**
@@ -51,14 +55,13 @@ public class RolesService {
 	 * 
 	 * @param rolId		id del rol a consultar
 	 * @return			true si encuentra una fila con el id recibido, false si no lo encuentra.
-	 * @throws RoleException	Si recibe un parámetro rolId igual null 
+	 * @throws UserException	Si recibe un parámetro rolId igual null 
 	 */
-	public boolean keyIdExists(Integer rolId) throws SQLException, RoleException {
+	public boolean keyIdExists(Integer rolId) throws SQLException, UserException {
 		if (rolId == null) {
-			throw new RoleException("roleException.rolIdNull");
+			throw new UserException("roleException.rolIdNull");
 		}
-		Role role = roleDAO.read(rolId);
-		return (role != null);
+		return (DAOFactory.getRoleDAO().read(rolId) != null);
 	}
 
 	/**
@@ -94,38 +97,38 @@ public class RolesService {
 	 * @throws SQLException 
 	 */
 	public List<Role> getRoleList(ControlParams control) throws SQLException {
-		List<Role> roles = roleDAO.getRoleList(control);
+		List<Role> roles = DAOFactory.getRoleDAO().getRoleList(control);
 		return roles;
 	}
 
 	public int getCountRows() throws SQLException {
-		return roleDAO.getCountRows();
+		return DAOFactory.getRoleDAO().getCountRows();
 	}
 
 	public Role getById(int rolId) throws SQLException {
-		return roleDAO.read(rolId);
+		return DAOFactory.getRoleDAO().read(rolId);
 	}
 
-	public int insertRole(Role role) throws SQLException, RoleException {
-		return roleDAO.create(role);
+	public int insertRole(Role role) throws SQLException, UserException {
+		return DAOFactory.getRoleDAO().create(role);
 	}
 
-	public int updateRole(Role role) throws SQLException, RoleException {
-		return roleDAO.update(role);
+	public int updateRole(Role role) throws SQLException, UserException {
+		return DAOFactory.getRoleDAO().update(role);
 	}
 
-	public int deleteRole(Role role) throws SQLException, RoleException {
+	public int deleteRole(Role role) throws SQLException, UserException {
 		if (role == null) {
-			throw new RoleException("roleException.roleNull");
+			throw new UserException("roleException.roleNull");
 		}
 		if (role.getId() == null) {
-			throw new RoleException("roleException.rolIdNull");
+			throw new UserException("roleException.rolIdNull");
 		}
-		return roleDAO.delete(role.getId());
+		return DAOFactory.getRoleDAO().delete(role.getId());
 	}
 
 	public int deleteRoleIds(List<String> ids) throws SQLException {
-		return roleDAO.deleteIds(ids);
+		return DAOFactory.getRoleDAO().deleteIds(ids);
 	}
 
 	public ControlParams getControl() {

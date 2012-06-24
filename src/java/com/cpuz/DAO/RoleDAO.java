@@ -20,7 +20,7 @@ package com.cpuz.DAO;
 
 import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.domain.Role;
-import com.cpuz.exceptions.RoleException;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.st2.beans.ControlParams;
 import com.cpuz.util.SqlUtil;
 import java.sql.*;
@@ -50,10 +50,10 @@ public class RoleDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public int create(Role role) throws SQLException, RoleException {
+	public int create(Role role) throws SQLException, UserException {
 		if (role == null || role.getRole() == null || role.getRole().equals("")
 				|| role.getDescription() == null || role.getDescription().equals("")) {
-			throw new RoleException("roleException.nullOrEmptyField");
+			throw new UserException("roleException.nullOrEmptyField");
 		}
 		String sql = "INSERT INTO roles ("
 				+ "rol_role, "
@@ -95,10 +95,10 @@ public class RoleDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public int update(Role role) throws SQLException, RoleException {
+	public int update(Role role) throws SQLException, UserException {
 		if (role == null || role.getId() == null || role.getRole() == null
 				|| role.getRole().equals("") || role.getDescription() == null || role.getDescription().equals("")) {
-			throw new RoleException("roleException.nullOrEmptyField");
+			throw new UserException("roleException.nullOrEmptyField");
 		}
 		int rowCount = 0;
 		String sql = "UPDATE roles SET "

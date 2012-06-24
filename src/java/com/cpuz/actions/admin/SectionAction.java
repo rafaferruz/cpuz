@@ -25,6 +25,7 @@ import com.cpuz.service.SectionsService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -68,8 +69,8 @@ public class SectionAction extends ActionSupport implements RequestAware, Serial
 		return "new";
 	}
 
-	public String sectionEdit() throws Exception {
-		dataEdit = dataService.getById(control.getId().toString());
+	public String sectionEdit() throws SQLException{
+//FIXME: Se debe cambiar la clave de la section a tipo int		dataEdit = dataService.getById(control.getId().toString());
 		// Se lee lista de Roles
 		availableRolesList = rolesService.getNewsRecords();
 

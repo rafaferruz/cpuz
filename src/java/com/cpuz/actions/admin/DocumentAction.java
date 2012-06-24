@@ -20,7 +20,7 @@ package com.cpuz.actions.admin;
 
 import com.cpuz.domain.Document;
 import com.cpuz.domain.UserType;
-import com.cpuz.exceptions.DocumentException;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.service.DocumentsService;
 import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
@@ -105,7 +105,7 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
 				if (dataEdit.getRepositoryReference() != null) {
 					try {
 						deleteFileFtp((String) dataEdit.getRepositoryReference());
-					} catch (DocumentException ex) {
+					} catch (UserException ex) {
 						Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
 					}
 				}
@@ -118,7 +118,7 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
 			try {
 				putFileFtp(applicationAttributes.get("dirRealApplicationPath") + ("WEB-INF/temp"), temporaryFileName);
 				dataEdit.setRepositoryReference(temporaryFileName);
-			} catch (DocumentException ex) {
+			} catch (UserException ex) {
 				Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
 				control.setRunAction("Edit");
 				addActionError(getText("DocumentsEditErrorUploadFile"));
@@ -166,7 +166,7 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
 				if (dataEdit.getRepositoryReference() != null) {
 					try {
 						deleteFileFtp((String) dataEdit.getRepositoryReference());
-					} catch (DocumentException ex) {
+					} catch (UserException ex) {
 						Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
 					}
 				}
@@ -180,7 +180,7 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
 			try {
 				putFileFtp(applicationAttributes.get("dirRealApplicationPath") + ("WEB-INF/temp"), temporaryFileName);
 				dataEdit.setRepositoryReference(temporaryFileName);
-			} catch (DocumentException ex) {
+			} catch (UserException ex) {
 				Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
 				control.setRunAction("Edit");
 				addActionError(getText("DocumentsEditErrorUploadFile"));
@@ -230,7 +230,7 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
 				if (dataEdit.getRepositoryReference() != null) {
 					try {
 						deleteFileFtp((String) dataEdit.getRepositoryReference());
-					} catch (DocumentException ex) {
+					} catch (UserException ex) {
 						Logger.getLogger(DocumentAction.class.getName()).log(Level.SEVERE, null, ex);
 					}
 				}
@@ -372,7 +372,7 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
 		fos.close();
 	}
 
-	private void putFileFtp(String localDir, String localFileName) throws DocumentException, IOException {
+	private void putFileFtp(String localDir, String localFileName) throws UserException, IOException {
 		String[] argsFtp = {"ftp://ftp.laboraldetarragona.com", "-user", "ecosysw@laboraldetarragona.com"};
 		FtpConnect ftpConx = FtpConnect.newConnect(argsFtp);
 		ftpConx.setPassWord("cragogru");
@@ -385,7 +385,7 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
 			ftpObj.connect(ftpConx);
 		} catch (IOException e) {
 			System.out.println(e);
-			throw new DocumentException("Conection FTP Error: " + e);
+			throw new UserException("Conection FTP Error: " + e);
 		} // El m�todo pwd devuelve el directorio actual
 		CoFile dir = new FtpFile(ftpObj.pwd(), ftpObj);
 		if (ftpObj.cd("CPUZ/documents")) {
@@ -394,20 +394,20 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
 			if (file.exists()) {
 				if (file.isFile()) {
 					if (!file.delete()) {
-						throw new DocumentException("El fichero ya existe y no puede ser reemplazado: ");
+						throw new UserException("El fichero ya existe y no puede ser reemplazado: ");
 					}
 				}
 			}
 			if (!CoLoad.copy(file, localFile)) {
-				throw new DocumentException("No ha sido posible copiar el fichero en el servidor: ");
+				throw new UserException("No ha sido posible copiar el fichero en el servidor: ");
 			}
 		} else {
-			throw new DocumentException("No se encuentra el repositorio de im�genes");
+			throw new UserException("No se encuentra el repositorio de im�genes");
 		} /* this must be always run */
 		ftpObj.disconnect();
 	}
 
-	private void deleteFileFtp(String fileToDelete) throws DocumentException {
+	private void deleteFileFtp(String fileToDelete) throws UserException {
 		String[] argsFtp = {"ftp://ftp.laboraldetarragona.com", "-user", "ecosysw@laboraldetarragona.com"};
 		FtpConnect ftpConx = FtpConnect.newConnect(argsFtp);
 		ftpConx.setPassWord("cragogru");
@@ -416,19 +416,19 @@ public class DocumentAction extends ActionSupport implements ServletRequestAware
 			ftpObj.connect(ftpConx);
 		} catch (IOException e) {
 			System.out.println(e);
-			throw new DocumentException("Conection FTP Error: " + e);
+			throw new UserException("Conection FTP Error: " + e);
 		}
 		if (ftpObj.cd("CPUZ/documents")) {
 			CoFile file = new FtpFile(fileToDelete, ftpObj);
 			if (file.exists()) {
 				if (file.isFile()) {
 					if (!file.delete()) {
-						throw new DocumentException("El fichero ya existe y no puede ser reemplazado: ");
+						throw new UserException("El fichero ya existe y no puede ser reemplazado: ");
 					}
 				}
 			}
 		} else {
-			throw new DocumentException("No se encuentra el repositorio de imágenes");
+			throw new UserException("No se encuentra el repositorio de imágenes");
 		} /* this must be always run */
 		ftpObj.disconnect();
 	}

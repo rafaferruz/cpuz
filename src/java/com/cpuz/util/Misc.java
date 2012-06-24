@@ -1,6 +1,6 @@
 package com.cpuz.util;
 
-import com.cpuz.exceptions.UserCodexException;
+import com.cpuz.exceptions.UserException;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -66,9 +66,9 @@ public class Misc {
 	 * @param file
 	 *            flujo del archivo
 	 * @return lista de líneas leídas
-	 * @throws UserCodexException
+	 * @throws UserException
 	 */
-	public static List<String> getFileLines(InputStream file) throws UserCodexException {
+	public static List<String> getFileLines(InputStream file) throws UserException {
 		InputStreamReader fr = null;
 		BufferedReader br = null;
 		List<String> lines = new ArrayList<String>();
@@ -82,14 +82,14 @@ public class Misc {
 			}
 
 		} catch (FileNotFoundException fe) {
-			throw new UserCodexException("No se ha encontrado el archivo: " + fe);
+			throw new UserException("No se ha encontrado el archivo: " + fe);
 		} catch (IOException ioex) {
-			throw new UserCodexException("Error de lectura del archivo: " + ioex);
+			throw new UserException("Error de lectura del archivo: " + ioex);
 		} finally {
 			try {
 				fr.close();
 			} catch (IOException ex) {
-				throw new UserCodexException("Error al recoger la información del archivo " + ex);
+				throw new UserException("Error al recoger la información del archivo " + ex);
 			}
 		}
 		return lines;
@@ -103,15 +103,15 @@ public class Misc {
 	 * @param parameter
 	 *            parámetro archivo
 	 * @return lista de líneas leídas del archivo
-	 * @throws UserCodexException
+	 * @throws UserException
 	 */
-	public static List<String> getFileLines(HttpServletRequest request, String parameter) throws UserCodexException {
+	public static List<String> getFileLines(HttpServletRequest request, String parameter) throws UserException {
 		List<String> lines = null;
 		BufferedInputStream file;
 		try {
 			FileUploader f = new FileUploader(request);
 			if (!f.isThereAnyFile()) {
-				throw new UserCodexException("UserCodexException.paymentFileNotContainsPayments");
+				throw new UserException("UserException.paymentFileNotContainsPayments");
 			}
 			file = new BufferedInputStream(f.readFile(parameter));
 			if (file != null) {
@@ -119,7 +119,7 @@ public class Misc {
 			}
 		} catch (FileUploadException ex) {
 			log.error("Error al subir el archivo", ex);
-			throw new UserCodexException("Error al subir archivo. " + ex);
+			throw new UserException("Error al subir archivo. " + ex);
 		}
 		return lines;
 	}
@@ -164,11 +164,11 @@ public class Misc {
 	 *            Objeto que se comprueba
 	 * @param i18nMessage
 	 *            mensaje internacionalizado a mostrar
-	 * @throws UserCodexException
+	 * @throws UserException
 	 */
-	public static void checkNull(Object object, String i18nMessage) throws UserCodexException {
+	public static void checkNull(Object object, String i18nMessage) throws UserException {
 		if (object == null) {
-			throw new UserCodexException(i18nMessage);
+			throw new UserException(i18nMessage);
 		}
 	}
 
@@ -181,16 +181,16 @@ public class Misc {
 	 *            mensaje internacionalizado
 	 * @param i18nParam
 	 *            parámetro del mensaje
-	 * @throws UserCodexException
+	 * @throws UserException
 	 */
-	public static void checkNull(Object object, String i18nMessage, Object i18nParam) throws UserCodexException {
+	public static void checkNull(Object object, String i18nMessage, Object i18nParam) throws UserException {
 		if (object == null) {
 			if (i18nParam != null) {
 				String i18nString = String.valueOf(i18nParam);
 				if (!i18nString.isEmpty()) {
-					throw new UserCodexException(i18nMessage);
+					throw new UserException(i18nMessage);
 				} else {
-					throw new UserCodexException(i18nMessage, i18nString);
+//	FIXME: La he comentado para que no dé error				throw new UserException(i18nMessage, i18nString);
 				}
 			}
 		}

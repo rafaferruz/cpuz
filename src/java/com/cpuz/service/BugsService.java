@@ -45,7 +45,7 @@ public class BugsService {
 	 * 
 	 * @param bugId		id del bug a consultar
 	 * @return			true si encuentra una fila con el id recibido, false si no lo encuentra.
-	 * @throws RoleException 
+	 * @throws UserException 
 	 */
     public boolean keyIdExists(Integer bugId) throws SQLException {
             Bug bug = new DAOFactory().getBugDAO().read(bugId);

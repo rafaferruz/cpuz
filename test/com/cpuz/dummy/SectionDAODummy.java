@@ -30,10 +30,10 @@ import java.util.List;
  * Clase dummy para la ejecución tests de operaciones CRUD sobre la tabla 'sections'.
  * 
  */
-public class SectionDAOdummy extends SectionDAO {
+public class SectionDAODummy extends SectionDAO {
 
 	/*
-	 * Método dummy para testear clases que accedan a SectionDAOdummy.create()
+	 * Método dummy para testear clases que accedan a SectionDAODummy.create()
 	 * 
 	 * Si el objeto pasado como parámetro es igual a null, devuelve una SQLException para su chequeo.
 	 * Si la variable de instancia 'id' del objeto pasado es igual a null, se devuelve el valor 0 y
@@ -67,7 +67,7 @@ public class SectionDAOdummy extends SectionDAO {
 	}
 
 	/*
-	 * Método dummy para testear clases que accedan a SectionDAOdummy.update()
+	 * Método dummy para testear clases que accedan a SectionDAODummy.update()
 	 * 
 	 * Si el objeto pasado como parámetro es igual a null, devuelve una SQLException para su chequeo.
 	 * Si la variable de instancia 'id' del objeto pasado es igual a null, se devuelve el valor 0 y
@@ -87,7 +87,7 @@ public class SectionDAOdummy extends SectionDAO {
 	}
 
 	/*
-	 * Método dummy para testear clases que accedan a SectionDAOdummy.delete()
+	 * Método dummy para testear clases que accedan a SectionDAODummy.delete()
 	 * 
 	 * Si el objeto pasado como parámetro es igual a null, devuelve una SQLException para su chequeo.
 	 * Si la variable de instancia 'id' del objeto pasado es igual a un string vacio, se devuelve el valor 0 y
@@ -107,7 +107,7 @@ public class SectionDAOdummy extends SectionDAO {
 	}
 
 	/*
-	 * Método dummy para testear clases que accedan a SectionDAOdummy.deleteIds()
+	 * Método dummy para testear clases que accedan a SectionDAODummy.deleteIds()
 	 * 
 	 * Si el objeto pasado como parámetro es igual a null, devuelve una SQLException para su chequeo.
 	 * Si la lista de Ids a deletear es una lista vacía, se devuelve el valor 0 y

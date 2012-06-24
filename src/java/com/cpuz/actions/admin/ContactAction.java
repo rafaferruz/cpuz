@@ -73,8 +73,8 @@ public class ContactAction extends ActionSupport implements RequestAware, Sessio
             this.addActionMessage(getText("ContactEditSaveOkMsg"));
             dataList = dataService.getRecords("SELECT * FROM contacts "
                     + " ORDER BY con_date DESC "
-                    + " LIMIT " + control.getRecChunk().toString()
-                    + " OFFSET " + control.getRecStart().toString(), "", "");
+                    + " LIMIT " + control.getRecChunk()
+                    + " OFFSET " + control.getRecStart(), "", "");
             control.setRecCount(dataList.size());
             control.setRunAction("list");
             requestáttributes.put("page", "/WEB-INF/pages/thanksForContact.jsp");
@@ -94,8 +94,8 @@ public class ContactAction extends ActionSupport implements RequestAware, Sessio
                 return "EDIT";
             }
             dataList = dataService.getRecords("SELECT * FROM contacts "
-                    + " LIMIT " + control.getRecChunk().toString()
-                    + " OFFSET " + control.getRecStart().toString(), "", "");
+                    + " LIMIT " + control.getRecChunk()
+                    + " OFFSET " + control.getRecStart(), "", "");
             control.setRecCount(dataList.size());
             control.setRunAction("list");
             requestáttributes.put("page", "/WEB-INF/views/contactList.jsp");
@@ -129,8 +129,8 @@ public class ContactAction extends ActionSupport implements RequestAware, Sessio
  
         dataList = dataService.getRecords("SELECT * FROM contacts "
                 + " ORDER BY con_date DESC "
-                + " LIMIT " + control.getRecChunk().toString()
-                + " OFFSET " + control.getRecStart().toString(), "", "");
+                + " LIMIT " + control.getRecChunk()
+                + " OFFSET " + control.getRecStart(), "", "");
         control.setRunAction("list");
         requestáttributes.put("page", "/WEB-INF/views/contactList.jsp");
         return "LIST";

@@ -21,6 +21,7 @@ package com.cpuz.DAO;
 import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.domain.User;
 import com.cpuz.domain.UserRole;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.st2.beans.ControlParams;
 import com.cpuz.util.SqlUtil;
 import java.sql.*;
@@ -50,19 +51,23 @@ public class UserDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public synchronized int create(User rec) throws SQLException {
+	public synchronized int create(User user) throws SQLException, UserException {
+		if (user == null || user.getUser() == null || user.getUser().equals("")
+				|| user.getPassword() == null || user.getPassword().equals("")) {
+			throw new UserException("userException.nullOrEmptyField");
+		}
 
 		String sql = "INSERT INTO users "
 				+ "(usu_date, usu_status, usu_category, usu_user, "
 				+ "usu_name, usu_password, usu_email) "
 				+ " VALUES ("
-				+ "'" + (new SimpleDateFormat("yyyy-MM-dd").format(rec.getDate())) + "',"
-				+ " " + rec.getStatus() + ","
-				+ " " + rec.getCategory() + " ,"
-				+ "'" + rec.getUser() + "',"
-				+ "'" + rec.getName() + "',"
-				+ "'" + rec.getPassword() + "',"
-				+ "'" + rec.getEmail() + "')";
+				+ "'" + (new SimpleDateFormat("yyyy-MM-dd").format(user.getDate())) + "',"
+				+ " " + user.getStatus() + ","
+				+ " " + user.getCategory() + " ,"
+				+ "'" + user.getUser() + "',"
+				+ "'" + user.getName() + "',"
+				+ "'" + user.getPassword() + "',"
+				+ "'" + user.getEmail() + "')";
 		int rowCount = 0;
 
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -72,9 +77,9 @@ public class UserDAO implements InjectableDAO {
 		log.debug("UserDAO create(): " + ps.toString());
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			rec.setId(rs.getInt(1));
+			user.setId(rs.getInt(1));
 		} else {
-			rec.setId(0);
+			user.setId(0);
 		}
 		return rowCount;
 	}
@@ -121,7 +126,7 @@ public class UserDAO implements InjectableDAO {
 				user = getCompleteUser(rs);
 				user.setRoles(userRoles);
 			}
-			UserRole userRole=new UserRole();
+			UserRole userRole = new UserRole();
 			userRole.setId(rs.getInt("usr.usr_id"));
 			userRole.setStatus(rs.getInt("usr.usr_status"));
 			userRole.setUser(rs.getString("usr.usu_user"));
@@ -140,7 +145,7 @@ public class UserDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public int update(User user) throws SQLException {
+	public int update(User user) throws SQLException,UserException {
 		int rowCount = 0;
 		String sql = "UPDATE users SET "
 				+ "usu_date = ?, usu_status = ?, usu_category = ?, "
@@ -168,7 +173,7 @@ public class UserDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha eliminado con éxito.
 	 * @throws SQLException 
 	 */
-	public int delete(int userId) throws SQLException {
+	public int delete(int userId) throws SQLException,UserException {
 		int rowCount = 0;
 		String sql = "DELETE FROM users WHERE usu_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
