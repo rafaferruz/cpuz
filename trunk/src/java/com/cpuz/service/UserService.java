@@ -56,7 +56,7 @@ public class UserService {
 		}
 		return (DAOFactory.getUserDAO().read(userId) != null);
 	}
-	
+
 	public List<User> getUserList(ControlParams control) throws SQLException {
 		List<User> users = DAOFactory.getUserDAO().getUserList(control);
 		return users;
@@ -66,18 +66,15 @@ public class UserService {
 		return DAOFactory.getUserDAO().getCountRows();
 	}
 
-	public User getById(int userId) throws SQLException {
+	public User getById(int userId) throws SQLException, UserException {
 		User user = DAOFactory.getUserDAO().read(userId);
-		if (user != null) {
-			List<String> userCodes = new ArrayList<>();
-			userCodes.add(user.getUser());
-			Map<String, List<UserRole>> userUsers = DAOFactory.getUserRoleDAO().getUserRoleMap(userCodes);
-			user.setRoles(userUsers.get(user.getUser()) != null ? userUsers.get(user.getUser()) : new ArrayList<UserRole>());
+		if (user != null && user.getUser() != null && !user.getUser().isEmpty()) {
+			user.setRoles(DAOFactory.getUserRoleDAO().getUserRoleList(user.getUser()));
 		}
 		return user;
 	}
 
-	public User getByCode(String userCode) throws SQLException {
+	public User getByCode(String userCode) throws SQLException, UserException {
 		User user = DAOFactory.getUserDAO().read(userCode);
 		if (user != null) {
 			List<String> userCodes = new ArrayList<>();
@@ -124,6 +121,7 @@ public class UserService {
 		return userCount;
 	}
 	//FIXME: Se deben eliminar todos los registros de UserRoles que correspondan al User eliminado
+
 	public int deleteUser(User user) throws SQLException, UserException {
 		if (user == null) {
 			throw new UserException("roleException.roleNull");
@@ -137,6 +135,7 @@ public class UserService {
 	public int deleteUserIds(List<String> ids) throws SQLException {
 		return DAOFactory.getUserDAO().deleteIds(ids);
 	}
+
 	public ControlParams getControl() {
 		return control;
 	}
@@ -144,5 +143,4 @@ public class UserService {
 	public void setControl(ControlParams control) {
 		this.control = control;
 	}
-
 }

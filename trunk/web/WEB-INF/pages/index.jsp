@@ -12,7 +12,7 @@
     </tr>
     <tr>
         <td valign="top">
-            <jsp:include page="newsPresentation.jsp" />
+            <%--jsp:include page="newsPresentation.jsp" --%>
         </td>
     </tr>
 </table>

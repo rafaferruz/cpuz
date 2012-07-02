@@ -56,6 +56,9 @@ public class UserDAODummy extends UserDAO {
 		if (userId == 0) {	// Testeamos que no encuentra el registro
 			return null;
 		} else {
+			User user=new User();
+			user.setId(1);
+			user.setUser("user1");
 			return new User();
 		}
 	}

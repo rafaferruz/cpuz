@@ -20,9 +20,9 @@ package com.cpuz.service;
 
 import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.Section;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
@@ -31,49 +31,66 @@ import org.apache.log4j.Logger;
  * @author RAFAEL FERRUZ
  */
 public class SectionsService {
+
 	private final transient Logger log = Logger.getLogger(this.getClass());
-	ControlParams control=new ControlParams();
+	ControlParams control = new ControlParams();
+	DAOFactory DAOFactory;
 
-    public SectionsService() {
-    }
-    public boolean keyIdExists(String sectionId) throws SQLException {
-            Section section = new DAOFactory().getSectionDAO().read(sectionId);
-		return (section != null);
-    }
+	public SectionsService() {
+	}
 
-	public List<Section> getSectionList(ControlParams control) throws SQLException  {
+	public DAOFactory getDAOFactory() {
+		return DAOFactory;
+	}
 
-		List<Section> sections = new ArrayList<>();
-		sections = new DAOFactory().getSectionDAO().getSectionList(control);
+	public void setDAOFactory(DAOFactory DAOFactory) {
+		this.DAOFactory = DAOFactory;
+	}
+
+	public boolean keyIdExists(int sectionId) throws SQLException, UserException {
+		if (sectionId == 0) {
+			throw new UserException("sectionException.sectionIdNull");
+		}
+		return (DAOFactory.getSectionDAO().read(sectionId) != null);
+	}
+
+	public List<Section> getSectionList(ControlParams control) throws SQLException {
+		List<Section> sections = DAOFactory.getSectionDAO().getSectionList(control);
 		return sections;
 	}
 
 	public int getCountRows() throws SQLException {
-		return new DAOFactory().getSectionDAO().getCountRows();
+		return DAOFactory.getSectionDAO().getCountRows();
 	}
 
-	public Section getById(String sectionId) throws SQLException{
-		return new DAOFactory().getSectionDAO().read(sectionId);
+	public Section getById(int sectionId) throws SQLException {
+		return DAOFactory.getSectionDAO().read(sectionId);
 	}
 
-	public int insertSection(Section section) throws SQLException {
-		return new DAOFactory().getSectionDAO().create(section);
+	public int insertSection(Section section) throws SQLException, UserException {
+		return DAOFactory.getSectionDAO().create(section);
 	}
 
-	public int updateSection(Section section) throws SQLException{
-		return new DAOFactory().getSectionDAO().update(section);
+	public int updateSection(Section section) throws SQLException, UserException {
+		return DAOFactory.getSectionDAO().update(section);
 	}
 
-	public int deleteSection(Section section) throws SQLException {
-		return new DAOFactory().getSectionDAO().delete(section.getId());
+	public int deleteSection(Section section) throws SQLException, UserException {
+		if (section == null) {
+			throw new UserException("sectionException.sectionNull");
+		}
+		return DAOFactory.getSectionDAO().delete(section.getId());
 	}
 
 	public int deleteSectionIds(List<String> ids) throws SQLException {
-		return new DAOFactory().getSectionDAO().deleteIds(ids);
+		return DAOFactory.getSectionDAO().deleteIds(ids);
+	}
+
+	public ControlParams getControl() {
+		return control;
+	}
+
+	public void setControl(ControlParams control) {
+		this.control = control;
 	}
 }
-
-
-
-
-

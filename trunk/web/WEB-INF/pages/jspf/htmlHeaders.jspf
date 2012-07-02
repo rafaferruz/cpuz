@@ -11,7 +11,7 @@
 
 	<%@include file="scripts.jspf" %>
 
-	<%@ include file="head01.jspf" %>
+	<%@include file="head01.jspf" %>
 
 </head>
 

@@ -52,7 +52,7 @@ public abstract class GenericAction<T> extends ActionSupport implements RequestA
 
 	public abstract String objectNew() throws SQLException ;
 
-	public abstract String objectEdit() throws SQLException;
+	public abstract String objectEdit() throws SQLException, UserException;
 
 	public abstract String objectSaveNew() throws SQLException, UserException;
 

@@ -18,14 +18,10 @@
  */
 package com.cpuz.actions.admin;
 
-import com.cpuz.domain.NewsPiece;
 import com.cpuz.service.InitService;
-import com.cpuz.st2.beans.ControlParams;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.apache.struts2.interceptor.RequestAware;
 

@@ -13,6 +13,7 @@ import com.cpuz.domain.NewsPiece;
 import com.cpuz.domain.Section;
 import com.cpuz.domain.UserRole;
 import com.cpuz.domain.UserType;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.service.DocumentsService;
 import com.cpuz.service.ImagesService;
 import com.cpuz.service.InfoBlocksService;
@@ -526,12 +527,12 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
 		dataEdit.setScope(1);
 		dataEdit.setAccess(0);
 		dataEdit.setUser("");
-		dataEdit.setSection("");
+		dataEdit.setSectionId(0);
 		dataEdit.setDescription("");
 		//dataEdit.setUser();
 	}
 
-	private void initSectionList() throws SQLException {
+	private void initSectionList() throws SQLException, UserException {
 		String stringRoles = "";
 		String user = (String) sessionAttributes.get("user");
 		UserRolesService userRolesService = new UserRolesService();
@@ -543,9 +544,10 @@ public class NewsPieceAction extends ActionSupport implements RequestAware, Sess
 		if (!stringRoles.contains("all") && !stringRoles.contains("adminRole")) {
 			List<Section> unusedSections = new ArrayList<>();
 			for (Section section : sectionList) {
+				/*
 				if (!stringRoles.contains(section.getId())) {
 					unusedSections.add(section);
-				}
+				}*/
 			}
 			sectionList.removeAll(unusedSections);
 		}

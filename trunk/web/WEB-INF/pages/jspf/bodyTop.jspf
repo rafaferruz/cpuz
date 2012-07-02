@@ -23,9 +23,12 @@
     <%-- La segunda fila contiene una tabla sobre la que se presentan
         las opciones del menú navegador principal --%>
 
-    <jsp:useBean class="com.cpuz.service.UserService" id="userService2"/>
-    <jsp:setProperty name="userService2" property="userCode" value="${user}"/>
-    <jsp:setProperty name="userService2" property="roleName" value="readerContact"/>
+    <jsp:useBean class="com.cpuz.domain.UserStatusTypeFactory" id="userStatusType"/>
+    <jsp:useBean class="com.cpuz.domain.UserCategoryTypeFactory" id="userCategoryType"/>
+	
+    <jsp:useBean class="com.cpuz.service.UserRolesService" id="userRoles"/>
+    <jsp:setProperty name="userRoles" property="userCode" value="${user}"/>
+    <jsp:setProperty name="userRoles" property="roleName" value="readerContact"/>
     <tr>
         <td class="navigationbar" width="100%">
             <%-- menú barra navegación --%>
@@ -38,7 +41,9 @@
 				<c:set var="sectionNames" value="${sectionNames}${section.sec_name}¿pages/newsSection.jsp?section=${section.sec_id}¿0|"/>
 			</c:forEach>
 			<c:set var="contact_list" value=""/>
-			<c:if test="${userCategory==2 || userService2.userInRole}" >
+			<c:if test="${userCategory == userCategoryType.admin.id || 
+						  (userRoles.byUserAndRole != null && 
+						  userStatus == userStatusType.authorized.id) }" >
 				<c:set var="contact_list" value="Mensajes recibidos¿contact/Contact_list.action¿0|"/>
 			</c:if>
 

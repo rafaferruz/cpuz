@@ -26,7 +26,6 @@ import com.cpuz.domain.UserStatusType;
 import com.cpuz.domain.UserType;
 import com.cpuz.exceptions.UserException;
 import com.cpuz.service.RolesService;
-import com.cpuz.service.UserRolesService;
 import com.cpuz.service.UserService;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,7 +44,6 @@ public class UserAction extends GenericAction<User> {
 	private List<Role> rolesList;
 	private List<UserRole> userRolesList;
 	private RolesService rolesService;
-	private UserRolesService userRolesService;
 	private List<String> authRolesSel = new ArrayList<>();
 	private String[] availableRolesSel;
 	private String passwordAgain;
@@ -70,7 +68,7 @@ public class UserAction extends GenericAction<User> {
 		return "new";
 	}
 
-	public String objectEdit() throws SQLException {
+	public String objectEdit() throws SQLException, UserException {
 		dataEdit = dataService.getById(control.getId());
 		// Si no se encuentra el User buscado se lee lista de Users
 		if (dataEdit == null) {
@@ -169,10 +167,6 @@ public class UserAction extends GenericAction<User> {
 
 	public void setRolesService(RolesService rolesService) {
 		this.rolesService = rolesService;
-	}
-
-	public void setUserRolesService(UserRolesService userRolesService) {
-		this.userRolesService = userRolesService;
 	}
 
 	public void setRolesList(List<Role> rolesList) {

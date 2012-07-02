@@ -46,4 +46,10 @@ public class DAOFactoryDummy extends DAOFactory {
 	public UserRoleDAODummy getUserRoleDAO() {
 		return new UserRoleDAODummy();
 	}
+	public SectionDAODummy getSectionDAO() {
+		return new SectionDAODummy();
+	}
+	public NewsPieceDAODummy getNewsPieceDAO() {
+		return new NewsPieceDAODummy();
+	}
 }

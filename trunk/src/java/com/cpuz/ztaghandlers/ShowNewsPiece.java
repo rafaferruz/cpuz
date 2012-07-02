@@ -88,7 +88,7 @@ public class ShowNewsPiece implements Tag {
         Integer colspan = 1;
         Integer widthCell = 0;
         Integer rId = (Integer) ((SortedMap) item).get("npi_id");
-        String rSection = (String) ((SortedMap) item).get("npi_section");
+        String rSection = (String) ((SortedMap) item).get("npi_section_id");
         String rDescription = (String) ((SortedMap) item).get("npi_description");
         Date rFecha = (Date) ((SortedMap) item).get("npi_date");
         String rFechatexto = new SimpleDateFormat("dd/MM/yyyy").format(rFecha);

@@ -6,6 +6,7 @@ package com.cpuz.tools;
 
 import com.cpuz.domain.User;
 import com.cpuz.domain.UserType;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.misc.ConfigurationBean;
 import com.cpuz.misc.PageBean;
 import com.cpuz.service.UserService;
@@ -65,7 +66,7 @@ public class CheckTool {
 	}
 // fin de comprobación de session
 
-	public static void checkUserCredentials(HttpServletRequest request) throws SQLException {
+	public static void checkUserCredentials(HttpServletRequest request) throws SQLException, UserException {
 
 		HttpSession session = request.getSession(false);
 		UserService usersModel = new UserService();
