@@ -30,7 +30,7 @@ import java.util.List;
  * Clase dummy para la ejecución tests de operaciones CRUD sobre la tabla 'sections'.
  * 
  */
-public class SectionDAODummy1 extends SectionDAO {
+public class SectionDAODummy extends SectionDAO {
 
 	/*
 	 * Método dummy para testear clases que accedan a SectionDAODummy.create()
