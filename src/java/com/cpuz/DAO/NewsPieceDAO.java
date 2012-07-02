@@ -50,13 +50,17 @@ public class NewsPieceDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public synchronized int create(NewsPiece newsPiece) throws SQLException {
+	public synchronized int create(NewsPiece newsPiece) throws SQLException, UserException {
+		if (newsPiece == null || newsPiece.getId() == 0 || newsPiece.getDescription() == null
+				|| newsPiece.getDescription().equals("")) {
+			throw new UserException("sectionException.nullOrEmptyField");
+		}
 
 		String sql = "INSERT INTO newspieces SET "
 				+ "npi_date = ?, "
 				+ "npi_status = ?, "
 				+ "npi_user = ?, "
-				+ "npi_section = ?, "
+				+ "npi_section_id = ?, "
 				+ "npi_description = ?, "
 				+ "npi_show_parameters = ?, "
 				+ "npi_scope = ?, "
@@ -66,7 +70,7 @@ public class NewsPieceDAO implements InjectableDAO {
 		ps.setTimestamp(1, new Timestamp(newsPiece.getDatetime().getTime()));
 		ps.setInt(2, newsPiece.getStatus());
 		ps.setString(3, newsPiece.getUser());
-		ps.setString(4, newsPiece.getSection());
+		ps.setInt(4, newsPiece.getSectionId());
 		ps.setString(5, newsPiece.getDescription());
 		ps.setString(6, newsPiece.getShowParameters());
 		ps.setInt(7, newsPiece.getScope());
@@ -104,11 +108,15 @@ public class NewsPieceDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public int update(NewsPiece newsPiece) throws SQLException {
+	public int update(NewsPiece newsPiece) throws SQLException, UserException {
+		if (newsPiece == null || newsPiece.getId() == 0 || newsPiece.getDescription() == null
+				|| newsPiece.getDescription().equals("")) {
+			throw new UserException("sectionException.nullOrEmptyField");
+		}
 		int rowCount = 0;
 		String sql = "UPDATE newsPieces SET "
 				+ "npi_status = ?,"
-				+ "npi_section = ?,"
+				+ "npi_section_id = ?,"
 				+ "npi_description = ?,"
 				+ "npi_show_parameters = ?,"
 				+ "npi_scope = ?,"
@@ -116,7 +124,7 @@ public class NewsPieceDAO implements InjectableDAO {
 				+ " WHERE npi_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, newsPiece.getStatus());
-		ps.setString(2, newsPiece.getSection());
+		ps.setInt(2, newsPiece.getSectionId());
 		ps.setString(3, newsPiece.getDescription());
 		ps.setString(4, newsPiece.getShowParameters());
 		ps.setInt(5, newsPiece.getScope());
@@ -126,7 +134,7 @@ public class NewsPieceDAO implements InjectableDAO {
 		rowCount = ps.executeUpdate();
 		return rowCount;
 	}
-	
+
 	/**
 	 * Elimina un NewsPiece de la tabla 
 	 *
@@ -135,7 +143,7 @@ public class NewsPieceDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha eliminado con éxito.
 	 * @throws SQLException 
 	 */
-	public int delete(Integer newsPieceId) throws SQLException {
+	public int delete(int newsPieceId) throws SQLException {
 		int rowCount = 0;
 		String sql = "DELETE FROM newsPieces WHERE npi_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -145,7 +153,7 @@ public class NewsPieceDAO implements InjectableDAO {
 		return rowCount;
 	}
 
-	public List<NewsPiece> getNewsPieceList(ControlParams control) throws SQLException {
+	public List<NewsPiece> getNewsPieceList(ControlParams control) throws SQLException, UserException {
 		List<NewsPiece> newsPieces = new ArrayList<>();
 		String sql = "SELECT * FROM newsPieces ORDER BY npi_id ";
 		String limit = control.getRecChunk() > 0 ? " LIMIT ? OFFSET ?" : "";
@@ -161,7 +169,7 @@ public class NewsPieceDAO implements InjectableDAO {
 				newsPieces.add(getCompleteNewsPiece(rs));
 			}
 		}
-		return newsPieces;
+		return getNewsPiecesWhitCompositions(newsPieces);
 	}
 
 	public int deleteIds(List<Integer> ids) throws SQLException {
@@ -189,33 +197,32 @@ public class NewsPieceDAO implements InjectableDAO {
 		return 0;
 	}
 
-
-	public NewsPiece getCompleteNewsPiece(ResultSet rs) throws SQLException {
+	protected static NewsPiece getCompleteNewsPiece(ResultSet rs) throws SQLException {
 		NewsPiece newsPiece = new NewsPiece();
-			newsPiece.setId(rs.getInt("npi_id"));
-			newsPiece.setDatetime(rs.getTimestamp("npi_date"));
-			newsPiece.setStatus(rs.getInt("npi_status"));
-			newsPiece.setUser(rs.getString("npi_user"));
-			newsPiece.setSection(rs.getString("npi_section"));
-			newsPiece.setDescription(rs.getString("npi_description"));
-			newsPiece.setShowParameters(rs.getString("npi_show_parameters"));
-			newsPiece.setScope(rs.getInt("npi_scope"));
-			newsPiece.setAccess(rs.getInt("npi_access"));
+		newsPiece.setId(rs.getInt("npi_id"));
+		newsPiece.setDatetime(rs.getTimestamp("npi_date"));
+		newsPiece.setStatus(rs.getInt("npi_status"));
+		newsPiece.setUser(rs.getString("npi_user"));
+		newsPiece.setSectionId(rs.getInt("npi_section_id"));
+		newsPiece.setDescription(rs.getString("npi_description"));
+		newsPiece.setShowParameters(rs.getString("npi_show_parameters"));
+		newsPiece.setScope(rs.getInt("npi_scope"));
+		newsPiece.setAccess(rs.getInt("npi_access"));
 		return newsPiece;
 	}
 
-	public List<NewsPiece> getCompleteNewsPieces() throws SQLException, UserException, UserException {
+	public List<NewsPiece> getCompleteNewsPieces() throws SQLException, UserException {
 		List<NewsPiece> newsPieces = new ArrayList<>();
 		String sql = "SELECT * FROM newspieces "
 				+ "LEFT JOIN newscomposition ON nco_npi_id = npi_id, "
 				+ "sections AS sec "
 				+ "WHERE npi_status = 2 AND npi_scope >= 0 "
 				+ "AND TO_DAYS(npi_date) > (TO_DAYS(CURDATE()) - 1000) "
-				+ "AND npi_section = sec_id "
+				+ "AND npi_section_id = sec_id "
 				+ "ORDER BY npi_date DESC, nco_order";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
-		log.debug("loadById: " + ps.toString());
+		log.debug("getCompleteNewsPieces: " + ps.toString());
 		NewsPiece newsPiece = null;
 		while (rs.next()) {
 			if (newsPiece == null) {
@@ -230,6 +237,35 @@ public class NewsPieceDAO implements InjectableDAO {
 		ps.close();
 		return newsPieces;
 
+
+	}
+
+	private List<NewsPiece> getNewsPiecesWhitCompositions(List<NewsPiece> newsPieces) throws SQLException, UserException {
+		List<Integer> newsPieceIds = new ArrayList<>();
+		for (NewsPiece newsPiece : newsPieces) {
+			newsPiece.getNewsCompositionList().clear(); // Se limpian la listas antes de volver a completarlas
+			newsPieceIds.add(newsPiece.getId());
+		}
+		if (!newsPieceIds.isEmpty()) {
+			String sql = "SELECT * FROM newscomposition AS nco "
+					+ "WHERE nco.npi_id " + SqlUtil.getPreparedStatementInClause(newsPieceIds)
+					+ "ORDER BY nco.npi_id, nco_order";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			SqlUtil.setList(ps, newsPieceIds);
+			ResultSet rs = ps.executeQuery();
+			log.debug("getCompleteNewsPieces: " + ps.toString());
+			while (rs.next()) {
+				NewsPiece newsPiece = new NewsPiece();
+				newsPiece.setId(rs.getInt("nco.npi_id"));
+				if (newsPieces.indexOf(newsPiece) >= 0) {
+					newsPieces.get(newsPieces.indexOf(newsPiece)).getNewsCompositionList()
+							.add(NewsCompositionDAOImpl.getNewsCompositionFromResultSet(rs));
+				}
+			}
+			rs.close();
+			ps.close();
+		}
+		return newsPieces;
 
 	}
 }

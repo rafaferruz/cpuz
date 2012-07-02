@@ -26,7 +26,7 @@ import java.io.Serializable;
  */
 public class Section  implements Serializable{
 
-    private String id;
+    private int id;
     private String name;
     private String authorizedRoles;
     private String group;
@@ -42,11 +42,11 @@ public class Section  implements Serializable{
         this.authorizedRoles = authorizedRoles;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -66,26 +66,25 @@ public class Section  implements Serializable{
         this.group = group;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Section other = (Section) obj;
-        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
-            return false;
-        }
-        return true;
-    }
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Section other = (Section) obj;
+		if (this.id != other.id) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 7;
+		hash = 89 * hash + this.id;
+		return hash;
+	}
+
 
 }

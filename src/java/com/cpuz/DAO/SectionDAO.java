@@ -20,6 +20,7 @@ package com.cpuz.DAO;
 
 import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.domain.Section;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.st2.beans.ControlParams;
 import com.cpuz.util.SqlUtil;
 import java.sql.*;
@@ -47,7 +48,11 @@ public class SectionDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public synchronized int create(Section rec) throws SQLException {
+	public synchronized int create(Section section) throws SQLException, UserException {
+		if (section == null || section.getId() == 0 || section.getName() == null
+				|| section.getName().equals("")) {
+			throw new UserException("sectionException.nullOrEmptyField");
+		}
 
 		String sql = "INSERT INTO sections "
 				+ "(sec_id, "
@@ -55,10 +60,10 @@ public class SectionDAO implements InjectableDAO {
 				+ "sec_authorized_roles, "
 				+ "sec_group) "
 				+ " VALUES ("
-				+ "'" + rec.getId() + "',"
-				+ "'" + rec.getName() + "',"
-				+ "'" + rec.getAuthorizedRoles() + "',"
-				+ "'" + rec.getGroup() + "')";
+				+ "'" + section.getId() + "',"
+				+ "'" + section.getName() + "',"
+				+ "'" + section.getAuthorizedRoles() + "',"
+				+ "'" + section.getGroup() + "')";
 		int rowCount = 0;
 
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -75,11 +80,11 @@ public class SectionDAO implements InjectableDAO {
 	 *					base de datos. Si no encuentra el id buscado, devuelve null.
 	 * @throws SQLException 
 	 */
-	public Section read(String secId) throws SQLException {
+	public Section read(int secId) throws SQLException {
 		Section section = null;
 		String sql = "SELECT * FROM sections WHERE sec_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setString(1, secId);
+		ps.setInt(1, secId);
 		log.debug("SectionDAO read(): " + ps.toString());
 		ResultSet rs = ps.executeQuery(sql);
 		if (rs.next()) {
@@ -96,7 +101,11 @@ public class SectionDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public int update(Section section) throws SQLException {
+	public int update(Section section) throws SQLException, UserException {
+		if (section == null || section.getId() == 0 || section.getName() == null
+				|| section.getName().equals("")) {
+			throw new UserException("sectionException.nullOrEmptyField");
+		}
 		int rowCount = 0;
 		String sql = "UPDATE sections SET " + ""
 				+ "sec_name = ?, "
@@ -108,7 +117,7 @@ public class SectionDAO implements InjectableDAO {
 		ps.setString(1, section.getName());
 		ps.setString(2, section.getAuthorizedRoles());
 		ps.setString(3, section.getGroup());
-		ps.setString(4, section.getId());
+		ps.setInt(4, section.getId());
 		log.debug("SectionDAO update(): " + ps.toString());
 		rowCount = ps.executeUpdate();
 		return rowCount;
@@ -122,11 +131,11 @@ public class SectionDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha eliminado con éxito.
 	 * @throws SQLException 
 	 */
-	public int delete(String secId) throws SQLException {
+	public int delete(int secId) throws SQLException {
 		int rowCount = 0;
 		String sql = "DELETE FROM sections WHERE sec_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setString(1, secId);
+		ps.setInt(1, secId);
 		log.debug("SectionDAO delete(): " + ps.toString());
 		rowCount = ps.executeUpdate();
 		return rowCount;
@@ -152,6 +161,9 @@ public class SectionDAO implements InjectableDAO {
 	}
 
 	public int deleteIds(List<String> ids) throws SQLException {
+		if (ids == null || ids.isEmpty()) {
+			return 0;
+		}
 		String sql = "DELETE FROM sections WHERE sec_id IN "
 				+ SqlUtil.getPreparedStatementInClause(ids);
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -178,7 +190,7 @@ public class SectionDAO implements InjectableDAO {
 
 	public Section getCompleteSection(ResultSet rs) throws SQLException {
 		Section section = new Section();
-		section.setId(rs.getString("sec_id"));
+		section.setId(rs.getInt("sec_id"));
 		section.setName(rs.getString("sec_name"));
 		section.setAuthorizedRoles(rs.getString("sec_authorized_roles"));
 		section.setGroup(rs.getString("sec_group"));

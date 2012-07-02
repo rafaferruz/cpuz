@@ -21,6 +21,7 @@ package com.cpuz.DAO;
 import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.domain.User;
 import com.cpuz.domain.UserRole;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.util.SqlUtil;
 import java.sql.*;
 import java.util.*;
@@ -48,7 +49,11 @@ public class UserRoleDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public synchronized int create(UserRole rec) throws SQLException {
+	public int create(UserRole rec) throws SQLException, UserException {
+		if (rec == null || rec.getRole() == null || rec.getRole().equals("")
+				|| rec.getUser() == null || rec.getUser().equals("")) {
+			throw new UserException("userRoleException.nullOrEmptyField");
+		}
 
 		String sql = "INSERT INTO userroles "
 				+ "(usr_id, "
@@ -102,13 +107,18 @@ public class UserRoleDAO implements InjectableDAO {
 	/**
 	 * Recupera un UserRole de la tabla 
 	 *
-	 * @param user		Nombre o Code del User que se quiere recuperar de la tabla
+	 * @param userCode		Nombre o Code del User que se quiere recuperar de la tabla
 	 * @param role		Role del User que se quiere recuperar de la tabla
 	 * @return			Un objeto UserRole con la información recuperada de la 
 	 *					base de datos. Si no encuentra el id buscado, devuelve null.
 	 * @throws SQLException 
 	 */
-	public UserRole read(String role, String userCode) throws SQLException {
+	public UserRole read(String role, String userCode) throws SQLException, UserException {
+		if (role == null || role.equals("")
+				|| userCode == null || userCode.equals("")) {
+			throw new UserException("userRoleException.nullOrEmptyField");
+		}
+
 		UserRole userRole = null;
 		String sql = "SELECT * FROM userroles WHERE usr_role = ? AND usu_user = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -123,14 +133,19 @@ public class UserRoleDAO implements InjectableDAO {
 	}
 
 	/**
-	 * Actualiza un User en la tabla 
+	 * Actualiza un UserRole en la tabla 
 	 *
 	 * @param userRole		Objeto UserRole que se quiere actualizar en la tabla
 	 * @return			Un entero indicando el número de filas afectadas por la sentencia
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public int update(UserRole rec) throws SQLException {
+	public int update(UserRole rec) throws SQLException, UserException {
+		if (rec == null || rec.getRole() == null || rec.getRole().equals("")
+				|| rec.getUser() == null || rec.getUser().equals("")) {
+			throw new UserException("userRoleException.nullOrEmptyField");
+		}
+
 		int rowCount = 0;
 		String sql = "UPDATE userroles SET "
 				+ "usr_status = ?, usu_user = ?, usr_role = ?, usr_description = ? "
@@ -172,7 +187,10 @@ public class UserRoleDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha eliminado con éxito.
 	 * @throws SQLException 
 	 */
-	public int deleteAllOfUser(User user) throws SQLException {
+	public int deleteAllOfUser(User user) throws SQLException, UserException {
+		if (user == null || user.getUser() == null || user.getUser().equals("")) {
+			throw new UserException("userRoleException.nullOrEmptyField");
+		}
 		int rowCount = 0;
 		String sql = "DELETE FROM userroles WHERE usu_user = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -182,7 +200,10 @@ public class UserRoleDAO implements InjectableDAO {
 		return rowCount;
 	}
 
-	public List<UserRole> getUserRoleList(String user) throws SQLException {
+	public List<UserRole> getUserRoleList(String user) throws SQLException, UserException {
+		if (user == null || user.equals("")) {
+			throw new UserException("userRoleException.nullOrEmptyField");
+		}
 		List<UserRole> roles = new ArrayList<>();
 		String sql = "SELECT * FROM userroles ORDER BY usr_user = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -196,20 +217,25 @@ public class UserRoleDAO implements InjectableDAO {
 		return roles;
 	}
 
-	public Map<String, List<UserRole>> getUserRoleMap(List<String> userCodes) throws SQLException {
+	public Map<String, List<UserRole>> getUserRoleMap(List<String> userCodes) throws SQLException, UserException {
+		if (userCodes == null) {
+			throw new UserException("userRoleException.nullOrEmptyField");
+		}
 		Map<String, List<UserRole>> userRoles = new HashMap<>();
-		String sql = "SELECT * FROM userroles "
-				+ "WHERE usu_user IN " + SqlUtil.getPreparedStatementInClause(userCodes) + " "
-				+ "ORDER BY usu_user";
-		PreparedStatement ps = conn.prepareStatement(sql);
-		SqlUtil.setList(ps, userCodes);
-		log.debug("UserRoleDAO getUserList(): " + ps.toString());
-		try (ResultSet rs = ps.executeQuery()) {
-			while (rs.next()) {
-				if (userRoles.get(rs.getString("usu_user")) == null) {
-					userRoles.put(rs.getString("usu_user"), new ArrayList<UserRole>());
+		if (!userCodes.isEmpty()) {
+			String sql = "SELECT * FROM userroles "
+					+ "WHERE usu_user IN " + SqlUtil.getPreparedStatementInClause(userCodes) + " "
+					+ "ORDER BY usu_user";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			SqlUtil.setList(ps, userCodes);
+			log.debug("UserRoleDAO getUserList(): " + ps.toString());
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					if (userRoles.get(rs.getString("usu_user")) == null) {
+						userRoles.put(rs.getString("usu_user"), new ArrayList<UserRole>());
+					}
+					userRoles.get(rs.getString("usu_user")).add(this.getCompleteUserRole(rs));
 				}
-				userRoles.get(rs.getString("usu_user")).add(this.getCompleteUserRole(rs));
 			}
 		}
 		return userRoles;

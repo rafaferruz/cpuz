@@ -34,7 +34,7 @@
                     </c:if>
                     )
                     AND TO_DAYS(NPI.npi_date) > (TO_DAYS(CURDATE()) - 270)
-                    AND NPI.npi_section = ?
+                    AND NPI.npi_section_id = ?
                     ORDER BY NPI.npi_date DESC
                     <sql:param value="${param.section}"/>
                 </sql:query>

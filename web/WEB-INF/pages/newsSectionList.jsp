@@ -17,7 +17,7 @@
         <sql:query var="newsCount"  dataSource="jdbc/CPUZ"
                    sql="SELECT npi_id FROM newspieces
                    WHERE npi_status = 2 AND npi_scope >= 0
-                   AND npi_section = ?">
+                   AND _id = ?">
             <sql:param value="${NewsSectionListFormBean.section}"/>
         </sql:query>
         <c:forEach var="counter" varStatus="control" items="${newsCount.rows}"  >
@@ -36,7 +36,7 @@
                    maxRows="${NewsSectionListFormBean.maxRows}"  startRow="${startRow}"
                    sql="SELECT * FROM newspieces
                    WHERE npi_status = 2 AND npi_scope >= 0
-                   AND npi_section = ?
+                   AND npi_section_id = ?
                    ORDER BY npi_date DESC">
             <sql:param value="${NewsSectionListFormBean.section}"/>
         </sql:query>
@@ -48,7 +48,7 @@
         <caption class="homepagenews">Listado general de noticias de&nbsp;${section.sec_name}<br/></caption>
                 <tr>
                     <th>Fecha</th>
-                    <th>Descripción</th>
+                    <th>Descripciï¿½n</th>
                     <th>Titulares</th>
                 </tr>
                 <c:forEach var="news" items="${sectionNews.rows}">

@@ -64,7 +64,7 @@ public class SectionTest {
 	@Test
 	public void testGetId() {
 		System.out.println("getId");
-		assertNull("section.id debería ser null", instance.getId());
+		assertEquals("section.id debería ser 0", 0, instance.getId());
 	}
 
 	/**
@@ -73,9 +73,9 @@ public class SectionTest {
 	@Test
 	public void testSetId() {
 		System.out.println("setId");
-		String id = "abc";
+		int id = 1;
 		instance.setId(id);
-		assertEquals("section.id debería ser abc", "abc", instance.getId());
+		assertEquals("section.id debería ser 1", 1, instance.getId());
 	}
 
 	/**
@@ -145,8 +145,8 @@ public class SectionTest {
 	public void testEquals_whenSameId() {
 		System.out.println("equals");
 		Section obj = new Section();
-		obj.setId("abc");
-		instance.setId("abc");
+		obj.setId(2);
+		instance.setId(2);
 		assertTrue("Deberían ser objetos iguales", instance.equals(obj));
 	}
 
@@ -157,8 +157,8 @@ public class SectionTest {
 	public void testEquals_whenDiferentId() {
 		System.out.println("equals");
 		Section obj = new Section();
-		obj.setId("xyz");
-		instance.setId("abc");
+		obj.setId(3);
+		instance.setId(4);
 		assertFalse("Deberían ser objetos no iguales", instance.equals(obj));
 	}
 
@@ -169,8 +169,8 @@ public class SectionTest {
 	public void testHashCode() {
 		System.out.println("hashCode");
 		Section otherInstance = new Section();
-		instance.setId("abc");
-		otherInstance.setId("abc");
+		instance.setId(5);
+		otherInstance.setId(5);
 		assertEquals("sections con id iguales deben dar igual hashCode", instance.hashCode(), otherInstance.hashCode());
 	}
 }

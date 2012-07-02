@@ -20,6 +20,7 @@ package com.cpuz.service;
 
 import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.NewsPiece;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,43 +35,63 @@ public class NewsPiecesService {
 
 	private final transient Logger log = Logger.getLogger(this.getClass());
 	ControlParams control = new ControlParams();
+	DAOFactory DAOFactory;
 
 	public NewsPiecesService() {
 	}
 
+	public DAOFactory getDAOFactory() {
+		return DAOFactory;
+	}
+
+	public void setDAOFactory(DAOFactory DAOFactory) {
+		this.DAOFactory = DAOFactory;
+	}
+
 	public boolean keyIdExists(int newsPieceId) throws SQLException {
-		NewsPiece newsPiece = new DAOFactory().getNewsPieceDAO().read(newsPieceId);
+		NewsPiece newsPiece = DAOFactory.getNewsPieceDAO().read(newsPieceId);
 		return (newsPiece != null);
 	}
 
-	public List<NewsPiece> getNewsPieceList(ControlParams control) throws SQLException {
+	public List<NewsPiece> getNewsPieceList(ControlParams control) throws SQLException, UserException {
 
 		List<NewsPiece> newsPieces = new ArrayList<>();
-		newsPieces = new DAOFactory().getNewsPieceDAO().getNewsPieceList(control);
+		newsPieces = DAOFactory.getNewsPieceDAO().getNewsPieceList(control);
 		return newsPieces;
 	}
 
 	public int getCountRows() throws SQLException {
-		return new DAOFactory().getNewsPieceDAO().getCountRows();
+		return DAOFactory.getNewsPieceDAO().getCountRows();
 	}
 
 	public NewsPiece getById(int newsPieceId) throws SQLException {
-		return new DAOFactory().getNewsPieceDAO().read(newsPieceId);
+		return DAOFactory.getNewsPieceDAO().read(newsPieceId);
 	}
 
-	public int insertNewsPiece(NewsPiece newsPiece) throws SQLException {
-		return new DAOFactory().getNewsPieceDAO().create(newsPiece);
+	public int insertNewsPiece(NewsPiece newsPiece) throws SQLException, UserException {
+		return DAOFactory.getNewsPieceDAO().create(newsPiece);
 	}
 
-	public int updateNewsPiece(NewsPiece newsPiece) throws SQLException {
-		return new DAOFactory().getNewsPieceDAO().update(newsPiece);
+	public int updateNewsPiece(NewsPiece newsPiece) throws SQLException, UserException {
+		return DAOFactory.getNewsPieceDAO().update(newsPiece);
 	}
 
-	public int deleteNewsPiece(NewsPiece newsPiece) throws SQLException {
-		return new DAOFactory().getNewsPieceDAO().delete(newsPiece.getId());
+	public int deleteNewsPiece(NewsPiece newsPiece) throws SQLException, UserException {
+		if (newsPiece == null) {
+			throw new UserException("newsPieceException.newsPieceNull");
+		}
+		return DAOFactory.getNewsPieceDAO().delete(newsPiece.getId());
 	}
 
 	public int deleteNewsPieceIds(List<Integer> ids) throws SQLException {
-		return new DAOFactory().getNewsPieceDAO().deleteIds(ids);
+		return DAOFactory.getNewsPieceDAO().deleteIds(ids);
+	}
+
+	public ControlParams getControl() {
+		return control;
+	}
+
+	public void setControl(ControlParams control) {
+		this.control = control;
 	}
 }

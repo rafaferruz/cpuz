@@ -20,6 +20,7 @@ package com.cpuz.service;
 
 import com.cpuz.DAO.DAOFactory;
 import com.cpuz.domain.UserRole;
+import com.cpuz.exceptions.UserException;
 import com.cpuz.st2.beans.ControlParams;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,7 +34,9 @@ import org.apache.log4j.Logger;
 public class UserRolesService {
 
 	private final transient Logger log = Logger.getLogger(this.getClass());
-	ControlParams control = new ControlParams();
+	private ControlParams control = new ControlParams();
+	private String roleName;
+	private String userCode;
 
 	public UserRolesService() {
 	}
@@ -43,7 +46,7 @@ public class UserRolesService {
 		return (userRole != null);
 	}
 
-	public List<UserRole> getUserRoleList(String user) throws SQLException {
+	public List<UserRole> getUserRoleList(String user) throws SQLException, UserException {
 
 		List<UserRole> userRoles = new ArrayList<>();
 		userRoles = new DAOFactory().getUserRoleDAO().getUserRoleList(user);
@@ -54,15 +57,15 @@ public class UserRolesService {
 		return new DAOFactory().getUserRoleDAO().read(userRoleId);
 	}
 
-	public UserRole getByUserAndRole(String role, String userCode) throws SQLException {
-		return new DAOFactory().getUserRoleDAO().read(role, userCode);
+	public UserRole getByUserAndRole() throws SQLException, UserException {
+		return new DAOFactory().getUserRoleDAO().read(roleName, userCode);
 	}
 
-	public int insertUserRole(UserRole userRole) throws SQLException {
+	public int insertUserRole(UserRole userRole) throws SQLException, UserException {
 		return new DAOFactory().getUserRoleDAO().create(userRole);
 	}
 
-	public int updateUserRole(UserRole UserRole) throws SQLException {
+	public int updateUserRole(UserRole UserRole) throws SQLException, UserException {
 		return new DAOFactory().getUserRoleDAO().update(UserRole);
 	}
 
@@ -73,4 +76,29 @@ public class UserRolesService {
 	public int deleteUserRoleIds(List<Integer> ids) throws SQLException {
 		return new DAOFactory().getUserRoleDAO().deleteIds(ids);
 	}
+
+	public ControlParams getControl() {
+		return control;
+	}
+
+	public void setControl(ControlParams control) {
+		this.control = control;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public String getUserCode() {
+		return userCode;
+	}
+
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
+	}
+	
 }

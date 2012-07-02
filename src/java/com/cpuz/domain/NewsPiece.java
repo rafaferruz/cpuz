@@ -1,3 +1,21 @@
+/*
+ * Copyright 2012 Rafael Ferruz
+ * 
+ * This file is part of CPUZ.
+ * 
+ * CPUZ is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * CPUZ is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with CPUZ.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.cpuz.domain;
 
 import java.io.Serializable;
@@ -17,15 +35,15 @@ public class NewsPiece implements Serializable{
 
     private static final long serialVersionUID = 101L;
 
-    private Integer id;
+    private int id;
     private java.util.Date datetime;
     private int status;       // Puede ser: 0=Deshabilitado, 1=Revisado pendiente, 2=Autorizado
     private String user;
-    private String section;
+    private int sectionId;
     private String description;
     private String showParameters; // definiciones clave=valor separadas por el caracter ';' para pasar parámetros de configuración de presentación
     // colspan=x; para indicar el número de columnas de la tabla que ocupara la noticia
-    // charsintroduction=xxx; para indicar los caracteres de introducción que se presentar�n en las páginas generales de noticias
+    // charsintroduction=xxx; para indicar los caracteres de introducción que se presentarón en las páginas generales de noticias
     private int scope;        // Puede ser : Global, Vecinal, Confidencial
     private int access;       // Puede ser: Restáicted Solamente accede el propietario, o
                                   //            ALL
@@ -63,11 +81,11 @@ public class NewsPiece implements Serializable{
         this.description = description;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -87,12 +105,12 @@ public class NewsPiece implements Serializable{
         this.scope = scope;
     }
 
-    public String getSection() {
-        return section;
+    public int getSectionId() {
+        return sectionId;
     }
 
-    public void setSection(String section) {
-        this.section = section;
+    public void setSectionId(int sectionId) {
+        this.sectionId = sectionId;
     }
 
     public Integer getStatus() {
