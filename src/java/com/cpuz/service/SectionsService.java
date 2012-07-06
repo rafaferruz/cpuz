@@ -93,4 +93,10 @@ public class SectionsService {
 	public void setControl(ControlParams control) {
 		this.control = control;
 	}
+
+	public List<Section> getSectionsNoGroup() throws SQLException {
+		List<Section> sections = DAOFactory.getSectionDAO().getSectionsNoGroup();
+		return sections;
+	}
+
 }

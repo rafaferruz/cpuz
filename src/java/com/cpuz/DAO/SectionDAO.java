@@ -196,4 +196,25 @@ public class SectionDAO implements InjectableDAO {
 		section.setGroup(rs.getString("sec_group"));
 		return section;
 	}
+
+	/**
+	 * Obtiene la lista de sections que no tienen asignado un grupo de secciones
+	 * 
+	 * @return					Lista de sections obtenidas
+	 * @throws SQLException 
+	 */
+	public List<Section> getSectionsNoGroup() throws SQLException {
+		List<Section> sections = new ArrayList<>();
+		String sql = "SELECT * FROM sections "
+				+ " WHERE sec_group IS NULL OR sec_group = '' "
+				+ " ORDER BY sec_name";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		log.debug("SectionDAO getSectionList(): " + ps.toString());
+		try (ResultSet rs = ps.executeQuery()) {
+			while (rs.next()) {
+				sections.add(getCompleteSection(rs));
+			}
+		}
+		return sections;
+	}
 }

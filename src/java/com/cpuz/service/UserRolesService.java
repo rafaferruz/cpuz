@@ -37,44 +37,57 @@ public class UserRolesService {
 	private ControlParams control = new ControlParams();
 	private String roleName;
 	private String userCode;
+	DAOFactory DAOFactory;
 
 	public UserRolesService() {
 	}
 
+	public DAOFactory getDAOFactory() {
+		return DAOFactory;
+	}
+
+	public void setDAOFactory(DAOFactory DAOFactory) {
+		this.DAOFactory = DAOFactory;
+	}
+
 	public boolean keyIdExists(int userRoleId) throws SQLException {
-		UserRole userRole = new DAOFactory().getUserRoleDAO().read(userRoleId);
+		UserRole userRole = DAOFactory.getUserRoleDAO().read(userRoleId);
 		return (userRole != null);
 	}
 
 	public List<UserRole> getUserRoleList(String user) throws SQLException, UserException {
 
 		List<UserRole> userRoles = new ArrayList<>();
-		userRoles = new DAOFactory().getUserRoleDAO().getUserRoleList(user);
+		userRoles = DAOFactory.getUserRoleDAO().getUserRoleList(user);
 		return userRoles;
 	}
 
 	public UserRole getById(int userRoleId) throws SQLException {
-		return new DAOFactory().getUserRoleDAO().read(userRoleId);
+		return DAOFactory.getUserRoleDAO().read(userRoleId);
 	}
 
 	public UserRole getByUserAndRole() throws SQLException, UserException {
-		return new DAOFactory().getUserRoleDAO().read(roleName, userCode);
+		if (roleName == null || roleName.equals("")
+				|| userCode == null || userCode.equals("")) {
+			return null;
+		}
+		return DAOFactory.getUserRoleDAO().read(roleName, userCode);
 	}
 
 	public int insertUserRole(UserRole userRole) throws SQLException, UserException {
-		return new DAOFactory().getUserRoleDAO().create(userRole);
+		return DAOFactory.getUserRoleDAO().create(userRole);
 	}
 
 	public int updateUserRole(UserRole UserRole) throws SQLException, UserException {
-		return new DAOFactory().getUserRoleDAO().update(UserRole);
+		return DAOFactory.getUserRoleDAO().update(UserRole);
 	}
 
 	public int deleteUserRole(UserRole UserRole) throws SQLException {
-		return new DAOFactory().getUserRoleDAO().delete(UserRole.getId());
+		return DAOFactory.getUserRoleDAO().delete(UserRole.getId());
 	}
 
 	public int deleteUserRoleIds(List<Integer> ids) throws SQLException {
-		return new DAOFactory().getUserRoleDAO().deleteIds(ids);
+		return DAOFactory.getUserRoleDAO().deleteIds(ids);
 	}
 
 	public ControlParams getControl() {

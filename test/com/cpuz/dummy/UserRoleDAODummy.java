@@ -76,7 +76,7 @@ public class UserRoleDAODummy extends UserRoleDAO {
 		if (role.equals("notFound")) {	// Testeamos que no encuentra el registro
 			return null;
 		} else {
-			UserRole userRole=new UserRole();
+			UserRole userRole = new UserRole();
 			userRole.setUser("user1");
 			userRole.setRole("role1");
 			return userRole;
@@ -137,6 +137,11 @@ public class UserRoleDAODummy extends UserRoleDAO {
 		}
 		if (user.equals("SQLException")) {
 			throw new SQLException("Testing SQLException");
+		}
+		if (user.equals("NoEmpty")) {
+			List<UserRole> userRoleList = new ArrayList<>();
+			userRoleList.add(new UserRole());
+			return userRoleList;
 		}
 		return new ArrayList<>();
 	}

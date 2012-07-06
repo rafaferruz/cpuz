@@ -24,6 +24,7 @@ import java.io.Serializable;
 /**
  * Clase que define los objetos Section de la aplicación
  */
+
 public class Section  implements Serializable{
 
     private int id;
