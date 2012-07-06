@@ -1,4 +1,5 @@
 <%-- any content can be specified here e.g.: --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page  import="java.util.Date" %>
 
 <%-- Se abre una tabla que contiene la cabecera.
@@ -25,84 +26,91 @@
 
     <jsp:useBean class="com.cpuz.domain.UserStatusTypeFactory" id="userStatusType"/>
     <jsp:useBean class="com.cpuz.domain.UserCategoryTypeFactory" id="userCategoryType"/>
+
+    <jsp:useBean class="com.cpuz.service.ServicesFactory" id="servicesFactory"/>
+    <jsp:setProperty name="servicesFactory" property="springContext" value="${springServicesContext}"/>
+    <jsp:setProperty name="servicesFactory" property="beanName" value="userRolesService"/>
+	<c:set var="userRolesService" value="${servicesFactory.returnedService}"/>
+	<jsp:useBean id="userRolesService" type="com.cpuz.service.UserRolesService"/>
 	
-    <jsp:useBean class="com.cpuz.service.UserRolesService" id="userRoles"/>
-    <jsp:setProperty name="userRoles" property="userCode" value="${user}"/>
-    <jsp:setProperty name="userRoles" property="roleName" value="readerContact"/>
+    <jsp:setProperty name="userRolesService" property="userCode" value="${user}"/>
+    <jsp:setProperty name="userRolesService" property="roleName" value="readerContact"/>
+
+    <jsp:setProperty name="servicesFactory" property="beanName" value="sectionsService"/>
+	<c:set var="sectionsService" value="${servicesFactory.returnedService}"/>
+	<jsp:useBean id="sectionsService" type="com.cpuz.service.SectionsService"/>
+
     <tr>
         <td class="navigationbar" width="100%">
             <%-- menú barra navegación --%>
-			<sql:query var="sections" dataSource="jdbc/CPUZ"
-					   sql="SELECT * FROM sections
-					   WHERE sec_group IS NULL OR sec_group = ''
-					   ORDER BY sec_name">
-			</sql:query>
-			<c:forEach var="section" items="${sections.rows}">
-				<c:set var="sectionNames" value="${sectionNames}${section.sec_name}¿pages/newsSection.jsp?section=${section.sec_id}¿0|"/>
-			</c:forEach>
-			<c:set var="contact_list" value=""/>
-			<c:if test="${userCategory == userCategoryType.admin.id || 
-						  (userRoles.byUserAndRole != null && 
-						  userStatus == userStatusType.authorized.id) }" >
-				<c:set var="contact_list" value="Mensajes recibidos¿contact/Contact_list.action¿0|"/>
-			</c:if>
+	<c:set var="sectionsNoGroup" value="${sectionsService.sectionsNoGroup}" />
+	<c:forEach var="section" items="${sectionsNoGroup}">
+		<c:set var="sectionNames" value="${sectionNames}${section.name}¿pages/newsSection.jsp?section=${section.id}¿0|"/>
+	</c:forEach>
+	
+	<c:set var="contact_list" value=""/>
+	<c:if test="${userCategory == userCategoryType.admin.id || 
+				  (userRolesService.byUserAndRole != null && 
+				  userStatus == userStatusType.authorized.id) }" >
+		<c:set var="contact_list" value="Mensajes recibidos¿contact/Contact_list.action¿0|"/>
+	</c:if>
 
-			<zorongo:links cadenamenu='
-						   GESTION_WEB¿¿1|
-						   Roles de Usuario¿admin/RoleList.action¿2|
-						   Usuarios¿admin/UserList.action¿2|
-						   Bugs¿admin/BugList.action¿2|
-						   Secciones de Noticias¿admin/SectionList.action¿2|
-						   Bloques de Información¿admin/InfoBlockList.action¿1|
-						   Imágenes¿admin/ImageList.action¿1|
-						   Documentos¿admin/DocumentList.action¿1|
-						   Noticias¿admin/NewsPieceList.action¿1|
-						   INICIO¿|
-						   Página de INICIO¿init.action|
-						   //Conócenos¿docs/presentacionzorongo.jsp|
-						   //Breve historia¿docs/historiazorongo.jsp|
-						   //Cómo es el Zorongo¿docs/comoeselzorongo.jsp|
-						   Situación y acceso¿docs/situacionyacceso.jsp|
-						   Mapa de la Urbanización¿docs/calles.jsp|
-						   //Encuentra tu vivienda en el Zorongo¿docs/encuentravivienda.jsp|
-						   SERVICIOS¿|
-						   //Teléfonos de interés¿docs/telefonos.jsp|
-						   //Horarios de autobús¿docs/horariosbus.jsp|
-						   El Tiempo¿http://www.aemet.es/es/eltiempo/prediccion/localidades/zaragoza-50001\" target=\"_blank|
-						   //Tablón de Anuncios¿docs/anuncioslistar.jsp|
-						   INFORMATIVOS¿¿|
-						   //Juntas Directivas¿view/InfoJuntasList|
-						   //Administración y Mantenimiento¿view/InfoAdmonList|
-						   //Colaboraciones de Vecinos¿view/InfoVecinosList|
-						   //Circulares Informativas¿view/InfoCircularesList|
-						   //Buscar Noticias en Archivo General¿NewsSelecConditions.do|
-						   ${sectionNames}
-						   //ARCHIVO¿¿0|
-						   //Estatutos y Reglamentos¿view/ArchivoEstatutosList|
-						   //Convocatorias y Actas de Asambleas¿view/ArchivoAsambleasList|
-						   //Documentos digitalizados¿view/ArchivoDocumentosList|
-						   //Archivo Fotográfico¿view/ArchivoFotosList|
-						   FOROS¿¿2|
-						   FOROS de Debate¿http://www.elzorongo.es/Foros" target=\"_blank¿2|
-						   CONTACTO¿¿0|
-						   Contacta con nosotros¿contact/Contact_new.action¿0|
-						   ${contact_list}
-						   USUARIOS¿|
-						   Conectarse¿admin|
-						   Registrarse¿docs/presentacionzorongo.jsp|
-						   Modificar datos¿docs/historiazorongo.jsp¿1|
-						   Darse de Baja¿docs/comoeselzorongo.jsp¿1|
-						   Cerrar sesión¿logout.action'
-						   mododisplay="navegador"
-						   separadoritems="¿"
-						   separadormenu="|"
-						   halign="right"
-						   class_navigationbar="navigationbar"
-						   class_parent="enlacesbarra"
-						   class_child="enlacecelda"
-						   class_boxchild="recuadros"
-						   class_childtable="recuadrotabla"
-						   class_boxparent="ancla"/>
-		</td>
-	</tr>
+	<zorongo:links cadenamenu='
+				   GESTION_WEB¿¿1|
+				   Roles de Usuario¿admin/RoleList.action¿2|
+				   Usuarios¿admin/UserList.action¿2|
+				   Bugs¿admin/BugList.action¿2|
+				   Secciones de Noticias¿admin/SectionList.action¿2|
+				   Bloques de Información¿admin/InfoBlockList.action¿1|
+				   Imágenes¿admin/ImageList.action¿1|
+				   Documentos¿admin/DocumentList.action¿1|
+				   Noticias¿admin/NewsPieceList.action¿1|
+				   INICIO¿|
+				   Página de INICIO¿init.action|
+				   //Conócenos¿docs/presentacionzorongo.jsp|
+				   //Breve historia¿docs/historiazorongo.jsp|
+				   //Cómo es el Zorongo¿docs/comoeselzorongo.jsp|
+				   Situación y acceso¿docs/situacionyacceso.jsp|
+				   Mapa de la Urbanización¿docs/calles.jsp|
+				   //Encuentra tu vivienda en el Zorongo¿docs/encuentravivienda.jsp|
+				   SERVICIOS¿|
+				   //Teléfonos de interés¿docs/telefonos.jsp|
+				   //Horarios de autobús¿docs/horariosbus.jsp|
+				   El Tiempo¿http://www.aemet.es/es/eltiempo/prediccion/localidades/zaragoza-50001\" target=\"_blank|
+				   //Tablón de Anuncios¿docs/anuncioslistar.jsp|
+				   INFORMATIVOS¿¿|
+				   //Juntas Directivas¿view/InfoJuntasList|
+				   //Administración y Mantenimiento¿view/InfoAdmonList|
+				   //Colaboraciones de Vecinos¿view/InfoVecinosList|
+				   //Circulares Informativas¿view/InfoCircularesList|
+				   //Buscar Noticias en Archivo General¿NewsSelecConditions.do|
+				   ${sectionNames}
+				   //ARCHIVO¿¿0|
+				   //Estatutos y Reglamentos¿view/ArchivoEstatutosList|
+				   //Convocatorias y Actas de Asambleas¿view/ArchivoAsambleasList|
+				   //Documentos digitalizados¿view/ArchivoDocumentosList|
+				   //Archivo Fotográfico¿view/ArchivoFotosList|
+				   FOROS¿¿2|
+				   FOROS de Debate¿http://www.elzorongo.es/Foros" target=\"_blank¿2|
+				   CONTACTO¿¿0|
+				   Contacta con nosotros¿contact/Contact_new.action¿0|
+				   ${contact_list}
+				   USUARIOS¿|
+				   Conectarse¿admin|
+				   Registrarse¿docs/presentacionzorongo.jsp|
+				   Modificar datos¿docs/historiazorongo.jsp¿1|
+				   Darse de Baja¿docs/comoeselzorongo.jsp¿1|
+				   Cerrar sesión¿logout.action'
+				   mododisplay="navegador"
+				   separadoritems="¿"
+				   separadormenu="|"
+				   halign="right"
+				   class_navigationbar="navigationbar"
+				   class_parent="enlacesbarra"
+				   class_child="enlacecelda"
+				   class_boxchild="recuadros"
+				   class_childtable="recuadrotabla"
+				   class_boxparent="ancla"/>
+</td>
+</tr>
 </table>

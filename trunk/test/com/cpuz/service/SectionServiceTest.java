@@ -347,4 +347,13 @@ public class SectionServiceTest {
 		ids.add(id);
 		assertEquals("Debería ser 1 fila deleted",1,instance.deleteSectionIds(ids));
 	}
+		/**
+	 * Test of getSectionsNoGroup method, of class SectionsService.
+	 */
+	public void testGetSectionsNoGroup() throws SQLException {
+		System.out.println("getSectionsNoGroup");
+		assertTrue("Debería devolver una lista vacía", instance.getSectionsNoGroup().isEmpty());
+	}
+
+
 }

@@ -43,13 +43,13 @@ public class SectionDAODummy extends SectionDAO {
 	 */
 	public int create(Section obj) throws SQLException, UserException {
 		if (obj == null || obj.getId() == 0 || obj.getName() == null
-				|| obj.getName().equals("") ) {
+				|| obj.getName().equals("")) {
 			throw new UserException("sectionException.nullOrEmptyField");
 		}
-		if (obj.getId()==-1) {
+		if (obj.getId() == -1) {
 			throw new SQLException("Testing SQLException");
 		}
-		if (obj.getId()==-2) {
+		if (obj.getId() == -2) {
 			return 0;
 		}
 		return 1;
@@ -59,10 +59,10 @@ public class SectionDAODummy extends SectionDAO {
 	 * Método dummy para testear clases que accedan a SectionDAOdummy.read()
 	 */
 	public Section read(int objId) throws SQLException {
-		if (objId==-1) {
+		if (objId == -1) {
 			throw new SQLException("Error en consulta SQL");
 		}
-		if (objId==-2 || objId==0) {	// Testeamos que no encuentra el registro
+		if (objId == -2 || objId == 0) {	// Testeamos que no encuentra el registro
 			return null;
 		} else {
 			return new Section();
@@ -80,13 +80,13 @@ public class SectionDAODummy extends SectionDAO {
 	 */
 	public int update(Section obj) throws SQLException, UserException {
 		if (obj == null || obj.getId() == 0 || obj.getName() == null
-				|| obj.getName().equals("") ) {
+				|| obj.getName().equals("")) {
 			throw new UserException("sectionException.nullOrEmptyField");
 		}
-		if (obj.getId()==-1) {
+		if (obj.getId() == -1) {
 			throw new SQLException("Testing SQLException");
 		}
-		if (obj.getId()==-2) {
+		if (obj.getId() == -2) {
 			return 0;
 		}
 		return 1;
@@ -102,10 +102,10 @@ public class SectionDAODummy extends SectionDAO {
 	 * filas eliminadas de la base de datos.
 	 */
 	public int delete(int objId) throws SQLException {
-		if (objId==-1) {
+		if (objId == -1) {
 			throw new SQLException("Error en consulta SQL");
 		}
-		if (objId==0) {
+		if (objId == 0) {
 			return 0;
 		} else {
 			return 1;
@@ -144,9 +144,13 @@ public class SectionDAODummy extends SectionDAO {
 		}
 		return sections;
 	}
-		public int getCountRows() throws SQLException {
+
+	public int getCountRows() throws SQLException {
 		return 1;
 	}
 
-
+	public List<Section> getSectionsNoGroup() throws SQLException {
+		List<Section> sections = new ArrayList<>();
+		return sections;
+	}
 }
