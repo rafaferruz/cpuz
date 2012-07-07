@@ -1,4 +1,6 @@
 <%-- Tabla de Novedades en la Web --%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="cpuz" tagdir="/WEB-INF/tags" %>
 
 <jsp:useBean id="ComponentType" class="com.cpuz.domain.ComponentTypeFactory" />
 <jsp:useBean id="HeaderType" class="com.cpuz.domain.HeaderTypeFactory" />
