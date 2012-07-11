@@ -45,6 +45,7 @@ public class UserServiceTest {
 	private UserService createUserService() {
 		UserService userService = new UserService();
 		userService.setDAOFactory(new DAOFactoryDummy());
+		userService.setDAOFactoryTransactional(new DAOFactoryDummy());
 		return userService;
 	}
 
@@ -301,6 +302,7 @@ public class UserServiceTest {
 		System.out.println("deleteUser");
 		User user = new User();
 		user.setId(1);	// Provocamos eliminación correcta
+		user.setUser("someUser");
 		assertEquals("Debería devolver 1 fila eliminada", 1, instance.deleteUser(user));
 	}
 
@@ -308,7 +310,7 @@ public class UserServiceTest {
 	 * Test of deleteUserIds method, of class UserService.
 	 */
 	@Test
-	public void testDeleteUserIds_ListNull() throws SQLException {
+	public void testDeleteUserIds_ListNull() throws SQLException, UserException {
 		System.out.println("deleteUserIds");
 		List<String> ids = null;
 		assertEquals("Debería ser 0 filas deleted",0,instance.deleteUserIds(ids));
@@ -318,7 +320,7 @@ public class UserServiceTest {
 	 * Test of deleteUserIds method, of class UserService.
 	 */
 	@Test(expected=SQLException.class)
-	public void testDeleteUserIds_whenSQLException() throws SQLException {
+	public void testDeleteUserIds_whenSQLException() throws SQLException, UserException {
 		System.out.println("deleteUserIds");
 		List<String> ids = new ArrayList<>();
 		ids.add("");
@@ -329,7 +331,7 @@ public class UserServiceTest {
 	 * Test of deleteUserIds method, of class UserService.
 	 */
 	@Test
-	public void testDeleteUserIds_OkDeleting() throws SQLException {
+	public void testDeleteUserIds_OkDeleting() throws SQLException, UserException {
 		System.out.println("deleteUserIds");
 		String id="One row";
 		List<String> ids = new ArrayList<>();

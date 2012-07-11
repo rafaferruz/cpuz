@@ -58,7 +58,7 @@ public abstract class GenericAction<T> extends ActionSupport implements RequestA
 
 	public abstract String objectSaveEdit() throws SQLException, UserException;
 
-	public abstract String objectDelete() throws SQLException;
+	public abstract String objectDelete() throws SQLException, UserException;
 
 	public abstract String objectList() throws SQLException;
 
@@ -95,10 +95,6 @@ public abstract class GenericAction<T> extends ActionSupport implements RequestA
 	public void setDataList(List<T> dataList) {
 		this.dataList = dataList;
 	}
-
-	public abstract Object getDataService();
-
-	public abstract void setDataService(Object dataService);
 
 	public String getSelec1() {
 		return selec1;

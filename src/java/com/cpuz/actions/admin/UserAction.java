@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -120,10 +121,10 @@ public class UserAction extends GenericAction<User> {
 		return objectList();
 	}
 
-	public String objectDelete() throws SQLException {
-		if (selec1 != null) {
-			String[] deletes = selec1.split(",");
-			if (dataService.deleteUserIds(Arrays.asList(deletes)) > 0) {
+	public String objectDelete() throws SQLException, UserException {
+		if (selec1 != null && !selec1.isEmpty()) {
+			List<String> ids = Arrays.asList(selec1.split(","));
+			if (dataService.deleteUserIds(ids) > 0) {
 				addActionMessage(getText("SuccessDeletedUsers"));
 			} else {
 				addActionError(getText("NoneDeletedUser"));
@@ -222,7 +223,7 @@ public class UserAction extends GenericAction<User> {
 		return dataService;
 	}
 
-	public void setDataService(Object dataService) {
-		this.dataService = (UserService) dataService;
+	public void setDataService(UserService dataService) {
+		this.dataService =  dataService;
 	}
 }

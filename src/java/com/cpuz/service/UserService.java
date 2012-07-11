@@ -38,6 +38,7 @@ public class UserService {
 	private final transient Logger log = Logger.getLogger(this.getClass());
 	ControlParams control = new ControlParams();
 	DAOFactory DAOFactory;
+	DAOFactory DAOFactoryTransactional;
 
 	public UserService() {
 	}
@@ -46,8 +47,16 @@ public class UserService {
 		return DAOFactory;
 	}
 
+	public DAOFactory getDAOFactoryTransactional() {
+		return DAOFactoryTransactional;
+	}
+
 	public void setDAOFactory(DAOFactory DAOFactory) {
 		this.DAOFactory = DAOFactory;
+	}
+
+	public void setDAOFactoryTransactional(DAOFactory DAOFactoryTransactional) {
+		this.DAOFactoryTransactional = DAOFactoryTransactional;
 	}
 
 	public boolean keyIdExists(Integer userId) throws SQLException, UserException {
@@ -86,41 +95,40 @@ public class UserService {
 	}
 
 	public int insertUser(User user) throws SQLException, UserException {
-		DAOFactory.startTransaction();
-		int userCount = DAOFactory.getUserDAO().create(user);
+		DAOFactoryTransactional.startTransaction();
+		int userCount = DAOFactoryTransactional.getUserDAO().create(user);
 		if (userCount == 1) {
 			// Eliminamos todos los UserRole que pudieran existir del User
-			DAOFactory.getUserRoleDAO().deleteAllOfUser(user);
+			DAOFactoryTransactional.getUserRoleDAO().deleteAllOfUser(user);
 			// Insertamos los nuevos userUser del User
 			for (UserRole userUser : user.getRoles()) {
-				DAOFactory.getUserRoleDAO().create(userUser);
+				DAOFactoryTransactional.getUserRoleDAO().create(userUser);
 			}
-			DAOFactory.commit();
+			DAOFactoryTransactional.commit();
 		} else {
-			DAOFactory.rollback(null);
+			DAOFactoryTransactional.rollback(null);
 			return 0;
 		}
 		return userCount;
 	}
 
 	public int updateUser(User user) throws SQLException, UserException {
-		DAOFactory.startTransaction();
-		int userCount = DAOFactory.getUserDAO().update(user);
+		DAOFactoryTransactional.startTransaction();
+		int userCount = DAOFactoryTransactional.getUserDAO().update(user);
 		if (userCount == 1) {
 			// Eliminamos todos los UserRole que pudieran existir del User
-			DAOFactory.getUserRoleDAO().deleteAllOfUser(user);
+			int deletes = DAOFactoryTransactional.getUserRoleDAO().deleteAllOfUser(user);
 			// Insertamos los nuevos userUser del User
 			for (UserRole userUser : user.getRoles()) {
-				DAOFactory.getUserRoleDAO().create(userUser);
+				DAOFactoryTransactional.getUserRoleDAO().create(userUser);
 			}
-			DAOFactory.commit();
+			DAOFactoryTransactional.commit();
 		} else {
-			DAOFactory.rollback(null);
+			DAOFactoryTransactional.rollback(null);
 			return 0;
 		}
 		return userCount;
 	}
-	//FIXME: Se deben eliminar todos los registros de UserRoles que correspondan al User eliminado
 
 	public int deleteUser(User user) throws SQLException, UserException {
 		if (user == null) {
@@ -129,11 +137,39 @@ public class UserService {
 		if (user.getId() == null) {
 			throw new UserException("roleException.rolIdNull");
 		}
-		return DAOFactory.getUserDAO().delete(user.getId());
+		DAOFactoryTransactional.startTransaction();
+		int deletedRows = DAOFactoryTransactional.getUserDAO().delete(user.getId());
+		if (deletedRows == 1) {
+			// Eliminamos todos los UserRole que pudieran existir del User
+			DAOFactoryTransactional.getUserRoleDAO().deleteAllOfUser(user);
+			DAOFactoryTransactional.commit();
+		} else {
+			DAOFactoryTransactional.rollback(null);
+			return 0;
+		}
+		return deletedRows;
 	}
 
-	public int deleteUserIds(List<String> ids) throws SQLException {
-		return DAOFactory.getUserDAO().deleteIds(ids);
+	public int deleteUserIds(List<String> ids) throws SQLException, UserException {
+		List<User> users = DAOFactory.getUserDAO().getUserListOnIds(ids);
+		List<String> usuRoles = new ArrayList();
+		for (User user : users) {
+			usuRoles.add(user.getUser());
+		}
+		DAOFactoryTransactional.startTransaction();
+		int deletedRows = DAOFactoryTransactional.getUserDAO().deleteIds(ids);
+		if (deletedRows > 0) {
+			// Eliminamos todos los UserRole que pudieran existir de los User eliminados
+			if (!usuRoles.isEmpty()) {
+				DAOFactoryTransactional.getUserRoleDAO().deleteRolesOfUsers(usuRoles);
+			}
+			DAOFactoryTransactional.commit();
+		} else {
+			DAOFactoryTransactional.rollback(null);
+			return 0;
+		}
+
+		return deletedRows;
 	}
 
 	public ControlParams getControl() {

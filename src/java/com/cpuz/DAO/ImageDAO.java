@@ -18,7 +18,6 @@
  */
 package com.cpuz.DAO;
 
-import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.domain.Image;
 import com.cpuz.st2.beans.ControlParams;
 import com.cpuz.util.SqlUtil;

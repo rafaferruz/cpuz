@@ -18,7 +18,6 @@
  */
 package com.cpuz.DAO;
 
-import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.domain.Section;
 import com.cpuz.exceptions.UserException;
 import com.cpuz.st2.beans.ControlParams;

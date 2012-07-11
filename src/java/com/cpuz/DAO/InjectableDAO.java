@@ -1,4 +1,4 @@
-package com.cpuz.DAO.impl;
+package com.cpuz.DAO;
 
 import java.sql.Connection;
 
