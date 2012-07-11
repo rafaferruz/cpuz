@@ -2,8 +2,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="cpuz" tagdir="/WEB-INF/tags" %>
 
-
-<zorongo:links cadenamenu='
+<zorongo:links menuChain='
 			   GESTION_WEB¿¿1|
 			   Roles de Usuario¿admin/RoleList.action¿2|
 			   Usuarios¿admin/UserList.action¿2|
@@ -49,9 +48,9 @@
 			   Modificar datos¿docs/historiazorongo.jsp¿1|
 			   Darse de Baja¿docs/comoeselzorongo.jsp¿1|
 			   Cerrar sesión¿logout.action'
-			   mododisplay="navigator"
-			   separadoritems="¿"
-			   separadormenu="|"
+			   displayMode="navigator"
+			   menuItemSeparator="¿"
+			   menuSeparator="|"
 			   halign="right"
 			   class_navigationbar="navigationbar"
 			   class_parent="enlacesbarra"

@@ -18,7 +18,6 @@
  */
 package com.cpuz.DAO;
 
-import com.cpuz.DAO.impl.InjectableDAO;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;

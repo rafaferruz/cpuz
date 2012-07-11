@@ -18,7 +18,6 @@
  */
 package com.cpuz.DAO;
 
-import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.domain.User;
 import com.cpuz.domain.UserRole;
 import com.cpuz.exceptions.UserException;
@@ -145,7 +144,7 @@ public class UserDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha insertado con éxito.
 	 * @throws SQLException 
 	 */
-	public int update(User user) throws SQLException,UserException {
+	public int update(User user) throws SQLException, UserException {
 		int rowCount = 0;
 		String sql = "UPDATE users SET "
 				+ "usu_date = ?, usu_status = ?, usu_category = ?, "
@@ -173,7 +172,7 @@ public class UserDAO implements InjectableDAO {
 	 *					SQL; en está caso será igual a 1 si se ha eliminado con éxito.
 	 * @throws SQLException 
 	 */
-	public int delete(int userId) throws SQLException,UserException {
+	public int delete(int userId) throws SQLException, UserException {
 		int rowCount = 0;
 		String sql = "DELETE FROM users WHERE usu_id = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -184,7 +183,7 @@ public class UserDAO implements InjectableDAO {
 	}
 
 	public List<User> getUserList(ControlParams control) throws SQLException {
-		List<User> roles = new ArrayList<>();
+		List<User> users = new ArrayList<>();
 		String sql = "SELECT * FROM users ORDER BY usu_id ";
 		String limit = control.getRecChunk() > 0 ? " LIMIT ? OFFSET ?" : "";
 		sql = sql + limit;
@@ -196,10 +195,35 @@ public class UserDAO implements InjectableDAO {
 		log.debug("UserDAO getUserList(): " + ps.toString());
 		try (ResultSet rs = ps.executeQuery()) {
 			while (rs.next()) {
-				roles.add(getCompleteUser(rs));
+				users.add(getCompleteUser(rs));
 			}
 		}
-		return roles;
+		return users;
+	}
+
+	/**
+	 * Devuelve una lista de User a partir de una lista String de ids de User a buscar
+	 * @param ids
+	 * @return
+	 * @throws SQLException 
+	 */
+	public List<User> getUserListOnIds(List<String> ids) throws SQLException {
+		List<User> users = new ArrayList<>();
+
+		List<Integer> usuIds = new ArrayList();
+		for (String id : ids) {
+			usuIds.add(Integer.parseInt(id.trim()));
+		}
+
+		String sql = "SELECT * FROM users WHERE usu_id IN " + SqlUtil.getIntegersStatementInClause(usuIds);
+		PreparedStatement ps = conn.prepareStatement(sql);
+		log.debug("UserDAO getUserListOnIds(): " + ps.toString());
+		try (ResultSet rs = ps.executeQuery()) {
+			while (rs.next()) {
+				users.add(getCompleteUser(rs));
+			}
+		}
+		return users;
 	}
 
 	public int deleteIds(List<String> ids) throws SQLException {

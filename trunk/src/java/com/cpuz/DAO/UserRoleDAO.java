@@ -18,7 +18,6 @@
  */
 package com.cpuz.DAO;
 
-import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.domain.User;
 import com.cpuz.domain.UserRole;
 import com.cpuz.exceptions.UserException;
@@ -200,12 +199,37 @@ public class UserRoleDAO implements InjectableDAO {
 		return rowCount;
 	}
 
+	/**
+	 * Elimina un UserRole de la tabla 
+	 *
+	 * @param userRoleId		Id del objeto UserRole que se quiere eliminar de la tabla
+	 * @return			Un entero indicando el número de filas afectadas por la sentencia
+	 *					SQL; en está caso será igual a 1 si se ha eliminado con éxito.
+	 * @throws SQLException 
+	 */
+	public int deleteRolesOfUsers(List<String> users) throws SQLException, UserException {
+		int rowCount = 0;
+		String sql = "DELETE FROM userroles WHERE usu_user IN "+SqlUtil.getPreparedStatementInClause(users);
+		PreparedStatement ps = conn.prepareStatement(sql);
+		SqlUtil.setList(ps, users);
+		log.debug("UserRoleDAO deleteRolesOfUsers(): " + ps.toString());
+		rowCount = ps.executeUpdate();
+		return rowCount;
+	}
+
+	/**
+	 * Devuelve la lista de roles asignados a un usuario pasado como parámetro
+	 * @param user			Usuario para el que se buscan sus roles
+	 * @return				List de roles
+	 * @throws SQLException
+	 * @throws UserException	Si el usuario pasado es nulo o vacio
+	 */
 	public List<UserRole> getUserRoleList(String user) throws SQLException, UserException {
 		if (user == null || user.equals("")) {
 			throw new UserException("userRoleException.nullOrEmptyField");
 		}
 		List<UserRole> roles = new ArrayList<>();
-		String sql = "SELECT * FROM userroles ORDER BY usr_user = ?";
+		String sql = "SELECT * FROM userroles WHERE usu_user = ? ORDER BY usr_role";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setString(1, user);
 		log.debug("UserRoleDAO getUserList(): " + ps.toString());

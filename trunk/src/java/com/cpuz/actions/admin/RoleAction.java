@@ -105,8 +105,8 @@ public class RoleAction extends GenericAction<Role> {
 		return dataService;
 	}
 
-	public void setDataService(Object dataService) {
-		this.dataService = (RolesService) dataService;
+	public void setDataService(RolesService dataService) {
+		this.dataService =  dataService;
 	}
 
 }

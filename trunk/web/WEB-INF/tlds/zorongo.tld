@@ -33,7 +33,7 @@
         </tldx>
         -->
     <attribute>
-      <name>cadenamenu</name>
+      <name>menuChain</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
@@ -47,7 +47,7 @@
             -->
     </attribute>
     <attribute>
-      <name>separadormenu</name>
+      <name>menuSeparator</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
@@ -61,7 +61,7 @@
             -->
     </attribute>
     <attribute>
-      <name>separadoritems</name>
+      <name>menuItemSeparator</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
@@ -75,7 +75,7 @@
             -->
     </attribute>
     <attribute>
-      <name>mododisplay</name>
+      <name>displayMode</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>

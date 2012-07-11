@@ -18,7 +18,6 @@
  */
 package com.cpuz.DAO;
 
-import com.cpuz.DAO.impl.InjectableDAO;
 import com.cpuz.DAO.impl.NewsCompositionDAOImpl;
 import com.cpuz.domain.NewsPiece;
 import com.cpuz.exceptions.UserException;

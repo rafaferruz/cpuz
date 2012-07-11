@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.context.ApplicationContext;
 
 /**
  *
@@ -69,10 +70,9 @@ public class CheckTool {
 	public static void checkUserCredentials(HttpServletRequest request) throws SQLException, UserException {
 
 		HttpSession session = request.getSession(false);
-		UserService usersModel = new UserService();
 		if (request.getUserPrincipal() != null) {
-			ControlParams controlParams=new ControlParams();
-			controlParams.setUserType(UserType.ADMIN);
+			ApplicationContext springContext = (ApplicationContext) request.getServletContext().getAttribute("springServicesContext");
+			UserService usersModel = (UserService) springContext.getBean("userService");
 			User user = usersModel.getByCode(request.getUserPrincipal().getName());
 			if (user != null) {
 				setUserSessionAttributes(session,

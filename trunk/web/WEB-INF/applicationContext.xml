@@ -7,104 +7,113 @@
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.6.SEC01.xsd
 ">
 
-    <bean id="InitService"
+	<bean id="DAOFactory"
+        class="com.cpuz.DAO.DAOFactory"  scope="prototype"/>
+
+	<bean id="InitService"
         class="com.cpuz.service.InitService" />
-    <bean id="UsersService"
-        class="com.cpuz.service.UserService" />
-    <bean id="RolesService"
-        class="com.cpuz.service.RolesService" />
-    <bean id="UserRolesService"
-        class="com.cpuz.service.UserRolesService" />
-    <bean id="BugsService"
+	<bean id="UsersService"
+        class="com.cpuz.service.UserService" scope="prototype">
+		<property name="DAOFactory" ref="DAOFactory"/>
+		<property name="DAOFactoryTransactional" ref="DAOFactory"/>
+	</bean>
+	<bean id="RolesService"
+        class="com.cpuz.service.RolesService" scope="prototype" >
+		<property name="DAOFactory" ref="DAOFactory"/>
+	</bean>
+	<bean id="UserRolesService"
+        class="com.cpuz.service.UserRolesService"  scope="prototype">
+		<property name="DAOFactory" ref="DAOFactory"/>
+	</bean>
+	<bean id="BugsService"
         class="com.cpuz.service.BugsService" />
-    <bean id="SectionsService"
+	<bean id="SectionsService"
         class="com.cpuz.service.SectionsService" />
-    <bean id="InfoBlocksService"
+	<bean id="InfoBlocksService"
         class="com.cpuz.service.InfoBlocksService" />
-    <bean id="ImagesService"
+	<bean id="ImagesService"
         class="com.cpuz.service.ImagesService" />
-    <bean id="DocumentsService"
+	<bean id="DocumentsService"
         class="com.cpuz.service.DocumentsService" />
-    <bean id="NewsPiecesService"
+	<bean id="NewsPiecesService"
         class="com.cpuz.service.NewsPiecesService" />
-    <bean id="NewsCompositionsService"
+	<bean id="NewsCompositionsService"
         class="com.cpuz.service.NewsCompositionsService" />
-    <bean id="ContactsService"
+	<bean id="ContactsService"
         class="com.cpuz.service.ContactsService" />
-    <bean id="availableRolesList"
+	<bean id="availableRolesList"
         class="java.util.ArrayList" />
-    <bean id="authRolesList"
+	<bean id="authRolesList"
         class="java.util.ArrayList" />
-    <bean id="RolesList"
+	<bean id="RolesList"
         class="java.util.ArrayList" />
-    <bean id="UserRolesList"
+	<bean id="UserRolesList"
         class="java.util.ArrayList" />
 
-    <bean id="springInitAction" class="com.cpuz.actions.admin.InitAction"
+	<bean id="springInitAction" class="com.cpuz.actions.admin.InitAction"
         scope="prototype">
-        <property name="initService" ref="InitService"/>
-    </bean>
-    <bean id="springLogoutAction" class="com.cpuz.actions.admin.LogoutAction"
+		<property name="initService" ref="InitService"/>
+	</bean>
+	<bean id="springLogoutAction" class="com.cpuz.actions.admin.LogoutAction"
         scope="prototype">
-        <property name="initService" ref="InitService"/>
-    </bean>
+		<property name="initService" ref="InitService"/>
+	</bean>
 
-    <bean id="springRoleAction" class="com.cpuz.actions.admin.RoleAction"
+	<bean id="springRoleAction" class="com.cpuz.actions.admin.RoleAction"
         scope="prototype">
-        <property name="dataService" ref="RolesService"/>
-    </bean>
+		<property name="dataService" ref="RolesService"/>
+	</bean>
 
-    <bean id="springUserAction" class="com.cpuz.actions.admin.UserAction"
+	<bean id="springUserAction" class="com.cpuz.actions.admin.UserAction"
         scope="prototype">
-        <property name="dataService" ref="UsersService"/>
-        <property name="rolesService" ref="RolesService"/>
-        <property name="userRolesService" ref="UserRolesService"/>
-        <property name="rolesList" ref="RolesList"/>
-        <property name="userRolesList" ref="UserRolesList"/>
-    </bean>
+		<property name="dataService" ref="UsersService"/>
+		<property name="rolesService" ref="RolesService"/>
+		<property name="rolesList" ref="RolesList"/>
+		<property name="userRolesList" ref="UserRolesList"/>
+	</bean>
 
-    <bean id="springBugAction" class="com.cpuz.actions.admin.BugAction"
+	<bean id="springBugAction" class="com.cpuz.actions.admin.BugAction"
         scope="prototype">
-        <property name="dataService" ref="BugsService"/>
-    </bean>
+		<property name="dataService" ref="BugsService"/>
+	</bean>
 
-    <bean id="springSectionAction" class="com.cpuz.actions.admin.SectionAction"
+	<bean id="springSectionAction" class="com.cpuz.actions.admin.SectionAction"
         scope="prototype">
-        <property name="dataService" ref="SectionsService"/>
-        <property name="availableRolesList" ref="availableRolesList"/>
-        <property name="authRolesList" ref="authRolesList"/>
-        <property name="rolesService" ref="RolesService"/>
-    </bean>
+		<property name="dataService" ref="SectionsService"/>
+		<property name="availableRolesList" ref="availableRolesList"/>
+		<property name="authRolesList" ref="authRolesList"/>
+		<property name="rolesService" ref="RolesService"/>
+	</bean>
 
-    <bean id="springInfoBlockAction" class="com.cpuz.actions.admin.InfoBlockAction"
+	<bean id="springInfoBlockAction" class="com.cpuz.actions.admin.InfoBlockAction"
         scope="prototype">
-        <property name="dataService" ref="InfoBlocksService"/>
-    </bean>
+		<property name="dataService" ref="InfoBlocksService"/>
+	</bean>
 
-    <bean id="springImageAction" class="com.cpuz.actions.admin.ImageAction"
+	<bean id="springImageAction" class="com.cpuz.actions.admin.ImageAction"
         scope="prototype">
-        <property name="dataService" ref="ImagesService"/>
-    </bean>
+		<property name="dataService" ref="ImagesService"/>
+	</bean>
 
-    <bean id="springDocumentAction" class="com.cpuz.actions.admin.DocumentAction"
+	<bean id="springDocumentAction" class="com.cpuz.actions.admin.DocumentAction"
         scope="prototype">
-        <property name="dataService" ref="DocumentsService"/>
-    </bean>
+		<property name="dataService" ref="DocumentsService"/>
+	</bean>
 
-    <bean id="springNewsPieceAction" class="com.cpuz.actions.admin.NewsPieceAction"
+	<bean id="springNewsPieceAction" class="com.cpuz.actions.admin.NewsPieceAction"
          scope="prototype">
-        <property name="dataService" ref="NewsPiecesService"/>
-    </bean>
+		<property name="dataService" ref="NewsPiecesService"/>
+	</bean>
 
-    <bean id="springNewsCompositionAction" class="com.cpuz.actions.admin.NewsCompositionAction"
+	<bean id="springNewsCompositionAction" class="com.cpuz.actions.admin.NewsCompositionAction"
          scope="prototype">
-        <property name="dataService" ref="NewsCompositionsService"/>
-    </bean>
+		<property name="dataService" ref="NewsCompositionsService"/>
+	</bean>
 
-    <bean id="springContactAction" class="com.cpuz.actions.admin.ContactAction"
+	<bean id="springContactAction" class="com.cpuz.actions.admin.ContactAction"
         scope="prototype">
-        <property name="dataService" ref="ContactsService"/>
-    </bean>
+		<property name="dataService" ref="ContactsService"/>
+	</bean>
 
 
 </beans>

@@ -7,63 +7,63 @@
 <struts>
     <package name="admin" namespace="/admin" extends="struts-default">
 
-        <action name="Role*" method="role{1}" class="springRoleAction" >
+        <action name="Role*" method="object{1}" class="springRoleAction" >
             <result name="list">/WEB-INF/pages/main.jsp</result>
             <result name="new">/WEB-INF/pages/main.jsp</result>
             <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="User*" method="user{1}" class="springUserAction" >
+        <action name="User*" method="object{1}" class="springUserAction" >
             <result name="list">/WEB-INF/pages/main.jsp</result>
             <result name="new">/WEB-INF/pages/main.jsp</result>
             <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="Bug*" method="bug{1}" class="springBugAction" >
+        <action name="Bug*" method="object{1}" class="springBugAction" >
             <result name="list">/WEB-INF/pages/main.jsp</result>
             <result name="new">/WEB-INF/pages/main.jsp</result>
             <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="Section*" method="section{1}" class="springSectionAction" >
+        <action name="Section*" method="object{1}" class="springSectionAction" >
             <result name="list">/WEB-INF/pages/main.jsp</result>
             <result name="new">/WEB-INF/pages/main.jsp</result>
             <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="InfoBlock*" method="infoBlock{1}" class="springInfoBlockAction" >
+        <action name="InfoBlock*" method="object{1}" class="springInfoBlockAction" >
             <result name="list">/WEB-INF/pages/main.jsp</result>
             <result name="new">/WEB-INF/pages/main.jsp</result>
             <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="Image*" method="image{1}" class="springImageAction" >
+        <action name="Image*" method="object{1}" class="springImageAction" >
             <result name="list">/WEB-INF/pages/main.jsp</result>
             <result name="new">/WEB-INF/pages/main.jsp</result>
             <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="Document*" method="document{1}" class="springDocumentAction" >
+        <action name="Document*" method="object{1}" class="springDocumentAction" >
             <result name="list">/WEB-INF/pages/main.jsp</result>
             <result name="new">/WEB-INF/pages/main.jsp</result>
             <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="NewsPiece*" method="newsPiece{1}" class="springNewsPieceAction" >
+        <action name="NewsPiece*" method="object{1}" class="springNewsPieceAction" >
             <result name="list">/WEB-INF/pages/main.jsp</result>
             <result name="new">/WEB-INF/pages/main.jsp</result>
             <result name="edit">/WEB-INF/pages/main.jsp</result>
             <result name="input">/WEB-INF/pages/main.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>
         </action>
-        <action name="NewsComp*" method="newsComposition{1}" class="springNewsCompositionAction" >
+        <action name="NewsComp*" method="object{1}" class="springNewsCompositionAction" >
             <result name="list">/WEB-INF/views/newsCompList.jsp</result>
             <result name="edit">/WEB-INF/views/newsCompEdit.jsp</result>
             <result>/WEB-INF/pages/main.jsp</result>

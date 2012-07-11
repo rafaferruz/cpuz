@@ -84,8 +84,8 @@ La plantilla ofrece una estructura de página html con un elemento <head> y un e
                 regenerate2();
                 if (div_inicial != null && div_inicial.length>0)
                     mostrar(div_inicial);
-                PosicionaPanelMenu();
-                empezarMenuNavegador = true;
+                MenuPanelPositioning();
+                menuNavigatorStart = true;
             }
             window.onload=funciones_iniciales;
         </script>

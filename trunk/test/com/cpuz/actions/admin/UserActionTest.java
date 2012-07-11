@@ -48,6 +48,7 @@ public class UserActionTest {
 		UserActionDummy userAction = new UserActionDummy();
 		userAction.setDataService(new UserService());
 		userAction.getDataService().setDAOFactory(new DAOFactoryDummy());
+		userAction.getDataService().setDAOFactoryTransactional(new DAOFactoryDummy());
 		userAction.setRolesService(new RolesService());
 		userAction.getRolesService().setDAOFactory(userAction.getDataService().getDAOFactory());
 		return userAction;
@@ -157,7 +158,7 @@ public class UserActionTest {
 	 * Test of userDelete method, of class UserAction.
 	 */
 	@Test
-	public void testObjectDelete_WhenSelec1Null() throws SQLException {
+	public void testObjectDelete_WhenSelec1Null() throws SQLException, UserException {
 		System.out.println("userDelete");
 		instance.setSelec1(null);
 		assertEquals("Debería ser igual a 'list'", "list", instance.objectDelete());
@@ -169,7 +170,7 @@ public class UserActionTest {
 	 * Test of userDelete method, of class UserAction.
 	 */
 	@Test(expected = SQLException.class)
-	public void testObjectDelete_WhenSelec1Empty() throws SQLException {
+	public void testObjectDelete_WhenSelec1Empty() throws SQLException, UserException {
 		System.out.println("userDelete");
 		instance.setSelec1("");
 		instance.objectDelete();
@@ -179,7 +180,7 @@ public class UserActionTest {
 	 * Test of userDelete method, of class UserAction.
 	 */
 	@Test
-	public void testObjectDelete_WhenNoneDeleted() throws SQLException {
+	public void testObjectDelete_WhenNoneDeleted() throws SQLException, UserException {
 		System.out.println("userDelete");
 		instance.setSelec1("none");
 		assertEquals("Debería ser igual a 'list'", "list", instance.objectDelete());
@@ -190,7 +191,7 @@ public class UserActionTest {
 	 * Test of userDelete method, of class UserAction.
 	 */
 	@Test
-	public void testObjectDelete_WhenOkDeleted() throws SQLException {
+	public void testObjectDelete_WhenOkDeleted() throws SQLException, UserException {
 		System.out.println("userDelete");
 		instance.setSelec1("1,2,3");
 		assertEquals("Debería ser igual a 'list'", "list", instance.objectDelete());

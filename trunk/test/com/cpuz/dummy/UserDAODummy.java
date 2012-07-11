@@ -87,7 +87,9 @@ public class UserDAODummy extends UserDAO {
 		}
 		return users;
 	}
-
+	public List<User> getUserListOnIds(List<String> ids) throws SQLException {
+		return new ArrayList<>();
+	}
 	public int getCountRows() throws SQLException {
 		return 1;
 	}

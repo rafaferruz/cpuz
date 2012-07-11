@@ -24,13 +24,13 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 public class LinksHandlerV3 extends BodyTagSupport {
 
 	private static final long serialVersionUID = 309L;
-	/** property declaration for tag attribute: separadormenu.
+	/** property declaration for tag attribute: menuSeparator.
 	 *
 	 */
-	private java.lang.String separadormenu;
-	private java.lang.String separadoritems;
-	private java.lang.String mododisplay;
-	private java.lang.String cadenamenu;
+	private java.lang.String menuSeparator;
+	private java.lang.String menuItemSeparator;
+	private java.lang.String displayMode;
+	private java.lang.String menuChain;
 	private java.lang.String class_parent;
 	private java.lang.String class_child;
 	private java.lang.String class_boxchild;
@@ -52,43 +52,41 @@ public class LinksHandlerV3 extends BodyTagSupport {
 
 	/**
 	 *
-	 * Generate the links based on the separadormenu attribute passed
+	 * Generate the links based on the menuSeparator attribute passed
 	 * in to the tag.
 	 */
 	public void otherDoStartTagOperations() {
 
-		if (mododisplay.equals("null")) {
+		if (displayMode.equals("null")) {
 			return;
 		}
 
 		HttpServletRequest request = (HttpServletRequest) (pageContext.getRequest());
-		ResourceBundle bundle = BundleHelper.getBundle(request.getLocales());
-
 		HttpServletResponse response = (HttpServletResponse) (pageContext.getResponse());
 		HttpSession session = request.getSession(false);
 
 		StringBuffer links = new StringBuffer("");
-		StringBuffer menuBarra = new StringBuffer("");
-		StringBuffer menuPaneles = new StringBuffer("");
+		StringBuffer menuBar = new StringBuffer("");
+		StringBuffer menuPanels = new StringBuffer("");
 
-		int numeroPanelMenu = 0;
-		String varcapasJavascriptMenuNavegador = "";
+		int menuPanelNumber = 0;
+		String varJavascriptMenuNavigatorLayers = "";
 
 		// Generamos una lista con cada línea de definición de menú
-		List<String> menuDefs = Arrays.asList(cadenamenu.split("\\" + separadormenu));
+		List<String> menuDefs = Arrays.asList(menuChain.split("\\" + menuSeparator));
 		Integer needCategory = 0;
 		if (session.getAttribute("userCategory") == null) {
 			session.setAttribute("userCategory", 0);
 		}
 
 		for (String menuDef : menuDefs) {
-			List<String> slideDefs = Arrays.asList(menuDef.split("\\" + separadoritems));
+			List<String> slideDefs = Arrays.asList(menuDef.split("\\" + menuItemSeparator));
 			// Recuperamos el texto de la línea de menú
-			String texto = slideDefs.get(0).replaceAll("\n", "").trim();
-			String enlace = "";
-			// Recuperamos la dirección de enlace
+			String text = slideDefs.get(0).replaceAll("\n", "").trim();
+			String linkTo = "";
+			// Recuperamos la dirección de linkTo
 			if (slideDefs.size() > 1) {
-				enlace = slideDefs.get(1).trim();
+				linkTo = slideDefs.get(1).trim();
 			}
 			// Recuperamos el nivel de categoría del usuario necesario para mostrar la línea
 			needCategory = 0;
@@ -96,67 +94,68 @@ public class LinksHandlerV3 extends BodyTagSupport {
 				needCategory = Integer.parseInt(slideDefs.get(2).trim());
 			}
 
-			if (!texto.startsWith("//")) { 	// Si se trata de una línea de comentario 
+			if (!text.startsWith("//")) { 	// Si se trata de una línea de comentario 
 				// no se trata y se toma la siguiente línea
 				// de definición de menú
 
 				if ((Integer) session.getAttribute("userCategory") >= needCategory) {
-					switch (mododisplay) {
+					switch (displayMode) {
 						case "column":
 							links.append("<tr><td><table width=\"100%\"  border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr>");
-							if (!enlace.equals("")) {
+							if (!linkTo.equals("")) {
 								links.append(getTd20());
 								links.append(getTd80Start());
 								links.append(getDivLeftStart());
-								menuPaneles.append(getLinkElement(request, response, enlace, "class=\"menu_2\"", texto));
+								menuPanels.append(getLinkElement(request, response, linkTo, "class=\"menu_2\"", text));
 							} else {
 								links.append(getTdMenusStart());
 								links.append(getDivLeftStart());
-								links.append("&nbsp;&nbsp;" + texto);
+								links.append("&nbsp;&nbsp;" + text);
 							}
 							links.append("</div></td></tr></table></td></tr>");
 							break;
 						case "foot":
-							menuPaneles.append(getLinkElement(request, response, enlace, "class=\"menu_2\"", texto));
+							menuPanels.append(getLinkElement(request, response, linkTo, "class=\"menu_2\"", text));
 							if (menuDefs.indexOf(menuDef) < menuDefs.size() - 1) {
 								links.append(" | ");
 							}
 							break;
 						case "navigator":
-							if (!enlace.equals("")) {
-								menuPaneles.append(getTrLinkMenu(request, response, enlace, texto));
+							if (!linkTo.equals("")) {
+								menuPanels.append(getTrLinkMenu(request, response, linkTo, text));
 							} else {
 								// Se crea la barra principal de navegación
-								if (menuPaneles.length() != 0) {
-									menuPaneles.append("</table>\n</div>\n");
+								if (menuPanels.length() != 0) {
+									menuPanels.append("</table>\n</div>\n");
 								} else {
 									// Es la primera línea del menú
 									links.append("\n<table class=\"" + class_navigationbar + "\" align=\"" + halign + "\"  border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
 									links.append("\n<tr>");
 								}
-								if (!varcapasJavascriptMenuNavegador.equals("")) {
-									varcapasJavascriptMenuNavegador = varcapasJavascriptMenuNavegador + ",";
+								if (!varJavascriptMenuNavigatorLayers.equals("")) {
+									varJavascriptMenuNavigatorLayers = varJavascriptMenuNavigatorLayers + ",";
 								}
-								menuBarra.append(getTextBar(numeroPanelMenu, texto));
-								menuPaneles.append(getTextPanel(texto));
-								varcapasJavascriptMenuNavegador = varcapasJavascriptMenuNavegador
-										+ "\"" + texto + "\"";
+								menuBar.append(getTextBar(menuPanelNumber, text));
+								menuPanelNumber++;
+								menuPanels.append(getTextPanel(text));
+								varJavascriptMenuNavigatorLayers = varJavascriptMenuNavigatorLayers
+										+ "\"" + text + "\"";
 							}
 							break;
 					}
 				}
 			}
 		}
-		if (mododisplay.equals("navigator")) {
+		if (displayMode.equals("navigator")) {
 // Se envía la barra de navegación
-			links.append(menuBarra);
+			links.append(menuBar);
 			links.append("\n</tr>");
 			links.append("\n<tr>\n<td>");
 
 // Se envían los paneles de menús hijos
-			if (menuPaneles.length() != 0) {
-				menuPaneles.append("\n</table>\n</div>\n");
-				links.append(menuPaneles);
+			if (menuPanels.length() != 0) {
+				menuPanels.append("\n</table>\n</div>\n");
+				links.append(menuPanels);
 				links.append("\n</td>\n</tr>\n");
 			}
 // Se cierra la tabla que forma el menú de navegación
@@ -165,7 +164,7 @@ public class LinksHandlerV3 extends BodyTagSupport {
 // insertamos código HTML generado
 
 			// insertamos código JavaScript
-			links = getJavaScriptCode(links, numeroPanelMenu, varcapasJavascriptMenuNavegador);
+			links = getJavaScriptCode(links, menuPanelNumber, varJavascriptMenuNavigatorLayers);
 
 			try {
 				JspWriter out = pageContext.getOut();
@@ -175,9 +174,8 @@ public class LinksHandlerV3 extends BodyTagSupport {
 			}
 		}
 
-	
+
 	}
-	
 
 	private String getTd20() {
 		return "<td width=\"20%\" bgcolor=\"#80FF80\" >&nbsp;</td>";
@@ -191,14 +189,14 @@ public class LinksHandlerV3 extends BodyTagSupport {
 		return "<td bgcolor=\"#10C410\" class=\"menus\">";
 	}
 
-	private String getLinkElement(HttpServletRequest request, HttpServletResponse response, String enlace, String cssClass, String texto) {
+	private String getLinkElement(HttpServletRequest request, HttpServletResponse response, String linkTo, String cssClass, String text) {
 		if (!request.getSession().isNew()) {
-			enlace = response.encodeURL(enlace);
+			linkTo = response.encodeURL(linkTo);
 		}
-		if (enlace.startsWith("http") || enlace.startsWith("#")) {
-			return " <a href=\"" + enlace + cssClass + ">" + texto + "</a>";
+		if (linkTo.startsWith("http") || linkTo.startsWith("#")) {
+			return " <a href=\"" + linkTo + "\" " + cssClass + ">" + text + "</a>";
 		} else {
-			return " <a href=\"" + request.getContextPath() + "/" + enlace + cssClass + ">" + texto + "</a>";
+			return " <a href=\"" + request.getContextPath() + "/" + linkTo + "\" " + cssClass + ">" + text + "</a>";
 		}
 	}
 
@@ -206,93 +204,93 @@ public class LinksHandlerV3 extends BodyTagSupport {
 		return "<div align=\"left\">";
 	}
 
-	private String getTrLinkMenu(HttpServletRequest request, HttpServletResponse response, String enlace, String texto) {
+	private String getTrLinkMenu(HttpServletRequest request, HttpServletResponse response, String linkTo, String text) {
 		return "<tr>\n<td class=\"" + class_child + "\">\n "
-				+ getLinkElement(request, response, enlace, "class=\"" + class_parent + "\"", "&nbsp;&nbsp;" + texto + "&nbsp;&nbsp;&nbsp;&nbsp;")
+				+ getLinkElement(request, response, linkTo, " class=\"" + class_parent + "\"", "&nbsp;&nbsp;" + text + "&nbsp;&nbsp;&nbsp;&nbsp;")
 				+ "\n</td>\n</tr>\n";
 
 	}
 
-	private String getTextBar(int numeroPanelMenu, String texto) {
-		return "\n<td>\n<div id=ancla" + numeroPanelMenu++
-				+ " class=" + class_boxparent + " >\n<a href=\"#\" "
-				+ " onmouseover=\"MuestraPanelMenuColoca('" + texto + "')\" "
-				+ " onmouseout=\"OcultaPanelMenuRetarda('" + texto + "')\">&nbsp;&nbsp;&nbsp;&nbsp;"
-				+ texto + "&nbsp;&nbsp;&nbsp;&nbsp;\n</a>\n</div>\n</td>\n";
+	private String getTextBar(int menuPanelNumber, String text) {
+		return "\n<td>\n<div id=\"anchor" + menuPanelNumber + "\""
+				+ " class=\"" + class_boxparent + "\" >\n<a href=\"#\" "
+				+ " onmouseover=\"MenuPanelShowPositioning('" + text + "')\" "
+				+ " onmouseout=\"MenuPanelHideDelaying('" + text + "')\">&nbsp;&nbsp;&nbsp;&nbsp;"
+				+ text + "&nbsp;&nbsp;&nbsp;&nbsp;\n</a>\n</div>\n</td>\n";
 	}
 
-	private String getTextPanel(String texto) {
+	private String getTextPanel(String text) {
 		return "\n<div id=\""
-				+ texto + "\" class=\"" + class_boxchild + "\"  "
-				+ " onmouseover=\"MuestraPanelMenuRetarda('" + texto + "')\" "
-				+ " onmouseout=\"OcultaPanelMenuRetarda('" + texto + "')\" "
+				+ text + "\" class=\"" + class_boxchild + "\"  "
+				+ " onmouseover=\"MenuPanelShowPositioning('" + text + "')\" "
+				+ " onmouseout=\"MenuPanelHideDelaying('" + text + "')\" "
 				+ " >\n"
 				+ "\n<table class=\"" + class_childtable + "\">"
 				+ "\n";
 	}
 
-	private StringBuffer getJavaScriptCode(StringBuffer links, int numeroPanelMenu, String varcapasJavascriptMenuNavegador) {
+	private StringBuffer getJavaScriptCode(StringBuffer links, int menuPanelNumber, String varJavascriptMenuNavigatorLayers) {
 		links.append("\n\n<script type='text/javascript'>\n");
-		links.append("var empezarMenuNavegador = false\n");
-		links.append("var anclasMenuNavegador = new Array (");
-		for (int i = 1; i <= numeroPanelMenu; i++) {
-			links.append("\"ancla" + i + "\"");
-			if (i < numeroPanelMenu) {
+		links.append("var menuNavigatorStart = false\n");
+		links.append("var menuNavigatorAnchors = new Array (");
+		for (int i = 1; i <= menuPanelNumber; i++) {
+			links.append("\"anchor" + i + "\"");
+			if (i < menuPanelNumber) {
 				links.append(",");
 			}
 		}
 		links.append(")\n");
 		links.append("\n");
-		links.append("var capasMenuNavegador = new Array(").append(varcapasJavascriptMenuNavegador).append(")\n");
-		links.append("var retardoMenuNavegador\n");
-		links.append("var ocultarMenuNavegador\n");
-		links.append("function MuestraPanelMenu(capa){\n");
-		links.append("xShow(capa);\n");
-		links.append("}\n");
-		links.append("function OcultaPanelMenu(capa){\n");
-		links.append("xHide(capa);\n");
-		links.append("}\n");
-		links.append("function PosicionaPanelMenu(){\n");
+		links.append("var menuNavigatorLayers = new Array(").append(varJavascriptMenuNavigatorLayers).append(")\n");
+		links.append("var menuNavigatorDelay\n");
+		links.append("var menuNavigatorHide\n");
 
-		links.append("for (i=0;i<capasMenuNavegador.length;i++){\n");
-		links.append("posx= xOffsetLeft(anclasMenuNavegador[i])\n");
-		links.append("if (posx>1050) posx=1050;\n");
-		links.append("posy= xOffsetTop(anclasMenuNavegador[i])\n");
-		links.append("xMoveTo(capasMenuNavegador[i],posx,posy+30)\n");
-		links.append("} \n");
-
+		links.append("function MenuPanelShow(layer){\n");
+			links.append("xShow(layer);\n");
 		links.append("}\n");
 
-		links.append("PosicionaPanelMenu()\n");
-		links.append("empezarMenuNavegador = true\n");
+		links.append("function MenuPanelHide(layer){\n");
+			links.append("xHide(layer);\n");
+		links.append("}\n");
 
+		links.append("function MenuPanelPositioning(){\n");
 
+			links.append("for (i=0;i<menuNavigatorLayers.length;i++){\n");
+				links.append("posx= xOffsetLeft(menuNavigatorAnchors[i])\n");
+				links.append("if (posx>1050) posx=1050;\n");
+				links.append("posy= xOffsetTop(menuNavigatorAnchors[i])\n");
+				links.append("xMoveTo(menuNavigatorLayers[i],posx,posy+30)\n");
+			links.append("} \n");
+		links.append("}\n");
+
+		links.append("MenuPanelPositioning()\n");
+		links.append("menuNavigatorStart = true\n");
 		links.append("window.onresize = function() {\n");
-		links.append("PosicionaPanelMenu()\n");
+			links.append("MenuPanelPositioning()\n");
 		links.append("}\n");
 
-		links.append("function MuestraPanelMenuColoca(capa){\n");
-		links.append("if (empezarMenuNavegador){\n");
-		links.append("for (i=0;i<capasMenuNavegador.length;i++){\n");
-		links.append("if (capasMenuNavegador[i] != capa) xHide(capasMenuNavegador[i])\n");
-		links.append("}\n");
-		links.append("clearTimeout(retardoMenuNavegador)\n");
-		links.append("xShow(capa)\n");
-		links.append("}\n");
-		links.append("}\n");
-
-		links.append("function OcultaPanelMenuRetarda(capa){\n");
-		links.append("if (empezarMenuNavegador){\n");
-		links.append("ocultarMenuNavegador =capa\n");
-		links.append("clearTimeout(retardoMenuNavegador)\n");
-		links.append("retardoMenuNavegador = setTimeout(\"xHide('\" + ocultarMenuNavegador + \"')\",1000)\n");
-		links.append("}\n");
+		links.append("function MenuPanelShowPositioning(layer){\n");
+			links.append("if (menuNavigatorStart){\n");
+				links.append("for (i=0;i<menuNavigatorLayers.length;i++){\n");
+					links.append("if (menuNavigatorLayers[i] != layer) xHide(menuNavigatorLayers[i])\n");
+				links.append("}\n");
+				links.append("clearTimeout(menuNavigatorDelay)\n");
+				links.append("xShow(layer)\n");
+			links.append("}\n");
 		links.append("}\n");
 
-		links.append("function MuestraPanelMenuRetarda(ind){\n");
-		links.append("if (empezarMenuNavegador){\n");
-		links.append("clearTimeout(retardoMenuNavegador)\n");
+		links.append("function MenuPanelHideDelaying(layer){\n");
+			links.append("if (menuNavigatorStart){\n");
+				links.append("menuNavigatorHide =layer\n");
+				links.append("clearTimeout(menuNavigatorDelay)\n");
+				links.append("menuNavigatorDelay = setTimeout(\"xHide('\" + menuNavigatorHide + \"')\",1000)\n");
+			links.append("}\n");
 		links.append("}\n");
+
+		links.append("function MenuPanelShowDelaying(ind){\n");
+			links.append("if (menuNavigatorStart){\n");
+				links.append("clearTimeout(menuNavigatorDelay)\n");
+			links.append("}\n");
 		links.append("} \n");
 
 		links.append("</script> \n");
@@ -380,36 +378,36 @@ public class LinksHandlerV3 extends BodyTagSupport {
 
 	}
 
-	public java.lang.String getCadenamenu() {
-		return cadenamenu;
+	public String getDisplayMode() {
+		return displayMode;
 	}
 
-	public void setCadenamenu(java.lang.String value) {
-		cadenamenu = value;
+	public void setDisplayMode(String displayMode) {
+		this.displayMode = displayMode;
 	}
 
-	public java.lang.String getSeparadormenu() {
-		return separadormenu;
+	public String getMenuChain() {
+		return menuChain;
 	}
 
-	public void setSeparadormenu(java.lang.String value) {
-		separadormenu = value;
+	public void setMenuChain(String menuChain) {
+		this.menuChain = menuChain;
 	}
 
-	public java.lang.String getSeparadoritems() {
-		return separadoritems;
+	public String getMenuItemSeparator() {
+		return menuItemSeparator;
 	}
 
-	public void setSeparadoritems(java.lang.String value) {
-		separadoritems = value;
+	public void setMenuItemSeparator(String menuItemSeparator) {
+		this.menuItemSeparator = menuItemSeparator;
 	}
 
-	public java.lang.String getMododisplay() {
-		return mododisplay;
+	public String getMenuSeparator() {
+		return menuSeparator;
 	}
 
-	public void setMododisplay(java.lang.String value) {
-		mododisplay = value;
+	public void setMenuSeparator(String menuSeparator) {
+		this.menuSeparator = menuSeparator;
 	}
 
 	public String getClass_child() {

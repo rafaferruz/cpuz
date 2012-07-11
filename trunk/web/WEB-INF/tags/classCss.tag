@@ -1,6 +1,6 @@
-<%-- Tag para componer la class a aplicar a un elemento html
+<%-- Tag para generar el códifo Javascript necesario en la creación de los menús de la página
 	- Uso:
-	-	<cpuz:classCss var="name_class" />
+	-	<cpuz:menuJavascriptCode var="name_class" />
 --%>
 <%@tag description="Crea un string para asignar una clase a un elemento html" 
 	   pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>

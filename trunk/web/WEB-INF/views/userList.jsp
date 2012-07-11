@@ -57,7 +57,7 @@
                 </td>
                 <s:if test="#session.userCategory == 2">
                     <td align="center"><s:submit theme="simple" type="button" name="edit" id="edit" value="%{getText('Edit')}"   onclick="newsEdit('%{#row.id}')"/></td>
-                    <td align="center"><s:checkbox theme="simple" name="selec1" fieldValue="%{#row.id+';'+#row.user}"/></td>
+                    <td align="center"><s:checkbox theme="simple" name="selec1" fieldValue="%{#row.id}"/></td>
                 </s:if>
             </tr>
         </s:iterator>

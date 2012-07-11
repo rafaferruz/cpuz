@@ -8,6 +8,11 @@
 ">
 
 
+    <bean id="userService" class="com.cpuz.service.UserService"
+        scope="prototype">
+        <property name="DAOFactory" ref="DAOFactory"/>
+    </bean>
+
     <bean id="userRolesService" class="com.cpuz.service.UserRolesService"
         scope="prototype">
         <property name="DAOFactory" ref="DAOFactory"/>
