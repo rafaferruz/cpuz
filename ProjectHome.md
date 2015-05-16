@@ -1,0 +1,1 @@
+Este proyecto está pensado para realizar prácticas de java y no pretende realizar ningún trabajo serio.
